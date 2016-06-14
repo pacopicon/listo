@@ -1,0 +1,139 @@
+*, *::before, *::after {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html {
+    height: 100; /* makes sure our HTML takes up 100% of the browser window */
+    font-size: 100;
+}
+
+body {
+/*    background-image: url(../assets/images/blurred_backgrounds/blur_bg_3.jpg);*/
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center center;
+    background-size: cover;
+    font-family: 'Open Sans'; 
+    color: white;             
+    min-height: 100%;
+    padding-bottom: 200px;
+ }
+ 
+.navbar {
+    position: relative; 
+    padding: 0.5rem;
+    /* #1 */
+    background-color: rgb(133,150,117);
+    /* #2 */
+    z-index: 1;
+ }
+ 
+ .navbar .logo {
+     position: relative;
+     left: 2rem;
+     cursor: pointer; /* produces the finter-pointer icon when your hover over the logo */
+ }
+
+.logo {
+    -webkit-transition: -webkit-transform 3s;
+    transition: transform 3s;
+}
+
+.logo:hover {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.navbar .links-container {
+    display: table;
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100px;
+    color: white;
+    /* #3 */
+    text-decoration: none; 
+}
+
+.links-container .navbar-link {
+    display: table-cell;
+    position: relative;
+    height: 100%;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    /* #4 */
+    vertical-align: middle;
+    color: white;
+    font-size: 0.625rem;
+    letter-spacing: 0.05rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    /* #3 */
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
+    transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
+}
+/* #5 */
+.links-container .navbar-link:hover {
+}
+
+.navbar-link:hover {
+    color: rgb(233,50,117);
+    letter-spacing: 2rem;
+    padding-right: 1rem;
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+}
+
+.links-container .navbar-link:active {
+    color: rgb(233,50,117);
+    background-color: white;
+}
+
+
+
+.container {
+    margin: 0 auto;
+    max-width: 64rem;
+}
+
+.container.narrow {
+    max-width: 56rem;
+}
+ /* Medium and small screens (640px) */
+ @media (min-width: 40rem) {
+    html { font-size: 112%; }
+     
+     .column {
+         float: left;
+         padding-left: 1rem;
+         padding-right: 1rem;
+     }
+     
+      
+     .column.full { width: 100%; }
+     .column.two-thirds { width: 66.7%; }
+     .column.half { width: 50%; }
+     .column.third { width: 33.3%; }
+     .column.fourth { width: 25%; }
+     .column.flow-opposite { float: right; }
+ }
+ 
+ /* Large screens (1024px) */
+ @media (min-width: 64rem) {
+    html { font-size: 120%; }
+ }
+
+
+.clearfix::before,
+.clearfix::after {
+    content: " ";
+    display: table;
+}
+
+.clearfix::after {
+    clear: both;
+}
