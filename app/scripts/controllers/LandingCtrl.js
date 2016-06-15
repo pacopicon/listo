@@ -1,10 +1,9 @@
-
 (function(){
-    function LoginCtrl() {
+    function LandingCtrl() {
        this.heroTitle = "Organize your life!"
     } 
     
     angular
-        .module('listo', ['ui.router', 'firebase'])
-        .controller('LoginCtrl', LoginCtrl);
+        .module('listo')
+        .controller('LandingCtrl', LandingCtrl);
 })();

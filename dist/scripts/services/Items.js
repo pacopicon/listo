@@ -1,9 +1,9 @@
 (function () {
-    function Items($rootScope, $firebaseObject,$firebaseArray) {
+    function Items($firebaseObject, $firebaseArray) {
         
         var ref = new Firebase ("https://listo-1f3db.firebaseio.com");
         
-        $scope.data = $firebaseObject(ref);
+        var items = $firebaseArray(ref);
     };
     
     angular

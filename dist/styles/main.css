@@ -24,6 +24,7 @@ body {
 .navbar {
     position: relative; 
     padding: 0.5rem;
+    height: 3rem;
     /* #1 */
     background-color: rgb(133,150,117);
     /* #2 */
@@ -58,34 +59,37 @@ body {
 }
 
 .links-container .navbar-link {
-    display: table-cell;
     position: relative;
+    top: 0.005rem;
     height: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
     /* #4 */
     vertical-align: middle;
     color: white;
-    font-size: 0.625rem;
+    font-size: 2.5rem;
     letter-spacing: 0.05rem;
     font-weight: 700;
     text-transform: uppercase;
     /* #3 */
     text-decoration: none;
     cursor: pointer;
+/*
     -webkit-transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
     transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
+*/
 }
 /* #5 */
 .links-container .navbar-link:hover {
 }
 
 .navbar-link:hover {
-    color: rgb(233,50,117);
-    letter-spacing: 2rem;
+    color: rgb(233,150,117);
     padding-right: 1rem;
+/*
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+*/
 }
 
 .links-container .navbar-link:active {

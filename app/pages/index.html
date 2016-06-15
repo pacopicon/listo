@@ -1,4 +1,3 @@
-<!--This index.html follows up-to-date Firebase API-->
 <!DOCTYPE html>
 <html ng-app="listo">
 <head lang="en">
@@ -9,10 +8,8 @@
     <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" type="text/css" href="/styles/normalize.css">
     <link rel="stylesheet" type="text/css" href="/styles/main.css">
-    <link rel="stylesheet" type="text/css" href="/styles/login.css">
-    <link rel="stylesheet" type="text/css" href="/styles/collection.css">
+    <link rel="stylesheet" type="text/css" href="/styles/landing.css">
     <link rel="stylesheet" type="text/css" href="/styles/user.css">
-    <link rel="stylesheet" type="text/css" href="/styles/player_bar.css">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
     <!--AngularJS-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
@@ -20,24 +17,20 @@
     <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
     <!--AngularFire-->
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
-    <!--FirebaseUI-->
+<!--
+    FirebaseUI
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/ui/0.4.0/firebase-ui-auth.js"></script>
     <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/0.4.0/firebase-ui-auth.css" />
+-->
     <!--ui-router-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
     <!--buzz.js-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/buzz/1.1.10/buzz.min.js"></script>-->
     <script src="/scripts/app.js"></script>
-    <script src="/scripts/services/Fixtures.js"></script>
-    <script src="/scripts/services/SongPlayer.js"></script>
-    <script src="/scripts/controllers/LoginCtrl.js"></script>
-    <script src="/scripts/controllers/CollectionCtrl.js"></script>
+    <script src="/scripts/controllers/LandingCtrl.js"></script>
     <script src="/scripts/controllers/UserCtrl.js"></script>
-    <script src="/scripts/controllers/PlayerBarCtrl.js"></script>
-    <script src="/scripts/directives/seekBar.js"></script>
-    <script src="/scripts/filters/timecode.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
 <!--New Firebase API config, does not seem to be addressed to AngularJS-->
 <!--
@@ -59,14 +52,9 @@
 </head>
 <body>
     <nav class="navbar">
-<!--
-        <a ui-sref="/" class="logo">
-             <img src="assets/images/bloc_jams_logo.png" alt="bloc jams logo">
-        </a>
         <div class="links-container">
-            <a ui-sref="collection" class="navbar-link">collection</a>
+            <a ui-sref="user" class="navbar-link">user page</a>
         </div>
--->
     </nav>
         
     <ui-view></ui-view>

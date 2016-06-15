@@ -9,7 +9,7 @@
         $stateProvider
             .state('landing', {
                 url: '/',
-                controller: 'LangingCtrl as landing',
+                controller: 'LandingCtrl as landing',
                 templateUrl: '/templates/landing.html'
             })
             .state('user', {
