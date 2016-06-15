@@ -7,10 +7,10 @@
         });
         
         $stateProvider
-            .state('login', {
+            .state('landing', {
                 url: '/',
-                controller: 'LoginCtrl as login',
-                templateUrl: '/templates/login.html'
+                controller: 'LangingCtrl as landing',
+                templateUrl: '/templates/landing.html'
             })
             .state('user', {
                 url: '/user',

@@ -1,0 +1,28 @@
+<script src="secrets.js"></script>
+<section class="hero-content">
+     <h1 class="hero-title">{{ login.heroTitle }}</h1>
+</section>
+<body ng-controller="LoginCtrl">
+    <!-- anything typed in here is magically saved to our Firebase database! -->
+    <input type="text" class="textbox" ng-model="data.text"/>
+    <!-- all changes from our Firebase database magically appear here! -->
+    <h1>You said: {{ data.text }}</h1>
+</body>
+
+<section class="selling-points container clearfix">
+    <div class="point column third">
+        <span class="ion-university"></span>
+        <h5 class="point-title">Smart</h5>
+        <p class="point-description">Listo! uses a specially-devised algorithm to prioritize what you need to do so that you do it exactly when you need to do it</p>
+    </div>
+    <div class="point column third">
+        <span class="ion-thumbsup"></span>
+        <h5 class="point-title">Easy</h5>
+        <p class="point-description">You don't need to be a rocket scientist to be productive here on Earth</p>
+    </div>
+    <div class="point column third">
+        <span class="ion-upload"></span>
+        <h5 class="point-title">Connected</h5>
+        <p class="point-description">Organize at home or on the go.  Listo! syncs your to do list across all of your devices</p>
+    </div>
+</section>

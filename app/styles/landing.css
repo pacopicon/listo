@@ -1,8 +1,18 @@
 body.landing {
      background-color: rgb(133,150,117);
  }
+
+.textbox {
+    margin: auto;
+    position: absolute;
+    overflow: auto;
+    width: 30%;
+    height: 3%;
+    top: 0; left: 0; bottom: 0; right: 0;
+    color: black;
+}
  
- .hero-content {
+.hero-content {
      position: relative;
      min-height: 600px;
 /*     background-image: url(../assets/images/bloc_jams_bg.jpg);*/

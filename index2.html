@@ -1,4 +1,4 @@
-<!--This index.html follows up-to-date Firebase API-->
+<!--This index.html follows Bloc's deprecated Firebase API recommendation-->
 <!DOCTYPE html>
 <html ng-app="listo">
 <head lang="en">
@@ -14,10 +14,10 @@
     <link rel="stylesheet" type="text/css" href="/styles/user.css">
     <link rel="stylesheet" type="text/css" href="/styles/player_bar.css">
     <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-    <!--AngularJS-->
+    <!--Angular-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
     <!--Firebase-->
-    <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+    <script src="https://cdn.firebase.com/js/client/2.3.2/firebase.js"></script>
     <!--AngularFire-->
     <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
     <!--FirebaseUI-->
@@ -39,23 +39,16 @@
     <script src="/scripts/directives/seekBar.js"></script>
     <script src="/scripts/filters/timecode.js"></script>
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
-<!--New Firebase API config, does not seem to be addressed to AngularJS-->
-<!--
     <script>
         // Initialize Firebase
         var config = {
             apiKey: "AIzaSyDJSMDWkPVq7PGxvfB8XRMWlfVNOfmQj9I",
             authDomain: "listo-1f3db.firebaseapp.com",
             databaseURL: "https://listo-1f3db.firebaseio.com",
-            storageBucket: "listo-1f3db.appspot.com"
+            storageBucket: "listo-1f3db.appspot.com",
         };
         firebase.initializeApp(config);
-        
-        // Get a reference to the database service
-        var database = firebase.database();
-        
 </script>
--->
 </head>
 <body>
     <nav class="navbar">

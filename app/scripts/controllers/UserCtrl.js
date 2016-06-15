@@ -1,10 +1,9 @@
 (function() {
-    function AlbumCtrl(Fixtures, SongPlayer) {
-        this.albumData = Fixtures.getAlbum();
-        this.songPlayer = SongPlayer;
-    };
+    function UserCtrl(Items) {
+        
+    }
     
     angular
-        .module('blocJams')
-        .controller('AlbumCtrl', ['Fixtures', 'SongPlayer', AlbumCtrl]);
+        .module('listo', ['ui.router', 'firebase'])
+        .controller('UserCtrl', ['ui.router','firebase', 'Items', UserCtrl]);
 })();
