@@ -1,26 +1,20 @@
-<main class="album-view container narrow">
-    <section class="clearfix">
-        <div class="column half">
-            <img src="{{ album.albumData.albumArtUrl }}">
-        </div>
-        <div class="album-view-details column half">
-            <h2 class="album-view-title">{{ album.albumData.name }}</h2>
-            <h3 class="album-view-artist">{{ album.albumData.artist }}</h3>
-            <h5 class="album-view-release-info">{{ album.ablumData.year }} {{ album.label }}</h5>
-        </div>
-    </section>
-    <table class="album-view-song-list">
-        <tr class="album-view-song-item" ng-repeat="song in album.albumData.songs" ng-mouseover="hovered = true" ng-mouseleave="hovered = false">
-            <td class="song-item-number">
-                <span ng-show="!song.playing && !hovered">{{ $index + 1 }}</span>
-                <a class="album-song-button" ng-show="hovered && !song.playing" ng-click="album.songPlayer.play(song)"><span class="ion-play"></span></a>
-
-                <a class="album-song-button" ng-show="song.playing" ng-click="album.songPlayer.pause(song)"><span class="ion-pause"></span></a>
-            </td>
-            <td class="song-item-title">{{ song.title }}</td>
-            <td class="song-item-duration">{{ song.duration }}</td>
-        </tr>
-    </table>
-</main>
-
-<ng-include src="'/templates/player_bar.html'"></ng-include>
+<section class="user" ng-controller="UserCtrl as user">
+    <div class="user-links-container">
+        <a ui-sref="landing" class="navbar-link">Back to index.html</a>
+    </div>
+    <div class="formAndButtonContainer">
+        <ul>
+            <li ng-repeat="item in user.itemCrud.items" class="itemsList">
+            <!-- edit a message -->
+                <input ng-model="item.text" ng-change="user.itemCrud.items.$save(items)" />
+            <!-- delete a message -->
+                <button ng-click="user.itemCrud.items.$remove(item)">Delete Message</button>
+            </li>
+        </ul>
+        <!-- push a new message onto the array -->
+        <form ng-submit="user.itemCrud.addItem()">
+            <input ng-model="user.itemCrud.newItemText" class="textbox"/>
+            <button type="submit" class="addButton">Add to-do item</button>
+        </form>
+    </div>
+</section>

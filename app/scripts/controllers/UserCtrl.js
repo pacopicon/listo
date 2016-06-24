@@ -1,9 +1,9 @@
 (function() {
-    function UserCtrl(Items) {
-            
+    function UserCtrl(ItemCrud) {
+        this.itemCrud = ItemCrud;
     }
     
     angular
         .module('listo')
-        .controller('UserCtrl', ['Items', UserCtrl]);
+        .controller('UserCtrl', ['ItemCrud', 'firebase' UserCtrl]);
 })();
