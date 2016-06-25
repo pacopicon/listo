@@ -1,19 +1,19 @@
-<section class="user" ng-controller="UserCtrl as user">
+<section ng-controller="UserCtrl" class="user">
     <div class="user-links-container">
         <a ui-sref="landing" class="navbar-link">Back to index.html</a>
     </div>
     <div class="formAndButtonContainer">
-        <ul>
-            <li ng-repeat="item in user.itemCrud.items" class="itemsList">
+        <ol>
+            <li ng-repeat="item in items" class="itemsList">
             <!-- edit a message -->
-                <input ng-model="item.text" ng-change="user.itemCrud.items.$save(items)" />
+                <input ng-model="item.text" ng-change="items.$save(item)" />
             <!-- delete a message -->
-                <button ng-click="user.itemCrud.items.$remove(item)">Delete Message</button>
+                <button ng-click="items.$remove(item)">Delete Message</button>
             </li>
-        </ul>
+        </ol>
         <!-- push a new message onto the array -->
-        <form ng-submit="user.itemCrud.addItem()">
-            <input ng-model="user.itemCrud.newItemText" class="textbox"/>
+        <form ng-submit="addItem()">
+            <input ng-model="newItemName" class="textbox"/>
             <button type="submit" class="addButton">Add to-do item</button>
         </form>
     </div>

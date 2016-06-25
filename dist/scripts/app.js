@@ -1,21 +1,21 @@
 var listo = angular.module("listo", ["ui.router", "firebase"]);
 
-listo.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
-    
+listo.config(function($stateProvider, $locationProvider) {
+
     $locationProvider.html5Mode({
         enabled: true,
         requireBase: false
     });
-    
+
     $stateProvider
         .state('landing', {
             url: '/',
-            controller: 'LandingCtrl as landing',
+            controller: 'LandingCtrl',
             templateUrl: '/templates/landing.html'
         })
         .state('user', {
             url: '/user',
-            controller: 'UserCtrl as user',
+            controller: 'UserCtrl',
             templateUrl: '/templates/user.html'
         });
 });
@@ -27,7 +27,7 @@ listo.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 //                enabled: true,
 //                requireBase: false
 //        });
-//        
+//
 //        $stateProvider
 //            .state('landing', {
 //                url: '/',
@@ -40,7 +40,7 @@ listo.config(function($stateProvider, $locationProvider, $urlRouterProvider) {
 //                templateUrl: '/templates/user.html'
 //            });
 //    }
-//    
+//
 //    angular
 //        .module('listo', ['ui.router', 'firebase'])
 //        .config(config);
