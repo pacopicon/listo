@@ -31,12 +31,11 @@
 }
 
 .formAndButtonContainer {
-    margin: auto;
-    position: absolute;
+    position: relative;
     overflow: auto;
-    width: 50%;
-    height: 30%;
-    top: 0; left: 0; bottom: 0; right: 0;
+    width: 60%;
+    height: 100%;
+    top: 0; left: 0; bottom: 10; right: 40;
 }
 
 .itemsList {
