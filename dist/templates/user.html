@@ -6,27 +6,28 @@
         <ol>
             <li ng-repeat="item in items" class="itemsList">
             <!-- edit a message -->
-                Name: <input ng-model="item.text" ng-change="items.$save(item)" /><br>
-                Due on: <input ng-model="item.dueDate" ng-change="items.$save(item)" /><br>
-                This will take: <input ng-model="item.timeEst" ng-change="items.$save(item)" /><br>
-                importance: <input ng-model="item.importance" ng-change="items.$save(item)" /><br>
-                completed?: <input ng-model="item.completed" ng-change="items.$save(item)" /><br>
-                urgent?: <input ng-model="item.urgent" ng-change="items.$save(item)" /><br>
+                Name: <input ng-model="item.text" ng-change="items.$save(item)" />{{item.text}}<br>
+                Due on: <input ng-model="item.dueDate" ng-change="items.$save(item)" />{{item.dueDate | date: 'fullDate'}}<br>
+                This will take: <input ng-model="item.timeEst" ng-change="items.$save(item)" />{{item.timeEst | date: 'shortTime'}}<br>
+                How important is it?: <input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />{{item.importance.repeatSelect}}<br>
+                completed?: <input ng-model="item.completed" ng-change="items.$save(item)" />{{item.completed}}<br>
+                urgent?: <input ng-model="item.urgent" ng-change="items.$save(item)" />{{item.urgent}}<br>
                 rank: <input ng-model="item.rank" ng-change="items.$save(item)" /><br>
-                active since: <input ng-model="item.created_at" ng-change="items.$save(item)" />
+                active since {{item.created_at | date: 'fullDate'}}
+                <!-- <input ng-model="item.created_at" ng-change="items.$save(item)" /> -->
 
             <!-- delete a message -->
                 <button ng-click="items.$remove(item)">Delete Message</button>
             </li>
         </ol>
         <!-- push a new message onto the array -->
-        <form ng-submit="addItem()">
-            Enter item name: <input ng-model="newItemName" class="textbox"/>
-            When is it due? <input type="date" ng-model="newDate" class="textbox"/>
-            How long will it take? <input type="time" ng-model="newTime" class="textbox"/>
+        <form ng-submit="addItem()" class="form">
+            Enter item name: <input ng-model="newItemName" class="textbox"/><br>
+            When is it due? <input type="date" ng-model="newDate" class="textbox"/><br>
+            How long will it take? <input type="time" ng-model="newTime" class="textbox"/><br>
             How important is it? <select name="How important is it?" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect">
-              <option ng-repeat="option in newImportanceTxt.availableOptions" value="option.id">{{option.text}}</option>
-            </select>
+              <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option>
+            </select><br>
             <button type="submit" class="addButton">Add to-do item</button>
         </form>
     </div>

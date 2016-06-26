@@ -42,6 +42,12 @@
     color: black;
 }
 
+.form {
+    color: black;
+    position: relative;
+    left: 10;
+}
+
 .textbox {
     position: relative;
     overflow: auto;
