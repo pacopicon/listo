@@ -22,9 +22,11 @@
         <!-- push a new message onto the array -->
         <form ng-submit="addItem()">
             Enter item name: <input ng-model="newItemName" class="textbox"/>
-            When is it due? <input ng-model="newDate" class="textbox"/>
-            How long will it take? <input ng-model="newTime" class="textbox"/>
-            How important is it? <input ng-model="newImportanceTxt" class="textbox"/>
+            When is it due? <input type="date" ng-model="newDate" class="textbox"/>
+            How long will it take? <input type="time" ng-model="newTime" class="textbox"/>
+            How important is it? <select name="How important is it?" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect">
+              <option ng-repeat="option in newImportanceTxt.availableOptions" value="option.id">{{option.text}}</option>
+            </select>
             <button type="submit" class="addButton">Add to-do item</button>
         </form>
     </div>

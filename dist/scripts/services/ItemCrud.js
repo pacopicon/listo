@@ -15,7 +15,7 @@ listo.factory("ItemCrud", function($firebaseObject, $firebaseArray) {
                 importance: importanceTxt,
                 completed: false,
                 urgent: false,
-                rank: num,
+                // rank: num,
                 created_at: Firebase.ServerValue.TIMESTAMP
             });
         },
