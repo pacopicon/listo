@@ -4,9 +4,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
 
         $scope.items = ItemCrud.getAllItems();
 
-        $scope.newItemName = '';
-        $scope.newDate = '';
-        $scope.newTime = '';
+        $scope.newDate = {
+            value: new Date
+        };
+        $scope.newTime = {
+            value: new Date
+        };
         $scope.newImportanceTxt = {
             repeatSelect: null,
             availableOptions: [
