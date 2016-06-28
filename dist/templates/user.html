@@ -13,11 +13,11 @@
                   </tr>
                   <tr>
                       <th>Due on:</th>
-                      <td><input ng-model="item.dueDate" ng-change="items.$save(item)" />{{item.dueDate | date: 'fullDate'}}</td>
+                      <td><input ng-model="item.dueDate" ng-change="items.$save(item)"/><input ng-model="item.dueTime" ng-change="items.$save(item)"/>{{item.dueDate | date: 'fullDate'}} at {{item.dueTime | date: 'shortTime' }}</td>
                   </tr>
                   <tr>
                       <th>This will take:</th>
-                      <td><input ng-model="item.timeEst" ng-change="items.$save(item)" />{{item.timeEst | date: 'shortTime'}}</td>
+                      <td><input ng-model="item.hourEst" ng-change="items.$save(item)" class="numberBox"/>{{item.hourEst}} hours and <input ng-model="item.minuteEst" ng-change="items.$save(item)" class="numberBox"/>{{item.minuteEst}} minutes</td>
                   </tr>
                   <tr>
                       <th>How important is it?:</th>
@@ -32,8 +32,8 @@
                       <td><input ng-model="item.urgent" ng-change="items.$save(item)" />{{item.urgent}}</td>
                   </tr>
                   <tr>
-                      <!-- <th>rank:</th> -->
-                      <!-- <td><input ng-model="item.rank" ng-change="items.$save(item)" />{{item.rank}}</td> -->
+                      <th>rank:</th>
+                      <td>{{item.rank}}</td>
                   </tr>
                   <tr>
                       <th>active since</th>
@@ -53,15 +53,15 @@
             <table>
                 <tr>
                     <td>Enter item name:</td>
-                    <td><input ng-model="newItemName" class="textbox"/></td>
+                    <td><input ng-model="newItemName" class="nameBox"/></td>
                 </tr>
                 <tr>
                     <td>When is it due?</td>
-                    <td><input type="date" ng-model="newDate.value" placeholder="yyyy-MM-" class="textbox"/></td>
+                    <td><input type="date" ng-model="newDate" placeholder="yyyy-MM-dd" class="dateBox"/><input type="time" ng-model="newTime" placeholder="HH:mm:ss" class="timeBox"/></td>
                 </tr>
                 <tr>
                     <td>How long will it take?</td>
-                    <td><input type="time" ng-model="newTime" class="textbox"/></td>
+                    <td><input type="number" ng-model="newHour" min="0" max="12"/> hours and <input type="number" ng-model="newMinute" min="0" max="59"/> minutes </td>
                 </tr>
                 <tr>
                     <td>How important is it?</td>
