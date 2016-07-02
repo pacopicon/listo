@@ -18,10 +18,11 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 return dDate.setHours(hours, minutes, seconds, milliseconds);
             },
 
-            calculateTimeTillDueDate: function(correctedDueDateInSecs) {
+            calculateTimeTillDueDate: function(correctedDueDate) {
                 //    All variables are in seconds:
-                var dateInSecs = Date.now()/1000;
-                var timeTillDueDate = correctedDueDateInSecs - dateInSecs;
+                var correctedDueDateInSecs = correctedDueDate / 1000;
+                var dateInSecs = Date.now() / 1000;
+                var timeTillDueDate = correctedDueDate - dateInSecs;
 
                 return timeTillDueDate;
             },
@@ -43,7 +44,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
             },
 
             calculateRank: function(importanceTxt, timeTillDueDate, estTime, urgency) {
-
                 // calculate dueDateRating
                 var dueDateRating = ((31536000 + estTime - timeTillDueDate) / 100000);
                 // calculate importanceRating and exponent
