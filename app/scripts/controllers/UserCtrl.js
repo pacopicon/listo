@@ -4,8 +4,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
 
         $scope.items = ItemCrud.getAllItems();
 
-        $scope.newDate = new Date();
-        $scope.newTime = new Date();
+        $scope.newDueDate = new Date();
+        $scope.newDueHour = 0;
+        $scope.newDueMinute = 0;
+        $scope.newAMorPM = {
+            repeatSelect: null,
+            availableOptions: [
+                {id: '1', text: 'am'},
+                {id: '2', text: 'pm'}
+            ]
+        };
+        $scope.newHourEst = 0;
+        $scope.newMinuteESt = 0;
         $scope.newImportanceTxt = {
             repeatSelect: null,
             availableOptions: [
@@ -16,28 +26,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
                 {id: '5', text: 'job depends on it'}
             ]
         };
-        $scope.newHour = 0;
-        $scope.newMinute = 0;
-        $scope.newRank = 0;
-
-        // $scope.rankAlgorithm = function(importanceRating, exponent) {
-        //     $scope.newRank = ((((dueDateRating + importanceRating)/2)**exponent)/bigDivisor)
-        // };
-        //
-        // $scope.updateRank = function() {
-        //     var timeEstInSecs = (($scope.newHour * 60 * 60) + ($scope.newMinute * 60))
-        //
-        //     var timeTillDueDate =
-        // };
 
         $scope.addItem = function() {
-            ItemCrud.addItem($scope.newItemName, $scope.newDate.toJSON(), $scope.newTime.toJSON(), $scope.newHour, $scope.newMinute, $scope.newImportanceTxt, $scope.newRank);
+            var dueDateInSecs = $scope.newDueDate.getTime() / 1000;
+            var timeTillDueDate = ItemCrud.calculateTimeTillDueDate(dueDateInSecs, $scope.newDueHour, $scope.newDueMinute, $scope.newAMorPM.repeatSelect);
+            console.log("timeTillDueDate = " + timeTillDueDate);
+            var estTime = ItemCrud.calculateEstTime($scope.newHourEst, $scope.newMinuteEst);
+            console.log("estTime = " + estTime);
+            var urgency = ItemCrud.calculateUrgency(timeTillDueDate, estTime);
+            var processedRank = ItemCrud.calculateRank($scope.newImportanceTxt.repeatSelect, timeTillDueDate, estTime, urgency);
+
+            ItemCrud.addItem($scope.newItemName, $scope.newDueDate.getTime(), timeTillDueDate, estTime, $scope.newImportanceTxt.repeatSelect, urgency, processedRank);
         };
-
-        // $scope.addItem.$watch(function() {
-        //     // $scope.updateRank();
-        //     console.log("This was a successful callback!");
-        // });
-
     }
 ]);

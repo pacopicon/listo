@@ -13,20 +13,21 @@
                   </tr>
                   <tr>
                       <th>Due on:</th>
-                      <td><input ng-model="item.dueDate" ng-change="items.$save(item)"/><input ng-model="item.dueTime" ng-change="items.$save(item)"/>{{item.dueDate | date: 'fullDate'}} at {{item.dueTime | date: 'shortTime' }}</td>
+                      <td><input ng-model="item.secsTillDueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.secsTillDueDate" type="time" ng-change="items.$save(item)"/> {{item.dueDate | date: 'fullDate'}} at {{item.dueDate | date: 'shortTime'}}</td>
                   </tr>
                   <tr>
                       <th>This will take:</th>
-                      <td><input ng-model="item.hourEst" ng-change="items.$save(item)" class="numberBox"/>{{item.hourEst}} hours and <input ng-model="item.minuteEst" ng-change="items.$save(item)" class="numberBox"/>{{item.minuteEst}} minutes</td>
+                      <td><input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/>{{item.estTime | date: 'shortTime'}}</td>
+                      <!--It looks like you need a Filter for a Date object given in seconds.  Need to separate this object into hours and minutes-->
                   </tr>
                   <tr>
                       <th>How important is it?:</th>
                       <td><input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />{{item.importance.repeatSelect}}</td>
                   </tr>
-                  <tr>
+                  <!-- <tr>
                       <th>completed?:</th>
                       <td><input ng-model="item.completed" ng-change="items.$save(item)" />{{item.completed}}</td>
-                  </tr>
+                  </tr> -->
                   <tr>
                       <th>urgent?:</th>
                       <td><input ng-model="item.urgent" ng-change="items.$save(item)" />{{item.urgent}}</td>
@@ -56,16 +57,17 @@
                     <td><input ng-model="newItemName" class="nameBox"/></td>
                 </tr>
                 <tr>
-                    <td>When is it due?</td>
-                    <td><input type="date" ng-model="newDate" placeholder="yyyy-MM-dd" class="dateBox"/><input type="time" ng-model="newTime" placeholder="HH:mm:ss" class="timeBox"/></td>
+                    <td>Enter due date and time:</td>
+                    <td><input type="date" ng-model="newDueDate" placeholder="yyyy-MM-dd" class="dateBox"/> at <input type="number" ng-model="newDueHour" min="0" max="12" class="numberBox"/> : <input type="number" ng-model="newDueMinute" min="0" max="59" class="numberBox"/> <select id="repeatSelect" ng-model="newAMorPM.repeatSelect">
+                    <option ng-repeat="option in newAMorPM.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
                 </tr>
                 <tr>
-                    <td>How long will it take?</td>
-                    <td><input type="number" ng-model="newHour" min="0" max="12"/> hours and <input type="number" ng-model="newMinute" min="0" max="59"/> minutes </td>
+                    <td>Enter est. time to finish:</td>
+                    <td><input type="number" ng-model="newHourEst" min="0" max="12" class="numberBox"/> hours and <input type="number" ng-model="newMinuteEst" min="0" max="59" class="numberBox"/> minutes </td>
                 </tr>
                 <tr>
-                    <td>How important is it?</td>
-                    <td><select name="How important is it?" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect">
+                    <td>Enter priority:</td>
+                    <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect">
                     <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
                 </tr>
                 <tr>

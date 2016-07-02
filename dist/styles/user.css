@@ -51,8 +51,8 @@
 .nameBox {
     position: relative;
     overflow: auto;
-    width: 100%;
-    height: 90%;
+    width: 15em;
+    height: 1.5em;
     /*top: 0; left: 0; bottom: 0; right: 0;*/
     color: black;
 }
@@ -60,26 +60,26 @@
 .numberBox {
   position: relative;
   overflow: auto;
-  width: 5%;
-  height: 70%;
+  width: 2.5em;
+  height: 1.5em;
   color: black;
 }
 
 .dateBox {
   position: relative;
   overflow: auto;
-  width: 45%;
-  height: 90%;
+  width: 10em;
+  height: 1.5em;
   color: black;
 }
 
-.timeBox {
+/*.timeBox {
   position: relative;
   overflow: auto;
-  width: 55%;
+  width: 45%;
   height: 90%;
   color: black;
-}
+}*/
 
 .addButton {
     position: relative;
