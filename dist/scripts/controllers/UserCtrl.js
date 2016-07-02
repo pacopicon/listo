@@ -5,15 +5,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
         $scope.items = ItemCrud.getAllItems();
 
         $scope.newDueDate = new Date();
-        $scope.newDueHour = 0;
-        $scope.newDueMinute = 0;
-        $scope.newAMorPM = {
-            repeatSelect: null,
-            availableOptions: [
-                {id: '1', text: 'am'},
-                {id: '2', text: 'pm'}
-            ]
-        };
+        $scope.newDueTime = new Date();
         $scope.newHourEst = 0;
         $scope.newMinuteESt = 0;
         $scope.newImportanceTxt = {
@@ -27,16 +19,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
             ]
         };
 
+// dueDateInSecs is now: correctedDueDateInSecs
         $scope.addItem = function() {
-            var dueDateInSecs = $scope.newDueDate.getTime() / 1000;
-            var timeTillDueDate = ItemCrud.calculateTimeTillDueDate(dueDateInSecs, $scope.newDueHour, $scope.newDueMinute, $scope.newAMorPM.repeatSelect);
-            console.log("timeTillDueDate = " + timeTillDueDate);
+
+            var correctedDueDateInSecs = ItemCrud.setDueDateClockTime($scope.newDueDate, $scope.newDueTime) / 1000;
+            var timeTillDueDate = ItemCrud.calculateTimeTillDueDate(correctedDueDateInSecs);
             var estTime = ItemCrud.calculateEstTime($scope.newHourEst, $scope.newMinuteEst);
-            console.log("estTime = " + estTime);
             var urgency = ItemCrud.calculateUrgency(timeTillDueDate, estTime);
             var processedRank = ItemCrud.calculateRank($scope.newImportanceTxt.repeatSelect, timeTillDueDate, estTime, urgency);
 
-            ItemCrud.addItem($scope.newItemName, $scope.newDueDate.getTime(), timeTillDueDate, estTime, $scope.newImportanceTxt.repeatSelect, urgency, processedRank);
+            ItemCrud.addItem($scope.newItemName, correctedDueDateInSecs, timeTillDueDate, estTime, $scope.newImportanceTxt.repeatSelect, urgency, processedRank);
         };
     }
 ]);

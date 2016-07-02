@@ -9,21 +9,19 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
         return {
 
-            calculateTimeTillDueDate: function(dDate, dHour, dMinute, AMorPM) {
+            setDueDateClockTime: function(dDate, dTime) {
+                var hours = dTime.getHours();
+                var minutes = dTime.getMinutes();
+                var seconds = dTime.getSeconds();
+                var milliseconds = dTime.getMilliseconds();
+
+                return dDate.setHours(hours, minutes, seconds, milliseconds);
+            },
+
+            calculateTimeTillDueDate: function(correctedDueDateInSecs) {
                 //    All variables are in seconds:
                 var dateInSecs = Date.now()/1000;
-                var yearsMonthsAndDaysTillDueDate = dDate - dateInSecs;
-
-                if (AMorPM === "pm") {
-                    postMeridian = 12;
-                } else {
-                    postMeridian = 0;
-                }
-
-                var hourAndMinuteTillDueDate = (((dHour + postMeridian) * 60 * 60) + (dMinute * 60));
-
-                // Return timeTillDueDate
-                var timeTillDueDate = yearsMonthsAndDaysTillDueDate + hourAndMinuteTillDueDate;
+                var timeTillDueDate = correctedDueDateInSecs - dateInSecs;
 
                 return timeTillDueDate;
             },

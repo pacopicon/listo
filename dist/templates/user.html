@@ -13,7 +13,7 @@
                   </tr>
                   <tr>
                       <th>Due on:</th>
-                      <td><input ng-model="item.secsTillDueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.secsTillDueDate" type="time" ng-change="items.$save(item)"/> {{item.dueDate | date: 'fullDate'}} at {{item.dueDate | date: 'shortTime'}}</td>
+                      <td><input ng-model="item.dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.dueDate" type="time" ng-change="items.$save(item)"/> {{item.dueDate | date: 'fullDate'}} at {{item.dueDate | date: 'shortTime'}}</td>
                   </tr>
                   <tr>
                       <th>This will take:</th>
@@ -58,8 +58,7 @@
                 </tr>
                 <tr>
                     <td>Enter due date and time:</td>
-                    <td><input type="date" ng-model="newDueDate" placeholder="yyyy-MM-dd" class="dateBox"/> at <input type="number" ng-model="newDueHour" min="0" max="12" class="numberBox"/> : <input type="number" ng-model="newDueMinute" min="0" max="59" class="numberBox"/> <select id="repeatSelect" ng-model="newAMorPM.repeatSelect">
-                    <option ng-repeat="option in newAMorPM.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
+                    <td><input type="date" ng-model="newDueDate" placeholder="yyyy-MM-dd" class="dateBox"/> <input type="time" ng-model="newDueTime" placeholder="HH:mm:ss" class="timeBox"/></td>
                 </tr>
                 <tr>
                     <td>Enter est. time to finish:</td>
