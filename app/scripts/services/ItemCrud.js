@@ -67,7 +67,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
                   exponent = 10;
                 }
 
-                var bigDiv = Math.pow(10, 20);
+                var bigDiv = Math.pow(10, 64);
                 var rankingFactor = (dueDateRating + importanceRating)/2;
                 var rawRank = Math.pow(rankingFactor, exponent);
                 var processedRank = Math.round(rawRank/bigDiv);
