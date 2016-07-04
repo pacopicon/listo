@@ -17,12 +17,12 @@
                   </tr>
                   <tr>
                       <th>This will take:</th>
-                      <td><input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/>{{item.estTime | date: 'shortTime'}}</td>
+                      <td><input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/>{{item.millisecsToFinish | date: 'shortTime'}}</td>
                       <!--It looks like you need a Filter for a Date object given in seconds.  Need to separate this object into hours and minutes-->
                   </tr>
                   <tr>
                       <th>How important is it?:</th>
-                      <td><input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />{{item.importanceTxt.repeatSelect}}</td>
+                      <td><input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />{{item.importance.repeatSelect}}</td>
                   </tr>
                   <!-- <tr>
                       <th>completed?:</th>
@@ -58,7 +58,7 @@
                 </tr>
                 <tr>
                     <td>Enter due date and time:</td>
-                    <td><input type="date" ng-model="newDueDate" placeholder="yyyy-MM-dd" class="dateBox"/> <input type="time" ng-model="newDueTime" placeholder="HH:mm:ss" class="timeBox"/></td>
+                    <td><input type="date" ng-model="newDueDate" placeholder="2016-01-01" class="dateBox"/> <input type="time" ng-model="newDueTime" placeholder="01:01:00 pm" class="timeBox"/></td>
                 </tr>
                 <tr>
                     <td>Enter est. time to finish:</td>

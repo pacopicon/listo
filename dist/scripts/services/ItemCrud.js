@@ -20,21 +20,25 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
             calculateTimeTillDueDate: function(correctedDueDate) {
                 //    All variables are in seconds:
-                var correctedDueDateInSecs = correctedDueDate / 1000;
-                var dateInSecs = Date.now() / 1000;
-                var timeTillDueDate = correctedDueDate - dateInSecs;
+                var correctedDueDateInSecs = correctedDueDate;
+                var timeTillDueDate = correctedDueDate - Date.now();
 
                 return timeTillDueDate;
             },
 
             calculateEstTime: function(eHour, eMinute) {
-                var estTime = ((eHour * 60 * 60) + (eMinute * 60));
+                var estTime = (eHour * 60 * 60 * 1000) + (eMinute * 60 * 1000);
                 return estTime;
             },
 
-            calculateUrgency: function(timeTillDueDate, estTime) {
+            calculateTimeEstTimeTillDueRatio: function(timeTillDueDate, estTime) {
+                var ratio = estTime / timeTillDueDate;
+                return ratio;
+            },
 
-                if (timeTillDueDate <= (estTime + 3600)) {
+            calculateUrgency: function(ratio) {
+
+                if (ratio >= 0.5) {
                   urgency = true;
                 } else {
                   urgency = false;
@@ -43,49 +47,42 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 return urgency;
             },
 
-            calculateRank: function(importanceTxt, timeTillDueDate, estTime, urgency) {
-                // calculate dueDateRating
-                var dueDateRating = ((31536000 + estTime - timeTillDueDate) / 100000);
-                // calculate importanceRating and exponent
-                if (!urgency && importanceTxt == 'job depends on it') {
-                  importanceRating = 400;
-                  exponent = 9.6;
-                } else if (!urgency && importanceTxt == 'pretty important') {
-                  importanceRating = 358;
-                  exponent = 9.7;
-                } else if (!urgency && importanceTxt == 'important') {
-                  importanceRating = 319.25;
-                  exponent = 9.8;
-                } else if (!urgency && importanceTxt == 'somewhat important') {
-                  importanceRating = 283.45;
-                  exponent = 9.9;
-                } else if (!urgency && importanceTxt == 'not important at all') {
-                  importanceRating = 283.39;
-                  exponent = 9.9;
+            calculateRank: function(importanceTxt, ratio, urgency) {
+
+                if (urgency) {
+                  urgencyAddend = 2.9;
                 } else {
-                  importanceRating = 400;
-                  exponent = 10;
+                  urgencyAddend = 0;
+                }
+                // calculate importanceRating and exponent
+                if (importanceTxt == 'job depends on it') {
+                  importanceMultiple = 3 + urgencyAddend;
+                } else if (importanceTxt == 'pretty important') {
+                  importanceMultiple = 2.5 + urgencyAddend;
+                } else if (importanceTxt == 'important') {
+                  importanceMultiple = 2 + urgencyAddend;
+                } else if (importanceTxt == 'somewhat important') {
+                  importanceMultiple = 1.5 + urgencyAddend;
+                } else {
+                  importanceMultiple = 1.1 + urgencyAddend;
                 }
 
-                var bigDiv = Math.pow(10, 64);
-                var rankingFactor = (dueDateRating + importanceRating)/2;
-                var rawRank = Math.pow(rankingFactor, exponent);
-                var processedRank = Math.round(rawRank/bigDiv);
+                var rank = Math.round((ratio * importanceMultiple + ratio) * 1000000);
 
-                return processedRank;
+                return rank;
             },
 
-            addItem: function(itemName, dueDate, timeTillDueDate, estTime, importanceTxt, urgency, processedRank) {
+            addItem: function(itemName, dueDate, timeTillDueDate, estTime, importanceTxt, urgency, rank) {
 
                 items.$add({
                     text: itemName,
                     dueDate: dueDate,
-                    secsTillDueDate: timeTillDueDate,
-                    estSecsToFinish: estTime,
+                    millisecsTillDueDate: timeTillDueDate,
+                    millisecsToFinish: estTime,
                     importance: importanceTxt,
                     completed: false,
                     urgent: urgency,
-                    rank: processedRank,
+                    rank: rank,
                     created_at: Firebase.ServerValue.TIMESTAMP
                 });
             }, // end of AddItem

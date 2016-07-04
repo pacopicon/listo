@@ -24,10 +24,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
             var correctedDueDate = ItemCrud.setDueDateClockTime($scope.newDueDate, $scope.newDueTime);
             var timeTillDueDate = ItemCrud.calculateTimeTillDueDate(correctedDueDate);
             var estTime = ItemCrud.calculateEstTime($scope.newHourEst, $scope.newMinuteEst);
-            var urgency = ItemCrud.calculateUrgency(timeTillDueDate, estTime);
-            var processedRank = ItemCrud.calculateRank($scope.newImportanceTxt, timeTillDueDate, estTime, urgency);
+            var ratio = ItemCrud.calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
+            var urgency = ItemCrud.calculateUrgency(ratio);
+            var rank = ItemCrud.calculateRank($scope.newImportanceTxt, ratio, urgency);
 
-            ItemCrud.addItem($scope.newItemName, correctedDueDate, timeTillDueDate, estTime, $scope.newImportanceTxt, urgency, processedRank);
+            ItemCrud.addItem($scope.newItemName, correctedDueDate, timeTillDueDate, estTime, $scope.newImportanceTxt, urgency, rank);
         };
     }
 ]);
