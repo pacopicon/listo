@@ -9,9 +9,9 @@
               <table>
                   <tr>
                       <b>{{item.text}}</b> | This item is due on <b>{{item.dueDate | date: 'fullDate'}}</b> at <b>{{item.dueDate | date: 'shortTime'}}</b> | It is classified as <b>{{item.importance.repeatSelect}}</b> and as <b>{{item.urgent}}</b><br> It will take <b>{{item.timeToFinish | date: 'H'}}</b> hours and
-                      <b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | Time till it is due:
+                      <b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | This item is due in:
 
-                      <b>{{item.tillDue | date: 'M' }} months, {{item.tillDue | date: 'd'}} days, {{item.tillDue | date: 'H'}} hours, {{item.tillDue | date: 'm'}} minutes and {{item.tillDue | date: 's'}} seconds.
+                      <b>{{item.tillDue.year}} years, {{item.tillDue.month}} months, {{item.tillDue.day}} days, {{item.tillDue.hour}} hours, {{item.tillDue.minute}} minutes and {{item.tillDue.second}} seconds.
 
 
                       </b> | Rank: <b>{{item.rank}}</b> | Active since <b>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}</b>

@@ -85,10 +85,48 @@ listo.factory("ItemCrud", ["$firebaseArray",
             },
 
             addItem: function(itemName, dueDate, timeTillDueDate, estTime, estTimeAsDateObj, importanceTxt, urgencyTxt, rank) {
+
+              var parseTime = function(timeInMillisecs) {
+                  // 'time' has to be in milliseconds
+                  var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
+                  var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
+                  var millisecsInDay = 24 * 60 * 60 * 1000;
+                  var millisecsInHour = 60 * 60 * 1000;
+                  var millisecsInMinute = 60 * 1000;
+                  var millisecsInSecs = 1000;
+                  
+                  var years = timeInMillisecs / millisecsInYear;
+                  var lessThanYear = timeInMillisecs % millisecsInYear;
+                  var months = lessThanYear / millisecsInMonth;
+                  var lessThanMonth = lessThanYear % millisecsInMonth;
+                  var days = lessThanMonth / millisecsInDay;
+                  var lessThanDay = lessThanMonth % millisecsInDay;
+                  var hours = lessThanDay / millisecsInHour;
+                  var lessThanHour = lessThanDay % millisecsInHour;
+                  var minutes = lessThanHour / millisecsInMinute;
+                  var lessThanMinute = lessThanHour % millisecsInMinute;
+                  var seconds = Math.round(lessThanMinute / millisecsInSecs);
+
+                  return {
+                      year: Math.round(years),
+                      month: Math.round(months),
+                      day: Math.round(days),
+                      hour: Math.round(hours),
+                      minute: Math.round(minutes),
+                      second: Math.round(seconds)
+                  };    
+              };
+
                 items.$add({
                     text: itemName,
                     dueDate: dueDate,
-                    tillDue: timeTillDueDate,
+                    tillDue: parseTime(timeTillDueDate),
+                    // parseTime(timeVarInMillisecs).year
+                    // parseTime(timeVarInMillisecs).month
+                    // parseTime(timeVarInMillisecs).day
+                    // parseTime(timeVarInMillisecs).hour
+                    // parseTime(timeVarInMillisecs).minute
+                    // parseTime(timeVarInMillisecs).second
                     timeToFinish: estTimeAsDateObj,
                     importance: importanceTxt,
                     completed: false,
