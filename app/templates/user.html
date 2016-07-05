@@ -4,46 +4,25 @@
     </button>
     <div class="formAndButtonContainer">
         <ol>
-            <li ng-repeat="item in items" class="itemsList">
+            <li ng-repeat="item in items | orderBy: '-rank'" class="itemsList">
             <!-- edit a message -->
               <table>
                   <tr>
-                      <th>Name:</th>
-                      <td><input ng-model="item.text" ng-change="items.$save(item)" />{{item.text}}</td>
+                      <b>{{item.text}}</b> | This item is due on <b>{{item.dueDate | date: 'fullDate'}}</b> at <b>{{item.dueDate | date: 'shortTime'}}</b> | It is classified as <b>{{item.importance.repeatSelect}}</b> and as <b>{{item.urgent}}</b><br> It will take <b>{{item.timeToFinish | date: 'H'}}</b> hours and
+                      <b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | Time till it is due:
+
+                      <b>{{item.tillDue / }} months, {{item.tillDue | date: 'd'}} days, {{item.tillDue | date: 'H'}} hours, {{item.tillDue | date: 'm'}} minutes and {{item.tillDue | date: 's'}} seconds.
+
+
+                      </b> | Rank: <b>{{item.rank}}</b> | Active since <b>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}</b>
                   </tr>
                   <tr>
-                      <th>Due on:</th>
-                      <td><input ng-model="item.dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.dueDate" type="time" ng-change="items.$save(item)"/> {{item.dueDate | date: 'fullDate'}} at {{item.dueDate | date: 'shortTime'}}</td>
-                  </tr>
-                  <tr>
-                      <th>This will take:</th>
-                      <td><input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/>{{item.millisecsToFinish | date: 'shortTime'}}</td>
-                      <!--It looks like you need a Filter for a Date object given in seconds.  Need to separate this object into hours and minutes-->
-                  </tr>
-                  <tr>
-                      <th>How important is it?:</th>
-                      <td><input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />{{item.importance.repeatSelect}}</td>
-                  </tr>
-                  <!-- <tr>
-                      <th>completed?:</th>
-                      <td><input ng-model="item.completed" ng-change="items.$save(item)" />{{item.completed}}</td>
-                  </tr> -->
-                  <tr>
-                      <th>urgent?:</th>
-                      <td><input ng-model="item.urgent" ng-change="items.$save(item)" />{{item.urgent}}</td>
-                  </tr>
-                  <tr>
-                      <th>rank:</th>
-                      <td>{{item.rank}}</td>
-                  </tr>
-                  <tr>
-                      <th>active since</th>
-                      <td>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}</td>
-                  </tr>
-                  <!-- <input ng-model="item.created_at" ng-change="items.$save(item)" /> -->
-                  <!-- delete a message -->
-                  <tr>
-                      <td><button ng-click="items.$remove(item)">Delete Message</button></td>
+                      <td><input ng-model="item.text" ng-change="items.$save(item)" /></td>
+                      <td><input ng-model="item.dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.dueDate" type="time" ng-change="items.$save(item)"/></td>
+                      <td><input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/></td>
+                      <td><input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" /></td>
+                      <td><input ng-model="item.urgent" ng-change="items.$save(item)" /></td>
+                      <td><button ng-click="items.$remove(item)">Delete item</button></td>
                   </tr>
               </table>
               __________________________________________________________________________________________

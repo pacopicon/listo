@@ -19,8 +19,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
             },
 
             calculateTimeTillDueDate: function(correctedDueDate) {
-                //    All variables are in seconds:
-                var correctedDueDateInSecs = correctedDueDate;
                 var timeTillDueDate = correctedDueDate - Date.now();
 
                 return timeTillDueDate;
@@ -31,14 +29,19 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 return estTime;
             },
 
+            calculateEstTimeAsDateObj: function(eHour, eMinute) {
+                var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
+                var estTimeAsDateObj = dummyDate.setHours(eHour, eMinute, 0, 0);
+                return estTimeAsDateObj;
+            },
+
             calculateTimeEstTimeTillDueRatio: function(timeTillDueDate, estTime) {
                 var ratio = estTime / timeTillDueDate;
                 return ratio;
             },
 
             calculateUrgency: function(ratio) {
-
-                if (ratio >= 0.5) {
+                if (ratio >= 0.4) {
                   urgency = true;
                 } else {
                   urgency = false;
@@ -47,8 +50,17 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 return urgency;
             },
 
-            calculateRank: function(importanceTxt, ratio, urgency) {
+            createUrgencyTxt: function(urgency) {
+                if (urgency === true) {
+                  urgencyTxt = "'urgent'";
+                } else {
+                  urgencyTxt = "'not urgent'";
+                }
 
+                return urgencyTxt;
+            },
+
+            calculateRank: function(importanceTxt, ratio, urgency) {
                 if (urgency) {
                   urgencyAddend = 2.9;
                 } else {
@@ -72,16 +84,15 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 return rank;
             },
 
-            addItem: function(itemName, dueDate, timeTillDueDate, estTime, importanceTxt, urgency, rank) {
-
+            addItem: function(itemName, dueDate, timeTillDueDate, estTime, estTimeAsDateObj, importanceTxt, urgencyTxt, rank) {
                 items.$add({
                     text: itemName,
                     dueDate: dueDate,
-                    millisecsTillDueDate: timeTillDueDate,
-                    millisecsToFinish: estTime,
+                    tillDue: timeTillDueDate,
+                    timeToFinish: estTimeAsDateObj,
                     importance: importanceTxt,
                     completed: false,
-                    urgent: urgency,
+                    urgent: urgencyTxt,
                     rank: rank,
                     created_at: Firebase.ServerValue.TIMESTAMP
                 });
