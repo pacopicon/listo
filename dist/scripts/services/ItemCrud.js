@@ -7,6 +7,60 @@ listo.factory("ItemCrud", ["$firebaseArray",
         // holds items
         var items = $firebaseArray(ref);
 
+        var updateTime = function() {
+
+            var onUpdateStatus = function(error) {
+                if (error) {
+                    console.log('Sync failed');
+                } else {
+                    console.log('Sync completed');
+                }
+            };
+
+            var timeNow = Date.now();
+
+            var timeTillDueDate = items.$getRecord("dueDate") - timeNow;
+
+            var parseTime = function(timeInMillisecs) {
+                // 'time' has to be in milliseconds
+                var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
+                var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
+                var millisecsInDay = 24 * 60 * 60 * 1000;
+                var millisecsInHour = 60 * 60 * 1000;
+                var millisecsInMinute = 60 * 1000;
+                var millisecsInSecs = 1000;
+                
+                var years = timeInMillisecs / millisecsInYear;
+                var lessThanYear = timeInMillisecs % millisecsInYear;
+                var months = lessThanYear / millisecsInMonth;
+                var lessThanMonth = lessThanYear % millisecsInMonth;
+                var days = lessThanMonth / millisecsInDay;
+                var lessThanDay = lessThanMonth % millisecsInDay;
+                var hours = lessThanDay / millisecsInHour;
+                var lessThanHour = lessThanDay % millisecsInHour;
+                var minutes = lessThanHour / millisecsInMinute;
+                var lessThanMinute = lessThanHour % millisecsInMinute;
+                var seconds = Math.round(lessThanMinute / millisecsInSecs);
+
+                return {
+                    year: Math.round(years),
+                    month: Math.round(months),
+                    day: Math.round(days),
+                    hour: Math.round(hours),
+                    minute: Math.round(minutes),
+                    second: seconds
+                };    
+            };
+
+            var timeTillUnit = parseTime(timeTillDueDate);
+
+            items.$save({currentTime: timeNow, tillDue: timeTillDueDate, yearsTillDue: timeTillUnit.year, monthsTillDue: timeTillUnit.month, daysTillDue: timeTillUnit.day, hoursTillDue: timeTillUnit.hour, minutesTillDue: timeTillUnit.minute, secondsTillDue: timeTillUnit.second}, onUpdateStatus);
+        };
+
+        if (items.$getRecord("completed") === false) {
+            $interval(updateTime(), 1000);
+        }
+
         return {
 
             setDueDateClockTime: function(dDate, dTime) {
@@ -14,8 +68,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 var minutes = dTime.getMinutes();
                 var seconds = dTime.getSeconds();
                 var milliseconds = dTime.getMilliseconds();
-
-                return dDate.setHours(hours, minutes, seconds, milliseconds);
+                var correctedDueDate =  dDate.setHours(hours, minutes, seconds, milliseconds);
+                return correctedDueDate;
             },
 
             calculateTimeTillDueDate: function(correctedDueDate) {
@@ -27,12 +81,14 @@ listo.factory("ItemCrud", ["$firebaseArray",
             calculateEstTime: function(eHour, eMinute) {
                 var estTime = (eHour * 60 * 60 * 1000) + (eMinute * 60 * 1000);
                 return estTime;
+                // estTime comes out in milliseconds and does not go into the database, it is used by calculateTimeEstTimeTillDueRatio function below
             },
 
             calculateEstTimeAsDateObj: function(eHour, eMinute) {
                 var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
                 var estTimeAsDateObj = dummyDate.setHours(eHour, eMinute, 0, 0);
                 return estTimeAsDateObj;
+                // like the name says, this is estTime as Date obj.
             },
 
             calculateTimeEstTimeTillDueRatio: function(timeTillDueDate, estTime) {
@@ -84,49 +140,21 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 return rank;
             },
 
-            addItem: function(itemName, dueDate, timeTillDueDate, estTime, estTimeAsDateObj, importanceTxt, urgencyTxt, rank) {
+            addItem: function(itemName, dueDate, estTimeAsDateObj, importanceTxt, urgencyTxt, rank) {
 
-              var parseTime = function(timeInMillisecs) {
-                  // 'time' has to be in milliseconds
-                  var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
-                  var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
-                  var millisecsInDay = 24 * 60 * 60 * 1000;
-                  var millisecsInHour = 60 * 60 * 1000;
-                  var millisecsInMinute = 60 * 1000;
-                  var millisecsInSecs = 1000;
-                  
-                  var years = timeInMillisecs / millisecsInYear;
-                  var lessThanYear = timeInMillisecs % millisecsInYear;
-                  var months = lessThanYear / millisecsInMonth;
-                  var lessThanMonth = lessThanYear % millisecsInMonth;
-                  var days = lessThanMonth / millisecsInDay;
-                  var lessThanDay = lessThanMonth % millisecsInDay;
-                  var hours = lessThanDay / millisecsInHour;
-                  var lessThanHour = lessThanDay % millisecsInHour;
-                  var minutes = lessThanHour / millisecsInMinute;
-                  var lessThanMinute = lessThanHour % millisecsInMinute;
-                  var seconds = Math.round(lessThanMinute / millisecsInSecs);
-
-                  return {
-                      year: Math.round(years),
-                      month: Math.round(months),
-                      day: Math.round(days),
-                      hour: Math.round(hours),
-                      minute: Math.round(minutes),
-                      second: Math.round(seconds)
-                  };    
-              };
+                var created_atDateObj = new Date();
 
                 items.$add({
                     text: itemName,
                     dueDate: dueDate,
-                    tillDue: parseTime(timeTillDueDate),
-                    // parseTime(timeVarInMillisecs).year
-                    // parseTime(timeVarInMillisecs).month
-                    // parseTime(timeVarInMillisecs).day
-                    // parseTime(timeVarInMillisecs).hour
-                    // parseTime(timeVarInMillisecs).minute
-                    // parseTime(timeVarInMillisecs).second
+                    currentTime: Date.now(),
+                    tillDue: dueDate - Date.now(),
+                    yearsTillDue: created_atDateObj.getFullYear(),
+                    monthsTillDue: created_atDateObj.getMonth(),
+                    daysTillDue: created_atDateObj.getDay(),
+                    hoursTillDue: created_atDateObj.getHours(),
+                    minutesTillDue: created_atDateObj.getMinutes(),
+                    secondsTillDue: created_atDateObj.getSeconds(),
                     timeToFinish: estTimeAsDateObj,
                     importance: importanceTxt,
                     completed: false,
