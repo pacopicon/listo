@@ -1,5 +1,5 @@
-listo.factory("ItemCrud", ["$firebaseArray", "$interval",
-    function($firebaseArray, $interval) {
+listo.factory("ItemCrud", ["$firebaseArray",
+    function($firebaseArray) {
 
     // downloads data
         var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
@@ -38,28 +38,37 @@ listo.factory("ItemCrud", ["$firebaseArray", "$interval",
             };    
         };
 
-        var updateTime = function() {
-
-            var onUpdateStatus = function(error) {
-                if (error) {
-                    console.log('Sync failed');
-                } else {
-                    console.log('Sync completed');
-                }
-            };
-
-            var timeNow = Date.now();
-            var timeTillDueDate = items.$getRecord("dueDate") - timeNow;
-            var timeTillUnit = parseTime(timeTillDueDate);
-
-            items.$save({currentTime: timeNow, tillDue: timeTillDueDate, yearsTillDue: timeTillUnit.year, monthsTillDue: timeTillUnit.month, daysTillDue: timeTillUnit.day, hoursTillDue: timeTillUnit.hour, minutesTillDue: timeTillUnit.minute, secondsTillDue: timeTillUnit.second}, onUpdateStatus);
-        };
-
-        if (items.$getRecord("completed") === false) {
-            $interval(updateTime(), 1000);
-        }
-
         return {
+
+            saveCurrentTime: function(time) {
+                // console.log(time);
+                for (i = 0; i < items.length; i++) {
+                    var eachItem = items[i]
+                    eachItem.currentTime = time;
+                    items.$save(eachItem).then(function() {
+                        // console.log(time);
+                    });
+                }
+            },
+
+            updateTime: function() {
+
+                console.log('success!');
+
+                var onUpdateStatus = function(error) {
+                    if (error) {
+                        console.log('Sync failed');
+                    } else {
+                        console.log('Sync completed');
+                    }
+                };
+
+                var timeNow = Date.now();
+                var timeTillDueDate = items.$getRecord("dueDate") - timeNow;
+                var timeTillUnit = parseTime(timeTillDueDate);
+
+                items.$save({currentTime: timeNow, tillDue: timeTillDueDate, yearsTillDue: timeTillUnit.year, monthsTillDue: timeTillUnit.month, daysTillDue: timeTillUnit.day, hoursTillDue: timeTillUnit.hour, minutesTillDue: timeTillUnit.minute, secondsTillDue: timeTillUnit.second}, onUpdateStatus);
+            },
 
             setDueDateClockTime: function(dDate, dTime) {
                 var hours = dTime.getHours();

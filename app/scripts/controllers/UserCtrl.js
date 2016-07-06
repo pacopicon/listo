@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
-    function($scope, ItemCrud, $rootScope) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
+    function($scope, ItemCrud, $rootScope, $interval) {
 
         $scope.items = ItemCrud.getAllItems();
         $scope.newDueDate = new Date();
@@ -17,6 +17,21 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
             ]
         };
 
+        var refreshTime = function() {
+            var time = Date.now();
+            $scope.time = time;
+            $scope.currentTime = time; 
+            ItemCrud.saveCurrentTime($scope.time);
+        }
+        refreshTime();
+        $interval(refreshTime, 1000);
+
+        // $scope.$watch('items', function(newValue, oldValue) {
+        //     $interval(ItemCrud.updateTime(), 1000);
+        // }, true);
+
+        // $interval(ItemCrud.saveCurrentTime($scope.time), 1000);
+
         $scope.addItem = function() {
             var correctedDueDate = ItemCrud.setDueDateClockTime($scope.newDueDate, $scope.newDueTime);
             var timeTillDueDate = ItemCrud.calculateTimeTillDueDate(correctedDueDate);
@@ -28,6 +43,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
             var rank = ItemCrud.calculateRank($scope.newImportanceTxt, ratio, urgency);
 
             ItemCrud.addItem($scope.newItemName, correctedDueDate, estTimeAsDateObj, $scope.newImportanceTxt, urgencyTxt, rank);
+
+            // $interval(ItemCrud.updateTime(), 1000);
+
         };
     }
 ]);
