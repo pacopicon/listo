@@ -1,6 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
-
-    function($scope, ItemCrud, $rootScope, $interval) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope",
+    function($scope, ItemCrud, $rootScope) {
 
         $scope.items = ItemCrud.getAllItems();
         $scope.newDueDate = new Date();
@@ -28,7 +27,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
             var urgencyTxt = ItemCrud.createUrgencyTxt(urgency);
             var rank = ItemCrud.calculateRank($scope.newImportanceTxt, ratio, urgency);
 
-            ItemCrud.addItem($scope.newItemName, correctedDueDate, timeTillDueDate, estTimeAsDateObj, $scope.newImportanceTxt, urgencyTxt, rank);
+            ItemCrud.addItem($scope.newItemName, correctedDueDate, estTimeAsDateObj, $scope.newImportanceTxt, urgencyTxt, rank);
         };
     }
 ]);

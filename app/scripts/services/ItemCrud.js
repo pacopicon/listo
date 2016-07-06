@@ -1,11 +1,42 @@
-listo.factory("ItemCrud", ["$firebaseArray",
-    function($firebaseArray) {
+listo.factory("ItemCrud", ["$firebaseArray", "$interval",
+    function($firebaseArray, $interval) {
 
     // downloads data
         var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
 
         // holds items
         var items = $firebaseArray(ref);
+
+        var parseTime = function(timeInMillisecs) {
+            // 'time' has to be in milliseconds
+            var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
+            var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
+            var millisecsInDay = 24 * 60 * 60 * 1000;
+            var millisecsInHour = 60 * 60 * 1000;
+            var millisecsInMinute = 60 * 1000;
+            var millisecsInSecs = 1000;
+            
+            var years = timeInMillisecs / millisecsInYear;
+            var lessThanYear = timeInMillisecs % millisecsInYear;
+            var months = lessThanYear / millisecsInMonth;
+            var lessThanMonth = lessThanYear % millisecsInMonth;
+            var days = lessThanMonth / millisecsInDay;
+            var lessThanDay = lessThanMonth % millisecsInDay;
+            var hours = lessThanDay / millisecsInHour;
+            var lessThanHour = lessThanDay % millisecsInHour;
+            var minutes = lessThanHour / millisecsInMinute;
+            var lessThanMinute = lessThanHour % millisecsInMinute;
+            var seconds = Math.round(lessThanMinute / millisecsInSecs);
+
+            return {
+                year: Math.round(years),
+                month: Math.round(months),
+                day: Math.round(days),
+                hour: Math.round(hours),
+                minute: Math.round(minutes),
+                second: seconds
+            };    
+        };
 
         var updateTime = function() {
 
@@ -18,40 +49,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             };
 
             var timeNow = Date.now();
-
             var timeTillDueDate = items.$getRecord("dueDate") - timeNow;
-
-            var parseTime = function(timeInMillisecs) {
-                // 'time' has to be in milliseconds
-                var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
-                var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
-                var millisecsInDay = 24 * 60 * 60 * 1000;
-                var millisecsInHour = 60 * 60 * 1000;
-                var millisecsInMinute = 60 * 1000;
-                var millisecsInSecs = 1000;
-                
-                var years = timeInMillisecs / millisecsInYear;
-                var lessThanYear = timeInMillisecs % millisecsInYear;
-                var months = lessThanYear / millisecsInMonth;
-                var lessThanMonth = lessThanYear % millisecsInMonth;
-                var days = lessThanMonth / millisecsInDay;
-                var lessThanDay = lessThanMonth % millisecsInDay;
-                var hours = lessThanDay / millisecsInHour;
-                var lessThanHour = lessThanDay % millisecsInHour;
-                var minutes = lessThanHour / millisecsInMinute;
-                var lessThanMinute = lessThanHour % millisecsInMinute;
-                var seconds = Math.round(lessThanMinute / millisecsInSecs);
-
-                return {
-                    year: Math.round(years),
-                    month: Math.round(months),
-                    day: Math.round(days),
-                    hour: Math.round(hours),
-                    minute: Math.round(minutes),
-                    second: seconds
-                };    
-            };
-
             var timeTillUnit = parseTime(timeTillDueDate);
 
             items.$save({currentTime: timeNow, tillDue: timeTillDueDate, yearsTillDue: timeTillUnit.year, monthsTillDue: timeTillUnit.month, daysTillDue: timeTillUnit.day, hoursTillDue: timeTillUnit.hour, minutesTillDue: timeTillUnit.minute, secondsTillDue: timeTillUnit.second}, onUpdateStatus);
@@ -142,19 +140,20 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
             addItem: function(itemName, dueDate, estTimeAsDateObj, importanceTxt, urgencyTxt, rank) {
 
-                var created_atDateObj = new Date();
+                var timeTillDue = dueDate - Date.now();
+                var timeTillUnit = parseTime(timeTillDue);
 
                 items.$add({
                     text: itemName,
                     dueDate: dueDate,
                     currentTime: Date.now(),
-                    tillDue: dueDate - Date.now(),
-                    yearsTillDue: created_atDateObj.getFullYear(),
-                    monthsTillDue: created_atDateObj.getMonth(),
-                    daysTillDue: created_atDateObj.getDay(),
-                    hoursTillDue: created_atDateObj.getHours(),
-                    minutesTillDue: created_atDateObj.getMinutes(),
-                    secondsTillDue: created_atDateObj.getSeconds(),
+                    tillDue: timeTillDue,
+                    yearsTillDue: timeTillUnit.year,
+                    monthsTillDue: timeTillUnit.month,
+                    daysTillDue: timeTillUnit.day,
+                    hoursTillDue: timeTillUnit.hour,
+                    minutesTillDue: timeTillUnit.minute,
+                    secondsTillDue: timeTillUnit.second,
                     timeToFinish: estTimeAsDateObj,
                     importance: importanceTxt,
                     completed: false,
