@@ -46,39 +46,21 @@ listo.factory("ItemCrud", ["$firebaseArray",
                     var eachItem = items[i]
                     eachItem.currentTime = time;
 
-                    // var timeTillDueDate = eachItem.$getRecord("dueDate") - time;
                     var timeTillDueDate = eachItem.dueDate - time;
-                    var timeTillUnit = parseTime(timeTillDueDate);
-
-                    eachItem.tillDue = timeTillDueDate;
-                    eachItem.yearsTillDue = timeTillUnit.year;
-                    eachItem.monthsTillDue = timeTillUnit.month;
-                    eachItem.daysTillDue = timeTillUnit.day;
-                    eachItem.hoursTillDue = timeTillUnit.hour;
-                    eachItem.minutesTillDue = timeTillUnit.minute;
-                    eachItem.secondsTillDue = timeTillUnit.second;
+                    // var timeTillUnit = parseTime(timeTillDueDate);
+                    //
+                    // eachItem.tillDue = timeTillDueDate;
+                    // eachItem.yearsTillDue = timeTillUnit.year;
+                    // eachItem.monthsTillDue = timeTillUnit.month;
+                    // eachItem.daysTillDue = timeTillUnit.day;
+                    // eachItem.hoursTillDue = timeTillUnit.hour;
+                    // eachItem.minutesTillDue = timeTillUnit.minute;
+                    // eachItem.secondsTillDue = timeTillUnit.second;
 
                     items.$save(eachItem).then(function() {
                         // console.log(time);
                     });
                 }
-            },
-
-            updateTime: function() {
-
-                var onUpdateStatus = function(error) {
-                    if (error) {
-                        console.log('Sync failed');
-                    } else {
-                        console.log('Sync completed');
-                    }
-                };
-
-                var timeNow = Date.now();
-                var timeTillDueDate = items.$getRecord("dueDate") - timeNow;
-                var timeTillUnit = parseTime(timeTillDueDate);
-
-                items.$save({currentTime: timeNow, tillDue: timeTillDueDate, yearsTillDue: timeTillUnit.year, monthsTillDue: timeTillUnit.month, daysTillDue: timeTillUnit.day, hoursTillDue: timeTillUnit.hour, minutesTillDue: timeTillUnit.minute, secondsTillDue: timeTillUnit.second}, onUpdateStatus);
             },
 
             setDueDateClockTime: function(dDate, dTime) {

@@ -1,6 +1,19 @@
 listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
     function($scope, ItemCrud, $rootScope, $interval) {
 
+        // time properties of the controller itself
+
+        var refreshTime = function() {
+            time = Date.now();
+            $scope.time = time;
+            $scope.currentTime = time;
+
+            // exception: this below is updated to item elements
+            ItemCrud.saveCurrentTime($scope.time);
+        }
+        refreshTime();
+        $interval(refreshTime, 1000);
+
         $scope.items = ItemCrud.getAllItems();
         $scope.newDueDate = new Date();
         $scope.newDueTime = new Date();
@@ -16,15 +29,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
                 {id: '5', text: "'job depends on it'"}
             ]
         };
-
-        var refreshTime = function() {
-            var time = Date.now();
-            $scope.time = time;
-            $scope.currentTime = time;
-            ItemCrud.saveCurrentTime($scope.time);
-        }
-        refreshTime();
-        $interval(refreshTime, 1000);
 
         $scope.addItem = function() {
             var correctedDueDate = ItemCrud.setDueDateClockTime($scope.newDueDate, $scope.newDueTime);
