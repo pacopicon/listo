@@ -3,7 +3,7 @@
         <a ui-sref="landing" class="navbar-link">Back to main page</a>
     </button>
     <div class="clock">
-        <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'shortTime'}}</b></p>
+        <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
     </div>
     <div class="formAndButtonContainer">
         <ol>
@@ -12,13 +12,6 @@
               <table>
                   <tr>
                       <b>{{item.currentTime}}</b> | <b>{{item.text}}</b> | This item is due on <b>{{item.dueDate | date: 'fullDate'}}</b> at <b>{{item.dueDate | date: 'shortTime'}}</b> | It is classified as <b>{{item.importance.repeatSelect}}</b> and as <b>{{item.urgent}}</b><br> It will take <b>{{item.timeToFinish | date: 'H'}}</b> hours and<b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.rank}}</b> | Active since <b>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}</b><br>This item is due in<br><b>yrs: {{item.yearsTillDue}}<br> mths: {{item.monthsTillDue}}<br>ds: {{item.daysTillDue}}<br>hrs:  {{item.hoursTillDue}}<br>mins: {{item.minutesTillDue}}<br>secs: {{item.secondsTillDue}}</b>
-                  </tr>
-                  This item is due:
-                  <tr>
-                      <th>yrs</th><th>mths</th><th>ds</th><th>hrs</th><th>mins</th><th>secs</th>
-                  </tr>
-                  <tr>
-                      <td>{{item.yearsTillDue}}</td><td>{{item.monthsTillDue}}</td><td>{{item.daysTillDue}}</td><td>{{item.hoursTillDue}}</td><td>{{item.minutesTillDue}}</td><td>{{item.secondsTillDue}}</td>
                   </tr>
                   <tr>
                       <td><input ng-model="item.text" ng-change="items.$save(item)" /></td>

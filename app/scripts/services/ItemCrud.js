@@ -40,6 +40,10 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
         return {
 
+            // parseTime: function(timeInMillisecs) {
+            //     parseTime(timeInMillisecs)
+            // },
+
             saveCurrentTime: function(time) {
                 // console.log(time);
                 for (i = 0; i < items.length; i++) {
@@ -47,15 +51,15 @@ listo.factory("ItemCrud", ["$firebaseArray",
                     eachItem.currentTime = time;
 
                     var timeTillDueDate = eachItem.dueDate - time;
-                    // var timeTillUnit = parseTime(timeTillDueDate);
-                    //
-                    // eachItem.tillDue = timeTillDueDate;
-                    // eachItem.yearsTillDue = timeTillUnit.year;
-                    // eachItem.monthsTillDue = timeTillUnit.month;
-                    // eachItem.daysTillDue = timeTillUnit.day;
-                    // eachItem.hoursTillDue = timeTillUnit.hour;
-                    // eachItem.minutesTillDue = timeTillUnit.minute;
-                    // eachItem.secondsTillDue = timeTillUnit.second;
+                    var timeTillUnit = parseTime(timeTillDueDate);
+
+                    eachItem.tillDue = timeTillDueDate;
+                    eachItem.yearsTillDue = timeTillUnit.year;
+                    eachItem.monthsTillDue = timeTillUnit.month;
+                    eachItem.daysTillDue = timeTillUnit.day;
+                    eachItem.hoursTillDue = timeTillUnit.hour;
+                    eachItem.minutesTillDue = timeTillUnit.minute;
+                    eachItem.secondsTillDue = timeTillUnit.second;
 
                     items.$save(eachItem).then(function() {
                         // console.log(time);

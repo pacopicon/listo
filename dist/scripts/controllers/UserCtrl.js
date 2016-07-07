@@ -3,7 +3,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
 
         // time properties of the controller itself
 
-        var refreshTime = function() {
+        var refreshAndSaveTime = function() {
             time = Date.now();
             $scope.time = time;
             $scope.currentTime = time;
@@ -11,8 +11,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
             // exception: this below is updated to item elements
             ItemCrud.saveCurrentTime($scope.time);
         }
-        refreshTime();
-        $interval(refreshTime, 1000);
+        refreshAndSaveTime();
+        $interval(refreshAndSaveTime, 1000);
 
         $scope.items = ItemCrud.getAllItems();
         $scope.newDueDate = new Date();

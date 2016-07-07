@@ -1,3 +1,0 @@
-listo.filter("timeParser", function () {
-    
-});
