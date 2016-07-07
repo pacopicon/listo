@@ -26,14 +26,14 @@ listo.factory("ItemCrud", ["$firebaseArray",
             var lessThanHour = lessThanDay % millisecsInHour;
             var minutes = lessThanHour / millisecsInMinute;
             var lessThanMinute = lessThanHour % millisecsInMinute;
-            var seconds = Math.round(lessThanMinute / millisecsInSecs);
+            var seconds = Math.floor(lessThanMinute / millisecsInSecs);
 
             return {
-                year: Math.round(years),
-                month: Math.round(months),
-                day: Math.round(days),
-                hour: Math.round(hours),
-                minute: Math.round(minutes),
+                year: Math.floor(years),
+                month: Math.floor(months),
+                day: Math.floor(days),
+                hour: Math.floor(hours),
+                minute: Math.floor(minutes),
                 second: seconds
             };    
         };
