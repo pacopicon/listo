@@ -43,5 +43,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
             ItemCrud.addItem($scope.newItemName, correctedDueDate, estTimeAsDateObj, $scope.newImportanceTxt, urgencyTxt, rank);
 
         };
+
+      $scope.hoverIn = function () {
+		      this.hoverEdit = true;
+	    };
+
+	    $scope.hoverOut = function () {
+		      this.hoverEdit = false;
+	    };
     }
 ]);

@@ -7,27 +7,33 @@
     </div>
     <div class="formAndButtonContainer">
         <ol>
-            <li ng-repeat="item in items | orderBy: '-rank'" class="itemsList">
+            <li ng-repeat="item in items | orderBy: '-rank'" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()" class="itemsList">
             <!-- edit a message -->
               <table>
                   <tr>
-                      <td>
+                      <!-- <td> -->
                           <b>{{item.text}}</b> |due on <b>{{item.dueDate | date: 'fullDate'}}</b> at <b>{{item.dueDate | date: 'shortTime'}}</b> | It is <b>{{item.importance.repeatSelect}}</b> and <b>{{item.urgent}}</b><br>
-                      </td>
-                      <td>
-                          E.T.C: <b>{{item.timeToFinish | date: 'H'}}</b> hours and <b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.rank}}</b> | Active since <b>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}
-                      </td>
-                      <td>
-                          </b><br>This item is due in<br><b>yrs: {{item.yearsTillDue}}<br> mths: {{item.monthsTillDue}}<br>ds: {{item.daysTillDue}}<br>hrs:  {{item.hoursTillDue}}<br>mins: {{item.minutesTillDue}}<br>secs: {{item.secondsTillDue}}</b>
-                      </td>
+                      <!-- </td> -->
+                      <!-- <td> -->
+                          E.T.C: <b>{{item.timeToFinish | date: 'H'}}</b> hours and <b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.rank}}</b> | Active since <b>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}</b><br>
+                      <!-- </td> -->
+                      <!-- <td> -->
+                          This item is due in<br><b>yrs: {{item.yearsTillDue}}<br> mths: {{item.monthsTillDue}}<br>ds: {{item.daysTillDue}}<br>hrs:  {{item.hoursTillDue}}<br>mins: {{item.minutesTillDue}}<br>secs: {{item.secondsTillDue}}</b><br>
+                      <!-- </td> -->
                   </tr>
                   <tr>
-                      <td><input ng-model="item.text" ng-change="items.$save(item)" /></td>
-                      <td><input ng-model="item.dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.dueDate" type="time" ng-change="items.$save(item)"/></td>
-                      <td><input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/></td>
-                      <td><input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" /></td>
-                      <td><input ng-model="item.urgent" ng-change="items.$save(item)" /></td>
-                      <td><button ng-click="items.$remove(item)">Delete item</button></td>
+                      <!-- <td> -->
+                          <input ng-model="item.text" ng-change="items.$save(item)" />
+                          <input ng-model="item.dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.dueDate" type="time" ng-change="items.$save(item)"/>
+                          <input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />
+                      <!-- </td> -->
+                      <!-- <td> -->
+                          <input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/>
+                      <!-- </td> -->
+                      <!-- <td> -->
+                          <input ng-model="item.urgent" ng-change="items.$save(item)" />
+                          <button ng-click="items.$remove(item)">Delete item</button>
+                      <!-- </td> -->
                   </tr>
               </table>
               __________________________________________________________________________________________
