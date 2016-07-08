@@ -12,26 +12,32 @@
               <table>
                   <tr>
                       <!-- <td> -->
-                          <b>{{item.text}}</b> |due on <b>{{item.dueDate | date: 'fullDate'}}</b> at <b>{{item.dueDate | date: 'shortTime'}}</b> | It is <b>{{item.importance.repeatSelect}}</b> and <b>{{item.urgent}}</b><br>
+                          <b><div click-to-edit-text type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"></div></b> | due on <b>{{item.b_dueDateObj | date: 'fullDate'}}</b> at <b>{{item.c_dueTimeObj | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
                       <!-- </td> -->
                       <!-- <td> -->
-                          E.T.C: <b>{{item.timeToFinish | date: 'H'}}</b> hours and <b>{{item.timeToFinish | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.rank}}</b> | Active since <b>{{item.created_at | date: 'fullDate'}}, {{item.created_at | date: 'shortTime'}}</b><br>
+                          E.T.C: <b>{{item.o_timeToFinishObj | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishObj | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
                       <!-- </td> -->
                       <!-- <td> -->
-                          This item is due in<br><b>yrs: {{item.yearsTillDue}}<br> mths: {{item.monthsTillDue}}<br>ds: {{item.daysTillDue}}<br>hrs:  {{item.hoursTillDue}}<br>mins: {{item.minutesTillDue}}<br>secs: {{item.secondsTillDue}}</b><br>
+                          This item is due in<br><b>yrs: {{item.g_yearsTillDue}}<br> mths: {{item.h_monthsTillDue}}<br>ds: {{item.i_daysTillDue}}<br>hrs:  {{item.j_hoursTillDue}}<br>mins: {{item.k_minutesTillDue}}<br>secs: {{item.l_secondsTillDue}}</b><br>
                       <!-- </td> -->
                   </tr>
                   <tr>
                       <!-- <td> -->
-                          <input ng-model="item.text" ng-change="items.$save(item)" />
-                          <input ng-model="item.dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.dueDate" type="time" ng-change="items.$save(item)"/>
-                          <input ng-model="item.importance.repeatSelect" ng-change="items.$save(item)" />
+
+                          <!--The <input> expression below was substituted by one (above) that works-->
+                          <!-- <input ng-model="item.text" ng-change="items.$save(item)" /> -->
+
+                          <!--The <input> expression below was substituted by one (above) that DOES not work, so: don't erase-->
+                          <!-- <input ng-model="item.b_dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.b_dueDate" type="time" ng-change="items.$save(item)"/> -->
+                          <div click-to-edit-date type="date" ng-model="item.b_dueDateObj"  ng-change="items.$save(item).then(function(){updateDueTiming(item.b_dueDateObj)})"></div> at <div click-to-edit-time type="time" ng-model="item.c_dueTimeObj"  ng-change="items.$save(item)"></div>
+                          <input ng-model="item.p_importance.repeatSelect" ng-change="items.$save(item)" />
                       <!-- </td> -->
                       <!-- <td> -->
-                          <input ng-model="item.estSecsToFinish" type="number" ng-change="items.$save(item)" class="numberBox"/>
+                          <div click-to-edit-number type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" class="numberBox"/>
+                          <div click-to-edit-number type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" class="numberBox"/>
                       <!-- </td> -->
                       <!-- <td> -->
-                          <input ng-model="item.urgent" ng-change="items.$save(item)" />
+                          <input ng-model="item.r_urgent" ng-change="items.$save(item)" />
                           <button ng-click="items.$remove(item)">Delete item</button>
                       <!-- </td> -->
                   </tr>

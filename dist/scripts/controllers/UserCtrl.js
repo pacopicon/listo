@@ -3,18 +3,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
 
         // time properties of the controller itself
 
-        var refreshAndSaveTime = function() {
-            time = Date.now();
-            $scope.time = time;
-            $scope.currentTime = time;
-
-            // exception: this below is updated to item elements
-            ItemCrud.saveCurrentTime($scope.time);
-        }
-        refreshAndSaveTime();
-        $interval(refreshAndSaveTime, 1000);
-
         $scope.items = ItemCrud.getAllItems();
+
+        // var refreshTime = function() {
+        //     time = Date.now();
+        //     $scope.time = time;
+        //     $scope.currentTime = time;
+        //
+        //     // exception: this below is updated to item elements
+        //     ItemCrud.refreshTimeAndDatabase($scope.time);
+        // }
+        // refreshTime();
+        // $interval(refreshTime, 1000);
+
         $scope.newDueDate = new Date();
         $scope.newDueTime = new Date();
         $scope.newHourEst = 0;
@@ -31,25 +32,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
         };
 
         $scope.addItem = function() {
-            var correctedDueDate = ItemCrud.setDueDateClockTime($scope.newDueDate, $scope.newDueTime);
-            var timeTillDueDate = ItemCrud.calculateTimeTillDueDate(correctedDueDate);
-            var estTime = ItemCrud.calculateEstTime($scope.newHourEst, $scope.newMinuteEst);
-            var estTimeAsDateObj = ItemCrud.calculateEstTimeAsDateObj($scope.newHourEst, $scope.newMinuteEst);
-            var ratio = ItemCrud.calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
-            var urgency = ItemCrud.calculateUrgency(ratio);
-            var urgencyTxt = ItemCrud.createUrgencyTxt(urgency);
-            var rank = ItemCrud.calculateRank($scope.newImportanceTxt, ratio, urgency);
-
-            ItemCrud.addItem($scope.newItemName, correctedDueDate, estTimeAsDateObj, $scope.newImportanceTxt, urgencyTxt, rank);
+            ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
 
         };
 
-      $scope.hoverIn = function () {
-		      this.hoverEdit = true;
-	    };
+        $scope.updateDueTiming = function() {
+            ItemCrud.updateDueTiming($scope.newDueDate)
+        };
 
-	    $scope.hoverOut = function () {
-		      this.hoverEdit = false;
-	    };
     }
 ]);

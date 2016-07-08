@@ -38,28 +38,102 @@ listo.factory("ItemCrud", ["$firebaseArray",
             };    
         };
 
+        var setDueDateClockTime = function(dueDate, dueTime) {
+            var hours = dueTime.getHours();
+            var minutes = dueTime.getMinutes();
+            var seconds = dueTime.getSeconds();
+            var milliseconds = dueTime.getMilliseconds();
+            var correctedDueDate =  dueDate.setHours(hours, minutes, seconds, milliseconds);
+            return correctedDueDate;
+        };
+
+        var calculateEstTimeAsDateObj = function(eHour, eMinute) {
+            var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
+            var estTimeAsDateObj = dummyDate.setHours(eHour, eMinute, 0, 0);
+            return estTimeAsDateObj;
+            // like the name says, this is estTime as Date obj.
+        };
+
+        var calculateEstTime = function(eHour, eMinute) {
+            var estTime = (eHour * 60 * 60 * 1000) + (eMinute * 60 * 1000);
+            return estTime;
+        };
+
+        var calculateTimeEstTimeTillDueRatio = function(timeTillDueDate, estTime) {
+            var ratio = estTime / timeTillDueDate;
+            return ratio;
+        };
+
+        var calculateUrgency = function(ratio) {
+            if (ratio >= 0.4) {
+              urgency = true;
+            } else {
+              urgency = false;
+            }
+
+            return urgency;
+        };
+
+        var createUrgencyTxt = function(urgency) {
+            if (urgency === true) {
+              urgencyTxt = "'urgent'";
+            } else {
+              urgencyTxt = "'not urgent'";
+            }
+
+            return urgencyTxt;
+        };
+
+        var calculateRank = function(importanceTxt, ratio, urgency) {
+            if (urgency) {
+              urgencyAddend = 2.9;
+            } else {
+              urgencyAddend = 0;
+            }
+            // calculate importanceRating and exponent
+            if (importanceTxt == 'job depends on it') {
+              importanceMultiple = 3 + urgencyAddend;
+            } else if (importanceTxt == 'pretty important') {
+              importanceMultiple = 2.5 + urgencyAddend;
+            } else if (importanceTxt == 'important') {
+              importanceMultiple = 2 + urgencyAddend;
+            } else if (importanceTxt == 'somewhat important') {
+              importanceMultiple = 1.5 + urgencyAddend;
+            } else {
+              importanceMultiple = 1.1 + urgencyAddend;
+            }
+
+            var rank = Math.round((ratio * importanceMultiple + ratio) * 1000000);
+
+            return rank;
+        };
+
         return {
 
-            // parseTime: function(timeInMillisecs) {
-            //     parseTime(timeInMillisecs)
-            // },
-
-            saveCurrentTime: function(time) {
-                // console.log(time);
+            refreshTimeAndDatabase: function(time) {
                 for (i = 0; i < items.length; i++) {
                     var eachItem = items[i]
-                    eachItem.currentTime = time;
+                    eachItem.e_currentTime = time;
+                    eachItem.d_dueDateNum = setDueDateClockTime(eachItem.b_dueDateObj, eachItem.c_dueTimeObj);
 
-                    var timeTillDueDate = eachItem.dueDate - time;
+                    var timeTillDueDate = eachItem.d_dueDateNum - time;
                     var timeTillUnit = parseTime(timeTillDueDate);
 
-                    eachItem.tillDue = timeTillDueDate;
-                    eachItem.yearsTillDue = timeTillUnit.year;
-                    eachItem.monthsTillDue = timeTillUnit.month;
-                    eachItem.daysTillDue = timeTillUnit.day;
-                    eachItem.hoursTillDue = timeTillUnit.hour;
-                    eachItem.minutesTillDue = timeTillUnit.minute;
-                    eachItem.secondsTillDue = timeTillUnit.second;
+                    eachItem.f_tillDue = timeTillDueDate;
+                    eachItem.g_yearsTillDue = timeTillUnit.year;
+                    eachItem.h_monthsTillDue = timeTillUnit.month;
+                    eachItem.i_daysTillDue = timeTillUnit.day;
+                    eachItem.j_hoursTillDue = timeTillUnit.hour;
+                    eachItem.k_minutesTillDue = timeTillUnit.minute;
+                    eachItem.l_secondsTillDue = timeTillUnit.second;
+
+                    eachItem.o_timeToFinishObj = calculateEstTimeAsDateObj(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
+
+                    var estTime = calculateEstTime(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
+                    var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
+                    var urgency = calculateUrgency(ratio);
+                    var urgencyTxt = createUrgencyTxt(urgency);
+                    var rank = calculateRank(eachItem.p_importance, ratio, urgency);
 
                     items.$save(eachItem).then(function() {
                         // console.log(time);
@@ -67,107 +141,61 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 }
             },
 
-            setDueDateClockTime: function(dDate, dTime) {
-                var hours = dTime.getHours();
-                var minutes = dTime.getMinutes();
-                var seconds = dTime.getSeconds();
-                var milliseconds = dTime.getMilliseconds();
-                var correctedDueDate =  dDate.setHours(hours, minutes, seconds, milliseconds);
-                return correctedDueDate;
-            },
+            addItem: function(itemName, dueDate, dueTime, eHour, eMinute, importanceTxt) {
 
-            calculateTimeTillDueDate: function(correctedDueDate) {
-                var timeTillDueDate = correctedDueDate - Date.now();
+                console.log("this should be dueTime: " + dueTime);
 
-                return timeTillDueDate;
-            },
+                var dueDateNum = setDueDateClockTime(dueDate, dueTime);
+                var timeTillDueDate = dueDateNum - Date.now();
+                var timeTillUnit = parseTime(timeTillDueDate);
+                var estTimeAsDateObj = calculateEstTimeAsDateObj(eHour, eMinute);
+                // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
+                var estTime = calculateEstTime(eHour, eMinute);
+                // ratio does not go into DB, but is used to figure out RANK below (words in all-caps refer to things that DO go into the DB)
+                var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
+                // urgency is used to calculate both RANK and URGENCYTXT below
+                var urgency = calculateUrgency(ratio);
+                var urgencyTxt = createUrgencyTxt(urgency);
+                var rank = calculateRank(importanceTxt, ratio, urgency);
 
-            calculateEstTime: function(eHour, eMinute) {
-                var estTime = (eHour * 60 * 60 * 1000) + (eMinute * 60 * 1000);
-                return estTime;
-                // estTime comes out in milliseconds and does not go into the database, it is used by calculateTimeEstTimeTillDueRatio function below
-            },
-
-            calculateEstTimeAsDateObj: function(eHour, eMinute) {
-                var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
-                var estTimeAsDateObj = dummyDate.setHours(eHour, eMinute, 0, 0);
-                return estTimeAsDateObj;
-                // like the name says, this is estTime as Date obj.
-            },
-
-            calculateTimeEstTimeTillDueRatio: function(timeTillDueDate, estTime) {
-                var ratio = estTime / timeTillDueDate;
-                return ratio;
-            },
-
-            calculateUrgency: function(ratio) {
-                if (ratio >= 0.4) {
-                  urgency = true;
-                } else {
-                  urgency = false;
-                }
-
-                return urgency;
-            },
-
-            createUrgencyTxt: function(urgency) {
-                if (urgency === true) {
-                  urgencyTxt = "'urgent'";
-                } else {
-                  urgencyTxt = "'not urgent'";
-                }
-
-                return urgencyTxt;
-            },
-
-            calculateRank: function(importanceTxt, ratio, urgency) {
-                if (urgency) {
-                  urgencyAddend = 2.9;
-                } else {
-                  urgencyAddend = 0;
-                }
-                // calculate importanceRating and exponent
-                if (importanceTxt == 'job depends on it') {
-                  importanceMultiple = 3 + urgencyAddend;
-                } else if (importanceTxt == 'pretty important') {
-                  importanceMultiple = 2.5 + urgencyAddend;
-                } else if (importanceTxt == 'important') {
-                  importanceMultiple = 2 + urgencyAddend;
-                } else if (importanceTxt == 'somewhat important') {
-                  importanceMultiple = 1.5 + urgencyAddend;
-                } else {
-                  importanceMultiple = 1.1 + urgencyAddend;
-                }
-
-                var rank = Math.round((ratio * importanceMultiple + ratio) * 1000000);
-
-                return rank;
-            },
-
-            addItem: function(itemName, dueDate, estTimeAsDateObj, importanceTxt, urgencyTxt, rank) {
-
-                var timeTillDue = dueDate - Date.now();
-                var timeTillUnit = parseTime(timeTillDue);
 
                 items.$add({
-                    text: itemName,
-                    dueDate: dueDate,
-                    currentTime: Date.now(),
-                    tillDue: timeTillDue,
-                    yearsTillDue: timeTillUnit.year,
-                    monthsTillDue: timeTillUnit.month,
-                    daysTillDue: timeTillUnit.day,
-                    hoursTillDue: timeTillUnit.hour,
-                    minutesTillDue: timeTillUnit.minute,
-                    secondsTillDue: timeTillUnit.second,
-                    timeToFinish: estTimeAsDateObj,
-                    importance: importanceTxt,
-                    completed: false,
-                    urgent: urgencyTxt,
-                    rank: rank,
-                    created_at: Firebase.ServerValue.TIMESTAMP
-                });
+
+                    // the properties below are added directly by user selection:
+                    a_text: itemName,
+                    b_dueDateObj: dueDate.getTime(),
+                    c_dueTimeObj: dueTime.getTime(),
+                    // the properties below is calculated in this factory:
+                    d_dueDateNum: dueDateNum,
+                    e_currentTime: Date.now(),
+                    f_tillDue: timeTillDueDate,
+                    g_yearsTillDue: timeTillUnit.year,
+                    h_monthsTillDue: timeTillUnit.month,
+                    i_daysTillDue: timeTillUnit.day,
+                    j_hoursTillDue: timeTillUnit.hour,
+                    k_minutesTillDue: timeTillUnit.minute,
+                    l_secondsTillDue: timeTillUnit.second,
+                    // the properties below are added directly by user selection:
+                    m_hoursToFinish: eHour,
+                    n_minutesToFinish: eMinute,
+                    // the properties below is calculated in this factory:
+                    o_timeToFinishObj: estTimeAsDateObj,
+                    // the properties below are added directly by user selection:
+                    p_importance: importanceTxt,
+                    // the properties below is calculated in this factory:
+                    q_completed: false,
+                    // the properties below are added directly by user selection:
+                    r_urgent: urgencyTxt,
+                    // the properties below is calculated in this factory:
+                    s_rank: rank,
+                    t_created_at: Firebase.ServerValue.TIMESTAMP
+                }).then(function(){console.log("I, the console.log, am attached to 'items.$add', use me to debug anything that happens around '$adding'")});
             }, // end of AddItem
+
+            updateDueTiming: function(b_dueDateObj) {
+                d_dueDateNum = b_dueDateObj.getTime();
+                items.$save(item);
+            },
 
             getAllItems: function() {
                 return items;
