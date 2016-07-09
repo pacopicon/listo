@@ -12,7 +12,7 @@
               <table>
                   <tr>
                       <!-- <td> -->
-                          <b><div click-to-edit-text type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"></div></b> | due on <b>{{item.b_dueDateObj | date: 'fullDate'}}</b> at <b>{{item.c_dueTimeObj | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
+                          <b><div click-to-edit-text type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"></div></b> | due on <b>{{item.b_dueDate | date: 'fullDate'}}</b> at <b>{{item.c_dueTime | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
                       <!-- </td> -->
                       <!-- <td> -->
                           E.T.C: <b>{{item.o_timeToFinishObj | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishObj | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
@@ -29,7 +29,7 @@
 
                           <!--The <input> expression below was substituted by one (above) that DOES not work, so: don't erase-->
                           <!-- <input ng-model="item.b_dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.b_dueDate" type="time" ng-change="items.$save(item)"/> -->
-                          <div click-to-edit-date type="date" ng-model="item.b_dueDateObj"  ng-change="items.$save(item).then(function(){updateDueTiming(item.b_dueDateObj)})"></div> at <div click-to-edit-time type="time" ng-model="item.c_dueTimeObj"  ng-change="items.$save(item)"></div>
+                          <div click-to-edit-date type="date" ng-model="item.b_dueDate"  ng-change="items.$save(item)})"></div> at <div click-to-edit-time type="time" ng-model="item.c_dueTime"  ng-change="items.$save(item)"></div>
                           <input ng-model="item.p_importance.repeatSelect" ng-change="items.$save(item)" />
                       <!-- </td> -->
                       <!-- <td> -->

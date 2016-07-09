@@ -39,6 +39,17 @@ listo.factory("ItemCrud", ["$firebaseArray",
         };
 
         var setDueDateClockTime = function(dueDate, dueTime) {
+            // inputs are Date objects
+            // output is Number object
+
+            if (typeof dueDate === "number") {
+                dueDate = new Date(dueDate);
+            }
+
+            if (typeof dueTime === "number") {
+                dueTime = new Date(dueTime);
+            }
+
             var hours = dueTime.getHours();
             var minutes = dueTime.getMinutes();
             var seconds = dueTime.getSeconds();
@@ -47,7 +58,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             return correctedDueDate;
         };
 
-        var calculateEstTimeAsDateObj = function(eHour, eMinute) {
+        var calculateEstTimeAsDateNum = function(eHour, eMinute) {
             var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
             var estTimeAsDateObj = dummyDate.setHours(eHour, eMinute, 0, 0);
             return estTimeAsDateObj;
@@ -114,7 +125,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 for (i = 0; i < items.length; i++) {
                     var eachItem = items[i]
                     eachItem.e_currentTime = time;
-                    eachItem.d_dueDateNum = setDueDateClockTime(eachItem.b_dueDateObj, eachItem.c_dueTimeObj);
+                    eachItem.d_dueDateNum = setDueDateClockTime(eachItem.b_dueDate, eachItem.c_dueTime);
 
                     var timeTillDueDate = eachItem.d_dueDateNum - time;
                     var timeTillUnit = parseTime(timeTillDueDate);
@@ -148,7 +159,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 var dueDateNum = setDueDateClockTime(dueDate, dueTime);
                 var timeTillDueDate = dueDateNum - Date.now();
                 var timeTillUnit = parseTime(timeTillDueDate);
-                var estTimeAsDateObj = calculateEstTimeAsDateObj(eHour, eMinute);
+                var estTimeAsDateObj = calculateEstTimeAsDateNum(eHour, eMinute);
                 // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
                 var estTime = calculateEstTime(eHour, eMinute);
                 // ratio does not go into DB, but is used to figure out RANK below (words in all-caps refer to things that DO go into the DB)
@@ -163,8 +174,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
                     // the properties below are added directly by user selection:
                     a_text: itemName,
-                    b_dueDateObj: dueDate.getTime(),
-                    c_dueTimeObj: dueTime.getTime(),
+                    b_dueDate: dueDate.getTime(),
+                    c_dueTime: dueTime.getTime(),
                     // the properties below is calculated in this factory:
                     d_dueDateNum: dueDateNum,
                     e_currentTime: Date.now(),
@@ -192,8 +203,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 }).then(function(){console.log("I, the console.log, am attached to 'items.$add', use me to debug anything that happens around '$adding'")});
             }, // end of AddItem
 
-            updateDueTiming: function(b_dueDateObj) {
-                d_dueDateNum = b_dueDateObj.getTime();
+            updateDueTiming: function(b_dueDate) {
+                d_dueDateNum = b_dueDate.getTime();
                 items.$save(item);
             },
 
