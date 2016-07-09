@@ -54,7 +54,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             var minutes = dueTime.getMinutes();
             var seconds = dueTime.getSeconds();
             var milliseconds = dueTime.getMilliseconds();
-            // console.log("this is are the hours: " + hours + ", minutes: " + minutes + ", seconds: " + seconds);
+            console.log("this is are the hours: " + hours + ", minutes: " + minutes + ", seconds: " + seconds);
             var correctedDueDate =  dueDate.setHours(hours, minutes, seconds, milliseconds);
             return correctedDueDate;
         };
