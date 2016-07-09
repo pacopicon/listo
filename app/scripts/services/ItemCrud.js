@@ -54,6 +54,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             var minutes = dueTime.getMinutes();
             var seconds = dueTime.getSeconds();
             var milliseconds = dueTime.getMilliseconds();
+            // console.log("this is are the hours: " + hours + ", minutes: " + minutes + ", seconds: " + seconds);
             var correctedDueDate =  dueDate.setHours(hours, minutes, seconds, milliseconds);
             return correctedDueDate;
         };
@@ -138,7 +139,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
                     eachItem.k_minutesTillDue = timeTillUnit.minute;
                     eachItem.l_secondsTillDue = timeTillUnit.second;
 
-                    eachItem.o_timeToFinishObj = calculateEstTimeAsDateObj(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
+                    eachItem.o_timeToFinishObj = calculateEstTimeAsDateNum(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
 
                     var estTime = calculateEstTime(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
                     var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
