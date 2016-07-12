@@ -19,7 +19,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
         $interval(refreshTime, 1000);
 
         $scope.newDueDate = new Date();
-        $scope.newDueTime = new Date();
         $scope.newHourEst = 0;
         $scope.newMinuteESt = 0;
         $scope.newImportanceTxt = {
@@ -34,7 +33,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
         };
 
         $scope.addItem = function() {
-            ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
+            ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
 
         };
 

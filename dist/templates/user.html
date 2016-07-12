@@ -12,10 +12,10 @@
               <table>
                   <tr>
                       <!-- <td> -->
-                          <b><div click-to-edit-text type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"></div></b> | due on <b>{{item.b_dueDate | date: 'fullDate'}}</b> at <b>{{item.c_dueTime | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
+                          <b><div click-to-edit-text type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"></div></b> | due on <b>{{item.b_dueDate | date: 'fullDate'}}</b> at <b>{{item.b_dueDate | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
                       <!-- </td> -->
                       <!-- <td> -->
-                          E.T.C: <b>{{item.o_timeToFinishObj | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishObj | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
+                          E.T.C: <b>{{item.o_timeToFinishDate | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishDate | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
                       <!-- </td> -->
                       <!-- <td> -->
                           This item is due in<br><b>yrs: {{item.g_yearsTillDue}}<br> mths: {{item.h_monthsTillDue}}<br>ds: {{item.i_daysTillDue}}<br>hrs:  {{item.j_hoursTillDue}}<br>mins: {{item.k_minutesTillDue}}<br>secs: {{item.l_secondsTillDue}}</b><br>
@@ -27,9 +27,7 @@
                           <!--The <input> expression below was substituted by one (above) that works-->
                           <!-- <input ng-model="item.text" ng-change="items.$save(item)" /> -->
 
-                          <!--The <input> expression below was substituted by one (above) that DOES not work, so: don't erase-->
-                          <!-- <input ng-model="item.b_dueDate" type="date" ng-change="items.$save(item)"/> at <input ng-model="item.b_dueDate" type="time" ng-change="items.$save(item)"/> -->
-                          <div click-to-edit-date type="date" ng-model="item.b_dueDate"  ng-change="items.$save(item)})"></div> at <div click-to-edit-time type="time" ng-model="item.c_dueTime"  ng-change="items.$save(item)"></div>
+                          <div click-to-edit-date type="datetime-local" ng-model="item.b_dueDate"  ng-change="items.$save(item)" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox edit"></div>
                           <input ng-model="item.p_importance.repeatSelect" ng-change="items.$save(item)" />
                       <!-- </td> -->
                       <!-- <td> -->
@@ -54,7 +52,8 @@
                 </tr>
                 <tr>
                     <td>Enter due date and time:</td>
-                    <td><input type="date" ng-model="newDueDate" placeholder="2016-01-01" class="dateBox"/> <input type="time" ng-model="newDueTime" placeholder="01:01:00 pm" class="timeBox"/></td>
+                    <td><input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/>
+                    <!-- <input type="time" ng-model="newDueTime" placeholder="01:01:00 pm" class="timeBox"/></td> -->
                 </tr>
                 <tr>
                     <td>Enter est. time to finish:</td>
@@ -62,10 +61,11 @@
                 </tr>
                 <tr>
                     <td>Enter priority:</td>
-                    <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect">
+                    <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="importanceBox">
                     <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
                 </tr>
                 <tr>
+                    <td></td>
                     <td><button type="submit" class="addButton">Add to-do item</button></td>
                 </tr>
             </table>

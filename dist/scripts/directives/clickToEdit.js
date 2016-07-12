@@ -3,7 +3,7 @@ var textEditString =
     '</div>';
 
 var dateEditString =
-    '<input class="inputText" type="date" ng-model="localModel" ng-enter="save()" ng-show="editState && type == \'date\'" />' +
+    '<input class="inputText" type="datetime-local" ng-model="localModel" ng-enter="save()" ng-show="editState && type == \'datetime-local\'" />' +
     '</div>';
 
 var timeEditString =
@@ -86,7 +86,7 @@ var inputTimeEditDirObj = inputEditDirObj(timeEditString);
 var inputNumberEditDirObj = inputEditDirObj(numberEditString);
 
 // name must be a string
-var dir = function(name, obj) {
+var dir = function(name, obj, $timeout) {
     return listo.directive(name, function($timeout) {
         return obj;
     });
