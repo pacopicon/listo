@@ -14,6 +14,14 @@ var numberEditString =
     '<input class="inputText" type="number" ng-model="localModel" ng-enter="save()" ng-show="editState && type == \'number\'" />' +
     '</div>';
 
+// var importanceEditString =
+//     '<select class="importanceBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-enter="save()" ng-show="editState && id == \'repeatSelect\'"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>' +
+//     '</div>';
+
+var importanceEditString =
+    '<select class="importanceBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-enter="save()" ng-show="editState"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>' +
+    '</div>';
+
 
 
 var inputEditDirObj = function(typeEditString) {
@@ -84,6 +92,7 @@ var inputTextEditDirObj = inputEditDirObj(textEditString);
 var inputDateEditDirObj = inputEditDirObj(dateEditString);
 var inputTimeEditDirObj = inputEditDirObj(timeEditString);
 var inputNumberEditDirObj = inputEditDirObj(numberEditString);
+var inputImportanceEditDirObj = inputEditDirObj(importanceEditString);
 
 // name must be a string
 var dir = function(name, obj, $timeout) {
@@ -96,6 +105,7 @@ dir('clickToEditText', inputTextEditDirObj);
 dir('clickToEditDate', inputDateEditDirObj);
 dir('clickToEditTime', inputTimeEditDirObj);
 dir('clickToEditNumber', inputNumberEditDirObj);
+dir('clickToEditImportance', inputImportanceEditDirObj);
 
 /*
  * seriously i would have never thought of this on my own, i don't think in directives yet

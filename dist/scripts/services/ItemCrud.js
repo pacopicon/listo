@@ -149,8 +149,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
                     var estTime = calculateEstTime(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
                     var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
                     var urgency = calculateUrgency(ratio);
-                    var urgencyTxt = createUrgencyTxt(urgency);
-                    var rank = calculateRank(eachItem.p_importance, ratio, urgency);
+                    eachItem.r_urgent = createUrgencyTxt(urgency);
+                    eachItem.s_rank = calculateRank(eachItem.p_importance, ratio, urgency);
 
                     items.$save(eachItem).then(function() {
                         // console.log(time);

@@ -10,10 +10,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
         var refreshTime = function() {
             time = Date.now();
             $scope.time = time;
-            $scope.currentTime = time;
-
-            // exception: this below is updated to item elements
-            ItemCrud.refreshTimeAndDatabase($scope.time);
+            // exception: the below is updated to item elements
+            ItemCrud.refreshTimeAndDatabase(time);
         }
         refreshTime();
         $interval(refreshTime, 1000);

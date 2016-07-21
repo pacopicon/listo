@@ -35,6 +35,9 @@
                           <div click-to-edit-number type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" class="numberBox"/>
                       <!-- </td> -->
                       <!-- <td> -->
+                          <div click-to-edit-importance id="repeatSelect" ng-model="item.p_importance"  ng-change="items.$save(item)" class="importanceBox"/>
+                      <!-- </td> -->
+                      <!-- <td> -->
                           <input ng-model="item.r_urgent" ng-change="items.$save(item)" />
                           <button ng-click="items.$remove(item)">Delete item</button>
                       <!-- </td> -->
