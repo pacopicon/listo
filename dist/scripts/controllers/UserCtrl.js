@@ -39,5 +39,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
             ItemCrud.updateDueTiming($scope.newDueDate)
         };
 
+        // new Chartkick.PieChart("chart-1", [["", ], ["",]);
+
     }
 ]);
