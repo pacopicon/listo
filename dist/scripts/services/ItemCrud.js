@@ -121,6 +121,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
             return rank;
         };
 
+        // This function below is at the core of the strategy in which the DB is pinged constantly with current time update.  Current time then updates the Time till and several other item parameters, most importantly -- rank.
+
         return {
 
             refreshTimeAndDatabase: function(time) {
