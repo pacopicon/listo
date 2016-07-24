@@ -18,13 +18,11 @@ var numberEditString =
 //     '<select class="importanceBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-enter="save()" ng-show="editState && id == \'repeatSelect\'"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>' +
 //     '</div>';
 
-var importanceEditString =
-    '<select class="importanceBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-enter="save()" ng-show="editState"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>' +
-    '</div>';
+// var importanceEditString =
+//     '<select class="importanceBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-enter="save()" ng-show="editState"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>' +
+//     '</div>';
 
-
-
-var inputEditDirObj = function(typeEditString) {
+var inputEditDirObj = function(typeEditString, $setTimeout) {
     return {
         require: 'ngModel',
         scope: {
@@ -65,7 +63,7 @@ var inputEditDirObj = function(typeEditString) {
             /*
              * toggles the editState of our field
              */
-            scope.toggle = function () {
+            scope.toggle = function ($timeout) {
 
                 scope.editState = !scope.editState;
 
@@ -92,25 +90,27 @@ var inputTextEditDirObj = inputEditDirObj(textEditString);
 var inputDateEditDirObj = inputEditDirObj(dateEditString);
 var inputTimeEditDirObj = inputEditDirObj(timeEditString);
 var inputNumberEditDirObj = inputEditDirObj(numberEditString);
-var inputImportanceEditDirObj = inputEditDirObj(importanceEditString);
+// var inputImportanceEditDirObj = inputEditDirObj(importanceEditString);
 
 // name must be a string
-var dir = function(name, obj, $timeout) {
-    return listo.directive(name, function($timeout) {
-        return obj;
-    });
+var dir = function(name, obj) {
+    return listo.directive(name, ['$timeout',
+        function($timeout) {
+            return obj;
+        }
+    ]);
 };
 
 dir('clickToEditText', inputTextEditDirObj);
 dir('clickToEditDate', inputDateEditDirObj);
 dir('clickToEditTime', inputTimeEditDirObj);
 dir('clickToEditNumber', inputNumberEditDirObj);
-dir('clickToEditImportance', inputImportanceEditDirObj);
 
 /*
  * seriously i would have never thought of this on my own, i don't think in directives yet
  * http://stackoverflow.com/questions/17470790/how-to-use-a-keypress-event-in-angularjs
  */
+
 listo.directive('ngEnter', function () {
     return function (scope, element, attrs) {
         element.bind("keydown keypress", function (event) {

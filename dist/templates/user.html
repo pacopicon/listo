@@ -18,7 +18,8 @@
                           E.T.C: <b>{{item.o_timeToFinishDate | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishDate | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
                       <!-- </td> -->
                       <!-- <td> -->
-                          This item is due in<br><b>yrs: {{item.g_yearsTillDue}}<br> mths: {{item.h_monthsTillDue}}<br>ds: {{item.i_daysTillDue}}<br>hrs:  {{item.j_hoursTillDue}}<br>mins: {{item.k_minutesTillDue}}<br>secs: {{item.l_secondsTillDue}}</b><br>
+                          This item is due in
+                          <br><b>years: {{parseTime(item.b_dueDate).year}}<br> months: {{parseTime(item.b_dueDate).month}}<br>days: {{parseTime(item.b_dueDate).day}}<br>hours:  {{parseTime(item.b_dueDate).hour}}<br>minutes: {{parseTime(item.b_dueDate).minute}}<br>seconds: {{parseTime(item.b_dueDate).second}}</b><br>
                       <!-- </td> -->
                   </tr>
                   <tr>

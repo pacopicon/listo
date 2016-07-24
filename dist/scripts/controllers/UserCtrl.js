@@ -10,11 +10,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
         var refreshTime = function() {
             time = Date.now();
             $scope.time = time;
-            // exception: the below is updated to item elements
-            ItemCrud.refreshTimeAndDatabase(time);
+            return time;
         }
-        refreshTime();
+
         $interval(refreshTime, 1000);
+
+        $scope.parseTime = function(dueDate) {
+            var timeLeftInMillisecs = ItemCrud.calculateTimeTillDueDate(dueDate, $scope.time);
+            var countdown = ItemCrud.parseTime(timeLeftInMillisecs);
+            return countdown;
+        };
 
         $scope.newDueDate = new Date();
         $scope.newHourEst = 0;
@@ -32,14 +37,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
 
         $scope.addItem = function() {
             ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
-
         };
 
         $scope.updateDueTiming = function() {
             ItemCrud.updateDueTiming($scope.newDueDate)
         };
-
-        // new Chartkick.PieChart("chart-1", [["", ], ["",]);
-
     }
 ]);
