@@ -22,7 +22,7 @@ var numberEditString =
 //     '<select class="importanceBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-enter="save()" ng-show="editState"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>' +
 //     '</div>';
 
-var inputEditDirObj = function(typeEditString, $setTimeout) {
+var inputEditDirObj = function(typeEditString) {
     return {
         require: 'ngModel',
         scope: {
@@ -63,7 +63,7 @@ var inputEditDirObj = function(typeEditString, $setTimeout) {
             /*
              * toggles the editState of our field
              */
-            scope.toggle = function ($timeout) {
+            scope.toggle = function () {
 
                 scope.editState = !scope.editState;
 

@@ -115,7 +115,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             // calculateTimeTillUnitsX: function(time) {
             //     for (i = 0; i < items.length; i++) {
             //         var eachItem = items[i]
-            //         // eachItem.e_currentTime = time;
+            //         eachItem.e_currentTime = time;
             //
             //         if (typeof eachItem.b_dueDate === "object") {
             //             eachItem.b_dueDate = eachItem.b_dueDate.getTime();
