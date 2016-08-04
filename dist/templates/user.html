@@ -1,81 +1,76 @@
 <section ng-controller="UserCtrl" class="user">
-    <button type="submit" class="user-links-container">
-        <a ui-sref="landing" class="navbar-link">Back to main page</a>
-    </button>
-    <div class="clock">
-        <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
-    </div>
-    <div class="formAndButtonContainer">
-        <ol>
-            <li ng-repeat="item in items | orderBy: '-rank'" class="itemsList">
-            <!-- edit a message -->
-              <table>
-                  <tr>
-                      <!-- <td> -->
-                          <b><div click-to-edit-text type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"></div></b>
-                          <b><input type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/></b>
-                          | due on <b>{{item.b_dueDate | date: 'fullDate'}}</b> at <b>{{item.b_dueDate | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
-                      <!-- </td> -->
-                      <!-- <td> -->
-                          E.T.C: <b>{{item.o_timeToFinishDate | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishDate | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
-                      <!-- </td> -->
-                      <!-- <td> -->
-                          This item is due in
-                          <br><b>years: {{parseTime(item.b_dueDate).year}}<br> months: {{parseTime(item.b_dueDate).month}}<br>days: {{parseTime(item.b_dueDate).day}}<br>hours:  {{parseTime(item.b_dueDate).hour}}<br>minutes: {{parseTime(item.b_dueDate).minute}}<br>seconds: {{parseTime(item.b_dueDate).second}}</b><br>
-                      <!-- </td> -->
-                  </tr>
-                  <tr>
-                      <!-- <td> -->
-
-                          <!--The <input> expression below was substituted by one (above) that works-->
-                          <!-- <input ng-model="item.text" ng-change="items.$save(item)" /> -->
-
-                          <div click-to-edit-date type="datetime-local" ng-model="item.b_dueDate"  ng-change="items.$save(item)" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox edit"></div>
-                          <input ng-model="item.p_importance.repeatSelect" ng-change="items.$save(item)" />
-                      <!-- </td> -->
-                      <!-- <td> -->
-                          <div click-to-edit-number type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" class="numberBox"/>
-                          <div click-to-edit-number type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" class="numberBox"/>
-                      <!-- </td> -->
-                      <!-- <td> -->
-                          <!-- <div click-to-edit-importance id="repeatSelect" ng-model="item.p_importance"  ng-change="items.$save(item)" class="importanceBox"/> -->
-                      <!-- </td> -->
-                      <!-- <td> -->
-                          <input ng-model="item.r_urgent" ng-change="items.$save(item)" />
-                          <button ng-click="items.$remove(item)">Delete item</button>
-                      <!-- </td> -->
-                  </tr>
-              </table>
+  <button type="submit" class="user-links-container">
+      <a ui-sref="landing" class="navbar-link">Back to main page</a>
+  </button>
+  <div class="clock">
+    <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
+  </div>
+  <div class="formAndButtonContainer">
+    <ol>
+      <li ng-repeat="item in items | orderBy: '-rank'" class="itemsList">
+        <!-- edit a message -->
+        <table>
+          <tr>
+            <!-- <td> -->
+            <b><input class="nameBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/></b>
+              | due on <b>{{item.b_dueDate | date: 'fullDate'}}</b> at <b>{{item.b_dueDate | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
+            <!-- </td> -->
+            <!-- <td> -->
+              E.T.C: <b>{{item.o_timeToFinishDate | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishDate | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
+            <!-- </td> -->
+            <!-- <td> -->
+              This item is due in
+              <br><b>years: {{parseTime(item.b_dueDate).year}}<br> months: {{parseTime(item.b_dueDate).month}}<br>days: {{parseTime(item.b_dueDate).day}}<br>hours:  {{parseTime(item.b_dueDate).hour}}<br>minutes: {{parseTime(item.b_dueDate).minute}}<br>seconds: {{parseTime(item.b_dueDate).second}}</b><br>
+            <!-- </td> -->
+          </tr>
+          <tr>
+            <!-- <td> -->
+              <input class="dateBox" type="datetime-local" ng-model="item.b_dueDate"  ng-change="items.$save(item)"/>
+              <input ng-model="item.p_importance.repeatSelect" ng-change="items.$save(item)" />
+            <!-- </td> -->
+            <!-- <td> -->
+              <input class="numberBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)"/>
+              <input class="numberBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" />
+            <!-- </td> -->
+            <!-- <td> -->
+              <!-- <div click-to-edit-importance id="repeatSelect" ng-model="item.p_importance"  ng-change="items.$save(item)" class="importanceBox"/> -->
+            <!-- </td> -->
+              <!-- <td> -->
+              <input ng-model="item.r_urgent" ng-change="items.$save(item)" />
+              <button ng-click="items.$remove(item)">Delete item</button>
+            <!-- </td> -->
+          </tr>
+        </table>
               <!-- <div id="chart-1" style="height: 300px;"></div> -->
               __________________________________________________________________________________________
-            </li>
-        </ol>
+        </li>
+      </ol>
         <!-- push a new message onto the array -->
-        <form ng-submit="addItem()" class="form">
-            <table>
-                <tr>
-                    <td>Enter item name:</td>
-                    <td><input ng-model="newItemName" class="nameBox"/></td>
-                </tr>
-                <tr>
-                    <td>Enter due date and time:</td>
-                    <td><input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/>
+      <form ng-submit="addItem()" class="form">
+        <table>
+          <tr>
+            <td>Enter item name:</td>
+            <td><input ng-model="newItemName" class="nameBox"/></td>
+          </tr>
+          <tr>
+            <td>Enter due date and time:</td>
+            <td><input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/>
                     <!-- <input type="time" ng-model="newDueTime" placeholder="01:01:00 pm" class="timeBox"/></td> -->
-                </tr>
-                <tr>
-                    <td>Enter est. time to finish:</td>
-                    <td><input type="number" ng-model="newHourEst" min="0" max="12" class="numberBox"/> hours and <input type="number" ng-model="newMinuteEst" min="0" max="59" class="numberBox"/> minutes </td>
-                </tr>
-                <tr>
-                    <td>Enter priority:</td>
-                    <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="importanceBox">
-                    <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td><button type="submit" class="addButton">Add to-do item</button></td>
-                </tr>
-            </table>
-        </form>
+          </tr>
+          <tr>
+            <td>Enter est. time to finish:</td>
+            <td><input type="number" ng-model="newHourEst" min="0" max="12" class="numberBox"/> hours and <input type="number" ng-model="newMinuteEst" min="0" max="59" class="numberBox"/> minutes </td>
+          </tr>
+          <tr>
+            <td>Enter priority:</td>
+            <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="importanceBox">
+              <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td><button type="submit" class="addButton">Add to-do item</button></td>
+          </tr>
+        </table>
+      </form>
     </div>
 </section>

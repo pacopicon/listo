@@ -64,6 +64,7 @@
 
 .nameBox {
     position: relative;
+    border: transparent;
     overflow: auto;
     width: 20em;
     height: 1.5em;
@@ -72,6 +73,7 @@
 }
 
 .numberBox {
+  border:
   position: relative;
   overflow: auto;
   width: 5em;

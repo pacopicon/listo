@@ -1,3 +1,4 @@
+
 listo.factory("ItemCrud", ["$firebaseArray",
     function($firebaseArray) {
 
@@ -72,15 +73,15 @@ listo.factory("ItemCrud", ["$firebaseArray",
         return {
 
             parseTime: function(timeInMillisecs) {
-                // 'time' has to be in milliseconds
-                var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
-                var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
-                var millisecsInDay = 24 * 60 * 60 * 1000;
-                var millisecsInHour = 60 * 60 * 1000;
-                var millisecsInMinute = 60 * 1000;
-                var millisecsInSecs = 1000;
-                
-                var years = timeInMillisecs / millisecsInYear;
+                // 'time' has to be in milliseconds
+                var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
+                var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
+                var millisecsInDay = 24 * 60 * 60 * 1000;
+                var millisecsInHour = 60 * 60 * 1000;
+                var millisecsInMinute = 60 * 1000;
+                var millisecsInSecs = 1000;
+
+                var years = timeInMillisecs / millisecsInYear;
                 var lessThanYear = timeInMillisecs % millisecsInYear;
                 var months = lessThanYear / millisecsInMonth;
                 var lessThanMonth = lessThanYear % millisecsInMonth;
@@ -100,7 +101,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
                     hour: Math.floor(hours),
                     minute: Math.floor(minutes),
                     second: seconds
-                };    
+                };
             },
 
             calculateTimeTillDueDate: function(dueDate, time) {
