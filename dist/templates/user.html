@@ -10,56 +10,66 @@
       <li ng-repeat="item in items | orderBy: '-rank'" class="list-group">
         <!-- edit a message -->
         <table class="table">
+          <!-- .row -->
           <tr>
-            <th> /////////////////////////////////
+            <th>item name:</th>
+            <th>date due:</th>
+            <th>priority:</th>
+            <th>urgency:</th>
+            <th colspan="2">duration:</th>
+            <th>rank:</th>
+            <th>Active since:</th>
+            <th colspan="6">Due in:</th>
+          </tr>
             <td class="nameCell">
+              <!-- .col-md-2 -->
               <div class="nameLine" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
-                <b>{{item.a_text}}</b>
+                {{item.a_text}}
               </div>
               <input class="nameEditBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
             </td>
             <td class="dateCell">
               <div class="dateLine" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
-                <b>{{item.c_dueDateString}}</b>
+                {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
               </div>
               <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
             </td>
             <td class="importanceCell">
               <div class="importanceLine" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
-                <b>{{item.p_importance.repeatSelect}}</b>
+                {{item.p_importance.repeatSelect}}
               </div>
               <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
             </td>
             <td class="urgentCell">
               <div class="urgentLine" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-                <b>{{item.r_urgent}}</b>
+                {{item.r_urgent}}
               </div>
               <input class="urgentEditBox" type="inputText" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false" ng-model="item.r_urgent" ng-change="items.$save(item)" />
             </td>
             <td class="numberCell">
               <div class="numberLine" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
-                <b>{{item.o_timeToFinishDate | date: 'H'}}</b>
+                {{item.o_timeToFinishDate | date: 'H'}}
               </div>
               <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
             </td>
             <td class="numberCell">
               <div class="numberLine" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
-                <b>{{item.o_timeToFinishDate | date: 'm'}}</b>
+                {{item.o_timeToFinishDate | date: 'm'}}
               </div>
               <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
             </td>
             <td class="rankCell">
-              Rank: <b>{{item.s_rank}}</b>
+              {{item.s_rank}}
             </td>
-          </tr>
-          <tr>
             <td class="createdAtCell">
-              Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
+              {{item.t_created_at | date: 'M/d/yy h:mm a'}}
             </td>
-            <td>
-              due in
-              <td><b>y:</b></td> {{parseTime(item.b_dueDate).year}}<br> months: {{parseTime(item.b_dueDate).month}}<br>days: {{parseTime(item.b_dueDate).day}}<br>hours:  {{parseTime(item.b_dueDate).hour}}<br>minutes: {{parseTime(item.b_dueDate).minute}}<br>seconds: {{parseTime(item.b_dueDate).second}}</b><br>
-            </td>
+            <td class="dueCell">Yr: {{parseTime(item.b_dueDate).year}}</td>
+            <td class="dueCell">Mo: {{parseTime(item.b_dueDate).month}}</td>
+            <td class="dueCell">Ds: {{parseTime(item.b_dueDate).day}}</td>
+            <td class="dueCell">Hs: {{parseTime(item.b_dueDate).hour}}</td>
+            <td class="dueCell">Ms: {{parseTime(item.b_dueDate).minute}}</td>
+            <td class="dueCell">S: {{parseTime(item.b_dueDate).second}}</td>
           </tr>
           <tr>
               <td>

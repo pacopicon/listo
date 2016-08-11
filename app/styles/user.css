@@ -49,9 +49,11 @@
   height: 100%;
   top: 0; left: 0; bottom: 0; right: 40;
 }
-.formAndButtonContainer {
+
+.list-group {
   color: black;
-  margin-left: 2.42em;
+  margin-left: 1.22em;
+  margin-right: 2.22em;
   position: relative;
   font-size: 1em;
   overflow: auto;
@@ -60,14 +62,10 @@
   top: 0; left: 0; bottom: 10; right: 40;
 }
 
-.list-group {
-  color: black;
-}
-
 .nameCell {
   position: relative;
   overflow: auto;
-  width: 15em;
+  width: 12em;
   height: 1.8em;
   /*top: 0; left: 0; bottom: 0; right: 0;*/
   color: black;
@@ -78,13 +76,13 @@
 }
 
 .nameEditBox {
-  width: 100%;
+  width: 20em;
 }
 
 .dateCell {
   position: relative;
   overflow: auto;
-  width: 22em;
+  width: 8.5em;
   height: 1.8em;
   color: black;
 }
@@ -94,13 +92,13 @@
 }
 
 .dateEditBox {
-  width: 100%;
+  width: 14em;
 }
 
 .importanceCell {
   position: relative;
   overflow: auto;
-  width: 10em;
+  width: 7em;
   height: 3.5em;
   color: black;
 }
@@ -110,13 +108,13 @@
 }
 
 .importanceEditBox {
-  width: 100%;
+  width: 6em;
 }
 
 .urgentCell {
   position: relative;
   overflow: auto;
-  width: 10em;
+  width: 8em;
   height: 3.5em;
   color: black;
 }
@@ -130,7 +128,6 @@
 }
 
 .numberCell {
-  border:
   position: relative;
   overflow: auto;
   width: 3.5em;
@@ -147,11 +144,35 @@
 }
 
 .rankCell {
-
+  position: relative;
+  overflow: auto;
+  width: 3.5em;
+  height: 1.8em;
+  color: black;
 }
 
 .createdAtCell {
+  position: relative;
+  overflow: auto;
+  width: 8.5em;
+  height: 1.8em;
+  color: black;
+}
 
+.dueCell {
+  position: relative;
+  overflow: auto;
+  width: 4em;
+  height: 1.8em;
+  color: black;
+}
+
+/* End of CSS for listed items */
+/* Begin CSS for Form */
+
+.form {
+  color: black;
+  margin-left: 2.42em;
 }
 
 .add {
