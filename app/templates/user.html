@@ -1,50 +1,77 @@
 <section ng-controller="UserCtrl" class="user">
   <button type="submit" class="user-links-container">
-      <a ui-sref="landing" class="navbar-link">Back to main page</a>
+    <a ui-sref="landing" class="navbar-link">Back to main page</a>
   </button>
   <div class="clock">
     <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
   </div>
-  <div class="formAndButtonContainer">
-    <ol>
-      <li ng-repeat="item in items | orderBy: '-rank'" class="itemsList">
+  <div class="panel panel-default">
+    <ol class="list-group">
+      <li ng-repeat="item in items | orderBy: '-rank'" class="list-group">
         <!-- edit a message -->
-        <table>
+        <table class="table">
           <tr>
-            <!-- <td> -->
-            <b><input class="nameBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/></b>
-              | due on <b>{{item.b_dueDate | date: 'fullDate'}}</b> at <b>{{item.b_dueDate | date: 'shortTime'}}</b> | It is <b>{{item.p_importance.repeatSelect}}</b> and <b>{{item.r_urgent}}</b><br>
-            <!-- </td> -->
-            <!-- <td> -->
-              E.T.C: <b>{{item.o_timeToFinishDate | date: 'H'}}</b> hours and <b>{{item.o_timeToFinishDate | date: 'm'}}</b> minutes to finish | Rank: <b>{{item.s_rank}}</b> | Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
-            <!-- </td> -->
-            <!-- <td> -->
-              This item is due in
-              <br><b>years: {{parseTime(item.b_dueDate).year}}<br> months: {{parseTime(item.b_dueDate).month}}<br>days: {{parseTime(item.b_dueDate).day}}<br>hours:  {{parseTime(item.b_dueDate).hour}}<br>minutes: {{parseTime(item.b_dueDate).minute}}<br>seconds: {{parseTime(item.b_dueDate).second}}</b><br>
-            <!-- </td> -->
+            <th> /////////////////////////////////
+            <td class="nameCell">
+              <div class="nameLine" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
+                <b>{{item.a_text}}</b>
+              </div>
+              <input class="nameEditBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
+            </td>
+            <td class="dateCell">
+              <div class="dateLine" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+                <b>{{item.c_dueDateString}}</b>
+              </div>
+              <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
+            </td>
+            <td class="importanceCell">
+              <div class="importanceLine" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
+                <b>{{item.p_importance.repeatSelect}}</b>
+              </div>
+              <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+            </td>
+            <td class="urgentCell">
+              <div class="urgentLine" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+                <b>{{item.r_urgent}}</b>
+              </div>
+              <input class="urgentEditBox" type="inputText" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false" ng-model="item.r_urgent" ng-change="items.$save(item)" />
+            </td>
+            <td class="numberCell">
+              <div class="numberLine" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
+                <b>{{item.o_timeToFinishDate | date: 'H'}}</b>
+              </div>
+              <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
+            </td>
+            <td class="numberCell">
+              <div class="numberLine" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
+                <b>{{item.o_timeToFinishDate | date: 'm'}}</b>
+              </div>
+              <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
+            </td>
+            <td class="rankCell">
+              Rank: <b>{{item.s_rank}}</b>
+            </td>
           </tr>
           <tr>
-            <!-- <td> -->
-              <input class="dateBox" type="datetime-local" ng-model="item.b_dueDate"  ng-change="items.$save(item)"/>
-              <input ng-model="item.p_importance.repeatSelect" ng-change="items.$save(item)" />
-            <!-- </td> -->
-            <!-- <td> -->
-              <input class="numberBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)"/>
-              <input class="numberBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" />
-            <!-- </td> -->
-            <!-- <td> -->
-              <!-- <div click-to-edit-importance id="repeatSelect" ng-model="item.p_importance"  ng-change="items.$save(item)" class="importanceBox"/> -->
-            <!-- </td> -->
-              <!-- <td> -->
-              <input ng-model="item.r_urgent" ng-change="items.$save(item)" />
-              <button ng-click="items.$remove(item)">Delete item</button>
-            <!-- </td> -->
+            <td class="createdAtCell">
+              Active since <b>{{item.t_created_at | date: 'fullDate'}}, {{item.t_created_at | date: 'shortTime'}}</b><br>
+            </td>
+            <td>
+              due in
+              <td><b>y:</b></td> {{parseTime(item.b_dueDate).year}}<br> months: {{parseTime(item.b_dueDate).month}}<br>days: {{parseTime(item.b_dueDate).day}}<br>hours:  {{parseTime(item.b_dueDate).hour}}<br>minutes: {{parseTime(item.b_dueDate).minute}}<br>seconds: {{parseTime(item.b_dueDate).second}}</b><br>
+            </td>
+          </tr>
+          <tr>
+              <td>
+                <button ng-click="items.$remove(item)">Delete item</button>
+              </td>
           </tr>
         </table>
               <!-- <div id="chart-1" style="height: 300px;"></div> -->
-              __________________________________________________________________________________________
+
         </li>
       </ol>
+        __________________________________________________________________________________________
         <!-- push a new message onto the array -->
       <form ng-submit="addItem()" class="form">
         <table>
@@ -55,7 +82,6 @@
           <tr>
             <td>Enter due date and time:</td>
             <td><input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/>
-                    <!-- <input type="time" ng-model="newDueTime" placeholder="01:01:00 pm" class="timeBox"/></td> -->
           </tr>
           <tr>
             <td>Enter est. time to finish:</td>

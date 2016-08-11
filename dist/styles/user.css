@@ -1,26 +1,28 @@
+.body {
+  white-space: nowrap;
+}
 .navbar .user-links-container {
-    display: table;
-    position: absolute;
-    top: 0;
-    right: 0;
-    height: 100px;
-    color: white;
-    /* #3 */
-    text-decoration: none;
+  display: table;
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100px;
+  color: white;
+  /* #3 */
+  text-decoration: none;
 }
 
 .user-links-container {
-    position: relative;
-    top: 0.0005rem;
-    margin-left: 2.42em;
-    margin-bottom: 1em;
-    height: 100%;
-    right: 40;
-    /*padding-left: 2em;
-    padding-right: 2em;*/
-    vertical-align: middle;
-    text-decoration: none;
-
+  position: relative;
+  top: 0.0005rem;
+  margin-left: 2.42em;
+  margin-bottom: 1em;
+  height: 100%;
+  right: 40;
+  /*padding-left: 2em;
+  padding-right: 2em;*/
+  vertical-align: middle;
+  text-decoration: none;
 }
 
 .navbar-link  {
@@ -38,81 +40,136 @@
 }
 
 .clock {
-    color: black;
-    position: relative;
-    font-size: 1em;
-    overflow: auto;
-    margin-left: 2.42em;
-    width: 100%;
-    height: 100%;
-    top: 0; left: 0; bottom: 0; right: 40;
+  color: black;
+  position: relative;
+  font-size: 1em;
+  overflow: auto;
+  margin-left: 2.42em;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0; bottom: 0; right: 40;
 }
 .formAndButtonContainer {
-    color: black;
-    margin-left: 2.42em;
-    position: relative;
-    font-size: 1em;
-    overflow: auto;
-    width: 60%;
-    height: 100%;
-    top: 0; left: 0; bottom: 10; right: 40;
+  color: black;
+  margin-left: 2.42em;
+  position: relative;
+  font-size: 1em;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  top: 0; left: 0; bottom: 10; right: 40;
 }
 
-.itemsList {
-    color: black;
+.list-group {
+  color: black;
 }
 
-.nameBox {
-    position: relative;
-    border: transparent;
-    overflow: auto;
-    width: 20em;
-    height: 1.5em;
-    /*top: 0; left: 0; bottom: 0; right: 0;*/
-    color: black;
+.nameCell {
+  position: relative;
+  overflow: auto;
+  width: 15em;
+  height: 1.8em;
+  /*top: 0; left: 0; bottom: 0; right: 0;*/
+  color: black;
 }
 
-.numberBox {
+.nameLine {
+  width: 100%;
+}
+
+.nameEditBox {
+  width: 100%;
+}
+
+.dateCell {
+  position: relative;
+  overflow: auto;
+  width: 22em;
+  height: 1.8em;
+  color: black;
+}
+
+.dateLine {
+
+}
+
+.dateEditBox {
+  width: 100%;
+}
+
+.importanceCell {
+  position: relative;
+  overflow: auto;
+  width: 10em;
+  height: 3.5em;
+  color: black;
+}
+
+.importanceLine {
+  width: 100%;
+}
+
+.importanceEditBox {
+  width: 100%;
+}
+
+.urgentCell {
+  position: relative;
+  overflow: auto;
+  width: 10em;
+  height: 3.5em;
+  color: black;
+}
+
+.urgentLine {
+  width: 100%;
+}
+
+.urgentEditBox {
+  width: 100%;
+}
+
+.numberCell {
   border:
   position: relative;
   overflow: auto;
-  width: 5em;
-  height: 1.5em;
+  width: 3.5em;
+  height: 1.8em;
   color: black;
 }
 
-.dateBox {
-  position: relative;
-  overflow: auto;
-  width: 20em;
-  height: 1.5em;
-  color: black;
+.numberLine {
+  width: 100%;
+}
+
+.numberEditBox {
+  width: 100%;
+}
+
+.rankCell {
+
+}
+
+.createdAtCell {
+
 }
 
 .add {
-  height: 1.5em;
+  height: 1.8em;
 }
 
 .edit {
   height: 4em;
 }
 
-.importanceBox {
+.addButton {
   position: relative;
   overflow: auto;
   width: 20em;
-  height: 1.5em;
-  color: black;
-}
-
-.addButton {
-    position: relative;
-    overflow: auto;
-    width: 20em;
-    height: 1.5em;
-    /*top: 0; left: 0; bottom: 0; right: 0;*/
-    color: white;
-    background-color: rgb(133,150,117);
+  height: 1.8em;
+  /*top: 0; left: 0; bottom: 0; right: 0;*/
+  color: white;
+  background-color: rgb(133,150,117);
 }
 
 /*clicToEdit directive template css*/
@@ -122,7 +179,8 @@
   background-color: black;
   color: gray;
 }*/
-.templateRoot{
+
+/*.templateRoot{
     display: inline-block;
 }
 .hover-edit-trigger {
@@ -152,4 +210,4 @@
     border-radius: 4px;
     margin: 1px;
     cursor: pointer;
-}
+}*/
