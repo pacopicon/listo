@@ -52,7 +52,7 @@
 
 .list-group {
   color: black;
-  margin-left: 1.22em;
+  margin-left: 2.42em;
   margin-right: 2.22em;
   position: relative;
   font-size: 1em;
@@ -62,17 +62,35 @@
   top: 0; left: 0; bottom: 10; right: 40;
 }
 
+.row {
+
+}
+
+.cell {
+  height: 5em;
+  padding-right: 0px;
+  padding-bottom: -1em;
+}
+
+.editBox {
+
+}
+
+.dateCell .importanceCell .urgentCell .numberCell .rankCell .dueCell {
+  /*margin-left: -4em;*/
+}
+
 .nameCell {
   position: relative;
   overflow: auto;
-  width: 12em;
-  height: 1.8em;
-  /*top: 0; left: 0; bottom: 0; right: 0;*/
+  width: 25em;
+  top: 0; left: 0; bottom: 0; right: 0;
   color: black;
 }
 
 .nameLine {
   width: 100%;
+  height: 3em;
 }
 
 .nameEditBox {
@@ -82,8 +100,8 @@
 .dateCell {
   position: relative;
   overflow: auto;
-  width: 8.5em;
-  height: 1.8em;
+  margin-left: -4em;
+  width: 16em;
   color: black;
 }
 
@@ -98,6 +116,7 @@
 .importanceCell {
   position: relative;
   overflow: auto;
+  margin-left: -1em;
   width: 7em;
   height: 3.5em;
   color: black;
@@ -109,6 +128,7 @@
 
 .importanceEditBox {
   width: 6em;
+  height: 3.5em;
 }
 
 .urgentCell {
@@ -131,7 +151,6 @@
   position: relative;
   overflow: auto;
   width: 3.5em;
-  height: 1.8em;
   color: black;
 }
 
@@ -147,7 +166,6 @@
   position: relative;
   overflow: auto;
   width: 3.5em;
-  height: 1.8em;
   color: black;
 }
 
@@ -155,7 +173,6 @@
   position: relative;
   overflow: auto;
   width: 8.5em;
-  height: 1.8em;
   color: black;
 }
 
@@ -163,7 +180,6 @@
   position: relative;
   overflow: auto;
   width: 4em;
-  height: 1.8em;
   color: black;
 }
 
