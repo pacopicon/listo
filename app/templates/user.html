@@ -30,21 +30,24 @@
         <input class="dateEditBox editBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
       </div>
 
-      <div class="col-md-6 importanceCell cell dropdown">
+      <!-- <div class="col-md-6 importanceCell cell dropdown"> -->
+      <div class="col-md-6 importanceCell cell">
         <div class="importanceLine" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
-          {{item.selectedOption}}
+          {{item.p_importance.repeatSelect}}
         </div>
-        <div class="btn-group" dropdown>
-          <button type="button" class="btn btn-danger" ng-click="items.$save(item)">{{selectedOption.text}}</button>
+        <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+
+        <!-- <div class="btn-group" dropdown>
+          <button type="button" class="btn btn-danger" ng-click="items.$save(item)">{{option.text}}</button>
           <button type="button" class="btn btn-danger dropdown-toggle">
             <span class="caret"></span>
             <span class="sr-only">Split button!</span>
           </button>
           <ul class="dropdown-menu" role="menu">
             <li ng-repeat="importanceOption in importanceOptions">
-              <a href="#" ng-click="setOption(importanceOption)">{{importanceOption.text}}</a>
+              <a href="#" ng-click="setOption(importanceOption)">{{option.text}}</a>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
 
@@ -124,7 +127,7 @@
           <tr>
             <td>Enter priority:</td>
 
-            <div class="btn-group" dropdown>
+            <!-- <div class="btn-group" dropdown>
               <button type="button" class="btn btn-primary" ng-click="addItem(item.selectedOption)">{{selectedOption.text}}</button>
               <button type="button" class="btn btn-primary dropdown-toggle">
                 <span class="caret"></span>
@@ -132,10 +135,10 @@
               </button>
               <ul class="dropdown-menu" role="menu">
                 <li ng-repeat="importanceOption in importanceOptions">
-                  <a href="#" ng-click="setOption(importanceOption)">{{importanceOption.text}}</a>
+                  <a href="#" ng-click="setOption(importanceOption)">{{selectedOption.text}}</a>
                 </li>
               </ul>
-            </div>
+            </div> -->
 
               <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="importanceBox">
                 <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>

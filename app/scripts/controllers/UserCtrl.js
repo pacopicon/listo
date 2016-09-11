@@ -25,31 +25,31 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
     $scope.newHourEst = 0;
     $scope.newMinuteESt = 0;
 
-    $scope.selectImportance = function() {
-      $scope.importanceOptions: [
-        {id: '1', text: "not important at all"},
-        {id: '2', text: "somewhat important"},
-        {id: '3', text: "important"},
-        {id: '4', text: "pretty important"},
-        {id: '5', text: "job depends on it"}
-      ];
-      $scope.selectedOption = $scope.importanceOptions[0];
-      $scope.setOption = function(importanceOption) {
-        $scope.selectedOption = importanceOption;
-      };
-      return $scope.selectedOption;
-    };
-
-    // $scope.newImportanceTxt = {
-    //   repeatSelect: null,
-    //   availableOptions: [
+    // $scope.selectImportance = function() {
+    //   $scope.importanceOptions = [
     //     {id: '1', text: "not important at all"},
     //     {id: '2', text: "somewhat important"},
     //     {id: '3', text: "important"},
     //     {id: '4', text: "pretty important"},
     //     {id: '5', text: "job depends on it"}
-    //   ]
+    //   ];
+    //   $scope.selectedOption = $scope.importanceOptions[0];
+    //   $scope.setOption = function(importanceOption) {
+    //     $scope.selectedOption = importanceOption;
+    //   };
+    //   return $scope.selectedOption;
     // };
+
+    $scope.newImportanceTxt = {
+      repeatSelect: null,
+      availableOptions: [
+        {id: '1', text: "not important at all"},
+        {id: '2', text: "somewhat important"},
+        {id: '3', text: "important"},
+        {id: '4', text: "pretty important"},
+        {id: '5', text: "job depends on it"}
+      ]
+    };
 
     $scope.isCompleted = {
       value : true
@@ -60,7 +60,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
     // };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.selectedOption);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
     };
 
     $scope.updateDueTiming = function() {
