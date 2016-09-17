@@ -53,7 +53,7 @@
 .list-group {
   color: black;
   margin-left: 2.42em;
-  margin-right: 2.22em;
+  /*margin-right: 2.22em;*/
   position: relative;
   font-size: 1em;
   overflow: auto;
@@ -67,7 +67,7 @@
 }
 
 .cell {
-  height: 5em;
+  /*height: 5em;*/
   padding-right: 0px;
   padding-bottom: -1em;
 }
@@ -83,18 +83,18 @@
 .nameCell {
   position: relative;
   overflow: auto;
-  width: 25em;
+  width: 17em;
   top: 0; left: 0; bottom: 0; right: 0;
   color: black;
 }
 
 .nameLine {
   width: 100%;
-  height: 3em;
+  height: 100%;
 }
 
 .nameEditBox {
-  width: 20em;
+  width: 12em;
 }
 
 .dateCell {
@@ -147,6 +147,10 @@
   width: 100%;
 }
 
+.durationCell {
+  /*Should be double the width of .numberCell*/
+  width: 7em;
+}
 .numberCell {
   position: relative;
   overflow: auto;

@@ -3,7 +3,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
   function($firebaseArray) {
 
   // downloads data
-    var ref = new Firebase("https://listo2-9047e.firebaseio.com/");
+    var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
 
         // holds items
     var items = $firebaseArray(ref);
@@ -109,12 +109,13 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
     var createUrgencyTxt = function(urgency) {
       if (urgency === true) {
-        urgencyTxt = "'urgent'";
+        urgencyTxt = "yes";
       } else {
-        urgencyTxt = "'not urgent'";
+        urgencyTxt = "no";
       }
 
       return urgencyTxt;
+      console.log(urgencyTxt);
     };
 
     var calculateRank = function(importanceTxt, ratio, urgency) {
