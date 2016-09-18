@@ -59,7 +59,7 @@
   overflow: auto;
   width: 100%;
   height: 100%;
-  top: 0; left: 0; bottom: 10; right: 40;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .row {
@@ -134,7 +134,7 @@
 .urgentCell {
   position: relative;
   overflow: auto;
-  width: 8em;
+  width: 6em;
   height: 3.5em;
   color: black;
 }
@@ -176,14 +176,14 @@
 .createdAtCell {
   position: relative;
   overflow: auto;
-  width: 8.5em;
+  width: 9em;
   color: black;
 }
 
 .dueCell {
   position: relative;
   overflow: auto;
-  width: 4em;
+  width: 12em;
   color: black;
 }
 

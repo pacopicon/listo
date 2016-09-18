@@ -58,7 +58,7 @@
           <select class="importanceEditBox editBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
         </div> -->
 
-        <div class="col-sm-1 urgentCell cell">
+        <div class="col-md-6 urgentCell cell">
           <div class="urgentLine" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
             {{item.r_urgent}}
           </div>
@@ -78,8 +78,6 @@
           </div>
           <input class="numberEditBox editBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
         </div>
-      </div>
-      <div class="row">
         <div class="col-md-6 rankCell cell">
           {{item.s_rank}}
         </div>
@@ -88,8 +86,7 @@
         </div>
         <div class="col-md-6">
           <div class="dueCell cell">
-            <span>{{parseTime(item.b_dueDate).year}}</span> :  <span>{{parseTime(item.b_dueDate).month}}</span> :  <span>{{parseTime(item.b_dueDate).day}}</span> :  <span>{{parseTime(item.b_dueDate).hour}}</span> :  <span>{{parseTime(item.b_dueDate).minute}</span> :  <span>{{parseTime(item.b_dueDate).second}}</span>
-            <span>{{}}</span>
+            <span>y: {{parseTime(item.b_dueDate).year}}</span> :  <span>{{parseTime(item.b_dueDate).month}}</span> :  <span>{{parseTime(item.b_dueDate).day}}</span> :  <span>{{parseTime(item.b_dueDate).hour}}</span> :  <span>{{parseTime(item.b_dueDate).minute}}</span> :  <span>{{parseTime(item.b_dueDate).second}}</span>
           </div>
           <!-- <div class="dueCell">{{parseTime(item.b_dueDate).year}}</div>
           <div class="dueCell">Mo: {{parseTime(item.b_dueDate).month}}</div>
@@ -98,6 +95,8 @@
           <div class="dueCell">Ms: {{parseTime(item.b_dueDate).minute}}</div>
           <div class="dueCell">S: {{parseTime(item.b_dueDate).second}}</div> -->
         </div>
+      </div> <!--End of First Row-->
+      <div class="row">
         <div class="col-md-6">
           <div>
             <input type="checkbox" ng-model="item.q_completed.value" ng-change="items.$save(item)"/>
