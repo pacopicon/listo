@@ -117,7 +117,7 @@
   position: relative;
   overflow: auto;
   margin-left: -1em;
-  width: 7em;
+  width: 9.5em;
   height: 3.5em;
   color: black;
 }
@@ -127,7 +127,7 @@
 }
 
 .importanceEditBox {
-  width: 6em;
+  width: 8.3em;
   height: 3.5em;
 }
 
@@ -169,7 +169,7 @@
 .rankCell {
   position: relative;
   overflow: auto;
-  width: 3.5em;
+  width: 4em;
   color: black;
 }
 
@@ -183,8 +183,24 @@
 .dueCell {
   position: relative;
   overflow: auto;
-  width: 12em;
+  width: 17em;
   color: black;
+}
+
+.completedBox {
+  position: relative;
+  overflow: auto;
+  margin-left: 7em;
+}
+
+.deleteButton {
+  position: relative;
+  overflow: auto;
+  margin-left: -7em;
+}
+
+.text {
+  text-decoration: line-through;
 }
 
 /* End of CSS for listed items */

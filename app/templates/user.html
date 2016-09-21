@@ -14,26 +14,26 @@
       <div class="col-sm-1 durationCell">duration:</div>
       <div class="col-sm-1 rankCell">rank:</div>
       <div class="col-sm-1 createdAtCell">Active since:</div>
-      <div class="col-sm-1" colspan="6">Due in:</div></b>
+      <div class="col-sm-1">Due in:</div></b>
     </div>
     <div ng-repeat="item in items | orderBy: '-rank'">
       <div class="row">
-        <div class="col-md-6 nameCell cell">
-          <div class="nameLine" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
+        <div class="col-sm-1 nameCell cell">
+          <div class="nameLine" ng-class="{'text': item.q_completed.value}" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
             {{item.a_text}}
           </div>
           <input class="nameEditBox editBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
         </div>
-        <div class="col-md-6 dateCell cell">
-          <div class="dateLine" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+        <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
+          <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
             {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
           </div>
           <input class="dateEditBox editBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
         </div>
 
         <!-- <div class="col-md-6 importanceCell cell dropdown"> -->
-        <div class="col-md-6 importanceCell cell">
-          <div class="importanceLine" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
+        <div class="col-sm-1 importanceCell cell">
+          <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
             {{item.p_importance.repeatSelect}}
           </div>
           <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
@@ -52,41 +52,42 @@
           </div>
 
         <!-- <div class="col-md-6 importanceCell cell">
-          <div class="importanceLine" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
+          <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
             {{item.p_importance.repeatSelect}}
           </div>
           <select class="importanceEditBox editBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
         </div> -->
 
-        <div class="col-md-6 urgentCell cell">
-          <div class="urgentLine" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+        <div class="col-sm-1 urgentCell cell">
+          <div class="urgentLine" ng-class="{'text': item.q_completed.value}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
             {{item.r_urgent}}
           </div>
           <div class="urgentEditBox editBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
             Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="items.$save(item)" />
           </div>
         </div>
-        <div class="col-md-6 numberCell cell">
-          <div class="numberLine" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
+        <div class="col-sm-1 numberCell cell">
+          <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
             {{item.o_timeToFinishDate | date: 'H'}}
           </div>
           <input class="numberEditBox editBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
         </div>
-        <div class="col-md-6 numberCell cell">
-          <div class="numberLine" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
+        <div class="col-sm-1 numberCell cell">
+          <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
             {{item.o_timeToFinishDate | date: 'm'}}
           </div>
           <input class="numberEditBox editBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
         </div>
-        <div class="col-md-6 rankCell cell">
+        <div class="col-sm-1 rankCell cell" ng-class="{'text': item.q_completed.value}">
           {{item.s_rank}}
         </div>
-        <div class="col-md-6 createdAtCell cell">
+        <div class="col-sm-1 createdAtCell cell" ng-class="{'text': item.q_completed.value}">
           {{item.t_created_at | date: 'M/d/yy h:mm a'}}
         </div>
-        <div class="col-md-6">
-          <div class="dueCell cell">
-            <span>y: {{parseTime(item.b_dueDate).year}}</span> :  <span>{{parseTime(item.b_dueDate).month}}</span> :  <span>{{parseTime(item.b_dueDate).day}}</span> :  <span>{{parseTime(item.b_dueDate).hour}}</span> :  <span>{{parseTime(item.b_dueDate).minute}}</span> :  <span>{{parseTime(item.b_dueDate).second}}</span>
+        <div class="col-sm-1">
+          <div class="dueCell cell" ng-class="{'text': item.q_completed.value}">
+            <span> {{parseTime(item.b_dueDate).year}}yr</span>  <span>{{parseTime(item.b_dueDate).month}}mth</span>
+            <span>{{parseTime(item.b_dueDate).day}}days</span> <span>{{parseTime(item.b_dueDate).hour}}hrs</span> <span>{{parseTime(item.b_dueDate).minute}}ms</span> <span>{{parseTime(item.b_dueDate).second}}secs</span>
           </div>
           <!-- <div class="dueCell">{{parseTime(item.b_dueDate).year}}</div>
           <div class="dueCell">Mo: {{parseTime(item.b_dueDate).month}}</div>
@@ -95,17 +96,11 @@
           <div class="dueCell">Ms: {{parseTime(item.b_dueDate).minute}}</div>
           <div class="dueCell">S: {{parseTime(item.b_dueDate).second}}</div> -->
         </div>
-      </div> <!--End of First Row-->
-      <div class="row">
-        <div class="col-md-6">
-          <div>
-            <input type="checkbox" ng-model="item.q_completed.value" ng-change="items.$save(item)"/>
-          </div>
+        <div class="col-sm-1 completedBox">
+          <input type="checkbox" ng-model="item.q_completed.value" ng-change="items.$save(item)"/>
         </div>
-        <div class="col-md-6">
-          <div ng-show="item.q_completed.value">
-            <button class="btn btn-primary" ng-click="items.$remove(item)">Delete item</button>
-          </div>
+        <div class="col-sm-1 deleteButton" ng-show="item.q_completed.value">
+          <button class="btn btn-primary" ng-click="items.$remove(item)">Delete item</button>
         </div>
       </div>
     </div>
