@@ -100,7 +100,7 @@
           <input type="checkbox" ng-model="item.q_completed.value" ng-change="items.$save(item)"/>
         </div>
         <div class="col-sm-1 deleteButton" ng-show="item.q_completed.value">
-          <button class="btn btn-primary" ng-click="items.$remove(item)">Delete item</button>
+          <button class="btn btn-danger" ng-click="items.$remove(item)">Delete item</button>
         </div>
       </div>
     </div>
@@ -116,7 +116,29 @@
           </tr>
           <tr>
             <td>Enter due date and time:</td>
-            <td><input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/>
+            <td>
+              <!-- <input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/> -->
+              <div class="row">
+                <div class="col-md-6">
+                  <p class="input-group">
+                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <span class="input-group-btn">
+                      <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                    </span>
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                  <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
+                </div>
+              </div>
+
+              <hr />
+              <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+              <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+            </td>
           </tr>
           <tr>
             <td>Enter est. time to finish:</td>
@@ -144,7 +166,7 @@
           </tr>
           <tr>
             <td></td>
-            <td><button type="submit" class="addButton">Add to-do item</button></td>
+            <td><button type="submit" type="button" class="btn btn-primary">Add to-do item</button></td>
           </tr>
         </table>
       </form>
