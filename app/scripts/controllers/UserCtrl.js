@@ -66,25 +66,25 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
       $scope.popup1.opened = true;
     };
 
-    $scope.open2 = function() {
-      $scope.popup2.opened = true;
-    };
+    // $scope.open2 = function() {
+    //   $scope.popup2.opened = true;
+    // };
 
     $scope.setDate = function(year, month, day) {
       $scope.newDueDate = new Date(year, month, day);
     };
 
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
+    // $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    // $scope.format = $scope.formats[0];
+    // $scope.altInputFormats = ['M!/d!/yyyy'];
 
     $scope.popup1 = {
       opened: false
     };
 
-    $scope.popup2 = {
-      opened: false
-    };
+    // $scope.popup2 = {
+    //   opened: false
+    // };
 
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -119,7 +119,36 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
 
       return '';
     }
+    // End Datepicker popup2
 
+    // Begin Timepicker
+    $scope.newDueTime = new Date();
+
+    $scope.hstep = 1;
+    $scope.mstep = 15;
+
+    $scope.options = {
+      hstep: [1, 2, 3],
+      mstep: [1, 5, 10, 15, 25, 30]
+    };
+
+    $scope.ismeridian = true;
+    $scope.toggleMode = function() {
+      $scope.ismeridian = ! $scope.ismeridian;
+    };
+
+    $scope.update = function() {
+      var d = new Date();
+      d.setHours(14);
+      d.setMinutes(0);
+      $scope.newDueTime = d;
+    };
+
+    $scope.changed = function() {
+      $scope.newDueTime = null;
+    };
+
+    // End Timepicker
 
 
 
@@ -164,7 +193,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
     // };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
     };
 
     $scope.updateDueTiming = function() {

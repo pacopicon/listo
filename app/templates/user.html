@@ -8,7 +8,7 @@
   <div class="list-group">
     <div class="row">
       <b><div class="col-sm-1 nameCell">item name:</div>
-      <div class="col-sm-1 dateCell">date due:</div>
+      <div class="col-sm-1 dateCell">date and time due:</div>
       <div class="col-sm-1 importanceCell">priority:</div>
       <div class="col-sm-1 urgentCell">urgent?:</div>
       <div class="col-sm-1 durationCell">duration:</div>
@@ -115,29 +115,52 @@
             <td><input ng-model="newItemName" class="nameBox"/></td>
           </tr>
           <tr>
-            <td>Enter due date and time:</td>
+            <td>Enter due date:</td>
             <td>
               <!-- <input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/> -->
               <div class="row">
                 <div class="col-md-6">
                   <p class="input-group">
-                    <input type="text" class="form-control" uib-datepicker-popup="{{format}}" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                    <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
                 </div>
+                <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+                <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+                <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
               </div>
-              <div class="row">
+            </td>
+              <!-- <div class="row">
                 <div class="col-md-6">
                   <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
                 </div>
+              </div> -->
+          <tr>
+            <td>Enter due time:</td>
+            <td>
+              <div uib-timepicker ng-model="newDueTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+              <pre class="alert alert-info">Time is: {{newDueTime | date: "shortTime"}}</pre>
+
+              <div class="row">
+                <div class="col-xs-6">
+                    Hours step is:
+                  <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+                </div>
+                <div class="col-xs-6">
+                    Minutes step is:
+                  <select class="form-control" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
+                </div>
               </div>
 
-              <hr />
-              <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-              <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-              <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+              <hr>
+
+              <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
+              <button type="button" class="btn btn-default" ng-click="update()">Set to 14:00</button>
+              <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
+
+
             </td>
           </tr>
           <tr>
