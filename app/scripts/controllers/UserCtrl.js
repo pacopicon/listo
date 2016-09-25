@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
-  function($scope, ItemCrud, $rootScope, $interval) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log",
+  function($scope, ItemCrud, $rootScope, $interval, $log) {
 
     // time properties of the controller itself
 
@@ -145,6 +145,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval",
     };
 
     $scope.changed = function() {
+      $log.log("Time changed to: " + $scope.newDueTime);
+    };
+
+    $scope.clear = function() {
       $scope.newDueTime = null;
     };
 
