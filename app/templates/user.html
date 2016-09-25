@@ -7,150 +7,163 @@
   </div>
   <div class="list-group">
     <div class="row">
-      <b><div class="col-sm-1 nameCell">item name:</div>
-      <div class="col-sm-1 dateCell">date and time due:</div>
-      <div class="col-sm-1 importanceCell">priority:</div>
-      <div class="col-sm-1 urgentCell">urgent?:</div>
-      <div class="col-sm-1 durationCell">duration:</div>
-      <div class="col-sm-1 rankCell">rank:</div>
-      <div class="col-sm-1 createdAtCell">Active since:</div>
-      <div class="col-sm-1">Due in:</div></b>
+      <b>
+        <div class="col-sm-1 priorityCell">priority:</div>
+        <div class="col-sm-1 nameCell">to do item:</div>
+        <div class="col-sm-1 dateCell">date and time due:</div>
+        <div class="col-sm-1 importanceCell">importance:</div>
+        <div class="col-sm-1 urgentCell">urgent?:</div>
+        <div class="col-sm-1 durationCell">duration:</div>
+        <div class="col-sm-1 rankCell">rank:</div>
+        <div class="col-sm-1 createdAtCell">Active since:</div>
+        <div class="col-sm-1">Due in:</div>
+      </b>
     </div>
-    <div ng-repeat="item in items | orderBy: '-rank'">
-      <div class="row">
-        <div class="col-sm-1 nameCell cell">
-          <div class="nameLine" ng-class="{'text': item.q_completed.value}" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
-            {{item.a_text}}
-          </div>
-          <input class="nameEditBox editBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
+    <div class="row" ng-repeat="item in items | orderBy: '-rank':true">
+      <div class="col-sm-1 priorityCell cell">
+        {{$index + 1}}
+      </div>
+      <div class="col-sm-1 nameCell cell">
+        <div class="nameLine" ng-class="{'text': item.q_completed.value}" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
+          {{item.a_text}}
         </div>
-        <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
-          <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
-            {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
-          </div>
-          <input class="dateEditBox editBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
+        <input class="nameEditBox editBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
+      </div>
+      <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
+        <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+          {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
+        </div>
+        <input class="dateEditBox editBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
+      </div>
+
+      <!-- <div class="col-md-6 importanceCell cell dropdown"> -->
+      <div class="col-sm-1 importanceCell cell">
+        <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
+          {{item.p_importance.repeatSelect}}
+        </div>
+        <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+
+        <!-- <div class="btn-group" dropdown>
+          <button type="button" class="btn btn-danger" ng-click="items.$save(item)">{{option.text}}</button>
+          <button type="button" class="btn btn-danger dropdown-toggle">
+            <span class="caret"></span>
+            <span class="sr-only">Split button!</span>
+          </button>
+          <ul class="dropdown-menu" role="menu">
+            <li ng-repeat="importanceOption in importanceOptions">
+              <a href="#" ng-click="setOption(importanceOption)">{{option.text}}</a>
+            </li>
+          </ul> -->
         </div>
 
-        <!-- <div class="col-md-6 importanceCell cell dropdown"> -->
-        <div class="col-sm-1 importanceCell cell">
-          <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
-            {{item.p_importance.repeatSelect}}
-          </div>
-          <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+      <!-- <div class="col-md-6 importanceCell cell">
+        <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
+          {{item.p_importance.repeatSelect}}
+        </div>
+        <select class="importanceEditBox editBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+      </div> -->
 
-          <!-- <div class="btn-group" dropdown>
-            <button type="button" class="btn btn-danger" ng-click="items.$save(item)">{{option.text}}</button>
-            <button type="button" class="btn btn-danger dropdown-toggle">
-              <span class="caret"></span>
-              <span class="sr-only">Split button!</span>
-            </button>
-            <ul class="dropdown-menu" role="menu">
-              <li ng-repeat="importanceOption in importanceOptions">
-                <a href="#" ng-click="setOption(importanceOption)">{{option.text}}</a>
-              </li>
-            </ul> -->
-          </div>
-
-        <!-- <div class="col-md-6 importanceCell cell">
-          <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
-            {{item.p_importance.repeatSelect}}
-          </div>
-          <select class="importanceEditBox editBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
-        </div> -->
-
-        <div class="col-sm-1 urgentCell cell">
-          <div class="urgentLine" ng-class="{'text': item.q_completed.value}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-            {{item.r_urgent}}
-          </div>
-          <div class="urgentEditBox editBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-            Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="items.$save(item)" />
-          </div>
+      <div class="col-sm-1 urgentCell cell">
+        <div class="urgentLine" ng-class="{'text': item.q_completed.value}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+          {{item.r_urgent}}
         </div>
-        <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
-            {{item.o_timeToFinishDate | date: 'H'}}
-          </div>
-          <input class="numberEditBox editBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
+        <div class="urgentEditBox editBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+          Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="items.$save(item)" />
         </div>
-        <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
-            {{item.o_timeToFinishDate | date: 'm'}}
-          </div>
-          <input class="numberEditBox editBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
+      </div>
+      <div class="col-sm-1 numberCell cell">
+        <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
+          {{item.o_timeToFinishDate | date: 'H'}}
         </div>
-        <div class="col-sm-1 rankCell cell" ng-class="{'text': item.q_completed.value}">
-          {{item.s_rank}}
+        <input class="numberEditBox editBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
+      </div>
+      <div class="col-sm-1 numberCell cell">
+        <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
+          {{item.o_timeToFinishDate | date: 'm'}}
         </div>
-        <div class="col-sm-1 createdAtCell cell" ng-class="{'text': item.q_completed.value}">
-          {{item.t_created_at | date: 'M/d/yy h:mm a'}}
+        <input class="numberEditBox editBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
+      </div>
+      <div class="col-sm-1 rankCell cell" ng-class="{'text': item.q_completed.value}">
+        {{item.s_rank}}
+      </div>
+      <div class="col-sm-1 createdAtCell cell" ng-class="{'text': item.q_completed.value}">
+        {{item.t_created_at | date: 'M/d/yy h:mm a'}}
+      </div>
+      <div class="col-sm-1">
+        <div class="dueCell cell" ng-class="{'text': item.q_completed.value}">
+          <span> {{parseTime(item.b_dueDate).year}}yr</span>  <span>{{parseTime(item.b_dueDate).month}}mth</span>
+          <span>{{parseTime(item.b_dueDate).day}}days</span> <span>{{parseTime(item.b_dueDate).hour}}hrs</span> <span>{{parseTime(item.b_dueDate).minute}}ms</span> <span>{{parseTime(item.b_dueDate).second}}secs</span>
         </div>
-        <div class="col-sm-1">
-          <div class="dueCell cell" ng-class="{'text': item.q_completed.value}">
-            <span> {{parseTime(item.b_dueDate).year}}yr</span>  <span>{{parseTime(item.b_dueDate).month}}mth</span>
-            <span>{{parseTime(item.b_dueDate).day}}days</span> <span>{{parseTime(item.b_dueDate).hour}}hrs</span> <span>{{parseTime(item.b_dueDate).minute}}ms</span> <span>{{parseTime(item.b_dueDate).second}}secs</span>
-          </div>
-          <!-- <div class="dueCell">{{parseTime(item.b_dueDate).year}}</div>
-          <div class="dueCell">Mo: {{parseTime(item.b_dueDate).month}}</div>
-          <div class="dueCell">Ds: {{parseTime(item.b_dueDate).day}}</div>
-          <div class="dueCell">Hs: {{parseTime(item.b_dueDate).hour}}</div>
-          <div class="dueCell">Ms: {{parseTime(item.b_dueDate).minute}}</div>
-          <div class="dueCell">S: {{parseTime(item.b_dueDate).second}}</div> -->
-        </div>
-        <div class="col-sm-1 completedBox">
-          <input type="checkbox" ng-model="item.q_completed.value" ng-change="items.$save(item)"/>
-        </div>
-        <div class="col-sm-1 deleteButton" ng-show="item.q_completed.value">
-          <button class="btn btn-danger" ng-click="items.$remove(item)">Delete item</button>
-        </div>
+        <!-- <div class="dueCell">{{parseTime(item.b_dueDate).year}}</div>
+        <div class="dueCell">Mo: {{parseTime(item.b_dueDate).month}}</div>
+        <div class="dueCell">Ds: {{parseTime(item.b_dueDate).day}}</div>
+        <div class="dueCell">Hs: {{parseTime(item.b_dueDate).hour}}</div>
+        <div class="dueCell">Ms: {{parseTime(item.b_dueDate).minute}}</div>
+        <div class="dueCell">S: {{parseTime(item.b_dueDate).second}}</div> -->
+      </div>
+      <div class="col-sm-1 completedBox">
+        <input type="checkbox" ng-model="item.q_completed.value" ng-change="items.$save(item)"/>
+      </div>
+      <div class="col-sm-1 deleteButton" ng-show="item.q_completed.value">
+        <button class="btn btn-danger" ng-click="items.$remove(item)">Delete item</button>
       </div>
     </div>
   </div>
+  <hr>
       <!-- <div id="chart-1" style="height: 300px;"></div> -->
-        __________________________________________________________________________________________
+
+<!--                              FORM                                 -->
+
         <!-- push a new message onto the array -->
       <form ng-submit="addItem()" class="form">
         <table>
+<!--                              name                                 -->
+
           <tr>
             <td>Enter item name:</td>
-            <td><input ng-model="newItemName" class="nameBox"/></td>
+            <td><input class="col-xs-1 form-control formBox" ng-model="newItemName" /></td>
           </tr>
+<!--                              date                                 -->
           <tr>
             <td>Enter due date:</td>
             <td>
-              <!-- <input type="datetime-local" ng-model="newDueDate" placeholder="e.g, 2016-05-01; 5:15:40 PM" class="dateBox add"/> -->
               <div class="row">
                 <div class="col-md-6">
-                  <p class="input-group">
+                  <p class="input-group formBox">
                     <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                     <span class="input-group-btn">
                       <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
                 </div>
-                <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-                <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-                <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
               </div>
-            </td>
-              <!-- <div class="row">
+              <div class="row">
                 <div class="col-md-6">
-                  <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control" ng-model="format" ng-options="f for f in formats"><option></option></select>
+                  <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control formBox" ng-model="format" ng-options="f for f in formats"><option></option></select>
                 </div>
-              </div> -->
+              </div>
+              <hr/>
+              <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+              <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable" uib-tooltip="weekend restriction">restrict weekends</button>
+            </td>
+          </tr>
+<!--                              time                                 -->
           <tr>
             <td>Enter due time:</td>
             <td>
-              <div uib-timepicker ng-model="newDueTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+              <div class="numberFormBox" uib-timepicker ng-model="newDueTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
               <pre class="alert alert-info">Time is: {{newDueTime | date: "shortTime"}}</pre>
 
               <div class="row">
                 <div class="col-xs-6">
                     Hours step is:
-                  <select class="form-control" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+                  <select class="form-control numberFormBox" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
                 </div>
                 <div class="col-xs-6">
                     Minutes step is:
-                  <select class="form-control" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
+                  <select class="form-control numberFormBox" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
                 </div>
               </div>
 
@@ -159,33 +172,20 @@
               <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
               <button type="button" class="btn btn-default" ng-click="update()">Set to 14:00</button>
               <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
-
-
             </td>
           </tr>
           <tr>
             <td>Enter est. time to finish:</td>
-            <td><input type="number" ng-model="newHourEst" min="0" max="12" class="numberBox"/> hours and <input type="number" ng-model="newMinuteEst" min="0" max="59" class="numberBox"/> minutes </td>
+            <td><select class="form-control numberFormBox" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select> hours and <select class="form-control numberFormBox" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select> minutes </td>
           </tr>
           <tr>
-            <td>Enter priority:</td>
-
-            <!-- <div class="btn-group" dropdown>
-              <button type="button" class="btn btn-primary" ng-click="addItem(item.selectedOption)">{{selectedOption.text}}</button>
-              <button type="button" class="btn btn-primary dropdown-toggle">
-                <span class="caret"></span>
-                <span class="sr-only">Split button!</span>
-              </button>
-              <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="importanceOption in importanceOptions">
-                  <a href="#" ng-click="setOption(importanceOption)">{{selectedOption.text}}</a>
-                </li>
-              </ul>
-            </div> -->
-
-              <td><select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="importanceBox">
-                <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select></td>
-
+            <td>Enter importance:</td>
+            <td>
+              <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control formBox">
+                <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}
+                </option>
+              </select>
+            </td>
           </tr>
           <tr>
             <td></td>

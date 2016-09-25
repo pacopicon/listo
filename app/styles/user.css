@@ -62,8 +62,8 @@
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
-.row {
-
+.list {
+  white-space: nowrap;
 }
 
 .cell {
@@ -72,12 +72,11 @@
   padding-bottom: -1em;
 }
 
-.editBox {
-
-}
-
-.dateCell .importanceCell .urgentCell .numberCell .rankCell .dueCell {
-  /*margin-left: -4em;*/
+.priorityCell {
+  position: relative;
+  overflow: auto;
+  width: 5em;
+  top: 0; left: 0; bottom: 0; right: 0;
 }
 
 .nameCell {
@@ -169,7 +168,7 @@
 .rankCell {
   position: relative;
   overflow: auto;
-  width: 4em;
+  width: 5em;
   color: black;
 }
 
@@ -219,6 +218,16 @@
   height: 4em;
 }
 
+.formBox {
+  width: 14em;
+}
+
+.numberFormBox {
+  width: 3.5em;
+  white-space: nowrap;
+}
+
+/* Begin CSS for Datepicker popup */
 .full button span {
     background-color: limegreen;
     border-radius: 32px;
@@ -229,6 +238,8 @@
     border-radius: 32px;
     color: black;
   }
+
+  /* End CSS for Datepicker popup*/
 
 .addButton {
   position: relative;

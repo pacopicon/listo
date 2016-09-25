@@ -23,7 +23,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // $scope.newDueDate = new Date();
 
-    // Begin Datepicker popup
+    // Begin Datepicker popup---------------------------------------------
     $scope.today = function() {
       $scope.newDueDate = new Date();
     };
@@ -43,7 +43,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     $scope.dateOptions = {
       dateDisabled: disabled,
       formatYear: 'yy',
-      maxDate: new Date(2020, 5, 22),
+      maxDate: new Date(2100, 5, 22),
       minDate: new Date(),
       startingDay: 1
     };
@@ -62,6 +62,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.toggleMin();
 
+    $scope.toggleWeekendDisable = function() {
+      $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
+    };
+
+    $scope.toggleWeekendDisable();
+
     $scope.open1 = function() {
       $scope.popup1.opened = true;
     };
@@ -74,9 +80,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       $scope.newDueDate = new Date(year, month, day);
     };
 
-    // $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    // $scope.format = $scope.formats[0];
-    // $scope.altInputFormats = ['M!/d!/yyyy'];
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
 
     $scope.popup1 = {
       opened: false
@@ -119,9 +125,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
       return '';
     }
-    // End Datepicker popup2
+    // End Datepicker popup----------------------------------------------
 
-    // Begin Timepicker
+    // Begin Timepicker--------------------------------------------------
     $scope.newDueTime = new Date();
 
     $scope.hstep = 1;
@@ -152,30 +158,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       $scope.newDueTime = null;
     };
 
-    // End Timepicker
+    // End Timepicker--------------------------------------------------
+
+    $scope.newHourEst = 1;
+    $scope.newMinuteESt = 15;
+
+    $scope.timeOptions = {
+      hour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      minute: [5, 10, 15, 25, 30, 45]
+    };
+
+    $scope.newImportanceTxt = "important";
 
 
-
-
-
-
-    $scope.newHourEst = 0;
-    $scope.newMinuteESt = 0;
-
-    // $scope.selectImportance = function() {
-    //   $scope.importanceOptions = [
-    //     {id: '1', text: "not important at all"},
-    //     {id: '2', text: "somewhat important"},
-    //     {id: '3', text: "important"},
-    //     {id: '4', text: "pretty important"},
-    //     {id: '5', text: "job depends on it"}
-    //   ];
-    //   $scope.selectedOption = $scope.importanceOptions[0];
-    //   $scope.setOption = function(importanceOption) {
-    //     $scope.selectedOption = importanceOption;
-    //   };
-    //   return $scope.selectedOption;
-    // };
 
     $scope.newImportanceTxt = {
       repeatSelect: null,
@@ -189,7 +184,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     };
 
     $scope.isCompleted = {
-      value : true
+      value: true
     };
 
     // $scope.addItem = function() {
