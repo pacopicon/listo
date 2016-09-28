@@ -1,7 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log",
-  function($scope, ItemCrud, $rootScope, $interval, $log) {
-
-    // time properties of the controller itself
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$uibModal",
+  function($scope, ItemCrud, $rootScope, $interval, $log, $uibModal) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -20,8 +18,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       var countdown = ItemCrud.parseTime(timeLeftInMillisecs);
       return countdown;
     };
-
-    // $scope.newDueDate = new Date();
 
     // Begin Datepicker popup---------------------------------------------
     $scope.today = function() {
@@ -68,7 +64,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.toggleWeekendDisable();
 
-    $scope.open1 = function() {
+    $scope.open = function() {
       $scope.popup1.opened = true;
     };
 
@@ -160,6 +156,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // End Timepicker--------------------------------------------------
 
+    // Begin Est-------------------------------------------------------
     $scope.newHourEst = 1;
     $scope.newMinuteESt = 15;
 
@@ -168,9 +165,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       minute: [5, 10, 15, 25, 30, 45]
     };
 
+    // End Est-------------------------------------------------------
+
+    // Begin Importance----------------------------------------------
     $scope.newImportanceTxt = "important";
-
-
 
     $scope.newImportanceTxt = {
       repeatSelect: null,
@@ -183,9 +181,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       ]
     };
 
+    // End Importance-----------------------------------------------
+
+    // Begin Completed----------------------------------------------
+
     $scope.isCompleted = {
       value: true
     };
+
+    // Begin Modal---------------------------------------------------
+
+    // End Modal-----------------------------------------------------
+
 
     // $scope.addItem = function() {
     //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);

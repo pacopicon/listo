@@ -112,18 +112,18 @@
   <hr>
       <!-- <div id="chart-1" style="height: 300px;"></div> -->
 
-<!--                              FORM                                 -->
+<!--                            FORM                               -->
 
         <!-- push a new message onto the array -->
       <form ng-submit="addItem()" class="form">
         <table>
-<!--                              name                                 -->
+<!--                            name                               -->
 
           <tr>
             <td>Enter item name:</td>
             <td><input class="col-xs-1 form-control formBox" ng-model="newItemName" /></td>
           </tr>
-<!--                              date                                 -->
+<!--                            date                               -->
           <tr>
             <td>Enter due date:</td>
             <td>
@@ -132,7 +132,7 @@
                   <p class="input-group formBox">
                     <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                     <span class="input-group-btn">
-                      <button type="button" class="btn btn-default" ng-click="open1()"><i class="glyphicon glyphicon-calendar"></i></button>
+                      <button type="button" class="btn btn-default" ng-click="open()"><i class="glyphicon glyphicon-calendar"></i></button>
                     </span>
                   </p>
                 </div>
@@ -146,10 +146,10 @@
               <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
               <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
               <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
-              <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable" uib-tooltip="weekend restriction">restrict weekends</button>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button>
             </td>
           </tr>
-<!--                              time                                 -->
+<!--                            time                               -->
           <tr>
             <td>Enter due time:</td>
             <td>
