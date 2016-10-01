@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$uibModal",
-  function($scope, ItemCrud, $rootScope, $interval, $log, $uibModal) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log",
+  function($scope, ItemCrud, $rootScope, $interval) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -51,42 +51,34 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
     }
 
-    $scope.toggleMin = function() {
-      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-    };
+    // $scope.toggleMin = function() {
+    //   $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    //   $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    // };
 
-    $scope.toggleMin();
+    // $scope.toggleMin();
 
-    $scope.toggleWeekendDisable = function() {
-      $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
-    };
+    // $scope.toggleWeekendDisable = function() {
+    //   $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
+    // };
 
-    $scope.toggleWeekendDisable();
+    // $scope.toggleWeekendDisable();
 
-    $scope.open = function() {
+    $scope.openDatePicker = function() {
       $scope.popup1.opened = true;
     };
-
-    // $scope.open2 = function() {
-    //   $scope.popup2.opened = true;
-    // };
 
     $scope.setDate = function(year, month, day) {
       $scope.newDueDate = new Date(year, month, day);
     };
 
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
+    // $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    // $scope.format = $scope.formats[0];
+    // $scope.altInputFormats = ['M!/d!/yyyy'];
 
     $scope.popup1 = {
       opened: false
     };
-
-    // $scope.popup2 = {
-    //   opened: false
-    // };
 
     var tomorrow = new Date();
     tomorrow.setDate(tomorrow.getDate() + 1);
@@ -129,15 +121,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     $scope.hstep = 1;
     $scope.mstep = 15;
 
-    $scope.options = {
-      hstep: [1, 2, 3],
-      mstep: [1, 5, 10, 15, 25, 30]
-    };
+    // $scope.options = {
+    //   hstep: [1, 2, 3],
+    //   mstep: [1, 5, 10, 15, 25, 30]
+    // };
 
     $scope.ismeridian = true;
-    $scope.toggleMode = function() {
-      $scope.ismeridian = ! $scope.ismeridian;
-    };
+    // $scope.toggleMode = function() {
+    //   $scope.ismeridian = ! $scope.ismeridian;
+    // };
 
     $scope.update = function() {
       var d = new Date();
@@ -189,15 +181,56 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       value: true
     };
 
-    // Begin Modal---------------------------------------------------
+    // Begin Accordion options -------------------------------------------
 
-    // End Modal-----------------------------------------------------
+    $scope.oneAtATime = true;
+
+    $scope.groups = [
+      {
+        title: 'Dynamic Group Header - 1',
+        content: 'Dynamic Group Body - 1'
+      },
+      {
+        title: 'Dynamic Group Header - 2',
+        content: 'Dynamic Group Body - 2'
+      }
+    ];
+
+    $scope.things = ['Item 1', 'Item 2', 'Item 3'];
+
+    $scope.addThing = function() {
+      var newItemNo = $scope.things.length + 1;
+      $scope.things.push('Thing ' + newThingNo);
+    };
+
+    $scope.status = {
+      isCustomHeaderOpen: false,
+      isFirstOpen: true,
+      isFirstDisabled: false
+    };
+
+    $scope.toggleMin = function() {
+      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    };
+
+    $scope.toggleWeekendDisable = function() {
+      $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
+    };
+
+    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    $scope.format = $scope.formats[0];
+    $scope.altInputFormats = ['M!/d!/yyyy'];
+
+    $scope.options = {
+      hstep: [1, 2, 3],
+      mstep: [1, 5, 10, 15, 25, 30]
+    };
 
 
-    // $scope.addItem = function() {
-    //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst,  $scope.newImportanceTxt);
-    // };
+    // End Accordion-----------------------------------------------------
 
+    // Begin CRUD Functions------------------------------------------
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
     };
