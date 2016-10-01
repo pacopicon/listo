@@ -251,6 +251,10 @@
   background-color: rgb(133,150,117);
 }
 
+.muted-text {
+  color: black;
+}
+
 /*clicToEdit directive template css*/
 
 /*body{
