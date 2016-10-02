@@ -1,4 +1,4 @@
-var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap"]);
+var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize"]);
 
 listo.config(function($stateProvider, $locationProvider) {
 

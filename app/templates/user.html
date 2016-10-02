@@ -115,24 +115,20 @@
           <div class="row">
             <div class="col-md-6">
               <p class="input-group formBox">
-                <input type="text" class="form-control" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                <input type="text" class="form-control formBox" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
-                  <button type="button" class="btn btn-default" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  <button type="button" class="btn btn-default buttonBox" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
               </p>
             </div>
           </div>
-          <div class="row">
-            <!-- <div class="col-md-6">
-              <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label> <select class="form-control formBox" ng-model="format" ng-options="f for f in formats"><option></option></select>
-            </div> -->
-          </div>
-          <hr/>
-          <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-          <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-          <!-- <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
-          <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button> -->
         </td>
+        <td>
+          <!-- <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+          <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button> -->
+        <!-- <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+        <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button> -->
+      </td>
       </tr>
 <!--                            time                               -->
       <tr>
@@ -179,20 +175,20 @@
         <td><button type="submit" type="button" class="btn btn-primary">Add to-do item</button></td>
       </tr>
     </table>
-  </form>
+
 
 <!--                            Accordion WINDOW                           -->
 
   <script type="text/ng-template" id="group-template.html">
     <div class="panel panel-default">
       <div class="panel-heading">
-        <h4 class="panel-title" style="color:#fa39c3">
+        <p class="panel-title" style="color:black">
           <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
             <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
               {{heading}}
             </span>
           </a>
-        </h4>
+        </p>
       </div>
       <div class="panel-collapse collapse" uib-collapse="!isOpen">
         <div class="panel-body" style="text-align: right" ng-transclude></div>
@@ -201,18 +197,59 @@
   </script>
 
   <uib-accordion close-others="oneAtATime">
-    <div uib-accordion-group class="panel-default" heading="Options">
-      <label>Format: <span class="muted-text">(manual alternate <em>{{altInputFormats[0]}}</em>)</span></label>
-      <select class="form-control formBox" ng-model="format" ng-options="f for f in formats"><option></option></select>
-      <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
-      <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button>
-      Hours step is:
-      <select class="form-control numberFormBox" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
-      Minutes step is:
-      <select class="form-control numberFormBox" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
-      <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
+    <div uib-accordion-group heading="Options">
+      <div class="alert alert-info">
+        <table>
+          <tr>
+            <td>
+              Format:
+            </td>
+            <td>
+              <select class="form-control formBox" ng-model="format" ng-options="f for f in formats"><option></option></select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Restrict past days:
+            </td>
+            <td>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" ng-click="buttonStyle={color:'red'}" ng-style="buttonStyle" uib-tooltip="After today restriction">Min date</button>
+            </td>
+          </tr>
+            <td>
+              Restrict weekends:
+            </td>
+            <td>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button><br>
+            </td>
+          <tr>
+            <td>
+              Hours step is:
+            </td>
+            <td>
+              <select class="form-control numberFormBox" ng-model="hstep" ng-options="opt for opt in options.hstep"></select><br>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              Minutes step is:
+            </td>
+            <td>
+              <select class="form-control numberFormBox" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              12H or 24H:
+            </td>
+            <td>
+              <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button>
+            </td>
+          </tr>
+      </table>
+      </div>
     </div>
   </uib-accordion>
 
-
+</form>
 </section>

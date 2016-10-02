@@ -55,13 +55,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     //   $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
     //   $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
     // };
-
+    //
     // $scope.toggleMin();
-
+    //
     // $scope.toggleWeekendDisable = function() {
     //   $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
     // };
-
+    //
     // $scope.toggleWeekendDisable();
 
     $scope.openDatePicker = function() {
@@ -127,9 +127,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // };
 
     $scope.ismeridian = true;
-    // $scope.toggleMode = function() {
-    //   $scope.ismeridian = ! $scope.ismeridian;
-    // };
+    $scope.toggleMode = function() {
+      $scope.ismeridian = ! $scope.ismeridian;
+    };
 
     $scope.update = function() {
       var d = new Date();
@@ -150,7 +150,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // Begin Est-------------------------------------------------------
     $scope.newHourEst = 1;
-    $scope.newMinuteESt = 15;
+    $scope.newMinuteEst = 15;
 
     $scope.timeOptions = {
       hour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -160,10 +160,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // End Est-------------------------------------------------------
 
     // Begin Importance----------------------------------------------
-    $scope.newImportanceTxt = "important";
-
     $scope.newImportanceTxt = {
-      repeatSelect: null,
+      repeatSelect: "important",
       availableOptions: [
         {id: '1', text: "not important at all"},
         {id: '2', text: "somewhat important"},
@@ -185,24 +183,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.oneAtATime = true;
 
-    $scope.groups = [
-      {
-        title: 'Dynamic Group Header - 1',
-        content: 'Dynamic Group Body - 1'
-      },
-      {
-        title: 'Dynamic Group Header - 2',
-        content: 'Dynamic Group Body - 2'
-      }
-    ];
-
-    $scope.things = ['Item 1', 'Item 2', 'Item 3'];
-
-    $scope.addThing = function() {
-      var newItemNo = $scope.things.length + 1;
-      $scope.things.push('Thing ' + newThingNo);
-    };
-
     $scope.status = {
       isCustomHeaderOpen: false,
       isFirstOpen: true,
@@ -214,9 +194,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
     };
 
+    $scope.toggleMin();
+
     $scope.toggleWeekendDisable = function() {
       $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
     };
+
+    $scope.toggleWeekendDisable();
+
+
+
+
 
     $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     $scope.format = $scope.formats[0];

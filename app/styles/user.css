@@ -220,10 +220,17 @@
 
 .formBox {
   width: 14em;
+  height: 2.5em;
+  /*padding-bottom: 1em;*/
+}
+
+.buttonBox {
+  height: 2.5em;
 }
 
 .numberFormBox {
   width: 3.5em;
+  /*height: 2.5em;*/
   white-space: nowrap;
 }
 
@@ -251,10 +258,13 @@
   background-color: rgb(133,150,117);
 }
 
-.muted-text {
+.well {
   color: black;
 }
 
+.panel-body {
+  width: 30em;
+}
 /*clicToEdit directive template css*/
 
 /*body{
