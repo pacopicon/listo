@@ -133,7 +133,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.update = function() {
       var d = new Date();
-      d.setHours(14);
+      d.setHours(17);
       d.setMinutes(0);
       $scope.newDueTime = d;
     };
