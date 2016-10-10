@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log",
-  function($scope, ItemCrud, $rootScope, $interval) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$sce",
+  function($scope, ItemCrud, $rootScope, $interval, $sce) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -218,13 +218,43 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // End Accordion-----------------------------------------------------
 
+    // Begin popover-----------------------------------------------------
+
+    $scope.dynamicPopover = {
+      content: '',
+      templateUrl: 'dateTimePickerPopover.html',
+      title: 'choose date and time'
+    };
+
+    $scope.placement = {
+      options: [
+        'top',
+        'top-left',
+        'top-right',
+        'bottom',
+        'bottom-left',
+        'bottom-right',
+        'left',
+        'left-top',
+        'left-bottom',
+        'right',
+        'right-top',
+        'right-bottom'
+      ],
+      selected: 'top'
+    };
+
+    // $scope.htmlPopover = $sce.trustAsHtml('<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content');
+
+    // End popover------------------------------------------
+
     // Begin CRUD Functions------------------------------------------
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
     };
 
-    $scope.updateDueTiming = function() {
-      ItemCrud.updateDueTiming($scope.newDueDate)
+    $scope.updateDueTime = function() {
+      ItemCrud.updateDueTime($scope.newDueDate)
     };
   }
 ]);

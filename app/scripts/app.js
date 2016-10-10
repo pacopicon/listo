@@ -1,4 +1,6 @@
-var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize"]);
+var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap",
+"mgcrea.ngStrap.tooltip", "mgcrea.ngStrap.datepicker"
+]);
 
 listo.config(function($stateProvider, $locationProvider) {
 

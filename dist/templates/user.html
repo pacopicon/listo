@@ -31,14 +31,34 @@
         <div class="nameLine" ng-class="{'text': item.q_completed.value}" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
           {{item.a_text}}
         </div>
-        <input class="nameEditBox editBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
+        <input class="nameEditBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
       </div>
 <!--                            DATE                                   -->
       <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
-        <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+        <!-- <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
           {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
-        </div>
-        <input class="dateEditBox editBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
+        </div> -->
+
+        <!-- <button ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button> -->
+        <button popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button>
+        <script type="text/ng-template" id="myPopoverTemplate.html">
+          <div>{{dynamicPopover.content}}</div>
+          <div class="form-group">
+            <label>Popup Title:</label>
+            <input type="text" ng-model="dynamicPopover.title" class="form-control">
+          </div>
+        </script>
+
+        <!-- <div ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" uib-datepicker ng-model="newDueDate">
+          <div class="well well-sm" datepicker-options="dateOptions"></div>
+          <hr />
+          <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+          <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+          <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+        </div> -->
+
+
+        <!-- <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/> -->
       </div>
 <!--                            IMPORTANCE                             -->
       <div class="col-sm-1 importanceCell cell">
@@ -52,7 +72,7 @@
         <div class="urgentLine" ng-class="{'text': item.q_completed.value}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
           {{item.r_urgent}}
         </div>
-        <div class="urgentEditBox editBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+        <div class="urgentEditBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
           Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="items.$save(item)" />
         </div>
       </div>
@@ -61,13 +81,13 @@
         <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
           {{item.o_timeToFinishDate | date: 'H'}}
         </div>
-        <input class="numberEditBox editBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
+        <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
       </div>
       <div class="col-sm-1 numberCell cell">
         <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
           {{item.o_timeToFinishDate | date: 'm'}}
         </div>
-        <input class="numberEditBox editBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
+        <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
       </div>
 <!--                            RANK                                   -->
       <div class="col-sm-1 rankCell cell" ng-class="{'text': item.q_completed.value}">
@@ -101,9 +121,8 @@
 
         <!-- push a new message onto the array -->
   <form ng-submit="addItem()" class="form">
-    <table>
+    <table class="outerTable">
 <!--                         name                             -->
-
       <tr>
         <td>Enter item name:</td>
         <td><input class="col-xs-1 form-control formBox" ng-model="newItemName" /></td>
@@ -134,8 +153,19 @@
       <tr>
         <td>Enter due time:</td>
         <td>
-          <div class="numberFormBox" uib-timepicker ng-model="newDueTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"><button type="button" class="btn btn-default" ng-click="update()">Set to end of day</button>
-          <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button></div>
+          <table class="innerTableOne">
+            <tr>
+              <td>
+                <div class="numberFormBox" uib-timepicker ng-model="newDueTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+              </td>
+              <td class="endOfDayButton">
+                <button type="button" class="btn btn-default" ng-click="update()">end of day</button>
+              </td>
+              <td class="clearButton">
+                <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
+              </td>
+            </tr>
+          </table>
 
           <!-- <div class="row">
             <div class="col-xs-6">
@@ -154,7 +184,20 @@
 <!--                            est. time                              -->
       <tr>
         <td>Enter est. time to finish:</td>
-        <td><select class="form-control numberFormBox" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select> hours and <select class="form-control numberFormBox" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select> minutes </td>
+        <td>
+          <table class="innerTableTwo">
+            <tr>
+              <td>
+                <select class="form-control numberFormBox" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
+              </td>
+              <td class="hourPickerCaption">hours and</td>
+              <td class="minutePicker">
+                <select class="form-control numberFormBox" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
+              </td>
+              <td class="minutePickerCaption">minutes</td>
+            </tr>
+          </table>
+        </td>
       </tr>
 <!--                            importance                             -->
       <tr>
@@ -170,27 +213,29 @@
         <td></td>
         <td><button type="submit" type="button" class="btn btn-primary">Add to-do item</button></td>
       </tr>
-    </table>
 
 
+</table>
 <!--                            Accordion WINDOW                           -->
+    <tr>
+      <script type="text/ng-template" id="group-template.html">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <p class="panel-title" style="color:black">
+              <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
+                <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
+                  {{heading}}
+                </span>
+              </a>
+            </p>
+          </div>
+          <div class="panel-collapse collapse" uib-collapse="!isOpen">
+            <div class="panel-body" style="text-align: right" ng-transclude></div>
+          </div>
+        </div>
+      </script>
+    </tr>
 
-  <script type="text/ng-template" id="group-template.html">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <p class="panel-title" style="color:black">
-          <a href tabindex="0" class="accordion-toggle" ng-click="toggleOpen()" uib-accordion-transclude="heading">
-            <span uib-accordion-header ng-class="{'text-muted': isDisabled}">
-              {{heading}}
-            </span>
-          </a>
-        </p>
-      </div>
-      <div class="panel-collapse collapse" uib-collapse="!isOpen">
-        <div class="panel-body" style="text-align: right" ng-transclude></div>
-      </div>
-    </div>
-  </script>
 
   <uib-accordion close-others="oneAtATime">
     <div uib-accordion-group heading="Options">

@@ -66,6 +66,10 @@
   white-space: nowrap;
 }
 
+.row {
+  /*height: 10em;*/
+}
+
 .cell {
   /*height: 5em;*/
   padding-right: 0px;
@@ -94,6 +98,7 @@
 
 .nameEditBox {
   width: 12em;
+  border-radius: 0.3em;
 }
 
 .dateCell {
@@ -110,6 +115,30 @@
 
 .dateEditBox {
   width: 14em;
+}
+
+/*
+ * Datepicker element
+ */
+
+.datepicker.dropdown-menu {
+  width: 250px;
+  height: 270px;
+  button {
+    outline: none;
+    border: 0px;
+  }
+  tbody {
+    height: 180px;
+  }
+  tbody button {
+    padding: 6px;
+  }
+  &.datepicker-mode-1, &.datepicker-mode-2 {
+    tbody button {
+      height: 65px;
+    }
+  }
 }
 
 .importanceCell {
@@ -205,17 +234,17 @@
 /* End of CSS for listed items */
 /* Begin CSS for Form */
 
+.outerTable {
+  width: 47em;
+}
+
 .form {
   color: black;
   margin-left: 2.42em;
 }
 
-.add {
-  height: 1.8em;
-}
-
-.edit {
-  height: 4em;
+.tableRow {
+  margin-bottom: 10em;
 }
 
 .formBox {
@@ -228,10 +257,40 @@
   height: 2.5em;
 }
 
+.innerTableOne {
+  width: 30em;
+}
+
+.endOfDayButton {
+  padding-left: 8.2em;
+}
+
+.clearButton {
+  padding-right: 5em;
+}
+
+.innerTableTwo {
+  width: 18em;
+}
+
+.hourPickerCaption {
+  /*padding-right: 10em;*/
+  /*float: left;*/
+
+}
+
+.minutePicker {
+  /*position: absolute;
+  left: 20em;*/
+  /*padding-right: 15em;*/
+}
+
+.minutePickerCaption {
+
+}
+
 .numberFormBox {
   width: 3.5em;
-  /*height: 2.5em;*/
-  white-space: nowrap;
 }
 
 /* Begin CSS for Datepicker popup */

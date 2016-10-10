@@ -8,76 +8,76 @@ listo.factory("ItemCrud", ["$firebaseArray",
         // holds items
     var items = $firebaseArray(ref);
 
-    var stringifyDate = function(dueDate) {
-      var yearString = dueDate.getFullYear().toString();
-
-      switch (dueDate.getMonth()) {
-        case 0:
-          monthString = "January";
-          break;
-        case 1:
-          monthString = "February";
-          break;
-        case 2:
-          monthString = "March";
-          break;
-        case 3:
-          monthString = "April";
-          break;
-        case 4:
-          monthString = "May";
-          break;
-        case 5:
-          monthString = "June";
-          break;
-        case 6:
-          monthString = "July";
-          break;
-        case 7:
-          monthString = "August";
-          break;
-        case 8:
-          monthString = "September";
-          break;
-        case 9:
-          monthString = "October";
-          break;
-        case 10:
-          monthString = "November";
-          break;
-        case 11:
-          monthString = "December";
-      };
-
-      var dayOfMonthString = dueDate.getDate().toString();
-
-      switch (dueDate.getDay()) {
-        case 0:
-          dayOfWeekString = "Sunday";
-          break;
-        case 1:
-          dayOfWeekString = "Monday";
-          break;
-        case 2:
-          dayOfWeekString = "Tuesday";
-          break;
-        case 3:
-          dayOfWeekString = "Wednesday";
-          break;
-        case 4:
-          dayOfWeekString = "Thursday";
-          break;
-        case 5:
-          dayOfWeekString = "Friday";
-          break;
-        case 6:
-          dayOfWeekString = "Saturday";
-      }
-      var hourString = dueDate.getHours().toString();
-      var minuteString = dueDate.getMinutes().toString();
-
-      return dayOfWeekString + ", " + monthString + " " + dayOfMonthString + ", " + yearString + " at " + hourString + ":" + minuteString;
-    };
+    // var stringifyDate = function(dueDate) {
+    //   var yearString = dueDate.getFullYear().toString();
+    //
+    //   switch (dueDate.getMonth()) {
+    //     case 0:
+    //       monthString = "January";
+    //       break;
+    //     case 1:
+    //       monthString = "February";
+    //       break;
+    //     case 2:
+    //       monthString = "March";
+    //       break;
+    //     case 3:
+    //       monthString = "April";
+    //       break;
+    //     case 4:
+    //       monthString = "May";
+    //       break;
+    //     case 5:
+    //       monthString = "June";
+    //       break;
+    //     case 6:
+    //       monthString = "July";
+    //       break;
+    //     case 7:
+    //       monthString = "August";
+    //       break;
+    //     case 8:
+    //       monthString = "September";
+    //       break;
+    //     case 9:
+    //       monthString = "October";
+    //       break;
+    //     case 10:
+    //       monthString = "November";
+    //       break;
+    //     case 11:
+    //       monthString = "December";
+    //   };
+    //
+    //   var dayOfMonthString = dueDate.getDate().toString();
+    //
+    //   switch (dueDate.getDay()) {
+    //     case 0:
+    //       dayOfWeekString = "Sunday";
+    //       break;
+    //     case 1:
+    //       dayOfWeekString = "Monday";
+    //       break;
+    //     case 2:
+    //       dayOfWeekString = "Tuesday";
+    //       break;
+    //     case 3:
+    //       dayOfWeekString = "Wednesday";
+    //       break;
+    //     case 4:
+    //       dayOfWeekString = "Thursday";
+    //       break;
+    //     case 5:
+    //       dayOfWeekString = "Friday";
+    //       break;
+    //     case 6:
+    //       dayOfWeekString = "Saturday";
+    //   }
+    //   var hourString = dueDate.getHours().toString();
+    //   var minuteString = dueDate.getMinutes().toString();
+    //
+    //   return dayOfWeekString + ", " + monthString + " " + dayOfMonthString + ", " + yearString + " at " + hourString + ":" + minuteString;
+    // };
 
     var dueDatePlusDueTime = function(dueDate, dueTime) {
       var dueHour = dueTime.getHours();
@@ -151,6 +151,23 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       var rank = Math.round((ratio * importanceMultiple + ratio) * 1000000);
 
+      return rank;
+    };
+
+    var prioritize = function(dueDate, dueTime, eHour, eMinute, importanceTxt) {
+
+      var stringifiedDate = stringifyDate(dueDate);
+      var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
+      var timeTillDueDate = totalDueDate.getTime() - Date.now();
+      var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
+      // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
+      var estTime = calculateEstTime(eHour, eMinute);
+      // ratio does not go into DB, but is used to figure out RANK below (words in all-caps refer to things that DO go into the DB)
+      var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
+      // urgency is used to calculate both RANK and URGENCYTXT below
+      var urgency = calculateUrgency(ratio);
+      var urgencyTxt = createUrgencyTxt(urgency);
+      var rank = calculateRank(importanceTxt, ratio, urgency);
       return rank;
     };
 
@@ -241,19 +258,9 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       addItem: function(itemName, dueDate, dueTime, eHour, eMinute, importanceTxt) {
 
-        var stringifiedDate = stringifyDate(dueDate);
-        var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
-        var timeTillDueDate = totalDueDate.getTime() - Date.now();
-        var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
-        // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
-        var estTime = calculateEstTime(eHour, eMinute);
-        // ratio does not go into DB, but is used to figure out RANK below (words in all-caps refer to things that DO go into the DB)
-        var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
-        // urgency is used to calculate both RANK and URGENCYTXT below
-        var urgency = calculateUrgency(ratio);
-        var urgencyTxt = createUrgencyTxt(urgency);
-        var rank = calculateRank(importanceTxt, ratio, urgency);
+        // var stringifiedDate = stringifyDate(dueDate);
 
+        var rank = prioritize(dueDate, dueTime, eHour, eMinute, importanceTxt);
 
         items.$add({
 
@@ -270,6 +277,12 @@ listo.factory("ItemCrud", ["$firebaseArray",
             t_created_at: Firebase.ServerValue.TIMESTAMP
         });
       }, // end of AddItem
+
+      updateDueTime: function() {
+
+        items.s_rank = prioritize(item.b_dueDate, dueTime, eHour, eMinute, importanceTxt);
+
+      },
 
       getAllItems: function() {
         return items;
