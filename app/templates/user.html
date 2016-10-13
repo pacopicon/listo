@@ -35,19 +35,44 @@
       </div>
 <!--                            DATE                                   -->
       <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
+
+<!--  Begin angular-strap datePicker -->
+        <!-- <form name="datepickerForm" class="form-inline" role="form">
+  Basic example
+          <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+            <label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as date)</small></label>
+            <input type="text" class="form-control" ng-model="item.b_dueDate" name="date" bs-datepicker ng-change="items.$save(item)"/>
+          </div>
+        </form> -->
+
+      <form name="timepickerForm" class="form-inline" role="form">
+        <div class="form-group">
+          <label class="control-label"><i class="fa fa-calendar"></i> Datetime picker</label><br>
+          <div class="form-group">
+            <input type="text" size="10" class="form-control" ng-model="item.b_dueDate" data-autoclose="1" placeholder="Date" bs-datepicker>
+          </div>
+          <div class="form-group">
+            <input type="text" size="8" class="form-control" ng-model="item.b_dueDate" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+          </div>
+        </div>
+      </form>
+
+  <!--  End angular-strap datePicker -->
+
         <!-- <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
           {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
         </div> -->
 
         <!-- <button ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button> -->
-        <button popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button>
+
+        <!-- <button popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button>
         <script type="text/ng-template" id="myPopoverTemplate.html">
           <div>{{dynamicPopover.content}}</div>
           <div class="form-group">
             <label>Popup Title:</label>
             <input type="text" ng-model="dynamicPopover.title" class="form-control">
           </div>
-        </script>
+        </script> -->
 
         <!-- <div ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" uib-datepicker ng-model="newDueDate">
           <div class="well well-sm" datepicker-options="dateOptions"></div>
@@ -56,7 +81,6 @@
           <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
           <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
         </div> -->
-
 
         <!-- <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/> -->
       </div>
@@ -129,16 +153,38 @@
       </tr>
 <!--                            date                               -->
       <tr>
-        <td>Enter due date:</td>
+        <td>Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :</td>
         <td>
           <div class="row">
             <div class="col-md-6">
-              <p class="input-group formBox">
+
+
+              <!-- <form name="datepickerForm" class="form-inline" role="form">
+                <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
+                  <label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as date)</small></label>
+                  <input type="text" class="form-control" ng-model="newDueDate" data-autoclose="1" name="date" bs-datepicker>
+                </div>
+              </form> -->
+
+              <form name="timepickerForm" class="form-inline" role="form">
+                <div class="form-group">
+                  <!-- <label class="control-label"><i class="fa fa-calendar"></i> Datetime picker</label><br> -->
+                  <div class="form-group">
+                    <input type="text" size="10" class="form-control" ng-model="newDueDate" data-autoclose="1" placeholder="Date" bs-datepicker>
+                  </div>
+                  <div class="form-group">
+                    <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+                  </div>
+                </div>
+              </form>
+
+
+              <!-- <p class="input-group formBox">
                 <input type="text" class="form-control formBox" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default buttonBox" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
-              </p>
+              </p> -->
             </div>
           </div>
         </td>
@@ -216,8 +262,8 @@
 
 
 </table>
-<!--                            Accordion WINDOW                           -->
-    <tr>
+<!--                     Accordion WINDOW                       -->
+    <!-- <tr>
       <script type="text/ng-template" id="group-template.html">
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -290,7 +336,7 @@
       </table>
       </div>
     </div>
-  </uib-accordion>
+  </uib-accordion> -->
 
 </form>
 </section>

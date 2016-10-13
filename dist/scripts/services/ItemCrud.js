@@ -156,7 +156,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
     var prioritize = function(dueDate, dueTime, eHour, eMinute, importanceTxt) {
 
-      var stringifiedDate = stringifyDate(dueDate);
+      // var stringifiedDate = stringifyDate(dueDate);
       var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
       var timeTillDueDate = totalDueDate.getTime() - Date.now();
       var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
@@ -168,7 +168,13 @@ listo.factory("ItemCrud", ["$firebaseArray",
       var urgency = calculateUrgency(ratio);
       var urgencyTxt = createUrgencyTxt(urgency);
       var rank = calculateRank(importanceTxt, ratio, urgency);
-      return rank;
+
+      return {
+        totalDueDate: totalDueDate,
+        estTimeAsDateNum: estTimeAsDateNum,
+        urgencyTxt: urgencyTxt,
+        rank: rank
+      };
     };
 
     return {
@@ -256,24 +262,26 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
 
 
-      addItem: function(itemName, dueDate, dueTime, eHour, eMinute, importanceTxt) {
+      // addItem: function(itemName, dueDate, dueTime, eHour, eMinute, importanceTxt) {
+      addItem: function(itemName, dueDate, eHour, eMinute, importanceTxt) {
 
         // var stringifiedDate = stringifyDate(dueDate);
 
-        var rank = prioritize(dueDate, dueTime, eHour, eMinute, importanceTxt);
+        var itemProperty = prioritize(dueDate, dueTime, eHour, eMinute, importanceTxt);
 
         items.$add({
 
             a_text: itemName,
-            b_dueDate: totalDueDate.getTime(),
-            c_dueDateString: stringifiedDate,
+            b_dueDate: dueDate,
+            // b_dueDate: itemProperty.totalDueDate.getTime(),
+            // c_dueDateString: stringifiedDate,
             m_hoursToFinish: eHour,
             n_minutesToFinish: eMinute,
-            o_timeToFinishDate: estTimeAsDateNum,
+            o_timeToFinishDate: itemProperty.estTimeAsDateNum,
             p_importance: importanceTxt,
             q_completed: false,
-            r_urgent: urgencyTxt,
-            s_rank: rank,
+            r_urgent: itemProperty.urgencyTxt,
+            s_rank: itemProperty.rank,
             t_created_at: Firebase.ServerValue.TIMESTAMP
         });
       }, // end of AddItem

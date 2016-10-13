@@ -1,8 +1,6 @@
-var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap",
-"mgcrea.ngStrap.tooltip", "mgcrea.ngStrap.datepicker"
-]);
+var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap"]);
 
-listo.config(function($stateProvider, $locationProvider) {
+listo.config(function($stateProvider, $locationProvider, $datepickerProvider) {
 
     $locationProvider.html5Mode({
         enabled: true,
@@ -20,6 +18,11 @@ listo.config(function($stateProvider, $locationProvider) {
             controller: 'UserCtrl',
             templateUrl: '/templates/user.html'
         });
+
+    angular.extend($datepickerProvider.defaults, {
+      dateFormat: 'dd/MM/yyyy',
+      startWeek: 1
+    });
 });
 
 //(function () {

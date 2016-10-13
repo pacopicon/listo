@@ -1,8 +1,4 @@
-'use strict';
-
-listo.module('mgcrea.ngStrap.helpers.dimensions', [])
-
-  .factory('dimensions', function () {
+listo.factory('dimensions', function () {
 
     var fn = {};
 

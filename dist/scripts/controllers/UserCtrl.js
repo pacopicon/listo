@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$sce",
-  function($scope, ItemCrud, $rootScope, $interval, $sce) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale",
+  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -18,6 +18,21 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       var countdown = ItemCrud.parseTime(timeLeftInMillisecs);
       return countdown;
     };
+
+    // Begin AngularStrap Datepicker ---------------------------------------------
+
+
+    $scope.newDueDate = new Date();
+
+    $scope.getType = function(key) {
+      return Object.prototype.toString.call($scope[key]);
+    };
+
+    $scope.clearDates = function() {
+      $scope.newDueDate = null;
+    };
+
+    // End AngularStrap Datepicker ---------------------------------------------
 
     // Begin Datepicker popup---------------------------------------------
     $scope.today = function() {
@@ -114,6 +129,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       return '';
     }
     // End Datepicker popup----------------------------------------------
+
+
+    // Begin AngularStrap timePicker-------------------------------------
+
+    $scope.newDueTime = new Date(1970, 0, 1, 10, 30, 40);
+    $scope.sharedDate = new Date(new Date().setMinutes(0, 0));
+
+
+    // End AngularStrap timePicker-------------------------------------
 
     // Begin Timepicker--------------------------------------------------
     $scope.newDueTime = new Date();
