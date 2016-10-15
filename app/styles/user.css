@@ -235,7 +235,7 @@
 /* Begin CSS for Form */
 
 .outerTable {
-  width: 47em;
+  width: 41em;
 }
 
 .form {
@@ -247,7 +247,29 @@
   margin-bottom: 10em;
 }
 
+.innerTableOne {
+  width: 17.75em;
+}
+
 .formBox {
+  padding-bottom: 1em;
+}
+
+.name {
+  width: 17.5em;
+}
+
+.date {
+  width: 11em;
+  /*height: 2.5em;*/
+}
+
+.time {
+  width: 6.2em;
+  /*height: 2.5em;*/
+}
+
+.importance {
   width: 14em;
   height: 2.5em;
   /*padding-bottom: 1em;*/
@@ -257,39 +279,12 @@
   height: 2.5em;
 }
 
-.innerTableOne {
-  width: 30em;
-}
-
-.endOfDayButton {
-  padding-left: 8.2em;
-}
-
-.clearButton {
-  padding-right: 5em;
-}
-
 .innerTableTwo {
   width: 18em;
 }
 
-.hourPickerCaption {
-  /*padding-right: 10em;*/
-  /*float: left;*/
 
-}
-
-.minutePicker {
-  /*position: absolute;
-  left: 20em;*/
-  /*padding-right: 15em;*/
-}
-
-.minutePickerCaption {
-
-}
-
-.numberFormBox {
+.number {
   width: 3.5em;
 }
 

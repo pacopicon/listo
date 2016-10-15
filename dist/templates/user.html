@@ -10,7 +10,7 @@
 
     <div class="row">
       <b>
-        <div class="col-sm-1 priorityCell">priority:</div>
+        <div class="col-sm-1 priorityCell">#</div>
         <div class="col-sm-1 nameCell">to do item:</div>
         <div class="col-sm-1 dateCell">date and time due:</div>
         <div class="col-sm-1 importanceCell">importance:</div>
@@ -47,12 +47,11 @@
 
       <form name="timepickerForm" class="form-inline" role="form">
         <div class="form-group">
-          <label class="control-label"><i class="fa fa-calendar"></i> Datetime picker</label><br>
           <div class="form-group">
-            <input type="text" size="10" class="form-control" ng-model="item.b_dueDate" data-autoclose="1" placeholder="Date" bs-datepicker>
+            <input type="text" size="10" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-autoclose="1" placeholder="Date" bs-datepicker>
           </div>
           <div class="form-group">
-            <input type="text" size="8" class="form-control" ng-model="item.b_dueDate" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+            <input type="text" size="8" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
           </div>
         </div>
       </form>
@@ -148,55 +147,59 @@
     <table class="outerTable">
 <!--                         name                             -->
       <tr>
-        <td>Enter item name:</td>
-        <td><input class="col-xs-1 form-control formBox" ng-model="newItemName" /></td>
+        <td class="formBox">
+          Enter item name:
+        </td>
+        <td class="formBox">
+          <input class="col-xs-1 form-control name" ng-model="newItemName" />
+        </td>
       </tr>
 <!--                            date                               -->
       <tr>
-        <td>Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :</td>
-        <td>
+        <td class="formBox">
+          Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :
+        </td>
+        <td class="formBox">
           <div class="row">
             <div class="col-md-6">
-
-
-              <!-- <form name="datepickerForm" class="form-inline" role="form">
-                <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
-                  <label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as date)</small></label>
-                  <input type="text" class="form-control" ng-model="newDueDate" data-autoclose="1" name="date" bs-datepicker>
-                </div>
-              </form> -->
-
               <form name="timepickerForm" class="form-inline" role="form">
-                <div class="form-group">
-                  <!-- <label class="control-label"><i class="fa fa-calendar"></i> Datetime picker</label><br> -->
-                  <div class="form-group">
-                    <input type="text" size="10" class="form-control" ng-model="newDueDate" data-autoclose="1" placeholder="Date" bs-datepicker>
-                  </div>
-                  <div class="form-group">
-                    <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="3" placeholder="Time" bs-timepicker>
-                  </div>
-                </div>
+                <table class="innerTableOne">
+                  <tr>
+                    <td>
+                      <div class="date">
+                        <input type="text" size="10" class="form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" placeholder="Date" bs-datepicker>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="time">
+                        <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
               </form>
 
-
-              <!-- <p class="input-group formBox">
+<!--
+              <p class="input-group formBox">
                 <input type="text" class="form-control formBox" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
                 <span class="input-group-btn">
                   <button type="button" class="btn btn-default buttonBox" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
                 </span>
-              </p> -->
-            </div>
-          </div>
-        </td>
-        <td>
-          <!-- <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-          <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button> -->
-        <!-- <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
-        <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button> -->
+              </p>
+
       </td>
-      </tr>
+      <td>
+              <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+              <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+            <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+            <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button> -->
+
+          </div>
+        </div>
+      </td>
+    </tr>
 <!--                            time                               -->
-      <tr>
+      <!-- <tr>
         <td>Enter due time:</td>
         <td>
           <table class="innerTableOne">
@@ -211,7 +214,7 @@
                 <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
               </td>
             </tr>
-          </table>
+          </table> -->
 
           <!-- <div class="row">
             <div class="col-xs-6">
@@ -224,21 +227,23 @@
             </div>
           </div> -->
           <!-- <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button> -->
-
+<!--
         </td>
-      </tr>
+      </tr> -->
 <!--                            est. time                              -->
       <tr>
-        <td>Enter est. time to finish:</td>
-        <td>
+        <td class="formBox">
+          Enter est. time to finish:
+        </td>
+        <td class="formBox">
           <table class="innerTableTwo">
             <tr>
               <td>
-                <select class="form-control numberFormBox" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
+                <select class="form-control number" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
               </td>
               <td class="hourPickerCaption">hours and</td>
               <td class="minutePicker">
-                <select class="form-control numberFormBox" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
+                <select class="form-control number" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
               </td>
               <td class="minutePickerCaption">minutes</td>
             </tr>
@@ -247,9 +252,11 @@
       </tr>
 <!--                            importance                             -->
       <tr>
-        <td>Enter importance:</td>
-        <td>
-          <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control formBox">
+        <td class="formBox">
+          Enter importance:
+        </td>
+        <td class="formBox">
+          <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control importance formBox">
             <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}
             </option>
           </select>
