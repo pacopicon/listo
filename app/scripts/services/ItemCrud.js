@@ -154,11 +154,13 @@ listo.factory("ItemCrud", ["$firebaseArray",
       return rank;
     };
 
-    var prioritize = function(dueDate, dueTime, eHour, eMinute, importanceTxt) {
+    var prioritize = function(dueDate, eHour, eMinute, importanceTxt) {
 
       // var stringifiedDate = stringifyDate(dueDate);
-      var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
-      var timeTillDueDate = totalDueDate.getTime() - Date.now();
+      // var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
+      // var timeTillDueDate = totalDueDate.getTime() - Date.now();
+      var timeTillDueDate = dueDate.getTime() - Date.now();
+      console.log("timeTillDueDate: " + timeTillDueDate);
       var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
       // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
       var estTime = calculateEstTime(eHour, eMinute);
@@ -170,7 +172,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
       var rank = calculateRank(importanceTxt, ratio, urgency);
 
       return {
-        totalDueDate: totalDueDate,
+        // totalDueDate: totalDueDate,
         estTimeAsDateNum: estTimeAsDateNum,
         urgencyTxt: urgencyTxt,
         rank: rank
@@ -260,19 +262,18 @@ listo.factory("ItemCrud", ["$firebaseArray",
       //     items.$save(item)
       // }
 
-
-
-      // addItem: function(itemName, dueDate, dueTime, eHour, eMinute, importanceTxt) {
       addItem: function(itemName, dueDate, eHour, eMinute, importanceTxt) {
-
         // var stringifiedDate = stringifyDate(dueDate);
 
-        var itemProperty = prioritize(dueDate, dueTime, eHour, eMinute, importanceTxt);
+        // var itemProperty = prioritize(dueDate, dueTime, eHour, eMinute, importanceTxt);
+        var itemProperty = prioritize(dueDate, eHour, eMinute, importanceTxt);
+
+        console.log("addItem dueDate: " + dueDate);
 
         items.$add({
 
             a_text: itemName,
-            b_dueDate: dueDate,
+            b_dueDate: dueDate.getTime(),
             // b_dueDate: itemProperty.totalDueDate.getTime(),
             // c_dueDateString: stringifiedDate,
             m_hoursToFinish: eHour,

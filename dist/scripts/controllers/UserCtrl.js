@@ -22,15 +22,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // Begin AngularStrap Datepicker ---------------------------------------------
 
 
-    $scope.newDueDate = new Date();
-
-    $scope.getType = function(key) {
-      return Object.prototype.toString.call($scope[key]);
-    };
-
-    $scope.clearDates = function() {
-      $scope.newDueDate = null;
-    };
+    // $scope.newDueDate = new Date();
+    //
+    // $scope.getType = function(key) {
+    //   return Object.prototype.toString.call($scope[key]);
+    // };
+    //
+    // $scope.clearDates = function() {
+    //   $scope.newDueDate = null;
+    // };
 
     // End AngularStrap Datepicker ---------------------------------------------
 
@@ -133,9 +133,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // Begin AngularStrap timePicker-------------------------------------
 
-    $scope.newDueTime = new Date(1970, 0, 1, 10, 30, 40);
-    $scope.sharedDate = new Date(new Date().setMinutes(0, 0));
+    // $scope.newDueTime = new Date(1970, 0, 1, 10, 30, 40);
 
+    $scope.newDueDate = new Date(new Date().setMinutes(0, 0));
 
     // End AngularStrap timePicker-------------------------------------
 
@@ -273,8 +273,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // End popover------------------------------------------
 
     // Begin CRUD Functions------------------------------------------
+    // $scope.addItem = function() {
+    //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
+    // };
+
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newDueTime, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
     };
 
     $scope.updateDueTime = function() {
