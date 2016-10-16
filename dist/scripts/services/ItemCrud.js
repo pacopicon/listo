@@ -160,7 +160,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
       // var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
       // var timeTillDueDate = totalDueDate.getTime() - Date.now();
       var timeTillDueDate = dueDate.getTime() - Date.now();
-      console.log("timeTillDueDate: " + timeTillDueDate);
       var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
       // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
       var estTime = calculateEstTime(eHour, eMinute);
@@ -268,7 +267,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
         // var itemProperty = prioritize(dueDate, dueTime, eHour, eMinute, importanceTxt);
         var itemProperty = prioritize(dueDate, eHour, eMinute, importanceTxt);
 
-        console.log("addItem dueDate: " + dueDate);
+        console.log("selected phrase: " + importanceTxt);
 
         items.$add({
 

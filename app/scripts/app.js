@@ -1,6 +1,6 @@
 var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap"]);
 
-listo.config(function($stateProvider, $locationProvider, $datepickerProvider) {
+listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $modalProvider) {
 
     $locationProvider.html5Mode({
         enabled: true,
@@ -22,6 +22,10 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider) {
     angular.extend($datepickerProvider.defaults, {
       dateFormat: 'dd/MM/yyyy',
       startWeek: 1
+    });
+
+    angular.extend($modalProvider.defaults, {
+      html: true
     });
 });
 

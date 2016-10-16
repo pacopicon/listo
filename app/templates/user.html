@@ -86,9 +86,18 @@
 <!--                            IMPORTANCE                             -->
       <div class="col-sm-1 importanceCell cell">
         <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
-          {{item.p_importance.repeatSelect}}
+          {{item.p_importance}}
         </div>
-        <select class="importanceEditBox" id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+
+        <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+
+        <!-- <select class="importanceEditBox" ng-model="p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="phrase in phrases" value="{{phrase.text}}" >{{phrase.text}}</option></select> -->
+
+        <!-- <button type="button" class="btn btn-default" ng-model="p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+        </button> -->
+
+        <!-- data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select -->
+
       </div>
 <!--                            URGENT                               -->
       <div class="col-sm-1 urgentCell cell">
@@ -167,12 +176,12 @@
                   <tr>
                     <td>
                       <div class="date">
-                        <input type="text" size="10" class="form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" placeholder="Date" bs-datepicker>
+                        <input type="text" size="10" class="form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="Date" bs-datepicker>
                       </div>
                     </td>
                     <td>
                       <div class="time">
-                        <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+                        <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
                       </div>
                     </td>
                   </tr>
@@ -255,13 +264,20 @@
         <td class="formBox">
           Enter importance:
         </td>
-        <td class="formBox">
+        <!-- <td class="formBox">
           <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control importance formBox">
             <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}
             </option>
           </select>
+        </td> -->
+
+        <td class="formBox">
+          <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+          </button>
         </td>
       </tr>
+<!--                            Add Button                             -->
+
       <tr>
         <td></td>
         <td><button type="submit" type="button" class="btn btn-primary">Add to-do item</button></td>
@@ -344,6 +360,10 @@
       </div>
     </div>
   </uib-accordion> -->
+
+<!--                     angular strap modal                       -->
+
+
 
 </form>
 </section>

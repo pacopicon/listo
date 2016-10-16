@@ -184,6 +184,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // End Est-------------------------------------------------------
 
     // Begin Importance----------------------------------------------
+
     $scope.newImportanceTxt = {
       repeatSelect: "important",
       availableOptions: [
@@ -195,10 +196,14 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       ]
     };
 
-    $scope.selectedIcon = Gear;
-    $scope.selectedIcons = [];
-    $scope.icons = [
-      {"value":"not important at all"},{"value":"somewhat important"},{"value":"important"},{"value":"pretty important","label":"<i class=\"fa fa-camera\"></i> Camera"}
+    $scope.selectedPhrase = "";
+    $scope.selectedPhrases = [];
+    $scope.phrases = [
+      {text:"not important at all"},
+      {text:"somewhat important"},
+      {text:"important"},
+      {text:"pretty important"},
+      {text:"job depends on it"}
     ];
 
     // End Importance-----------------------------------------------
@@ -211,68 +216,71 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // Begin Accordion options -------------------------------------------
 
-    $scope.oneAtATime = true;
-
-    $scope.status = {
-      isCustomHeaderOpen: false,
-      isFirstOpen: true,
-      isFirstDisabled: false
-    };
-
-    $scope.toggleMin = function() {
-      $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
-      $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
-    };
-
-    $scope.toggleMin();
-
-    $scope.toggleWeekendDisable = function() {
-      $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
-    };
-
-    $scope.toggleWeekendDisable();
-
-
-
-
-
-    $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
-    $scope.format = $scope.formats[0];
-    $scope.altInputFormats = ['M!/d!/yyyy'];
-
-    $scope.options = {
-      hstep: [1, 2, 3],
-      mstep: [1, 5, 10, 15, 25, 30]
-    };
+    // $scope.oneAtATime = true;
+    //
+    // $scope.status = {
+    //   isCustomHeaderOpen: false,
+    //   isFirstOpen: true,
+    //   isFirstDisabled: false
+    // };
+    //
+    // $scope.toggleMin = function() {
+    //   $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
+    //   $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
+    // };
+    //
+    // $scope.toggleMin();
+    //
+    // $scope.toggleWeekendDisable = function() {
+    //   $scope.dateOptions.dateDisabled = $scope.dateOptions.dateDisabled ? null : disabled;
+    // };
+    //
+    // $scope.toggleWeekendDisable();
+    //
+    // $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
+    // $scope.format = $scope.formats[0];
+    // $scope.altInputFormats = ['M!/d!/yyyy'];
+    //
+    // $scope.options = {
+    //   hstep: [1, 2, 3],
+    //   mstep: [1, 5, 10, 15, 25, 30]
+    // };
 
 
     // End Accordion-----------------------------------------------------
 
+    // Begin angularStrap modal -------------------------------------------
+
+
+
+    // End angularStrap modal -------------------------------------------
+
+
     // Begin popover-----------------------------------------------------
 
-    $scope.dynamicPopover = {
-      content: '',
-      templateUrl: 'dateTimePickerPopover.html',
-      title: 'choose date and time'
-    };
-
-    $scope.placement = {
-      options: [
-        'top',
-        'top-left',
-        'top-right',
-        'bottom',
-        'bottom-left',
-        'bottom-right',
-        'left',
-        'left-top',
-        'left-bottom',
-        'right',
-        'right-top',
-        'right-bottom'
-      ],
-      selected: 'top'
-    };
+    // $scope.dynamicPopover = {
+    //   content: '',
+    //   templateUrl: 'dateTimePickerPopover.html',
+    //   title: 'choose date and time'
+    // };
+    //
+    // $scope.placement = {
+    //   options: [
+    //     'top',
+    //     'top-left',
+    //     'top-right',
+    //     'bottom',
+    //     'bottom-left',
+    //     'bottom-right',
+    //     'left',
+    //     'left-top',
+    //     'left-bottom',
+    //     'right',
+    //     'right-top',
+    //     'right-bottom'
+    //   ],
+    //   selected: 'top'
+    // };
 
     // $scope.htmlPopover = $sce.trustAsHtml('<b style="color: red">I can</b> have <div class="label label-success">HTML</div> content');
 
@@ -284,7 +292,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst, $scope.newImportanceTxt);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst, $scope.selectedPhrase);
     };
 
     $scope.updateDueTime = function() {
