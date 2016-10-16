@@ -35,54 +35,28 @@
       </div>
 <!--                            DATE                                   -->
       <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
-
-<!--  Begin angular-strap datePicker -->
-        <!-- <form name="datepickerForm" class="form-inline" role="form">
-  Basic example
-          <div class="form-group" ng-class="{'has-error': datepickerForm.date.$invalid}">
-            <label class="control-label"><i class="fa fa-calendar"></i> Date <small>(as date)</small></label>
-            <input type="text" class="form-control" ng-model="item.b_dueDate" name="date" bs-datepicker ng-change="items.$save(item)"/>
-          </div>
-        </form> -->
-
-      <form name="timepickerForm" class="form-inline" role="form">
-        <div class="form-group">
-          <div class="form-group">
-            <input type="text" size="10" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-autoclose="1" placeholder="Date" bs-datepicker>
-          </div>
-          <div class="form-group">
-            <input type="text" size="8" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
-          </div>
-        </div>
-      </form>
-
-  <!--  End angular-strap datePicker -->
-
-        <!-- <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+        <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
           {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
-        </div> -->
+        </div>
 
-        <!-- <button ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button> -->
-
-        <!-- <button popover-placement="bottom" popover-trigger="'mouseenter'" uib-popover-template="dateTimePickerPopover.html" popover-title="{{dynamicPopover.title}}" type="button" class="btn btn-default">Dynamic Popover</button>
-        <script type="text/ng-template" id="myPopoverTemplate.html">
-          <div>{{dynamicPopover.content}}</div>
-          <div class="form-group">
-            <label>Popup Title:</label>
-            <input type="text" ng-model="dynamicPopover.title" class="form-control">
-          </div>
-        </script> -->
-
-        <!-- <div ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" uib-datepicker ng-model="newDueDate">
-          <div class="well well-sm" datepicker-options="dateOptions"></div>
-          <hr />
-          <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
-          <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
-          <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
-        </div> -->
-
-        <!-- <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" placeholder="yyyy-MM-ddTHH:mm:ss" ng-model="item.b_dueDate" ng-change="items.$save(item)"/> -->
+        <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false"
+        placeholder="yyyy-MM-ddTHH:mm" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
       </div>
+
+      <!--  Begin angular-strap datePicker -->
+
+            <!-- <form name="timepickerForm" class="form-inline" role="form">
+              <div class="form-group">
+                <div class="form-group">
+                  <input type="text" size="10" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-autoclose="1" placeholder="Date" bs-datepicker>
+                </div>
+                <div class="form-group">
+                  <input type="text" size="8" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+                </div>
+              </div>
+            </form> -->
+
+        <!--  End angular-strap datePicker -->
 <!--                            IMPORTANCE                             -->
       <div class="col-sm-1 importanceCell cell">
         <div class="importanceLine" ng-class="{'text': item.q_completed.value}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
@@ -91,13 +65,12 @@
 
         <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
 
-        <!-- <select class="importanceEditBox" ng-model="p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="phrase in phrases" value="{{phrase.text}}" >{{phrase.text}}</option></select> -->
+      <!--  Begin angular-strap select -->
 
         <!-- <button type="button" class="btn btn-default" ng-model="p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
         </button> -->
 
-        <!-- data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select -->
-
+      <!--  End angular-strap select -->
       </div>
 <!--                            URGENT                               -->
       <div class="col-sm-1 urgentCell cell">
@@ -249,10 +222,16 @@
             <tr>
               <td>
                 <select class="form-control number" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
+
+                <!-- <button type="button" class="btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="timeOption.hour as timeOption.hour for timeOption in timeOptions" bs-select><span class="caret"></span> -->
+
               </td>
               <td class="hourPickerCaption">hours and</td>
               <td class="minutePicker">
                 <select class="form-control number" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
+
+                <!-- <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span> -->
+
               </td>
               <td class="minutePickerCaption">minutes</td>
             </tr>

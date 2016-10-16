@@ -145,7 +145,7 @@
   position: relative;
   overflow: auto;
   margin-left: -1em;
-  width: 9.5em;
+  width: 13em;
   height: 3.5em;
   color: black;
 }
@@ -155,8 +155,8 @@
 }
 
 .importanceEditBox {
-  width: 8.3em;
-  height: 3.5em;
+  width: 11.5em;
+  height: 2.5em;
 }
 
 .urgentCell {

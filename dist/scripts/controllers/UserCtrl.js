@@ -35,37 +35,36 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // End AngularStrap Datepicker ---------------------------------------------
 
     // Begin Datepicker popup---------------------------------------------
-    $scope.today = function() {
-      $scope.newDueDate = new Date();
-    };
+    // $scope.today = function() {
+    //   $scope.newDueDate = new Date();
+    // };
+    //
+    // $scope.today();
+    //
+    // $scope.clear = function() {
+    //   $scope.newDueDate = null;
+    // };
+    //
+    // $scope.inlineOptions = {
+    //   customClass: getDayClass,
+    //   minDate: new Date(),
+    //   showWeeks: true
+    // };
+    //
+    // $scope.dateOptions = {
+    //   dateDisabled: disabled,
+    //   formatYear: 'yy',
+    //   maxDate: new Date(2100, 5, 22),
+    //   minDate: new Date(),
+    //   startingDay: 1
+    // };
 
-    $scope.today();
-
-    $scope.clear = function() {
-      $scope.newDueDate = null;
-    };
-
-    $scope.inlineOptions = {
-      customClass: getDayClass,
-      minDate: new Date(),
-      showWeeks: true
-    };
-
-    $scope.dateOptions = {
-      dateDisabled: disabled,
-      formatYear: 'yy',
-      maxDate: new Date(2100, 5, 22),
-      minDate: new Date(),
-      startingDay: 1
-    };
-
-    // Disable weekend selection
-    function disabled(data) {
-      var date = data.date,
-        mode = data.mode;
-      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-    }
-
+    // function disabled(data) {
+    //   var date = data.date,
+    //     mode = data.mode;
+    //   return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
+    // }
+    //
     // $scope.toggleMin = function() {
     //   $scope.inlineOptions.minDate = $scope.inlineOptions.minDate ? null : new Date();
     //   $scope.dateOptions.minDate = $scope.inlineOptions.minDate;
@@ -78,56 +77,56 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // };
     //
     // $scope.toggleWeekendDisable();
-
-    $scope.openDatePicker = function() {
-      $scope.popup1.opened = true;
-    };
-
-    $scope.setDate = function(year, month, day) {
-      $scope.newDueDate = new Date(year, month, day);
-    };
-
+    //
+    // $scope.openDatePicker = function() {
+    //   $scope.popup1.opened = true;
+    // };
+    //
+    // $scope.setDate = function(year, month, day) {
+    //   $scope.newDueDate = new Date(year, month, day);
+    // };
+    //
     // $scope.formats = ['dd-MMMM-yyyy', 'yyyy/MM/dd', 'dd.MM.yyyy', 'shortDate'];
     // $scope.format = $scope.formats[0];
     // $scope.altInputFormats = ['M!/d!/yyyy'];
-
-    $scope.popup1 = {
-      opened: false
-    };
-
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    var afterTomorrow = new Date();
-    afterTomorrow.setDate(tomorrow.getDate() + 1);
-
-    $scope.events = [
-      {
-        date: tomorrow,
-        status: 'full'
-      },
-      {
-        date: afterTomorrow,
-        status: 'partially'
-      }
-    ];
-
-    function getDayClass(data) {
-      var date = data.date,
-        mode = data.mode;
-      if (mode === 'day') {
-        var dayToCheck = new Date(date).setHours(0,0,0,0);
-
-        for (var i = 0; i < $scope.events.length; i++) {
-          var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
-
-          if (dayToCheck === currentDay) {
-            return $scope.events[i].status;
-          }
-        }
-      }
-
-      return '';
-    }
+    //
+    // $scope.popup1 = {
+    //   opened: false
+    // };
+    //
+    // var tomorrow = new Date();
+    // tomorrow.setDate(tomorrow.getDate() + 1);
+    // var afterTomorrow = new Date();
+    // afterTomorrow.setDate(tomorrow.getDate() + 1);
+    //
+    // $scope.events = [
+    //   {
+    //     date: tomorrow,
+    //     status: 'full'
+    //   },
+    //   {
+    //     date: afterTomorrow,
+    //     status: 'partially'
+    //   }
+    // ];
+    //
+    // function getDayClass(data) {
+    //   var date = data.date,
+    //     mode = data.mode;
+    //   if (mode === 'day') {
+    //     var dayToCheck = new Date(date).setHours(0,0,0,0);
+    //
+    //     for (var i = 0; i < $scope.events.length; i++) {
+    //       var currentDay = new Date($scope.events[i].date).setHours(0,0,0,0);
+    //
+    //       if (dayToCheck === currentDay) {
+    //         return $scope.events[i].status;
+    //       }
+    //     }
+    //   }
+    //
+    //   return '';
+    // }
     // End Datepicker popup----------------------------------------------
 
 
@@ -139,46 +138,46 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // End AngularStrap timePicker-------------------------------------
 
-    // Begin Timepicker--------------------------------------------------
-    $scope.newDueTime = new Date();
-
-    $scope.hstep = 1;
-    $scope.mstep = 15;
-
-    // $scope.options = {
-    //   hstep: [1, 2, 3],
-    //   mstep: [1, 5, 10, 15, 25, 30]
+    // Begin uib-bootstrap Timepicker--------------------------------------------------
+    // $scope.newDueTime = new Date();
+    //
+    // $scope.hstep = 1;
+    // $scope.mstep = 15;
+    //
+    // // $scope.options = {
+    // //   hstep: [1, 2, 3],
+    // //   mstep: [1, 5, 10, 15, 25, 30]
+    // // };
+    //
+    // $scope.ismeridian = true;
+    // $scope.toggleMode = function() {
+    //   $scope.ismeridian = ! $scope.ismeridian;
     // };
-
-    $scope.ismeridian = true;
-    $scope.toggleMode = function() {
-      $scope.ismeridian = ! $scope.ismeridian;
-    };
-
-    $scope.update = function() {
-      var d = new Date();
-      d.setHours(17);
-      d.setMinutes(0);
-      $scope.newDueTime = d;
-    };
-
-    $scope.changed = function() {
-      $log.log("Time changed to: " + $scope.newDueTime);
-    };
-
-    $scope.clear = function() {
-      $scope.newDueTime = null;
-    };
+    //
+    // $scope.update = function() {
+    //   var d = new Date();
+    //   d.setHours(17);
+    //   d.setMinutes(0);
+    //   $scope.newDueTime = d;
+    // };
+    //
+    // $scope.changed = function() {
+    //   $log.log("Time changed to: " + $scope.newDueTime);
+    // };
+    //
+    // $scope.clear = function() {
+    //   $scope.newDueTime = null;
+    // };
 
     // End Timepicker--------------------------------------------------
 
     // Begin Est-------------------------------------------------------
-    $scope.newHourEst = 1;
-    $scope.newMinuteEst = 15;
+    $scope.newHourEst = 0;
+    $scope.newMinuteEst = 0;
 
     $scope.timeOptions = {
-      hour: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      minute: [5, 10, 15, 25, 30, 45]
+      hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      minute: [0, 5, 10, 15, 25, 30, 45]
     };
 
     // End Est-------------------------------------------------------
