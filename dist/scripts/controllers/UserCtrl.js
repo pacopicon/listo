@@ -195,6 +195,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       ]
     };
 
+    $scope.selectedIcon = Gear;
+    $scope.selectedIcons = [];
+    $scope.icons = [
+      {"value":"not important at all"},{"value":"somewhat important"},{"value":"important"},{"value":"pretty important","label":"<i class=\"fa fa-camera\"></i> Camera"}
+    ];
+
     // End Importance-----------------------------------------------
 
     // Begin Completed----------------------------------------------
