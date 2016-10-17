@@ -8,77 +8,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
         // holds items
     var items = $firebaseArray(ref);
 
-    // var stringifyDate = function(dueDate) {
-    //   var yearString = dueDate.getFullYear().toString();
-    //
-    //   switch (dueDate.getMonth()) {
-    //     case 0:
-    //       monthString = "January";
-    //       break;
-    //     case 1:
-    //       monthString = "February";
-    //       break;
-    //     case 2:
-    //       monthString = "March";
-    //       break;
-    //     case 3:
-    //       monthString = "April";
-    //       break;
-    //     case 4:
-    //       monthString = "May";
-    //       break;
-    //     case 5:
-    //       monthString = "June";
-    //       break;
-    //     case 6:
-    //       monthString = "July";
-    //       break;
-    //     case 7:
-    //       monthString = "August";
-    //       break;
-    //     case 8:
-    //       monthString = "September";
-    //       break;
-    //     case 9:
-    //       monthString = "October";
-    //       break;
-    //     case 10:
-    //       monthString = "November";
-    //       break;
-    //     case 11:
-    //       monthString = "December";
-    //   };
-    //
-    //   var dayOfMonthString = dueDate.getDate().toString();
-    //
-    //   switch (dueDate.getDay()) {
-    //     case 0:
-    //       dayOfWeekString = "Sunday";
-    //       break;
-    //     case 1:
-    //       dayOfWeekString = "Monday";
-    //       break;
-    //     case 2:
-    //       dayOfWeekString = "Tuesday";
-    //       break;
-    //     case 3:
-    //       dayOfWeekString = "Wednesday";
-    //       break;
-    //     case 4:
-    //       dayOfWeekString = "Thursday";
-    //       break;
-    //     case 5:
-    //       dayOfWeekString = "Friday";
-    //       break;
-    //     case 6:
-    //       dayOfWeekString = "Saturday";
-    //   }
-    //   var hourString = dueDate.getHours().toString();
-    //   var minuteString = dueDate.getMinutes().toString();
-    //
-    //   return dayOfWeekString + ", " + monthString + " " + dayOfMonthString + ", " + yearString + " at " + hourString + ":" + minuteString;
-    // };
-
     var dueDatePlusDueTime = function(dueDate, dueTime) {
       var dueHour = dueTime.getHours();
       var dueMinute = dueTime.getMinutes();
@@ -280,21 +209,74 @@ listo.factory("ItemCrud", ["$firebaseArray",
             o_timeToFinishDate: itemProperty.estTimeAsDateNum,
             p_importance: importanceTxt,
             q_completed: false,
+            qq_pastDue: false,
             r_urgent: itemProperty.urgencyTxt,
             s_rank: itemProperty.rank,
             t_created_at: Firebase.ServerValue.TIMESTAMP
+        }).then(function(ref) {
+          var id = ref.key();
+          console.log("added item with id " + id);
+          items.$indexFor(id);
         });
       }, // end of AddItem
 
-      updateDueTime: function() {
+      updateDueDate: function(dateAndTimeObj) {
+        var id = ref.key();
+        items.b_dueDate = dateAndTimeObj.getTime();
 
+
+        var updatedItem = items.$getRecord(id);
+        console.log("item from id " + items.$getRecord(id));
+        items.$save(updatedItem);
+      },
+
+      updateRank: function() {
         items.s_rank = prioritize(item.b_dueDate, dueTime, eHour, eMinute, importanceTxt);
-
       },
 
       getAllItems: function() {
         return items;
+      },
+
+      getAllUncompletedItems: function() {
+        var uncompletedItems = [];
+        var totalItems = items.length;
+
+        for (var i = 0; i < totalItems; i++) {
+          if (!items[i].isCompleted) {
+            uncompletedItems.push(items[i]);
+          }
+        }
+        return uncompletedItems;
+      },
+
+      getAllCompletedItems: function() {
+        var completedItems = [];
+        var totalItems = items.length;
+
+        for (var i = 0; i < totalItems; i++) {
+          if (items[i].isCompleted) {
+            completedItems.push(items[i]);
+          }
+        }
+        return completedItems;
+      },
+
+      getAllItemsPastDue: function() {
+        var itemsPastDue = [];
+        var totalItems = items.length;
+
+        var now = new Date().getTime();
+
+        for (var i = 0; i < totalItems; i++) {
+          if (items[i].b_dueDate < now) {
+            completedItems.push(items[i]);
+          }
+        }
+        return completedItems;
       }
+
+
     }; // end of Return
 
   } // end of firebase function

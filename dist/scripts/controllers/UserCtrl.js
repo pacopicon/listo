@@ -19,6 +19,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       return countdown;
     };
 
+    // db {
+    //   users: {},
+    //   tasks: {
+    //     userId
+    //   }
+    // }
+
     // Begin AngularStrap Datepicker ---------------------------------------------
 
 
@@ -294,8 +301,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst, $scope.selectedPhrase);
     };
 
-    $scope.updateDueTime = function() {
-      ItemCrud.updateDueTime($scope.newDueDate)
+
+    $scope.updateDueDate = function() {
+      console.log($scope.newDueDate)
+      ItemCrud.updateDueDate($scope.newDueDate);
     };
   }
 ]);

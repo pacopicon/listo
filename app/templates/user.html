@@ -39,9 +39,16 @@
           {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
         </div>
 
-        <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false"
-        placeholder="yyyy-MM-ddTHH:mm" ng-model="item.b_dueDate" ng-change="items.$save(item)"/>
+        <input class="dateEditBox" type="datetime-local"
+        placeholder="yyyy-MM-ddTHH:mm" ng-model="newDueDate"
+        ng-change="updateDueDate()" />
+
+        <!-- <input class="dateEditBox" type="datetime-local"
+        placeholder="yyyy-MM-ddTHH:mm" ng-model="newDueDate"
+        ng-change="items.$save(item)" /> -->
       </div>
+
+      <!-- ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" -->
 
       <!--  Begin angular-strap datePicker -->
 
