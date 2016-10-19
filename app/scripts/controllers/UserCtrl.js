@@ -308,7 +308,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     //     }
 
     $scope.updateDueDate = function(queriedItem, updatedDate) {
-      console.log("updated date is a " + typeof updatedDate);
       ItemCrud.updateDueDate(queriedItem, updatedDate);
     };
   }

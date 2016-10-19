@@ -96,13 +96,13 @@ listo.factory("ItemCrud", ["$firebaseArray",
       var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
       // urgency is used to calculate both RANK and URGENCYTXT below
       var urgency = calculateUrgency(ratio);
-      var urgencyTxt = createUrgencyTxt(urgency);
+      // var urgencyTxt = createUrgencyTxt(urgency);
       var rank = calculateRank(importanceTxt, ratio, urgency);
 
       return {
         // totalDueDate: totalDueDate,
         // estTimeAsDateNum: estTimeAsDateNum,
-        urgencyTxt: urgencyTxt,
+        urgency: urgency,
         rank: rank
       };
     };
@@ -215,7 +215,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             p_importance: importanceTxt,
             q_completed: false,
             qq_pastDue: false,
-            r_urgent: itemProperty.urgencyTxt,
+            r_urgent: itemProperty.urgency,
             s_rank: itemProperty.rank,
             t_created_at: Firebase.ServerValue.TIMESTAMP
         }).then(function(ref) {
@@ -227,9 +227,17 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       updateDueDate: function(queriedItem, dateAndTimeObj) {
         var itemToBeUpdated = items.$getRecord(queriedItem.$id);
+
+        var eHour = itemToBeUpdated.m_hoursToFinish;
+        var eMinute = itemToBeUpdated.n_minutesToFinish;
+        var importanceTxt = itemToBeUpdated.p_importance;
+
+        var itemProperty = prioritize(dateAndTimeObj, eHour, eMinute, importanceTxt);
+
         itemToBeUpdated.b_dueDate = dateAndTimeObj.getTime();
-        console.log("item from id " + queriedItem.$id);
-        items.$getRecord(queriedItem.$id);
+        itemToBeUpdated.r_urgent = itemProperty.urgency;
+        itemToBeUpdated.s_rank = itemProperty.rank;
+
         items.$save(itemToBeUpdated);
       },
 

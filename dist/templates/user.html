@@ -21,7 +21,7 @@
         <div class="col-sm-1">Due in:</div>
       </b>
     </div>
-    <div class="row" ng-repeat="item in items | orderBy: '-rank':true">
+    <div class="row" ng-repeat="item in items | orderBy: '-s_rank'">
 <!--                            PRIORITY                               -->
       <div class="col-sm-1 priorityCell cell">
         {{$index + 1}}
@@ -35,11 +35,11 @@
       </div>
 <!--                            DATE                                   -->
       <div class="col-sm-1 dateCell cell" ng-class="{'text': item.q_completed.value}">
-        <!-- <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+        <div class="dateLine" ng-class="{'text': item.q_completed.value}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
           {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
-        </div> -->
+        </div>
 
-        <input class="dateEditBox" type="datetime-local"
+        <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-blur="dateNum=false"
         placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDate"
         ng-change="updateDueDate(item, updatedDate)" />
 
