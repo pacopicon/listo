@@ -20,12 +20,12 @@ listo.factory("ItemCrud", ["$firebaseArray",
       return DueDateTotalDateObj;
     };
 
-    var calculateEstTimeAsDateNum = function(eHour, eMinute) {
-      var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
-      var estTimeAsDateNum = dummyDate.setHours(eHour, eMinute, 0, 0);
-      return estTimeAsDateNum;
-      // The returned value will be able to be displayed with a date type on user.html
-    };
+    // var calculateEstTimeAsDateNum = function(eHour, eMinute) {
+    //   var dummyDate = new Date(1970, 0, 1, 0, 0, 0);
+    //   var estTimeAsDateNum = dummyDate.setHours(eHour, eMinute, 0, 0);
+    //   return estTimeAsDateNum;
+    //   // The returned value will be able to be displayed with a date type on user.html
+    // };
 
     var calculateEstTime = function(eHour, eMinute) {
       var estTime = (eHour * 60 * 60 * 1000) + (eMinute * 60 * 1000);
@@ -89,7 +89,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
       // var totalDueDate = dueDatePlusDueTime(dueDate, dueTime);
       // var timeTillDueDate = totalDueDate.getTime() - Date.now();
       var timeTillDueDate = dueDate.getTime() - Date.now();
-      var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
+      // var estTimeAsDateNum = calculateEstTimeAsDateNum(eHour, eMinute);
       // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
       var estTime = calculateEstTime(eHour, eMinute);
       // ratio does not go into DB, but is used to figure out RANK below (words in all-caps refer to things that DO go into the DB)
@@ -101,7 +101,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       return {
         // totalDueDate: totalDueDate,
-        estTimeAsDateNum: estTimeAsDateNum,
+        // estTimeAsDateNum: estTimeAsDateNum,
         urgencyTxt: urgencyTxt,
         rank: rank
       };
@@ -111,11 +111,16 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       parseTime: function(timeInMillisecs) {
                 // 'time' has to be in milliseconds
-        var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
-        var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
-        var millisecsInDay = 24 * 60 * 60 * 1000;
-        var millisecsInHour = 60 * 60 * 1000;
-        var millisecsInMinute = 60 * 1000;
+        // var millisecsInYear = 12 * 30.4166 * 24 * 60 * 60 * 1000;
+        var millisecsInYear = 31535930880;
+        // var millisecsInMonth = 30.4166 * 24 * 60 * 60 * 1000;
+        var millisecsInMonth = 2627994239.9999995;
+        // var millisecsInDay = 24 * 60 * 60 * 1000;
+        var millisecsInDay = 86400000;
+        // var millisecsInHour = 60 * 60 * 1000;
+        var millisecsInHour = 3600000;
+        // var millisecsInMinute = 60 * 1000;
+        var millisecsInMinute = 60000;
         var millisecsInSecs = 1000;
 
         var years = timeInMillisecs / millisecsInYear;
@@ -150,40 +155,40 @@ listo.factory("ItemCrud", ["$firebaseArray",
         return timeLeftInMillisecs;
       },
 
-      calculateTimeTillUnitsX: function(time) {
-        for (i = 0; i < items.length; i++) {
-          var eachItem = items[i]
-          eachItem.e_currentTime = time;
-
-          if (typeof eachItem.b_dueDate === "object") {
-              eachItem.b_dueDate = eachItem.b_dueDate.getTime();
-          }
-
-          var timeTillDueDate = eachItem.b_dueDate - time;
-
-          var timeTillUnit = parseTimeX(timeTillDueDate);
-
-          eachItem.f_tillDue = timeTillDueDate;
-          eachItem.g_yearsTillDue = timeTillUnit.year;
-          eachItem.h_monthsTillDue = timeTillUnit.month;
-          eachItem.i_daysTillDue = timeTillUnit.day;
-          eachItem.j_hoursTillDue = timeTillUnit.hour;
-          eachItem.k_minutesTillDue = timeTillUnit.minute;
-          eachItem.l_secondsTillDue = timeTillUnit.second;
-
-          eachItem.o_timeToFinishDate = calculateEstTimeAsDateNum(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
-
-          var estTime = calculateEstTime(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
-          var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
-          var urgency = calculateUrgency(ratio);
-          eachItem.r_urgent = createUrgencyTxt(urgency);
-          eachItem.s_rank = calculateRank(eachItem.p_importance, ratio, urgency);
-
-          items.$save(eachItem).then(function() {
-              // console.log(time);
-          });
-        }
-      },
+      // calculateTimeTillUnitsX: function(time) {
+      //   for (i = 0; i < items.length; i++) {
+      //     var eachItem = items[i]
+      //     eachItem.e_currentTime = time;
+      //
+      //     if (typeof eachItem.b_dueDate === "object") {
+      //         eachItem.b_dueDate = eachItem.b_dueDate.getTime();
+      //     }
+      //
+      //     var timeTillDueDate = eachItem.b_dueDate - time;
+      //
+      //     var timeTillUnit = parseTimeX(timeTillDueDate);
+      //
+      //     eachItem.f_tillDue = timeTillDueDate;
+      //     eachItem.g_yearsTillDue = timeTillUnit.year;
+      //     eachItem.h_monthsTillDue = timeTillUnit.month;
+      //     eachItem.i_daysTillDue = timeTillUnit.day;
+      //     eachItem.j_hoursTillDue = timeTillUnit.hour;
+      //     eachItem.k_minutesTillDue = timeTillUnit.minute;
+      //     eachItem.l_secondsTillDue = timeTillUnit.second;
+      //
+      //     eachItem.o_timeToFinishDate = calculateEstTimeAsDateNum(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
+      //
+      //     var estTime = calculateEstTime(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
+      //     var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
+      //     var urgency = calculateUrgency(ratio);
+      //     eachItem.r_urgent = createUrgencyTxt(urgency);
+      //     eachItem.s_rank = calculateRank(eachItem.p_importance, ratio, urgency);
+      //
+      //     items.$save(eachItem).then(function() {
+      //         // console.log(time);
+      //     });
+      //   }
+      // },
 
       // updateItem: function() {
       //     // changes
@@ -206,7 +211,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
             // c_dueDateString: stringifiedDate,
             m_hoursToFinish: eHour,
             n_minutesToFinish: eMinute,
-            o_timeToFinishDate: itemProperty.estTimeAsDateNum,
+            // o_timeToFinishDate: itemProperty.estTimeAsDateNum,
             p_importance: importanceTxt,
             q_completed: false,
             qq_pastDue: false,
@@ -220,15 +225,21 @@ listo.factory("ItemCrud", ["$firebaseArray",
         });
       }, // end of AddItem
 
-      updateDueDate: function(dateAndTimeObj) {
-        var id = ref.key();
-        items.b_dueDate = dateAndTimeObj.getTime();
-
-
-        var updatedItem = items.$getRecord(id);
-        console.log("item from id " + items.$getRecord(id));
-        items.$save(updatedItem);
+      updateDueDate: function(queriedItem, dateAndTimeObj) {
+        var itemToBeUpdated = items.$getRecord(queriedItem.$id);
+        itemToBeUpdated.b_dueDate = dateAndTimeObj.getTime();
+        console.log("item from id " + queriedItem.$id);
+        items.$getRecord(queriedItem.$id);
+        items.$save(itemToBeUpdated);
       },
+
+      // updateImportance: function(queriedItem,) {
+      //   var itemToBeUpdated = items.$getRecord(queriedItem.$id);
+      //   itemToBeUpdated.b_dueDate = dateAndTimeObj.getTime();
+      //   console.log("item from id " + queriedItem.$id);
+      //   items.$getRecord(queriedItem.$id);
+      //   items.$save(itemToBeUpdated);
+      // },
 
       updateRank: function() {
         items.s_rank = prioritize(item.b_dueDate, dueTime, eHour, eMinute, importanceTxt);
