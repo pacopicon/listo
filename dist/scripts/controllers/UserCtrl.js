@@ -4,6 +4,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
     $scope.items = ItemCrud.getAllItems();
+    $scope.uncompletedItems = ItemCrud.getUncompletedItems();
+    $scope.completedItems = ItemCrud.getCompletedItems();
+    $scope.itemsPastDue = ItemCrud.getItemsPastDue();
 
     var refreshTime = function() {
       time = Date.now();
