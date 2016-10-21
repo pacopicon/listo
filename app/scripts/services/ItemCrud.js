@@ -8,6 +8,9 @@ listo.factory("ItemCrud", ["$firebaseArray",
         // holds items
     var items = $firebaseArray(ref);
 
+    var now = Date.now();
+    var week = 604800000;
+
     // var dueDatePlusDueTime = function(dueDate, dueTime) {
     //   var dueHour = dueTime.getHours();
     //   var dueMinute = dueTime.getMinutes();
@@ -32,6 +35,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
     };
 
     var calculateUrgency = function(ratio) {
+      console.log("item is undefined and calculateUrgency was called");
       if (ratio >= 0.4) {
         urgency = true;
       } else {
@@ -49,7 +53,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
       }
 
       return urgencyTxt;
-      console.log(urgencyTxt);
     };
 
     var calculateRank = function(importanceTxt, ratio, urgency) {
@@ -78,6 +81,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
     var prioritize = function(item, dueDate, importanceTxt, newUrgency, eHour, eMinute) {
 
+      console.log("newUrgency: " + newUrgency);
+
       var timeTillDueDate = dueDate.getTime() - now;
       // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
       var estTime = calculateEstTime(eHour, eMinute);
@@ -85,32 +90,26 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
 
-      if (item === undefined) {
+      // if (item !== undefined ) {
+      //   console.log("item with id " + items.$getRecord(item.$id) + "exists");
+      // } else {
+      //   console.log("item is not defined");
+      // }
+
+      if (item === null) {
         // urgency is used to calculate RANK
         var currentUrgency = calculateUrgency(ratio);
       } else {
         var currentUrgency = newUrgency;
       }
 
-      var rank = calculateRank(importanceTxt, ratio, urgency);
+      console.log("currentUrgency: " + currentUrgency);
 
+      var rank = calculateRank(importanceTxt, ratio, currentUrgency);
       return {
         urgency: currentUrgency,
         rank: rank
       };
-    };
-
-    var updateItem = function(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
-      var itemToBeUpdated = items.$getRecord(item.$id);
-
-      var updatedItemProperties = prioritize(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
-
-      itemToBeUpdated.b_dueDate = updatedDueDate.getTime();
-      itemToBeUpdated.p_importance = updatedImportance.getTime();
-      itemToBeUpdated.r_urgent = updatedItemProperties.urgency;
-      itemToBeUpdated.s_rank = updatedItemProperties.rank;
-
-      items.$save(itemToBeUpdated);
     };
 
     return {
@@ -163,9 +162,10 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
       addItem: function(itemName, dueDate, importanceTxt, eHour, eMinute) {
 
-        var itemProperties = prioritize(item, dueDate, importanceTxt, urgency, eHour, eMinute);
+        var item = null;
+        var urgency = null;
 
-        console.log("selected phrase: " + importanceTxt);
+        var itemProperties = prioritize(item, dueDate, importanceTxt, urgency, eHour, eMinute);
 
         items.$add({
 
@@ -188,8 +188,19 @@ listo.factory("ItemCrud", ["$firebaseArray",
       }, // end of AddItem
 
       updateItem: function(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
-        updateItem(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+        console.log("updatedUrgency: " + updatedUrgency);
+        console.log("updateItem was called");
+        console.log("updateItem fn received " + updatedImportance);
+        var itemToBeUpdated = items.$getRecord(item.$id);
 
+        var updatedItemProperties = prioritize(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+
+        itemToBeUpdated.b_dueDate = updatedDueDate.getTime();
+        itemToBeUpdated.p_importance = updatedImportance;
+        itemToBeUpdated.r_urgent = updatedItemProperties.urgency;
+        itemToBeUpdated.s_rank = updatedItemProperties.rank;
+
+        items.$save(itemToBeUpdated);
       },
 
       markAsCompleted: function(item) {
@@ -237,8 +248,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
         var totalItems = items.length;
 
         for (var i = 0; i < totalItems; i++) {
-          var now = Date.now();
-          var week = 604800000;
+          // var now = Date.now();
+          // var week = 604800000;
           var itemExpirationDatePlusWeek = now + week;
 
 
@@ -261,8 +272,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
         var totalItems = items.length;
 
         for (var i = 0; i < totalItems; i++) {
-          var now = Date.now();
-          var week = 604800000;
+          // var now = Date.now();
+          // var week = 604800000;
           var itemExpirationDatePlusWeek = now + week;
 
           if (items[i].b_dueDate < now) {

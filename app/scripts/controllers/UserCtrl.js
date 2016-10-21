@@ -146,7 +146,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.newDueDate = new Date(new Date().setMinutes(0, 0));
 
-    $scope.updatedDate = new Date();
+    $scope.updatedDueDate = new Date();
 
     // End AngularStrap timePicker-------------------------------------
 
@@ -303,15 +303,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.newHourEst, $scope.newMinuteEst, $scope.selectedPhrase);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
     };
 
     // if (typeof eachItem.b_dueDate === "object") {
     //         eachItem.b_dueDate = eachItem.b_dueDate.getTime();
     //     }
 
-    $scope.updateDueDate = function(queriedItem, updatedDate) {
-      ItemCrud.updateDueDate(queriedItem, updatedDate);
+    $scope.updateItem = function(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
+      ItemCrud.updateItem(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
     };
   }
 ]);
