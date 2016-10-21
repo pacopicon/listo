@@ -74,7 +74,7 @@
           {{item.p_importance}}
         </div>
 
-        <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+        <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
 
       <!--  Begin angular-strap select -->
 
@@ -89,7 +89,7 @@
           {{item.r_urgent}}
         </div>
         <div class="urgentEditBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-          Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="items.$save(item)" />
+          Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
         </div>
       </div>
 <!--                            DURATION                               -->
@@ -97,13 +97,13 @@
         <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
           {{item.m_hoursToFinish}}
         </div>
-        <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="items.$save(item)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
+        <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
       </div>
       <div class="col-sm-1 numberCell cell">
         <div class="numberLine" ng-class="{'text': item.q_completed.value}" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
           {{item.n_minutesToFinish}}
         </div>
-        <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="items.$save(item)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
+        <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
       </div>
 <!--                            RANK                                   -->
       <div class="col-sm-1 rankCell cell" ng-class="{'text': item.q_completed.value}">
