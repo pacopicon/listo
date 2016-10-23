@@ -221,9 +221,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // Begin Completed----------------------------------------------
 
-    $scope.isCompleted = {
-      value: true
-    };
+    $scope.isCompleted = false;
 
     // Begin Accordion options -------------------------------------------
 
