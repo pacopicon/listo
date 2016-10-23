@@ -1,4 +1,4 @@
-var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap"]);
+var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap", "ui.router.tabs"]);
 
 listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $modalProvider) {
 
@@ -17,6 +17,26 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             url: '/user',
             controller: 'UserCtrl',
             templateUrl: '/templates/user.html'
+        })
+        .state('userCompleteItems', {
+            url: '/userCompleteItems',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/userCompleteItems.html'
+        })
+        .state('userWeekly', {
+            url: '/userWeekly',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/userWeekly.html'
+        })
+        .state('userMonthly', {
+            url: '/userMonthly',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/userMonthly.html'
+        })
+        .state('userYearly', {
+            url: '/userYearly',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/userYearly.html'
         });
 
     angular.extend($datepickerProvider.defaults, {

@@ -224,10 +224,12 @@ listo.factory("ItemCrud", ["$firebaseArray",
             }
 
             if (items[i].q_completed && items[i].b_dueDate < itemExpirationDatePlusWeek) {
-              items.$remove(item[1]).then(function() {
-                console.log("The item called " + item[i].a_text + "has been long been completed and has now been erased from the database");
+              items.$remove(items[i]).then(function() {
+                var id = ref.key();
+                items[i].$indexFor(id);
+                console.log("The item " + id + "has been long been completed and has now been erased from the database");
               });
-            };
+            }
           }
 
         });
@@ -246,15 +248,15 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
           if (items[i].b_dueDate < now) {
             items[i].qq_pastDue = true;
-            items.$save(item[1]).then(function () {
-              console.log("The item called " + item[i].a_text + "is past due!");
+            items.$save(items[i]).then(function () {
+              console.log("The item called " + items[i].a_text + "is past due!");
             });
             itemsPastDue.push(items[i]);
           }
 
           if (items[i].b_dueDate < itemExpirationDatePlusWeek) {
-            items.$remove(item[1]).then(function() {
-              console.log("The item called " + item[i].a_text + "has been past due for a week and has now been erased from the database");
+            items.$remove(items[i]).then(function() {
+              console.log("The item called " + items[i].a_text + "has been past due for a week and has now been erased from the database");
             });
           }
 
@@ -263,22 +265,26 @@ listo.factory("ItemCrud", ["$firebaseArray",
       },
 
       markAsCompleted: function(item) {
-       // marks the item as completed
-       var itemToBeCrossedOut = items.$getRecord(item.$id);
-       itemToBeCrossedOut.q_completed = true;
-
-       items.$save(itemToBeCrossedOut);
-     },
-
-      uncrossOutItem: function(crossedOutItem, updatedDueDate) {
-        var itemToBeUncrossed = items.$getRecord(queriedItem.$id);
-
-        itemToBeUncrossedOut.q_completed = false;
-        itemToBeUncrossedOut.b_dueDate = updatedDueDate.getTime();
+        // marks the item as completed
+        var itemToBeCrossedOut = items.$getRecord(item.$id);
+        itemToBeCrossedOut.q_completed = true;
 
         items.$save(itemToBeCrossedOut);
       },
 
+      uncrossOutItem: function(crossedOutItem, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
+        var itemToBeUncrossed = items.$getRecord(queriedItem.$id);
+
+        var updatedItemProperties = prioritize(crossedOutItem, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+
+        itemToBeUncrossedOut.q_completed = false;
+        itemToBeUncrossedOut.b_dueDate = updatedDueDate.getTime();
+        itemToBeUncrossedOut.p_importance = updatedImportance;
+        itemToBeUncrossedOut.r_urgent = updatedItemProperties.urgency;
+        itemToBeUncrossedOut.s_rank = updatedItemProperties.rank;
+
+        items.$save(itemToBeCrossedOut);
+      }
 
     }; // end of Return
 

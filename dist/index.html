@@ -120,25 +120,26 @@
   <script src="/scripts/services/ItemCrud.js"></script>
   <script src="/scripts/controllers/LandingCtrl.js"></script>
   <script src="/scripts/controllers/UserCtrl.js"></script>
-  <!-- <script src="/scripts/factories/dimensions.js"></script>
-  <script src="/scripts/factories/date-parser.js"></script> -->
+  <script src="/scripts/controllers/UserCtrl.js"></script>
+  <script src="/scripts/directives/ui-router-tabs.js"></script>
 
 
   <!--FontAwesome-->
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/fontawesome/4.5.0/css/font-awesome.css">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+  <!--Bootstrap CSS-->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
   <!--AngularStrap CSS-->
   <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/libs.min.css">
-   <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/docs.min.css">
+  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/docs.min.css">
 
-  <!-- Optional theme -->
-  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
 
-  <!-- Latest compiled and minified JavaScript -->
-  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script> -->
-  <!--Local style files-->
+
+   <!-- Latest compiled and minified JavaScript -->
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+  <!--Native style files-->
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700,300">
   <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <link rel="stylesheet" type="text/css" href="/styles/normalize.css">
@@ -150,9 +151,14 @@
 </head>
 <body>
     <nav class="navbar">
-        <div class="links-container">
-            <a ui-sref="user" class="navbar-link">user page</a>
-        </div>
+        <!-- <ul class="links-container"> -->
+          <ul class="nav nav-tabs">
+            <li ui-sref="user" class="active">To do List</li>
+            <li ui-sref="userCompleteItems">completed items</li>
+            <li ui-sref="userWeekly">weekly calendar</li>
+            <li ui-sref="userMonthly">monthly calendar</li>
+            <li ui-sref="userYearly">yearly calendar</li>
+        </ul>
     </nav>
 
     <ui-view></ui-view>

@@ -1,0 +1,78 @@
+Completed items:
+    <div class="row">
+      <b>
+        <div class="col-sm-1 priorityCell">#</div>
+        <div class="col-sm-1 nameCell">to do item:</div>
+        <div class="col-sm-1 importanceCell">importance:</div>
+        <div class="col-sm-1 urgentCell">urgent?:</div>
+        <div class="col-sm-1 durationCell">duration:</div>
+        <div class="col-sm-1 rankCell">rank:</div>
+        <div class="col-sm-1 createdAtCell">Active since:</div>
+        <div class="col-sm-1">Due in:</div>
+        <div class="col-sm-1 dateCell">date and time due:</div>
+      </b>
+    </div>
+    <div class="row" ng-repeat="completedItem in completedItems | orderBy: '-s_rank'">
+      <div class="col-sm-1 priorityCell cell">
+        {{$index + 1}}
+      </div>
+<!--                            NAME                                   -->
+      <div class="col-sm-1 nameCell cell">
+        <div class="nameLine">
+          {{completedItem.a_text}}
+        </div>
+      </div>
+
+<!--                            IMPORTANCE                             -->
+      <div class="col-sm-1 importanceCell cell">
+        <div class="importanceLine">
+          {{completedItem.p_importance}}
+        </div>
+
+<!--                            URGENT                               -->
+      <div class="col-sm-1 urgentCell cell">
+        <div class="urgentLine">
+          {{completedItem.r_urgent}}
+        </div>
+      </div>
+<!--                            DURATION                               -->
+      <div class="col-sm-1 numberCell cell">
+        <div class="numberLine">
+          {{completedItem.m_hoursToFinish}}
+        </div>
+      <div class="col-sm-1 numberCell cell">
+        <div class="numberLine">
+          {{completedItem.n_minutesToFinish}}
+        </div>
+      </div>
+<!--                            RANK                                   -->
+      <div class="col-sm-1 rankCell cell" ng-class="{'text': crossOut}">
+        {{completedItem.s_rank}}
+      </div>
+<!--                            DATE CREATED                           -->
+      <div class="col-sm-1 createdAtCell cell" ng-class="{'text': crossOut}">
+        {{completedItem.t_created_at | date: 'M/d/yy h:mm a'}}
+      </div>
+<!--                        TIME TO COMPLETE                           -->
+      <div class="col-sm-1">
+        <div class="dueCell cell" ng-class="{'text': crossOut}">
+          <span>{{parseTime(completedItem.b_dueDate).year}}yr</span>  <span>{{parseTime(completedItem.b_dueDate).month}}mth</span>
+          <span>{{parseTime(completedItem.b_dueDate).day}}days</span> <span>{{parseTime(completedItem.b_dueDate).hour}}hrs</span> <span>{{parseTime(completedItem.b_dueDate).minute}}ms</span> <span>{{parseTime(completedItem.b_dueDate).second}}secs</span>
+        </div>
+      </div>
+<!--                     COMPLETE CHECKBOX + DELETE                    -->
+<!--
+      <div class="col-sm-1 deleteButton" ng-show="crossOut">
+        Delete: <button class="btn btn-default" ng-model="completedItems.b_dueDate" ng-click="uncrossOutItem(completedItem, completedItems.b_dueDate)"></button>
+      </div>
+    </div> -->
+
+    <!--                            DATE                                   -->
+      <div class="col-sm-1 dateCell cell">
+        <div class="dateLine" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+          {{completedItem.b_dueDate | date: 'M/d/yy h:mm a'}}
+        </div>
+        <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-blur="dateNum=false"
+        placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate"
+        ng-change="updateItem(completedItems.item, updatedDueDate, completedItem.p_importance, completedItem.r_urgent, completedItem.m_hoursToFinish, completedItems.n_minutesToFinish)" />
+      </div>
