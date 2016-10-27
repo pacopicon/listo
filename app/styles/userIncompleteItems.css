@@ -1,0 +1,41 @@
+
+body {
+  background-color: rgb(255, 247, 254);
+  height: 100%;
+  width: 100%;
+}
+
+form {
+  height: 100%;
+  width: 100%;
+}
+section {
+  height: 100%;
+  width: 100%;
+}
+.user-links-container {
+  position: relative;
+  top: 0.0005rem;
+  margin-left: 2.42em;
+  margin-bottom: 1em;
+  height: 100%;
+  right: 40;
+  /*padding-left: 2em;
+  padding-right: 2em;*/
+  vertical-align: middle;
+  text-decoration: none;
+}
+
+.navbar-link  {
+  color: black;
+  font-size: 2em;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+  /*text-transform: uppercase;*/
+  text-decoration: none;
+  cursor: pointer;
+/*
+  -webkit-transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
+  transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
+*/
+}

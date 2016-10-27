@@ -80,10 +80,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
       if (item === null) {
         // urgency is used to calculate RANK
         var currentUrgency = calculateUrgency(ratio);
-        console.log("item is null");
       } else {
         var currentUrgency = newUrgency;
-        console.log("item is not null");
       }
 
       var rank = calculateRank(importanceTxt, ratio, currentUrgency);
@@ -191,20 +189,20 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
         items.$loaded().then(function(items) {
           var totalItems = items.length;
-          console.log("contents of items: " + items.length);
 
           for (var i = 0; i < totalItems; i++) {
-            if (items[i].q_completed == false) {
+            if (!items[i].q_completed) {
               uncompletedItems.push(items[i]);
             }
-            console.log("completed?: " + items[i].q_completed);
+            // console.log("completed?: " + items[i].q_completed);
           }
 
-          console.log("The item array: " + items);
-
+          // console.log("The item array: " + items);
+          return uncompletedItems
         });
-        console.log("The uncompleted array: " + uncompletedItems);
+
         return uncompletedItems;
+        console.log("uncompleted array has: " + uncompletedItems.length + " uncompleted items");
       },
 
       getCompletedItems: function() {
@@ -214,27 +212,23 @@ listo.factory("ItemCrud", ["$firebaseArray",
           var totalItems = items.length;
 
           for (var i = 0; i < totalItems; i++) {
-            // var now = Date.now();
-            // var week = 604800000;
-            var itemExpirationDatePlusWeek = now + week;
-
-
-            if (items[i].q_completed == true) {
+            if (items[i].q_completed) {
               completedItems.push(items[i]);
             }
 
-            if (items[i].q_completed && items[i].b_dueDate < itemExpirationDatePlusWeek) {
+            if (items[i].q_completed && items[i].b_dueDate + week < now) {
               items.$remove(items[i]).then(function() {
-                var id = ref.key();
-                items[i].$indexFor(id);
-                console.log("The item " + id + "has been long been completed and has now been erased from the database");
+                // var id = ref.key();
+                // items[i].$indexFor(id);
+                // console.log("The item " + id + "has been long been completed and has now been erased from the database");
               });
             }
           }
-
+          return completedItems
         });
 
         return completedItems;
+        console.log("completed array has: " + completedItems.length + " completed items");
       },
 
       getItemsPastDue: function() {
@@ -249,19 +243,20 @@ listo.factory("ItemCrud", ["$firebaseArray",
           if (items[i].b_dueDate < now) {
             items[i].qq_pastDue = true;
             items.$save(items[i]).then(function () {
-              console.log("The item called " + items[i].a_text + "is past due!");
+              // console.log("The item called " + items[i].a_text + "is past due!");
             });
             itemsPastDue.push(items[i]);
           }
 
-          if (items[i].b_dueDate < itemExpirationDatePlusWeek) {
+          if (items[i].b_dueDate + week < now) {
             items.$remove(items[i]).then(function() {
-              console.log("The item called " + items[i].a_text + "has been past due for a week and has now been erased from the database");
+              // console.log("The item called " + items[i].a_text + "has been past due for a week and has now been erased from the database");
             });
           }
 
         }
         return itemsPastDue;
+        console.log("getItemsPastDue was called, itemsPastDue array has: " + itemsPastDue.length + "items past due");
       },
 
       markAsCompleted: function(item) {

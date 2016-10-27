@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache",
-  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout',
+  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache, $timeout) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -314,19 +314,72 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // Begin Tab Templates ---------------------------------------------
 
-    $scope.tabs = [
-    {title:'Home', content: 'Raw denim you probably haven\'t heard of them jean shorts Austin. Nesciunt tofu stumptown aliqua, retro synth master cleanse. Mustache cliche tempor, williamsburg carles vegan helvetica.'},
-    {title:'Profile', content: 'Food truck fixie locavore, accusamus mcsweeney\'s marfa nulla single-origin coffee squid. Exercitation +1 labore velit, blog sartorial PBR leggings next level wes anderson artisan four loko farm-to-table craft beer twee.'},
-    {title:'About', content: 'Etsy mixtape wayfarers, ethical wes anderson tofu before they sold out mcsweeney\'s organic lomo retro fanny pack lo-fi farm-to-table readymade.', disabled: true}
-  ];
+    // $scope.tabData   = [
+    //   {
+    //     heading: 'User',
+    //     route:   'user'
+    //   },
+    //   {
+    //     heading: 'UserCompleteItems',
+    //     route:   'userCompleteItems',
+    //     disable: false
+    //   },
+    //   {
+    //     heading: 'UserWeekly',
+    //     route:   'userWeekly',
+    //     disable: false
+    //   },
+    //   {
+    //     heading: 'UserMonthly',
+    //     route:   'userMonthly',
+    //     disable: false
+    //   },
+    //   {
+    //     heading: 'UserYearly',
+    //     route:   'userYearly',
+    //     disable: false
+    //   }
+    // ];
 
-  $scope.pushTab = function() {
-    $scope.tabs.push({title: 'Contact', content: 'Reprehenderit butcher retro keffiyeh dreamcatcher synth. Cosby sweater eu banh mi, qui irure terry richardson ex squid.'});
-  };
+    // $scope.tabData   = [
+    //   {
+    //     heading: 'Settings',
+    //     route:   'user.settings'
+    //   },
+    //   {
+    //     heading: 'Accounts',
+    //     route:   'user.accounts',
+    //     disable: true
+    //   }
+    // ];
 
-  $scope.toggleThirdTab = function() {
-    $scope.tabs[2].disabled = !$scope.tabs[2].disabled;
-  };
+    // Begin angular-chart.js -----------------------------------------
+
+    $scope.labels = ["completed", "incomplete"];
+
+    $scope.completeDataPoint = function() {
+      if ($scope.completedItems !== undefined) {
+          // console.log("completeDataPoint called, completedItems undefined, # of items completed: " + $scope.uncompletedItems.length);
+        return $scope.completedItems.length;
+      }
+      else {
+          // console.log("completeDataPoint called, completedItems is defined, # of items completed: " + $scope.uncompletedItems.length);
+        return 0;
+      }
+    };
+
+    $scope.incompleteDataPoint = function() {
+      if ($scope.uncompletedItems !== undefined) {
+        // console.log("incompleteDataPoint called, uncompletedItems undefined, # of items not complete: " + $scope.uncompletedItems.length);
+        return $scope.uncompletedItems.length;
+      }
+      else {
+        // console.log("incompleteDataPoint called, uncompletedItems is defined, # of items not complete: " + $scope.completedItems.length);
+        return 0;
+      }
+    };
+
+    $scope.data = [$scope.completeDataPoint(), $scope.incompleteDataPoint()];
 
   }
 ]);

@@ -7,6 +7,7 @@
 html {
     height: 100; /* makes sure our HTML takes up 100% of the browser window */
     font-size: 100;
+    background-color: rgb(255, 247, 254);
 }
 
 body {
@@ -16,17 +17,19 @@ body {
     background-position: center center;
     background-size: cover;
     font-family: 'Open Sans';
-    color: white;
+    color: rgb(255, 247, 254);
     min-height: 100%;
     padding-bottom: 200px;
  }
 
-.navbar {
+.navbark {
     position: relative;
-    padding: 0.5rem;
+    /*padding: 0.5rem;*/
     height: 3rem;
+    top: -3.4em;
+    background-color: rgb(160, 218, 255);
     /* #1 */
-    background-color: rgb(133,150,117);
+    /*background-color: rgb(133,150,117);*/
     /* #2 */
     z-index: 1;
  }
@@ -51,7 +54,7 @@ body {
     display: table;
     position: absolute;
     top: 0;
-    right: 0;
+    /*right: 0;*/
     height: 100px;
     color: white;
     /* #3 */
@@ -65,12 +68,12 @@ body {
     padding-left: 1rem;
     padding-right: 1rem;
     /* #4 */
-    vertical-align: middle;
+    /*vertical-align: middle;*/
     color: white;
-    font-size: 1rem;
+    font-size: 1.9rem;
     letter-spacing: 0.05rem;
     font-weight: 700;
-    text-transform: uppercase;
+    /*text-transform: uppercase;*/
     /* #3 */
     text-decoration: none;
     cursor: pointer;
@@ -83,21 +86,29 @@ body {
 .links-container .navbar-link:hover {
 }
 
-.navbar-link:hover {
-    color: rgb(233,150,117);
-    padding-right: 1rem;
-/*
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-*/
+.navbar-link {
+  display: inline-block;
 }
 
 .links-container .navbar-link:active {
-    color: rgb(233,50,117);
-    background-color: white;
+  color: rgb(122, 197, 244);
+  background-color: white;
 }
 
+.fa:hover {
+  color: rgb(219, 133, 217);
+}
 
+.userMenu {
+  /*color: black;*/
+  /*font-size: 1.5em;*/
+  /*margin-left: 2em;*/
+  /*letter-spacing: 0.1em;*/
+  /*font-weight: 700;*/
+  /*text-transform: uppercase;*/
+  /*text-decoration: none;*/
+  /*cursor: pointer;*/
+}
 
 .container {
     margin: 0 auto;

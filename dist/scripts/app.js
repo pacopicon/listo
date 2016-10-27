@@ -1,4 +1,6 @@
-var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap", "ui.router.tabs"]);
+var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap", "chart.js"]);
+
+// , "ui.router.tabs"
 
 listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $modalProvider) {
 
@@ -17,6 +19,11 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             url: '/user',
             controller: 'UserCtrl',
             templateUrl: '/templates/user.html'
+        })
+        .state('userIncompleteItems', {
+            url: '/userIncompleteItems',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/userIncompleteItems.html'
         })
         .state('userCompleteItems', {
             url: '/userCompleteItems',
@@ -48,6 +55,18 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
       html: true
     });
 });
+
+listo.config(['ChartJsProvider', function (ChartJsProvider) {
+    // Configure all charts
+    ChartJsProvider.setOptions({
+      chartColors: ['#FF5252', '#FF8A80'],
+      responsive: false
+    });
+    // Configure all line charts
+    ChartJsProvider.setOptions('line', {
+      showLines: false
+    });
+  }]);
 
 //(function () {
 //    function config($stateProvider, $locationProvider, $urlRouterProvider) {

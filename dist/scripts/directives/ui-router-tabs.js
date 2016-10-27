@@ -24,8 +24,7 @@ if (typeof module !== 'undefined' && typeof exports !== 'undefined' && module.ex
   module.exports = 'ui.router.tabs';
 }
 
-angular.module('ui.router.tabs', ['ngSanitize']);
-angular.module('ui.router.tabs').directive(
+listo.directive(
   'tabs', ['$rootScope', '$state', function($rootScope, $state) {
 
     return {

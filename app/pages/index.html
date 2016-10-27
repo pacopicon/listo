@@ -110,9 +110,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_en-us.js"></script>
 
 
-  <!--Charts-->
+  <!--Chart.js-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+
+  <!--angular-chart.js-->
+
+  <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
 
   <!--Native Script  files-->
 
@@ -137,7 +141,7 @@
 
 
    <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script> -->
 
   <!--Native style files-->
   <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,800,600,700,300">
@@ -150,15 +154,17 @@
 
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbark">
         <!-- <ul class="links-container"> -->
-          <ul class="nav nav-tabs">
-            <li ui-sref="user" class="active">To do List</li>
-            <li ui-sref="userCompleteItems">completed items</li>
-            <li ui-sref="userWeekly">weekly calendar</li>
-            <li ui-sref="userMonthly">monthly calendar</li>
-            <li ui-sref="userYearly">yearly calendar</li>
-        </ul>
+        <div class="links-container userMenu">
+            <div ui-sref="user" class="navbar-link login"><i class="fa fa-sign-in"></i></div>
+            <div ui-sref="userIncompleteItems" class="navbar-link todo"><i class="fa fa-pencil-square"></i></div>
+            <div ui-sref="userCompleteItems" class="navbar-link complete"><i class="fa fa-archive"></i></div>
+            <div ui-sref="userWeekly" class="navbar-link weekly"><i class="fa fa-calendar"><small> (weekly)</small></i></div>
+            <div ui-sref="userMonthly" class="navbar-link monthly"><i class="fa fa-calendar"><small> (monthly)</small></i></div>
+            <div ui-sref="userYearly" class="navbar-link yearly"><i class="fa fa-calendar"><small> (yearly)</small></i></div>
+            <div ui-sref="landing" class="navbar-link logout"><i class="fa fa-sign-out"></i></div>
+          </div>
     </nav>
 
     <ui-view></ui-view>

@@ -1,3 +1,280 @@
+<body>
 <section ng-controller="UserCtrl" class="user">
-  <h1>This is Incomplete items</h1>
+  <div class="clock">
+    <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
+  </div>
+  <div class="list-group">
+  <!--                            HEADING                               -->
+
+    <div class="row">
+      <b>
+        <div class="col-sm-1 priorityCell">#</div>
+        <div class="col-sm-1 nameCell">to do item:</div>
+        <div class="col-sm-1 dateCell">date and time due:</div>
+        <div class="col-sm-1 importanceCell">importance:</div>
+        <div class="col-sm-1 urgentCell">urgent?:</div>
+        <div class="col-sm-1 durationCell">duration:</div>
+        <div class="col-sm-1 rankCell">rank:</div>
+        <div class="col-sm-1 createdAtCell">Active since:</div>
+        <div class="col-sm-1">Due in:</div>
+      </b>
+    </div>
+    <hr>
+    <div class="row" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
+      <!-- <div ng-hide="item.q_complete"> -->
+  <!--                            PRIORITY                               -->
+      <div class="col-sm-1 priorityCell cell">
+        {{$index + 1}}
+      </div>
+  <!--                            NAME                                   -->
+      <div class="col-sm-1 nameCell cell">
+        <div class="nameLine" ng-class="{'text': crossOut}" ng-hide="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false">
+          {{item.a_text}}
+        </div>
+        <input class="nameEditBox" type="inputText" ng-show="nameEdit" ng-Mouseover="nameEdit=true" ng-Mouseleave="nameEdit=false" ng-model="item.a_text" ng-change="items.$save(item)"/>
+      </div>
+  <!--                            DATE                                   -->
+      <div class="col-sm-1 dateCell cell" ng-class="{'text': crossOut}">
+        <div class="dateLine" ng-class="{'text': crossOut}" ng-hide="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false">
+          {{item.b_dueDate | date: 'M/d/yy h:mm a'}}
+        </div>
+
+        <input class="dateEditBox" type="datetime-local" ng-show="dateNum" ng-Mouseover="dateNum=true" ng-blur="dateNum=false"
+        placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate"
+        ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
+      </div>
+
+      <!-- ng-show="dateNum" ng-Mouseover="dateNum=true" ng-Mouseleave="dateNum=false" -->
+
+      <!--  Begin angular-strap datePicker -->
+
+            <!-- <form name="timepickerForm" class="form-inline" role="form">
+              <div class="form-group">
+                <div class="form-group">
+                  <input type="text" size="10" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-autoclose="1" placeholder="Date" bs-datepicker>
+                </div>
+                <div class="form-group">
+                  <input type="text" size="8" class="form-control" ng-model="item.b_dueDate" ng-change="items.$save(item)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+                </div>
+              </div>
+            </form> -->
+
+        <!--  End angular-strap datePicker -->
+  <!--                            IMPORTANCE                             -->
+      <div class="col-sm-1 importanceCell cell">
+        <div class="importanceLine" ng-class="{'text': crossOut}" ng-hide="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false">
+          {{item.p_importance}}
+        </div>
+
+        <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+
+      <!--  Begin angular-strap select -->
+
+        <!-- <button type="button" class="btn btn-default" ng-model="p_importance" ng-change="items.$save(item)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+        </button> -->
+
+      <!--  End angular-strap select -->
+      </div>
+  <!--                            URGENT                               -->
+      <div class="col-sm-1 urgentCell cell">
+        <div class="urgentLine" ng-class="{'text': crossOut}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+          {{item.r_urgent}}
+        </div>
+        <div class="urgentEditBox" ng-show="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+          Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
+        </div>
+      </div>
+  <!--                            DURATION                               -->
+      <div class="col-sm-1 numberCell cell">
+        <div class="numberLine" ng-class="{'text': crossOut}" ng-hide="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false">
+          {{item.m_hoursToFinish}}
+        </div>
+        <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="hourEdit" ng-Mouseover="hourEdit=true" ng-Mouseleave="hourEdit=false"/>
+      </div>
+      <div class="col-sm-1 numberCell cell">
+        <div class="numberLine" ng-class="{'text': crossOut}" ng-hide="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false">
+          {{item.n_minutesToFinish}}
+        </div>
+        <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="minuteEdit" ng-Mouseover="minuteEdit=true" ng-Mouseleave="minuteEdit=false"/>
+      </div>
+  <!--                            RANK                                   -->
+      <div class="col-sm-1 rankCell cell" ng-class="{'text': crossOut}">
+        {{item.s_rank}}
+      </div>
+  <!--                            DATE CREATED                           -->
+      <div class="col-sm-1 createdAtCell cell" ng-class="{'text': crossOut}">
+        {{item.t_created_at | date: 'M/d/yy h:mm a'}}
+      </div>
+  <!--                        TIME TO COMPLETE                           -->
+      <div class="col-sm-1">
+        <div class="dueCell cell" ng-class="{'text': crossOut}">
+          <span>{{parseTime(item.b_dueDate).year}}yr</span>  <span>{{parseTime(item.b_dueDate).month}}mth</span>
+          <span>{{parseTime(item.b_dueDate).day}}days</span> <span>{{parseTime(item.b_dueDate).hour}}hrs</span> <span>{{parseTime(item.b_dueDate).minute}}ms</span> <span>{{parseTime(item.b_dueDate).second}}secs</span>
+        </div>
+      </div>
+  <!--                     COMPLETE CHECKBOX + DELETE                    -->
+
+      <div class="col-sm-1 completedBox">
+        <input type="checkbox" ng-model="crossOut" />
+      </div>
+      <div class="col-sm-1 deleteButton" ng-show="crossOut">
+        Delete: <input type="checkbox" class="btn btn-danger" ng-model="item.q_completed" ng-change="items.$save(item)"/>
+      </div>
+    <!-- </div> -->
+    </div>
+
+    <hr />
+
+    <canvas id="doughnut" class="chart chart-doughnut"
+  chart-data="data" chart-labels="labels">
+</canvas>
+
+    <hr />
+        <!-- <div id="chart-1" style="height: 300px;"></div> -->
+
+  <!--                            FORM                               -->
+
+          <!-- push a new message onto the array -->
+    <form ng-submit="addItem()" class="form">
+      <table class="outerTable">
+  <!--                         name                             -->
+        <tr>
+          <td class="formBox">
+            Enter item name:
+          </td>
+          <td class="formBox">
+            <input class="col-xs-1 form-control name" ng-model="newItemName" />
+          </td>
+        </tr>
+  <!--                            date                               -->
+        <tr>
+          <td class="formBox">
+            Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :
+          </td>
+          <td class="formBox">
+            <div class="row">
+              <div class="col-md-6">
+                <form name="timepickerForm" class="form-inline" role="form">
+                  <table class="innerTableOne">
+                    <tr>
+                      <td>
+                        <div class="date">
+                          <input type="text" size="10" class="form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="Date" bs-datepicker>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="time">
+                          <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </form>
+
+  <!--
+                <p class="input-group formBox">
+                  <input type="text" class="form-control formBox" uib-datepicker-popup="dd-MMMM-yyyy" ng-model="newDueDate" is-open="popup1.opened" datepicker-options="dateOptions" ng-required="true" close-text="Close" alt-input-formats="altInputFormats" />
+                  <span class="input-group-btn">
+                    <button type="button" class="btn btn-default buttonBox" ng-click="openDatePicker()"><i class="glyphicon glyphicon-calendar"></i></button>
+                  </span>
+                </p>
+
+        </td>
+        <td>
+                <button type="button" class="btn btn-sm btn-info" ng-click="today()">Today</button>
+                <button type="button" class="btn btn-sm btn-danger" ng-click="clear()">Clear</button>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleMin()" uib-tooltip="After today restriction">Min date</button>
+              <button type="button" class="btn btn-sm btn-default" ng-click="toggleWeekendDisable()" uib-tooltip="weekend restriction">restrict weekends</button> -->
+
+            </div>
+          </div>
+        </td>
+      </tr>
+  <!--                            time                               -->
+        <!-- <tr>
+          <td>Enter due time:</td>
+          <td>
+            <table class="innerTableOne">
+              <tr>
+                <td>
+                  <div class="numberFormBox" uib-timepicker ng-model="newDueTime" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></div>
+                </td>
+                <td class="endOfDayButton">
+                  <button type="button" class="btn btn-default" ng-click="update()">end of day</button>
+                </td>
+                <td class="clearButton">
+                  <button type="button" class="btn btn-danger" ng-click="clear()">Clear</button>
+                </td>
+              </tr>
+            </table> -->
+
+            <!-- <div class="row">
+              <div class="col-xs-6">
+                  Hours step is:
+                <select class="form-control numberFormBox" ng-model="hstep" ng-options="opt for opt in options.hstep"></select>
+              </div>
+              <div class="col-xs-6">
+                  Minutes step is:
+                <select class="form-control numberFormBox" ng-model="mstep" ng-options="opt for opt in options.mstep"></select>
+              </div>
+            </div> -->
+            <!-- <button type="button" class="btn btn-info" ng-click="toggleMode()">12H / 24H</button> -->
+  <!--
+          </td>
+        </tr> -->
+  <!--                            est. time                              -->
+        <tr>
+          <td class="formBox">
+            Enter est. <i class="fa fa-clock-o"></i> to finish:
+          </td>
+          <td class="formBox">
+            <table class="innerTableTwo">
+              <tr>
+                <td>
+                  <select class="form-control number" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
+
+                  <!-- <button type="button" class="btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="timeOption.hour as timeOption.hour for timeOption in timeOptions" bs-select><span class="caret"></span> -->
+
+                </td>
+                <td class="hourPickerCaption">hours and</td>
+                <td class="minutePicker">
+                  <select class="form-control number" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
+
+                  <!-- <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span> -->
+
+                </td>
+                <td class="minutePickerCaption">minutes</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+  <!--                            importance                             -->
+        <tr>
+          <td class="formBox">
+            Enter importance:
+          </td>
+          <!-- <td class="formBox">
+            <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control importance formBox">
+              <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}
+              </option>
+            </select>
+          </td> -->
+
+          <td class="formBox">
+            <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+            </button>
+          </td>
+        </tr>
+  <!--                            Add Button                             -->
+
+        <tr>
+          <td></td>
+          <td><button type="submit" type="button" class="btn btn-primary">Add to-do item</button></td>
+        </tr>
+
+      </table>
+
+    </form>
+  </div>
 </section>
+</body>
