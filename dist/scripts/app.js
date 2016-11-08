@@ -59,7 +59,7 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
 listo.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      chartColors: ['#FF5252', '#FF8A80'],
+      chartColors: ['FED7A0', '#8582D9', '#44362F'],
       responsive: false
     });
     // Configure all line charts

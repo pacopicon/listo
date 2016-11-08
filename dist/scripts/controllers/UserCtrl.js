@@ -4,9 +4,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
     $scope.items = ItemCrud.getAllItems();
-    $scope.uncompletedItems = ItemCrud.getUncompletedItems();
-    $scope.completedItems = ItemCrud.getCompletedItems();
-    $scope.itemsPastDue = ItemCrud.getItemsPastDue();
+    // $scope.incompleteItems = ItemCrud.getIncompleteItems();
+
+    var items = $scope.items;
 
     var refreshTime = function() {
       time = Date.now();
@@ -138,6 +138,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     //   return '';
     // }
     // End Datepicker popup----------------------------------------------
+
 
 
     // Begin AngularStrap timePicker-------------------------------------
@@ -302,6 +303,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
+
+      $scope.completionData();
     };
 
     // if (typeof eachItem.b_dueDate === "object") {
@@ -310,6 +313,37 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     $scope.updateItem = function(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
       ItemCrud.updateItem(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+    };
+
+    $scope.updateItemCompletion = function(item, completion) {
+
+      ItemCrud.updateItemCompletion(item, completion);
+
+      $scope.completionData();
+
+    };
+
+    $scope.completionData = function() {
+      $scope.incompleteItems = ItemCrud.itemsIncomplete().itemCount;
+      $scope.millisecondsLeft = ItemCrud.itemsIncomplete().millisecondsLeft;
+      $scope.hoursLeft = ItemCrud.itemsIncomplete().hoursLeft;
+      $scope.minutesLeft = ItemCrud.itemsIncomplete().minutesLeft;
+
+      $scope.completeItems = ItemCrud.itemsComplete().itemCount;
+      $scope.millisecondsWorked = ItemCrud.itemsComplete().millisecondsWorked;
+      $scope.hoursWorked = ItemCrud.itemsComplete().hoursWorked;
+      console.log("hoursWorked: " + $scope.hoursWorked);
+      $scope.minutesWorked = ItemCrud.itemsComplete().minutesWorked;
+
+      $scope.itemLabels = ["items yet to complete", "items completed"];
+      $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
+
+      $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
+      $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
+      // $scope.millisecData = [$scope.hoursWorked, $scope.hoursLeft];
+      $scope.series = ["Hours worked", "Hours yet to work"];
+      $scope.hourData = [$scope.hoursWorked, $scope.hoursLeft];
+      $scope.hourLabel = ["Hours worked", "Hours yet to work"]
     };
 
     // Begin Tab Templates ---------------------------------------------
@@ -355,31 +389,165 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // Begin angular-chart.js -----------------------------------------
 
-    $scope.labels = ["completed", "incomplete"];
 
-    $scope.completeDataPoint = function() {
-      if ($scope.completedItems !== undefined) {
-          // console.log("completeDataPoint called, completedItems undefined, # of items completed: " + $scope.uncompletedItems.length);
-        return $scope.completedItems.length;
-      }
-      else {
-          // console.log("completeDataPoint called, completedItems is defined, # of items completed: " + $scope.uncompletedItems.length);
-        return 0;
-      }
-    };
 
-    $scope.incompleteDataPoint = function() {
-      if ($scope.uncompletedItems !== undefined) {
-        // console.log("incompleteDataPoint called, uncompletedItems undefined, # of items not complete: " + $scope.uncompletedItems.length);
-        return $scope.uncompletedItems.length;
-      }
-      else {
-        // console.log("incompleteDataPoint called, uncompletedItems is defined, # of items not complete: " + $scope.completedItems.length);
-        return 0;
-      }
-    };
+    // $scope.completeDataPoint = function(items) {
+    //   arrayCompletedItems(items);
+    //   if ($scope.completedItems !== undefined) {
+    //     var completeDataPoint = $scope.completedItems.length;
+    //   }
+    //   else {
+    //     var completeDataPoint = 0;
+    //   }
+    //   return completeDataPoint;
+    // };
+    //
+    // $scope.incompleteDataPoint = function(items) {
+    //   arrayIncompleteItems(items);
+    //   if ($scope.incompleteItems !== undefined) {
+    //     var incompleteDataPoint = $scope.incompleteItems.length;
+    //   }
+    //   else {
+    //     var incompleteDataPoint = 0;
+    //   }
+    //   return incompleteDataPoint;
+    // };
 
-    $scope.data = [$scope.completeDataPoint(), $scope.incompleteDataPoint()];
+    // $scope.completeDataPoint = ItemCrud.getCompleteItems;
+    // $scope.incompleteDataPoint = ItemCrud.getIncompleteItems;
+
+    // $scope.completeItems = [];
+    // $scope.incompleteItems = [];
+    //
+    // $scope.updateArrays = function() {
+    //   var items = ItemCrud.getAllItems();
+    //   items.$loaded().then(function(items) {
+    //
+    //     items.$ref().orderByChild("q_completed").equalTo(true).on("value", function(snapshot) {
+    //     console.log("updateArrays called");
+    //
+    //       var completeItems = [];
+    //       completeItems = Object.keys(snapshot.val());
+    //
+    //       if (snapshot.exists()) {
+    //         console.log("found completeItems array", completeItems);
+    //         return completeItems;
+    //       } else {
+    //         console.warn("completeItems was not found.");
+    //         return [];
+    //       }
+    //
+    //     });
+    //
+    //     items.$ref().orderByChild("q_completed").equalTo(false).on("value", function(snapshot) {
+    //
+    //
+    //
+    //       var incompleteItems = [];
+    //       incompleteItems = Object.keys(snapshot.val());
+    //
+    //       if (snapshot.exists()) {
+    //         console.log("found incompleteItems array", incompleteItems);
+    //         return incompleteItems;
+    //       } else {
+    //         console.warn("incompleteItems was not found.");
+    //         return [];
+    //       }
+    //
+    //     });
+    //
+    //     return {
+    //       incompleteItems: incompleteItems,
+    //       totalIncompleteItems: incompleteItems.length,
+    //       completeItems: completeItems,
+    //       totalCompleteItems: completeItems.length
+    //     }
+    //
+    //   });
+    // };
+
+    // $scope.incompleteItems = function() {
+    //   var items = ItemCrud.getAllItems();
+    //   var totalItems = items.length;
+    //   var incompleteItems = [];
+    //
+    //   for (var i = 0; i < totalItems; i++) {
+    //     if (!items[i].q_completed) {
+    //       incompleteItems.push(items[i]);
+    //     }
+    //   }
+    //
+    //   if (incompleteItems !== undefined) {
+    //     return incompleteItems.length;
+    //     console.log("incomplete items is: " + incompleteItems);
+    //   } else {
+    //     return 0;
+    //     console.log("incomplete items is: " + 0);
+    //   }
+    // };
+    //
+    // $scope.completeItems = function() {
+    //   var items = ItemCrud.getAllItems();
+    //   var totalItems = items.length;
+    //   var completeItems = [];
+    //
+    //   for (var i = 0; i < totalItems; i++) {
+    //     if (items[i].q_completed) {
+    //       completeItems.push(items[i]);
+    //     }
+    //
+    //     if (items[i].q_completed && items[i].b_dueDate + week < now) {
+    //       items.$remove(items[i]).then(function() {
+    //       });
+    //     }
+    //   }
+    //
+    //   if (completeItems !== undefined) {
+    //     return completeItems.length;
+    //     console.log("complete items is: " + completeItems);
+    //   } else {
+    //     return 0;
+    //     console.log("complete items is: " + 0);
+    //   }
+    // };
+
+
+
+
+    // $scope.makeIncompleteItemsArray = function() {
+    //   var items = ItemCrud.getAllItems();
+    //   items.$loaded().then(function(items) {
+    //     items.$ref().orderByChild("q_completed").equalTo(false).on("value", function(snapshot) {
+    //     console.log("incompleteItems called");
+    //
+    //       var incompleteItems = [];
+    //       incompleteItems = snapshot.val();
+    //
+    //       if (snapshot.exists()) {
+    //         console.log("found", incompleteItems);
+    //         $scope.incompleteItems = incompleteItems;
+    //       } else {
+    //         console.warn("incompleteItems was not found.");
+    //       }
+    //
+    //     });
+    //   });
+    // };
+
+
+
+
+
+    // $scope.completeDataPoint = ItemCrud.completeItems.length;
+    // $scope.incompleteDataPoint = ItemCrud.incompleteItems.length;
+
+    // $scope.data = [$scope.completeDataPoint, $scope.incompleteDataPoint];
+    $scope.itemLabels = ["items yet to complete", "items completed"];
+    $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
+
+    $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
+    $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
+
 
   }
 ]);

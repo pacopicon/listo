@@ -154,18 +154,20 @@
 
 </head>
 <body>
-    <nav class="navbark">
-        <!-- <ul class="links-container"> -->
-        <div class="links-container userMenu">
-            <div ui-sref="user" class="navbar-link login"><i class="fa fa-sign-in"></i></div>
-            <div ui-sref="userIncompleteItems" class="navbar-link todo"><i class="fa fa-pencil-square"></i></div>
-            <div ui-sref="userCompleteItems" class="navbar-link complete"><i class="fa fa-archive"></i></div>
-            <div ui-sref="userWeekly" class="navbar-link weekly"><i class="fa fa-calendar"><small> (weekly)</small></i></div>
-            <div ui-sref="userMonthly" class="navbar-link monthly"><i class="fa fa-calendar"><small> (monthly)</small></i></div>
-            <div ui-sref="userYearly" class="navbar-link yearly"><i class="fa fa-calendar"><small> (yearly)</small></i></div>
-            <div ui-sref="landing" class="navbar-link logout"><i class="fa fa-sign-out"></i></div>
-          </div>
-    </nav>
+  <nav class="navbark">
+  </nav>
+  <aside>
+    <!-- <ul class="links-container"> -->
+    <div class="links-container userMenu">
+        <div ui-sref="user" class="navbar-link login"><i class="fa fa-sign-in"></i></div>
+        <div ui-sref="userIncompleteItems" class="navbar-link todo"><i class="fa fa-pencil-square"></i></div>
+        <div ui-sref="userCompleteItems" class="navbar-link complete"><i class="fa fa-archive"></i></div>
+        <div ui-sref="userWeekly" class="navbar-link weekly"><i class="fa fa-calendar"><small> (weekly)</small></i></div>
+        <div ui-sref="userMonthly" class="navbar-link monthly"><i class="fa fa-calendar"><small> (monthly)</small></i></div>
+        <div ui-sref="userYearly" class="navbar-link yearly"><i class="fa fa-calendar"><small> (yearly)</small></i></div>
+        <div ui-sref="landing" class="navbar-link logout"><i class="fa fa-sign-out"></i></div>
+      </div>
+    </aside>
 
     <ui-view></ui-view>
 

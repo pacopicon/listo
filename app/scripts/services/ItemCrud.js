@@ -8,9 +8,23 @@ listo.factory("ItemCrud", ["$firebaseArray",
         // holds items
     var items = $firebaseArray(ref);
 
+    // $scope.findSeriesWithoutFactory = function() {
+    //   var seriesRef = new Firebase(fbUrl+'/series');
+    //   var seriesCollection = $firebaseArray(seriesRef);
+    //
+    //   seriesCollection.$ref().orderByChild("name").equalTo($scope.seriesName).once("value", function(dataSnapshot){
+    //     var series = dataSnapshot.val();
+    //     if(dataSnapshot.exists()){
+    //       console.log("Found", series);
+    //       $scope.series = series;
+    //     } else {
+    //       console.warn("Not found.");
+    //     }
+    //   });
+    // };
+
     var now = Date.now();
     var week = 604800000;
-
 
     var calculateEstTime = function(eHour, eMinute) {
       var estTime = (eHour * 60 * 60 * 1000) + (eMinute * 60 * 1000);
@@ -91,6 +105,21 @@ listo.factory("ItemCrud", ["$firebaseArray",
       };
     };
 
+    var clockTime = function(totalHour, totalMin) {
+      var totalTime = (totalHour * 60) + totalMin;
+      var wholeHoursOnly = Math.floor(totalTime / 60);
+      var wholeMinsOnly = totalTime % 60;
+      var milliseconds = ((3600000 * wholeHoursOnly) + (60000 * wholeMinsOnly));
+
+      console.log("clockTime called returning: " + wholeHoursOnly + " and " + wholeMinsOnly);
+
+      return {
+        hours: wholeHoursOnly,
+        minutes: wholeMinsOnly,
+        milliseconds: milliseconds
+      }
+    };
+
     return {
 
       parseTime: function(timeInMillisecs) {
@@ -148,16 +177,16 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
         items.$add({
 
-            a_text: itemName,
-            b_dueDate: dueDate.getTime(),
-            m_hoursToFinish: eHour,
-            n_minutesToFinish: eMinute,
-            p_importance: importanceTxt,
-            q_completed: false,
-            qq_pastDue: false,
-            r_urgent: itemProperties.urgency,
-            s_rank: itemProperties.rank,
-            t_created_at: Firebase.ServerValue.TIMESTAMP
+          a_text: itemName,
+          b_dueDate: dueDate.getTime(),
+          m_hoursToFinish: eHour,
+          n_minutesToFinish: eMinute,
+          p_importance: importanceTxt,
+          q_completed: false,
+          qq_pastDue: false,
+          r_urgent: itemProperties.urgency,
+          s_rank: itemProperties.rank,
+          t_created_at: Firebase.ServerValue.TIMESTAMP
 
         }).then(function(ref) {
           var id = ref.key();
@@ -180,56 +209,143 @@ listo.factory("ItemCrud", ["$firebaseArray",
         items.$save(itemToBeUpdated);
       },
 
+      updateItemCompletion: function(item, completion) {
+
+        var itemToBeUpdated = items.$getRecord(item.$id);
+        itemToBeUpdated.q_completed = completion;
+
+        items.$save(itemToBeUpdated);
+      },
+
       getAllItems: function() {
         return items;
       },
 
-      getUncompletedItems: function() {
-        var uncompletedItems = [];
+      // getIncompleteItems: function() {
+      //   var incompleteItems = [];
+      //   var totalItems = items.length;
+      //
+      //   for (var i = 0; i < totalItems; i++) {
+      //     if (!items[i].q_completed) {
+      //       incompleteItems.push(items[i]);
+      //     }
+      //   }
+      //   return incompleteItems;
+      //   console.log("getIncompleteItems called, incompleteItems: " + incompleteItems.length);
+      // },
+      //
+      // getCompleteItems: function() {
+      //   var completeItems = [];
+      //   var totalItems = items.length;
+      //
+      //   for (var i = 0; i < totalItems; i++) {
+      //     if (items[i].q_completed) {
+      //       completeItems.push(items[i]);
+      //     }
+      //   }
+      //   return completeItems;
+      //   console.log("getCompleteItems called, completeItems: " + completeItems.length);
+      // },
+      // completedAt: timestamp
 
-        items.$loaded().then(function(items) {
-          var totalItems = items.length;
+      itemsComplete: function () {
+        var itemCount = 0;
+        var hours = 0;
+        var minutes = 0;
+        var totalItems = items.length;
 
-          for (var i = 0; i < totalItems; i++) {
-            if (!items[i].q_completed) {
-              uncompletedItems.push(items[i]);
-            }
-            // console.log("completed?: " + items[i].q_completed);
+        for (var i = 0; i < totalItems; i++) {
+
+          if (items[i].q_completed) {
+            itemCount++;
+            hours = hours + items[i].m_hoursToFinish;
+            minutes = minutes + items[i].n_minutesToFinish;
           }
 
-          // console.log("The item array: " + items);
-          return uncompletedItems
-        });
+          if (items[i].q_completed && items[i].b_dueDate + week < now) {
+            items.$remove(items[i]).then(function() {
+              console.log("item named " + items[i].a_text + " removed");
 
-        return uncompletedItems;
-        console.log("uncompleted array has: " + uncompletedItems.length + " uncompleted items");
-      },
-
-      getCompletedItems: function() {
-        var completedItems = [];
-
-        items.$loaded().then(function(items) {
-          var totalItems = items.length;
-
-          for (var i = 0; i < totalItems; i++) {
-            if (items[i].q_completed) {
-              completedItems.push(items[i]);
-            }
-
-            if (items[i].q_completed && items[i].b_dueDate + week < now) {
-              items.$remove(items[i]).then(function() {
-                // var id = ref.key();
-                // items[i].$indexFor(id);
-                // console.log("The item " + id + "has been long been completed and has now been erased from the database");
-              });
-            }
+            itemsComplete();
+            });
           }
-          return completedItems
-        });
+        }
 
-        return completedItems;
-        console.log("completed array has: " + completedItems.length + " completed items");
+        var hoursWorked = clockTime(hours, minutes).hours;
+        var minutesWorked = clockTime(hours, minutes).minutes;
+        var millisecondsWorked = clockTime(hours, minutes).milliseconds;
+
+        return {
+          hoursWorked: hoursWorked,
+          minutesWorked: minutesWorked,
+          millisecondsWorked: millisecondsWorked,
+          itemCount: itemCount
+        }
       },
+
+      itemsIncomplete: function () {
+        var itemCount = 0;
+        var hours = 0;
+        var minutes = 0;
+        var totalItems = items.length;
+
+        for (var i = 0; i < totalItems; i++) {
+          if (!items[i].q_completed) {
+            itemCount++;
+            hours = hours + items[i].m_hoursToFinish;
+            minutes = minutes + items[i].n_minutesToFinish;
+          }
+        }
+
+        var hoursLeft = clockTime(hours, minutes).hours;
+        var minutesLeft = clockTime(hours, minutes).minutes;
+        var millisecondsLeft = clockTime(hours, minutes).milliseconds;
+
+        return {
+          hoursLeft: hoursLeft,
+          minutesLeft: minutesLeft,
+          millisecondsLeft: millisecondsLeft,
+          itemCount: itemCount
+        }
+      },
+
+      // getIncompleteItems: function() {
+      //   var incompleteItems = [];
+      //
+      //   items.$loaded().then(function(items) {
+      //     var totalItems = items.length;
+      //
+      //     for (var i = 0; i < totalItems; i++) {
+      //       if (!items[i].q_completed) {
+      //         incompleteItems.push(items[i]);
+      //       }
+      //     }
+      //     return incompleteItems;
+      //   });
+      // },
+      //
+      // getCompleteItems: function() {
+      //   var completeItems = [];
+      //
+      //   items.$loaded().then(function(items) {
+      //     var totalItems = items.length;
+      //
+      //     for (var i = 0; i < totalItems; i++) {
+      //       if (items[i].q_completed) {
+      //         completeItems.push(items[i]);
+      //       }
+      //
+      //       if (items[i].q_completed && items[i].b_dueDate + week < now) {
+      //         items.$remove(items[i]).then(function() {
+      //         });
+      //       }
+      //     }
+      //     return completeItems;
+      //   });
+      //
+      //   return completeItems;
+      //
+      // },
 
       getItemsPastDue: function() {
         var itemsPastDue = [];

@@ -12,6 +12,18 @@
   text-decoration: none;
 }
 
+aside {
+  position: absolute;
+  top: 45px;
+  /*right: 0;*/
+  bottom: 0;
+  width: auto;
+  left: 0;
+  padding-left: 0;
+  padding-top: 0;
+  z-index: 1;
+}
+
 .user-links-container {
   position: relative;
   top: 0.0005rem;
@@ -62,6 +74,13 @@
   top: 0; left: 0; bottom: 0; right: 0;
 }
 
+.itemDisplay {
+  border-radius: 0;
+  background-color: #7B6FA6;
+  width: 90%;
+  color: white;
+}
+
 .list {
   white-space: nowrap;
 }
@@ -79,14 +98,18 @@
 .priorityCell {
   position: relative;
   overflow: auto;
-  width: 5em;
+  width: 2.5em;
   top: 0; left: 0; bottom: 0; right: 0;
 }
+
+/*.textlength {
+  width:
+}*/
 
 .nameCell {
   position: relative;
   overflow: auto;
-  width: 17em;
+  width: 30em;
   top: 0; left: 0; bottom: 0; right: 0;
   color: black;
 }
@@ -94,10 +117,11 @@
 .nameLine {
   width: 100%;
   height: 100%;
+  color: white;
 }
 
 .nameEditBox {
-  width: 12em;
+  width: 25em;
   border-radius: 0.3em;
 }
 
@@ -110,7 +134,7 @@
 }
 
 .dateLine {
-
+  color: white;
 }
 
 .dateEditBox {
@@ -212,19 +236,24 @@
   position: relative;
   overflow: auto;
   width: 17em;
-  color: black;
+  color: white;
 }
 
 .completedBox {
   position: relative;
   overflow: auto;
-  margin-left: 7em;
+  margin-left: 12em;
 }
 
-.deleteButton {
+.deleteBox {
   position: relative;
   overflow: auto;
-  margin-left: -7em;
+  margin-left: -5em;
+}
+
+.btn {
+  border-radius: 0;
+  background-color: #3d7fba;
 }
 
 .text {
@@ -232,6 +261,19 @@
 }
 
 /* End of CSS for listed items */
+
+/* Begin Charts CSS */
+
+.graphTable {
+  width: 60em;
+}
+
+.graphRow {
+  width: 20em;
+}
+
+/* Emd Charts CSS */
+
 /* Begin CSS for Form */
 
 .outerTable {

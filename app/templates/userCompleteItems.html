@@ -1,4 +1,4 @@
-<section ng-controller="UserCtrl" class="user">
+<section ng-controller="UserCtrl" ng-init="completionData()" class="user">
   <div class="clock">
     <p><b>Time now: {{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
   </div>
@@ -119,8 +119,21 @@
       </div>
     </div>
 
-    <hr>
-        <!-- <div id="chart-1" style="height: 300px;"></div> -->
+    <hr />
+
+    <canvas id="pie" class="chart chart-pie"
+  chart-data="itemData" chart-labels="itemLabels">
+    </canvas>
+
+    <canvas id="doughnut" class="chart chart-doughnut"
+  chart-data="millisecData" chart-labels="millisecLabels">
+    </canvas>
+
+    <canvas id="bar" class="chart chart-bar"
+  chart-data="hourData" chart-labels="hourLabel" chart-series="series">
+    </canvas>
+
+    <hr />
 
   </div>
 </section>

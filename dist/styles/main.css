@@ -7,7 +7,8 @@
 html {
     height: 100; /* makes sure our HTML takes up 100% of the browser window */
     font-size: 100;
-    background-color: rgb(255, 247, 254);
+    background-color: #e7eaeb;
+    /*background-color: white;*/
 }
 
 body {
@@ -17,7 +18,7 @@ body {
     background-position: center center;
     background-size: cover;
     font-family: 'Open Sans';
-    color: rgb(255, 247, 254);
+    background-color: #e7eaeb;
     min-height: 100%;
     padding-bottom: 200px;
  }
@@ -27,7 +28,8 @@ body {
     /*padding: 0.5rem;*/
     height: 3rem;
     top: -3.4em;
-    background-color: rgb(160, 218, 255);
+    /*background-color: #3d7fba;*/
+    background-color: #51445f;
     /* #1 */
     /*background-color: rgb(133,150,117);*/
     /* #2 */
@@ -95,8 +97,16 @@ body {
   background-color: white;
 }
 
-.fa:hover {
-  color: rgb(219, 133, 217);
+.fa {
+  color: black;
+}
+
+.navbark .fa {
+  color: white;
+}
+
+.navbark .fa:hover {
+  color: white;
 }
 
 .userMenu {
