@@ -1,59 +1,53 @@
 *, *::before, *::after {
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+  /*-moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;*/
 }
 
 html {
-    height: 100; /* makes sure our HTML takes up 100% of the browser window */
-    font-size: 100;
-    background-color: #e7eaeb;
-    /*background-color: white;*/
+  height: 100;
+  font-size: 112%;
+  background-color: #e7eaeb;
 }
 
 body {
-/*    background-image: url(../assets/images/blurred_backgrounds/blur_bg_3.jpg);*/
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-position: center center;
-    background-size: cover;
-    font-family: 'Open Sans';
-    background-color: #e7eaeb;
-    min-height: 100%;
-    padding-bottom: 200px;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: cover;
+  font-family: 'Montserrat', sans-serif;
+  /*font-family: 'Press Start 2P', cursive;*/
+  background-color: #e7eaeb;
+  min-height: 100%;
+  padding-bottom: 200px;
  }
 
 .navbark {
-    position: relative;
-    /*padding: 0.5rem;*/
-    height: 3rem;
-    top: -3.4em;
-    /*background-color: #3d7fba;*/
-    background-color: #51445f;
-    /* #1 */
-    /*background-color: rgb(133,150,117);*/
-    /* #2 */
-    z-index: 1;
+  position: relative;
+  height: 3rem;
+  top: -3.4em;
+  background-color: #51445f;
+  z-index: 1;
  }
 
- .navbar .logo {
-     position: relative;
-     left: 2rem;
-     cursor: pointer; /* produces the finter-pointer icon when your hover over the logo */
+ aside {
+   position: absolute;
+   display: block;
+   background-color: #51445f;
+   height: 100%;
+   top: 3em;
+   bottom: 0;
+   /*right: 75em;*/
+   max-width: 10em;
+   min-width: 4em;
+   left: 0;
+   padding-left: 0;
+   padding-top: 0;
+   z-index: 1;
  }
 
-.logo {
-    -webkit-transition: -webkit-transform 3s;
-    transition: transform 3s;
-}
-
-.logo:hover {
-    -webkit-transform: rotate(360deg);
-    transform: rotate(360deg);
-}
-
-.navbar .links-container {
-    display: table;
+aside.links-container {
+    display: block;
     position: absolute;
     top: 0;
     /*right: 0;*/
@@ -63,9 +57,9 @@ body {
     text-decoration: none;
 }
 
-.links-container .navbar-link {
+.links-container .aside-link {
     position: relative;
-    top: 0.005rem;
+    top: 0.5em;
     height: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -85,14 +79,14 @@ body {
 */
 }
 /* #5 */
-.links-container .navbar-link:hover {
+.links-container .aside-link:hover {
 }
 
-.navbar-link {
+.aside-link {
   display: inline-block;
 }
 
-.links-container .navbar-link:active {
+.links-container .aside-link:active {
   color: rgb(122, 197, 244);
   background-color: white;
 }
@@ -101,23 +95,17 @@ body {
   color: black;
 }
 
-.navbark .fa {
-  color: white;
+aside .fa {
+  color: #e7eaeb;
+  font-size: 0.5em;
+  /*font-family: 'Montserrat', sans-serif;*/
 }
 
-.navbark .fa:hover {
+aside .fa:hover {
   color: white;
-}
-
-.userMenu {
-  /*color: black;*/
-  /*font-size: 1.5em;*/
-  /*margin-left: 2em;*/
-  /*letter-spacing: 0.1em;*/
-  /*font-weight: 700;*/
-  /*text-transform: uppercase;*/
-  /*text-decoration: none;*/
-  /*cursor: pointer;*/
+  font-weight: bold;
+  -webkit-transition: color 0.5s, -webkit-transform 0.5s;
+  transition: color 0.5s, -webkit-transform 0.5s;
 }
 
 .container {
@@ -125,33 +113,32 @@ body {
     max-width: 64rem;
 }
 
-.container.narrow {
-    max-width: 56rem;
+@media only screen and (max-width : 767px) {
+
 }
- /* Medium and small screens (640px) */
- @media (min-width: 40rem) {
-    html { font-size: 112%; }
 
-     .column {
-         float: left;
-         padding-left: 1rem;
-         padding-right: 1rem;
-     }
+@media only screen and (max-width : 992px) {
 
+}
 
-     .column.full { width: 100%; }
-     .column.two-thirds { width: 66.7%; }
-     .column.half { width: 50%; }
-     .column.third { width: 33.3%; }
-     .column.fourth { width: 25%; }
-     .column.flow-opposite { float: right; }
- }
+@media only screen and (max-width : 1200px) {
 
- /* Large screens (1024px) */
- @media (min-width: 64rem) {
-    html { font-size: 120%; }
- }
+}
 
+ /* Small devices (tablets, 768px and up) */
+ /*@media (min-width: @screen-sm-min) {
+
+ }*/
+
+ /* Medium devices (desktops, 992px and up) */
+ /*@media (min-width: @screen-md-min) {
+
+ }*/
+
+ /* Large devices (large desktops, 1200px and up) */
+ /*@media (min-width: @screen-lg-min) {
+
+ }*/
 
 .clearfix::before,
 .clearfix::after {

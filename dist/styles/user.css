@@ -1,144 +1,143 @@
 .body {
   white-space: nowrap;
-}
-.navbar .user-links-container {
-  display: table;
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 100px;
-  color: white;
-  /* #3 */
-  text-decoration: none;
-}
-
-aside {
-  position: absolute;
-  top: 45px;
-  /*right: 0;*/
-  bottom: 0;
-  width: auto;
-  left: 0;
-  padding-left: 0;
-  padding-top: 0;
-  z-index: 1;
-}
-
-.user-links-container {
-  position: relative;
-  top: 0.0005rem;
-  margin-left: 2.42em;
-  margin-bottom: 1em;
   height: 100%;
-  right: 40;
-  /*padding-left: 2em;
-  padding-right: 2em;*/
-  vertical-align: middle;
-  text-decoration: none;
 }
 
-.navbar-link  {
-  color: black;
-  font-size: 2em;
-  letter-spacing: 0.1em;
-  font-weight: 700;
-  /*text-transform: uppercase;*/
-  text-decoration: none;
-  cursor: pointer;
-/*
-  -webkit-transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
-  transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
-*/
+section {
+  height: 100%;
 }
 
 .clock {
-  color: black;
+  background-color: #3f4e62;
+  color: white;
+  /*color: #957F5B;*/
   position: relative;
-  font-size: 1em;
+  font-size: 1.5em;
   overflow: auto;
-  margin-left: 2.42em;
-  width: 100%;
-  height: 100%;
-  top: 0; left: 0; bottom: 0; right: 40;
+  margin-left: 0em;
+  width: 23em;
+  height: 0.1%;
+  margin-bottom: 1em;
+
+}
+
+.clock p {
+  padding-top: 0.45em;
+  text-align: center;
 }
 
 .list-group {
   color: black;
-  margin-left: 2.42em;
-  /*margin-right: 2.22em;*/
-  position: relative;
-  font-size: 1em;
-  /*overflow: auto;*/
+  margin-top: 1em;
+  margin-left: 15%;
+  margin-right: 1em;
   width: 100%;
   height: 100%;
-  top: 0; left: 0; bottom: 0; right: 0;
+  position: relative;
+  font-size: 1em;
 }
 
 .itemDisplay {
-  border-radius: 0;
-  background-color: #7B6FA6;
-  width: 90%;
-  color: white;
-}
-
-.list {
+  border-radius: 1em;
+  background-color: #418bca;
+  color: #ffb145;
+  display: inline-block;
+  width: 65%;
+  float: left;
+  margin-bottom: 0.5em;
+  padding-right: 0;
   white-space: nowrap;
 }
 
-.row {
-  /*height: 10em;*/
+.editDeleteBox {
+  position: relative;
+  overflow: auto;
+  float: right;
+  /*width: 10%;*/
 }
 
-.cell {
-  /*height: 5em;*/
-  padding-right: 0px;
-  padding-bottom: -1em;
+.editBtn {
+  border-radius: 1em;
+  width: 4em;
+  height: 2em;
+  background-color: #6FC853;
+  color: #3f4e62;
+  border-color: #e05d6f;
+  border-style: none;
+  /*text-align: left;*/
+}
+
+.deleteBtn {
+  border-radius: 1em;
+  width: 4em;
+  height: 2em;
+  background-color: #e05d6f;
+  color: #3f4e62;
+  border-style: none;
+}
+
+.well {
+  border-radius: 1em;
+  height: 15em;
+  background-color: #418bca;
+  border-style: none;
+  color: #ffb145;
 }
 
 .priorityCell {
-  position: relative;
-  overflow: auto;
-  width: 2.5em;
-  top: 0; left: 0; bottom: 0; right: 0;
+  border-radius: 1em;
+  width: 1em;
+  height: 1.5em;
+  background-color: #3f4e62;
+  color: white;
+  border-style: none;
+  text-align: center;
+  float: right;
 }
 
-/*.textlength {
-  width:
-}*/
+.priorityCell p {
+  text-align: center;
+}
+
+.completedBox {
+  position: relative;
+  overflow: auto;
+  float: left;
+}
+
+.archiveCheckbox {
+  border-radius: 1px;
+  background-color: green;
+}
 
 .nameCell {
   position: relative;
   overflow: auto;
-  width: 30em;
-  top: 0; left: 0; bottom: 0; right: 0;
-  color: black;
 }
 
 .nameLine {
-  width: 100%;
-  height: 100%;
-  color: white;
+  /*width: 0;*/
 }
 
 .nameEditBox {
-  width: 25em;
+  width: 100%;
   border-radius: 0.3em;
+  color: black;
 }
 
 .dateCell {
   position: relative;
   overflow: auto;
-  margin-left: -4em;
-  width: 16em;
-  color: black;
+  /*width: 50%;*/
 }
 
 .dateLine {
-  color: white;
+  /*width: 100%;*/
 }
 
 .dateEditBox {
-  width: 14em;
+  width: 25%;
+  color: black;
 }
 
 /*
@@ -168,10 +167,7 @@ aside {
 .importanceCell {
   position: relative;
   overflow: auto;
-  margin-left: -1em;
-  width: 13em;
-  height: 3.5em;
-  color: black;
+  /*width: 13em*/
 }
 
 .importanceLine {
@@ -181,6 +177,7 @@ aside {
 .importanceEditBox {
   width: 11.5em;
   height: 2.5em;
+  color: black;
 }
 
 .urgentCell {
@@ -239,26 +236,20 @@ aside {
   color: white;
 }
 
-.completedBox {
-  position: relative;
-  overflow: auto;
-  margin-left: 12em;
-}
-
 .deleteBox {
   position: relative;
   overflow: auto;
-  margin-left: -5em;
 }
 
-.btn {
+/*.btn {
   border-radius: 0;
   background-color: #3d7fba;
-}
+}*/
 
 .text {
-  text-decoration: line-through;
+  color: #e05d6f;
 }
+
 
 /* End of CSS for listed items */
 
@@ -354,13 +345,22 @@ aside {
   background-color: rgb(133,150,117);
 }
 
-.well {
-  color: black;
-}
-
 .panel-body {
   width: 30em;
 }
+
+@media only screen and (max-width : 767px) {
+
+}
+
+@media only screen and (max-width : 992px) {
+
+}
+
+@media only screen and (max-width : 1200px) {
+
+}
+
 /*clicToEdit directive template css*/
 
 /*body{

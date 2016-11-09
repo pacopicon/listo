@@ -548,6 +548,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
     $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
 
+    // ui.bootstrap collapse
+
+    // $scope.isNavCollapsed = true;
+    $scope.isCollapsed = true;
+    // $scope.isCollapsedHorizontal = false;
 
   }
 ]);
