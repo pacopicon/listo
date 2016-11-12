@@ -19,22 +19,17 @@
         </div>
       </div>
   <!--                       NAME                           -->
-      <div class="col-lg-3 col-sm-5 col-sx-12 nameCell" ng-class="{'text': makeRed}">
-          {{item.a_text}}
+      <div class="col-lg-3 col-sm-5 col-sx-4 nameCell" ng-class="{'text': makeRed}">
+          <p class="name">{{item.a_text}}</P>
       </div>
   <!--                       DATE                           -->
-      <div class="col-lg-3 col-sm-5.5 col-sx-12 dateCell cell" ng-class="{'text': makeRed}">
-        <div class="dateLine" ng-class="{'text': makeRed}">
-          <!-- {{item.b_dueDate | date: 'M/d/yy h:mm a'}} -->
-          {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
-        </div>
+      <div class="col-lg-3 col-sm-5 col-sx-4 dateCell" ng-class="{'text': makeRed}">
+        {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
       </div>
 
   <!--                       IMPORTANCE                     -->
-      <div class="col-lg-3 col-sm-4 col-sx-12 importanceCell cell">
-        <div class="importanceLine" ng-class="{'text': makeRed}">
-          {{item.p_importance}}
-        </div>
+      <div class="col-lg-3 col-sm-4 col-sx-12 importanceCell cell" ng-class="{'text': makeRed}">
+        {{item.p_importance}}
       </div>
   <!--                     URGENT                           -->
       <!-- <div class="col-sm-1 urgentCell cell">
@@ -74,19 +69,26 @@
         </div>
       </div> -->
   <!--                EDIT + DELETE              -->
-
       <div class="col-lg-1 col-sm-2 col-xs-4 editDeleteBox">
-        <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-hide="makeRed">edit</button>
+        <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-model="showWell" ng-hide="makeRed">edit</button>
         <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button>
       </div>
-
+      <!--                   WELL                       -->
     	<div uib-collapse="isCollapsed">
-    		<div class="well well-lg">
-          <input class="nameEditBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/>
+    		<div class="well" hide="showWell">
+      <!--                  Edit Name                       -->
 
-          <input class="dateEditBox" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
+        <div class= "col-lg-6 col-sm-6 col-xs-6">
+          enter name: <input class="nameEditBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/>
+        </div>
+      <!--                  Edit Date                      -->
 
-          <!--Angular-strap date and time picker-->
+        <div class= "col-lg-6 col-sm-6 col-xs-6">
+          enter date: <input class="dateEditBox" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
+
+
+
+      <!--Angular-strap date and time picker-->
 
           <!-- <form name="timepickerForm" class="form-inline" role="form">
             <div class="form-group">
@@ -101,21 +103,29 @@
             </div>
           </form> -->
 
-          <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select>
+        </div>
+
+
+
+
+          <!-- enter importance: <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select> -->
 
           <!--Angular-strap importance picker-->
+        <div class= "col-lg-6 col-sm-6 col-xs-6">
+          enter importance: <button type="button" class="importanceButton" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+          </button>
+        </div>
 
-          <!-- <button type="button" class="btn btn-default" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" ng-show="impSelect" ng-Mouseover="impSelect=true" ng-Mouseleave="impSelect=false" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
-          </button> -->
-
-          <div class="urgentEditBox">
+          <div class="col-lg-6 col-sm-6 col-xs-6 urgentEditBox">
             Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
           </div>
 
-          <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
+          <div class="col-lg-6 col-sm-6 col-xs-6 hourAndMinute">
+            <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
 
-          <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
-        </div>
+            <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
+          </div>
+        </div> <!-- Well end -->
     	</div>
     </div> <!-- item Display and ng-repeat end -->
 
@@ -125,35 +135,26 @@
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <!--                        GRAPH                           -->
 
-    <table class="graphTable">
-      <tr class="graphRow">
-        <td>
-          <div>
-            <canvas id="pie" class="chart chart-pie"
-          chart-data="itemData" chart-labels="itemLabels">
-            </canvas>
-          </div>
-        </td>
-      </tr>
-      <tr class="graphRow">
-        <td>
-          <div>
-            <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="millisecData" chart-labels="millisecLabels">
-            </canvas>
-          </div>
-        </td>
-      </tr>
-      <tr class="graphRow">
-        <td>
-          <div>
-            <canvas id="bar" class="chart chart-bar"
-          chart-data="hourData" chart-labels="hourLabel" chart-series="series">
-            </canvas>
-          </div>
-        </td>
-      </tr>
-    </table>
+    <div class="<div class=col-lg-12 col-sm-12 col-xs-12 allCharts">
+      <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
+        <canvas id="pie" class="chart chart-pie"
+      chart-data="itemData" chart-labels="itemLabels">
+        </canvas>
+      </div>
+
+      <div>
+        <canvas id="doughnut" class="chart chart-doughnut"
+      chart-data="millisecData" chart-labels="millisecLabels">
+        </canvas>
+      </div>
+
+      <div>
+        <canvas id="bar" class="chart chart-bar"
+      chart-data="hourData" chart-labels="hourLabel" chart-series="series">
+        </canvas>
+      </div>
+    </div>
+
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->

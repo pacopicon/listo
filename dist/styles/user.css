@@ -7,6 +7,17 @@ section {
   height: 100%;
 }
 
+.list-group {
+  color: black;
+  /*margin-top: 1em;*/
+  margin-left: 15%;
+  margin-right: 1em;
+  width: 100%;
+  height: 100%;
+  position: relative;
+  font-size: 1em;
+}
+
 .clock {
   background-color: #3f4e62;
   color: white;
@@ -15,26 +26,16 @@ section {
   font-size: 1.5em;
   overflow: auto;
   margin-left: 0em;
-  width: 23em;
-  height: 0.1%;
+  width: 25em;
+  /*height: 0.1%;*/
   margin-bottom: 1em;
+  padding-left: 1em;
 
 }
 
 .clock p {
   padding-top: 0.45em;
-  text-align: center;
-}
-
-.list-group {
-  color: black;
-  margin-top: 1em;
-  margin-left: 15%;
-  margin-right: 1em;
-  width: 100%;
-  height: 100%;
-  position: relative;
-  font-size: 1em;
+  text-align: left;
 }
 
 .itemDisplay {
@@ -53,6 +54,7 @@ section {
   position: relative;
   overflow: auto;
   float: right;
+  height: 100%;
   /*width: 10%;*/
 }
 
@@ -76,23 +78,20 @@ section {
   border-style: none;
 }
 
-.well {
-  border-radius: 1em;
-  height: 15em;
-  background-color: #418bca;
-  border-style: none;
-  color: #ffb145;
+.priorityAndCheckbox {
+  /*position: absolute;*/
 }
 
 .priorityCell {
   border-radius: 1em;
-  width: 1em;
+  width: 1.5em;
   height: 1.5em;
   background-color: #3f4e62;
   color: white;
   border-style: none;
   text-align: center;
   float: right;
+  /*overflow: hidden;*/
 }
 
 .priorityCell p {
@@ -115,68 +114,53 @@ section {
   overflow: auto;
 }
 
-.nameLine {
-  /*width: 0;*/
+.name {
+  /*float: right;*/
+  text-align: left;
 }
 
+.well {
+  border-radius: 1em;
+  height: 12em;
+  width: 50em;
+  background-color: #418bca;
+  border-style: none;
+  color: #ffb145;
+  overflow: auto;
+  float: left;
+}
+
+/*Elements inside the Well*/
+
 .nameEditBox {
-  width: 100%;
+  margin-left: 2.9em;
+  width: 10em;
   border-radius: 0.3em;
   color: black;
+  /*margin-bottom: 0.5em;*/
 }
 
 .dateCell {
   position: relative;
-  overflow: auto;
-  /*width: 50%;*/
-}
-
-.dateLine {
-  /*width: 100%;*/
+  /*overflow: auto;*/
+  /*margin-bottom: 0.5em;*/
 }
 
 .dateEditBox {
-  width: 25%;
+  /*width: 100%;*/
   color: black;
-}
-
-/*
- * Datepicker element
- */
-
-.datepicker.dropdown-menu {
-  width: 250px;
-  height: 270px;
-  button {
-    outline: none;
-    border: 0px;
-  }
-  tbody {
-    height: 180px;
-  }
-  tbody button {
-    padding: 6px;
-  }
-  &.datepicker-mode-1, &.datepicker-mode-2 {
-    tbody button {
-      height: 65px;
-    }
-  }
+  /*overflow: auto;*/
 }
 
 .importanceCell {
   position: relative;
-  overflow: auto;
+  /*overflow: auto;*/
   /*width: 13em*/
 }
 
-.importanceLine {
-  width: 100%;
-}
-
 .importanceEditBox {
-  width: 11.5em;
-  height: 2.5em;
+  /*width: 11.5em;*/
+  /*height: 2.5em;*/
   color: black;
 }
 
@@ -208,12 +192,23 @@ section {
 }
 
 .numberLine {
-  width: 100%;
+  /*width: 100%;*/
 }
 
 .numberEditBox {
-  width: 100%;
+  /*width: 100%;*/
 }
+
+/*End Well*/
+
+.allCharts {
+
+}
+
+.pieChart {
+
+}
+
 
 .rankCell {
   position: relative;
@@ -300,6 +295,26 @@ section {
 .time {
   width: 6.2em;
   /*height: 2.5em;*/
+}
+
+.datepicker.dropdown-menu {
+  width: 250px;
+  height: 270px;
+  button {
+    outline: none;
+    border: 0px;
+  }
+  tbody {
+    height: 180px;
+  }
+  tbody button {
+    padding: 6px;
+  }
+  &.datepicker-mode-1, &.datepicker-mode-2 {
+    tbody button {
+      height: 65px;
+    }
+  }
 }
 
 .importance {

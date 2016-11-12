@@ -14,9 +14,8 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  background-size: cover;
+  /*background-size: cover;*/
   font-family: 'Montserrat', sans-serif;
-  /*font-family: 'Press Start 2P', cursive;*/
   background-color: #e7eaeb;
   min-height: 100%;
   padding-bottom: 200px;
@@ -35,31 +34,26 @@ body {
    display: block;
    background-color: #51445f;
    height: 100%;
-   top: 3em;
+   top: 4em;
    bottom: 0;
-   /*right: 75em;*/
-   max-width: 10em;
-   min-width: 4em;
+   width: 10.5em;
+   /*width: 10%;*/
    left: 0;
-   padding-left: 0;
-   padding-top: 0;
    z-index: 1;
  }
 
 aside.links-container {
     display: block;
     position: absolute;
-    top: 0;
-    /*right: 0;*/
+    margin-top: 2em;
     height: 100px;
     color: white;
-    /* #3 */
     text-decoration: none;
 }
 
 .links-container .aside-link {
     position: relative;
-    top: 0.5em;
+    top: 1em;
     height: 100%;
     padding-left: 1rem;
     padding-right: 1rem;
@@ -77,9 +71,6 @@ aside.links-container {
     -webkit-transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
     transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
 */
-}
-/* #5 */
-.links-container .aside-link:hover {
 }
 
 .aside-link {
@@ -101,6 +92,11 @@ aside .fa {
   /*font-family: 'Montserrat', sans-serif;*/
 }
 
+aside p {
+  float: right;
+  font-family: 'Montserrat', sans-serif;
+}
+
 aside .fa:hover {
   color: white;
   font-weight: bold;
@@ -115,9 +111,39 @@ aside .fa:hover {
 
 @media only screen and (max-width : 767px) {
 
+  aside {
+    width: 4em;
+  }
+
+  .links-container .aside-link {
+      padding-left: 0.5rem;
+      padding-right: 0.5rem;
+  }
+
+  aside .fa {
+    color: #e7eaeb;
+    font-size: 1em;
+  }
+
+  aside p {
+    display: none
+  }
+
 }
 
-@media only screen and (max-width : 992px) {
+@media only screen and (min-width : 768px) and (max-width : 992px) {
+
+  aside {
+    width: 7.5em;
+  }
+
+  aside .fa {
+    font-size: 0.3em;
+  }
+
+  aside p {
+    font-size: 1em;
+  }
 
 }
 
