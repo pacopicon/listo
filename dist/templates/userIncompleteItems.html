@@ -6,9 +6,9 @@
       <p><b>{{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
     </div>
     <!--                     ItemDisplay                     -->
-    <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
+    <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed" ng-class="itemEditConsole">
       <!--                 PRIORITY & CHECKBOX                -->
-      <div class="col-lg-1 col-sm-1 col-xs-4 priorityAndCheckbox">
+      <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
         <!--                     CHECKBOX                     -->
         <div class="completedBox">
           <input type="checkbox" class="archiveCheckbox" ng-model="makeRed" />
@@ -19,16 +19,16 @@
         </div>
       </div>
   <!--                       NAME                           -->
-      <div class="col-lg-3 col-sm-5 col-sx-4 nameCell" ng-class="{'text': makeRed}">
-          <p class="name">{{item.a_text}}</P>
+      <div class="col-lg-3 col-sm-3 col-sx-3 nameCell" ng-class="{'text': makeRed}">
+          <p>{{item.a_text}}</P>
       </div>
   <!--                       DATE                           -->
-      <div class="col-lg-3 col-sm-5 col-sx-4 dateCell" ng-class="{'text': makeRed}">
+      <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'text': makeRed}">
         {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
       </div>
 
   <!--                       IMPORTANCE                     -->
-      <div class="col-lg-3 col-sm-4 col-sx-12 importanceCell cell" ng-class="{'text': makeRed}">
+      <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'text': makeRed}">
         {{item.p_importance}}
       </div>
   <!--                     URGENT                           -->
@@ -69,10 +69,17 @@
         </div>
       </div> -->
   <!--                EDIT + DELETE              -->
-      <div class="col-lg-1 col-sm-2 col-xs-4 editDeleteBox">
+      <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
+      <div class="editDeleteBox">
         <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-model="showWell" ng-hide="makeRed">edit</button>
         <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button>
       </div>
+
+      <!-- <div class="editDeleteBox">
+        <button type="button" class="editBtn" ng-click="var='itemEditConsole'" ng-hide="makeRed">edit</button>
+        <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button>
+        <button type="button" class="doneBtn" ng-click="var=''" ng-hide="makeRed">edit</button>
+      </div> -->
       <!--                   WELL                       -->
     	<div uib-collapse="isCollapsed">
     		<div class="well" hide="showWell">
@@ -111,7 +118,7 @@
           <!-- enter importance: <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select> -->
 
           <!--Angular-strap importance picker-->
-        <div class= "col-lg-6 col-sm-6 col-xs-6">
+        <div class= "col-lg-6 col-sm-6 col-xs-6 importanceEditBox">
           enter importance: <button type="button" class="importanceButton" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
           </button>
         </div>
