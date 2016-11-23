@@ -1,34 +1,34 @@
-// calculateTimeTillUnitsX: function(time) {
-//   for (i = 0; i < items.length; i++) {
-//     var eachItem = items[i]
-//     eachItem.e_currentTime = time;
-//
-//     if (typeof eachItem.b_dueDate === "object") {
-//         eachItem.b_dueDate = eachItem.b_dueDate.getTime();
-//     }
-//
-//     var timeTillDueDate = eachItem.b_dueDate - time;
-//
-//     var timeTillUnit = parseTimeX(timeTillDueDate);
-//
-//     eachItem.f_tillDue = timeTillDueDate;
-//     eachItem.g_yearsTillDue = timeTillUnit.year;
-//     eachItem.h_monthsTillDue = timeTillUnit.month;
-//     eachItem.i_daysTillDue = timeTillUnit.day;
-//     eachItem.j_hoursTillDue = timeTillUnit.hour;
-//     eachItem.k_minutesTillDue = timeTillUnit.minute;
-//     eachItem.l_secondsTillDue = timeTillUnit.second;
-//
-//     eachItem.o_timeToFinishDate = calculateEstTimeAsDateNum(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
-//
-//     var estTime = calculateEstTime(eachItem.m_hoursToFinish, eachItem.n_minutesToFinish);
-//     var ratio = calculateTimeEstTimeTillDueRatio(timeTillDueDate, estTime);
-//     var urgency = calculateUrgency(ratio);
-//     eachItem.r_urgent = createUrgencyTxt(urgency);
-//     eachItem.s_rank = calculateRank(eachItem.p_importance, ratio, urgency);
-//
-//     items.$save(eachItem).then(function() {
-//         // console.log(time);
-//     });
-//   }
-// },
+var app = angular.module('mgcrea.ngStrapDocs', ['ngAnimate', 'ngSanitize', 'mgcrea.ngStrap']);
+
+app.controller('MainCtrl', function($scope) {
+});
+
+'use strict';
+
+angular.module('mgcrea.ngStrapDocs')
+
+.config(function($modalProvider) {
+  angular.extend($modalProvider.defaults, {
+    html: true
+  });
+})
+
+.controller('ModalDemoCtrl', function($scope, $modal) {
+  $scope.modal = {title: 'Title', content: 'Hello Modal<br />This is a multiline message!'};
+
+  // Controller usage example
+  //
+  function MyModalController($scope) {
+    $scope.title = 'Some Title';
+    $scope.content = 'Hello Modal<br />This is a multiline message from a controller!';
+  }
+  MyModalController.$inject = ['$scope'];
+  var myModal = $modal({controller: MyModalController, templateUrl: 'modal/docs/modal.demo.tpl.html', show: false});
+  $scope.showModal = function() {
+    myModal.$promise.then(myModal.show);
+  };
+  $scope.hideModal = function() {
+    myModal.$promise.then(myModal.hide);
+  };
+
+});

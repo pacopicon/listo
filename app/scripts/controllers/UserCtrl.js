@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout',
-  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache, $timeout) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', '$modal',
+  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache, $timeout, $modal) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -28,6 +28,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     //     userId
     //   }
     // }
+
+    // Begin AngularStrap Modal --------------------------------
+
+    $scope.modal = {
+      title: 'edit modal',
+      content: 'Hello Modal<br /><div class= "col-lg-6 col-sm-6 col-xs-6">enter name: <input class="nameEditBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/></div>'
+    };
+
+    // End AngularStrap Modal ----------------------------------
+
 
     // Begin AngularStrap Datepicker ---------------------------------------------
 
