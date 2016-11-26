@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', '$modal',
-  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache, $timeout, $modal) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', 'ModalService',
+  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache, $timeout, ModalService) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -74,6 +74,29 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
     ];
 
     // End Importance-----------------------------------------------
+
+    // Begin Cutsom Modal-----------------
+
+    var vm = this;
+
+    vm.openModal = openModal;
+    vm.closeModal = closeModal;
+
+    initController();
+
+    function initController() {
+      vm.bodyText = 'This text can be updated in modal 1';
+    }
+
+    function openModal(id) {
+      ModalService.Open(id);
+    }
+
+    function closeModal(id) {
+      ModalService.close(id);
+    }
+
+    // End Cutsom Modal-------------------
 
     // Begin Completed----------------------------------------------
 
