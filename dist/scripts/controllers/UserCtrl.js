@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', 'ModalService',
-  function($scope, ItemCrud, $rootScope, $interval, $log, $http, $locale, $templateCache, $timeout, ModalService) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout',
+  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -75,28 +75,29 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", "$interval", "
 
     // End Importance-----------------------------------------------
 
-    // Begin Cutsom Modal-----------------
+    // Begin Custom Modal-----------------
 
-    var vm = this;
+    $scope.complexResult = null;
 
-    vm.openModal = openModal;
-    vm.closeModal = closeModal;
+    $scope.showComplex = function() {
 
-    initController();
+    ModalService.showModal({
+      templateUrl: "templates/modal.html",
+      controller: "ModalController",
+      inputs: {
+        title: "Edit item"
+      }
+    }).then(function(modal) {
+      modal.element.modal();
+      modal.close.then(function(result) {
+        $scope.complexResult  = "Name: " + result.name + ", age: " + result.age;
+      });
+    });
 
-    function initController() {
-      vm.bodyText = 'This text can be updated in modal 1';
-    }
+  };
 
-    function openModal(id) {
-      ModalService.Open(id);
-    }
 
-    function closeModal(id) {
-      ModalService.close(id);
-    }
-
-    // End Cutsom Modal-------------------
+    // End Custom Modal-------------------
 
     // Begin Completed----------------------------------------------
 

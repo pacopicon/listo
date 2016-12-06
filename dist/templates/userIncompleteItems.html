@@ -1,5 +1,5 @@
-<body>
 <section ng-controller="UserCtrl" ng-init="completionData()" class="user">
+<body>
   <div class="list-group">
     <!--                     CLOCK                     -->
     <div class="clock">
@@ -73,9 +73,38 @@
   <!--                EDIT + DELETE              -->
       <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
       <div class="editDeleteBox">
-        <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-model="showWell" ng-hide="makeRed">edit</button>
+        <!-- <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-model="showWell" ng-hide="makeRed">edit</button> -->
+        <p><a href class="editBtn" ng-click="showComplex()">Show Complex</a></p>
 
-        <button type="button" class="editBtn" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">edit</button>
+        <!-- <button type="button" class="editBtn" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">edit</button> -->
+
+        <!-- <p>{{bodyText}}</p>
+        <button ng-click="openModal('custom-modal-1')">Open Modal 1</button>
+        <button ng-click="openModal('custom-modal-2')">Open Modal 2</button>
+
+        <modal id="custom-modal-1">
+          <div class="modal">
+              <div class="modal-body">
+                  <h1>A Custom Modal!</h1>
+                  <p>
+                      Home page text: <input type="text" ng-model="bodyText" />
+                  </p>
+                  <button ng-click="closeModal('custom-modal-1');">Close</button>
+              </div>
+          </div>
+          <div class="modal-background"></div>
+        </modal>
+
+        <modal id="custom-modal-2">
+            <div class="modal">
+                <div class="modal-body">
+                    <h1 style="height:1000px">A Tall Custom Modal!</h1>
+                    <button ng-click="closeModal('custom-modal-2');">Close</button>
+                </div>
+            </div>
+            <div class="modal-background"></div>
+        </modal> -->
+
 
         <!-- <button type="button" class="editBtn" data-animation="am-fade-and-slide-top" data-template-url="/templates/editModal.tpl.html" bs-modal="modal">edit</button> -->
 
@@ -91,10 +120,6 @@
       </div> -->
 
       <!--                   MODAL                     -->
-
-
-
-
 
       <!--                   WELL                       -->
     	<div uib-collapse="isCollapsed">
@@ -177,7 +202,14 @@
         </canvas>
       </div>
     </div>
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 
+
+
+<pre ng-show="complexResult">{{complexResult}}</pre>
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
@@ -280,5 +312,5 @@
 
     </form>
   </div>
-</section>
 </body>
+</section>

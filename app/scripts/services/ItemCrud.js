@@ -111,7 +111,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
       var wholeMinsOnly = totalTime % 60;
       var milliseconds = ((3600000 * wholeHoursOnly) + (60000 * wholeMinsOnly));
 
-      console.log("clockTime called returning: " + wholeHoursOnly + " and " + wholeMinsOnly);
+      // console.log("clockTime called returning: " + wholeHoursOnly + " and " + wholeMinsOnly);
 
       return {
         hours: wholeHoursOnly,
