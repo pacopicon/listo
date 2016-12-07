@@ -74,107 +74,14 @@
       <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
       <div class="editDeleteBox">
         <!-- <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-model="showWell" ng-hide="makeRed">edit</button> -->
-        <p><a href class="editBtn" ng-click="showComplex()">Show Complex</a></p>
+        <p><a href class="editBtn" ng-click="showComplex()">edit</a></p>
 
         <!-- <button type="button" class="editBtn" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">edit</button> -->
 
-        <!-- <p>{{bodyText}}</p>
-        <button ng-click="openModal('custom-modal-1')">Open Modal 1</button>
-        <button ng-click="openModal('custom-modal-2')">Open Modal 2</button>
-
-        <modal id="custom-modal-1">
-          <div class="modal">
-              <div class="modal-body">
-                  <h1>A Custom Modal!</h1>
-                  <p>
-                      Home page text: <input type="text" ng-model="bodyText" />
-                  </p>
-                  <button ng-click="closeModal('custom-modal-1');">Close</button>
-              </div>
-          </div>
-          <div class="modal-background"></div>
-        </modal>
-
-        <modal id="custom-modal-2">
-            <div class="modal">
-                <div class="modal-body">
-                    <h1 style="height:1000px">A Tall Custom Modal!</h1>
-                    <button ng-click="closeModal('custom-modal-2');">Close</button>
-                </div>
-            </div>
-            <div class="modal-background"></div>
-        </modal> -->
-
-
-        <!-- <button type="button" class="editBtn" data-animation="am-fade-and-slide-top" data-template-url="/templates/editModal.tpl.html" bs-modal="modal">edit</button> -->
-
-        <!-- <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button> -->
+        <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button>
 
 
       </div>
-
-      <!-- <div class="editDeleteBox">
-        <button type="button" class="editBtn" ng-click="var='itemEditConsole'" ng-hide="makeRed">edit</button>
-        <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button>
-        <button type="button" class="doneBtn" ng-click="var=''" ng-hide="makeRed">edit</button>
-      </div> -->
-
-      <!--                   MODAL                     -->
-
-      <!--                   WELL                       -->
-    	<div uib-collapse="isCollapsed">
-    		<div class="well" hide="showWell">
-      <!--                  Edit Name                       -->
-
-        <div class= "col-lg-6 col-sm-6 col-xs-6">
-          enter name: <input class="nameEditBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/>
-        </div>
-      <!--                  Edit Date                      -->
-
-        <div class= "col-lg-6 col-sm-6 col-xs-6">
-          enter date: <input class="dateEditBox" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
-
-
-
-      <!--Angular-strap date and time picker-->
-
-          <!-- <form name="timepickerForm" class="form-inline" role="form">
-            <div class="form-group">
-              <div class="form-group">
-                <input type="text" size="10" class="form-control" ng-model="updatedDueDate"
-                ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-autoclose="1" placeholder="Date" bs-datepicker>
-              </div>
-              <div class="form-group">
-                <input type="text" size="8" class="form-control" ng-model="updatedDueDate"
-                ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
-              </div>
-            </div>
-          </form> -->
-
-        </div>
-
-
-
-
-          <!-- enter importance: <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select> -->
-
-          <!--Angular-strap importance picker-->
-        <div class= "col-lg-6 col-sm-6 col-xs-6 importanceEditBox">
-          enter importance: <button type="button" class="importanceButton" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
-          </button>
-        </div>
-
-          <div class="col-lg-6 col-sm-6 col-xs-6 urgentEditBox">
-            Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
-          </div>
-
-          <div class="col-lg-6 col-sm-6 col-xs-6 hourAndMinute">
-            <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
-
-            <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
-          </div>
-        </div> <!-- Well end -->
-    	</div>
     </div> <!-- item Display and ng-repeat end -->
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->

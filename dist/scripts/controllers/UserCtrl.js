@@ -91,6 +91,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       modal.element.modal();
       modal.close.then(function(result) {
         $scope.complexResult  = "Name: " + result.name + ", age: " + result.age;
+        $scope.updatedDueDate = new Date();
       });
     });
 
