@@ -73,11 +73,8 @@
   <!--                EDIT + DELETE              -->
       <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
       <div class="editDeleteBox">
-        <!-- <button type="button" class="editBtn" ng-click="isCollapsed = !isCollapsed" ng-model="showWell" ng-hide="makeRed">edit</button> -->
-        <p><a href class="editBtn" ng-click="showComplex()">edit</a></p>
-
-        <!-- <button type="button" class="editBtn" data-animation="am-fade-and-scale" data-placement="center" bs-modal="modal">edit</button> -->
-
+        <!--Passing "item" into showComplex() INDEED works-->
+        <p><a href class="editBtn" ng-model="item" ng-hide="makeRed" ng-click="showComplex(item)">edit</a></p>
         <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed">delete</button>
 
 

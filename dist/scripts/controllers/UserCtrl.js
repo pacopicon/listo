@@ -77,25 +77,27 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     // Begin Custom Modal-----------------
 
-    $scope.complexResult = null;
+    // $scope.item = null;
 
-    $scope.showComplex = function() {
+    $scope.showComplex = function(item) {
 
-    ModalService.showModal({
-      templateUrl: "templates/modal.html",
-      controller: "ModalController",
-      inputs: {
-        title: "Edit item"
-      }
-    }).then(function(modal) {
-      modal.element.modal();
-      modal.close.then(function(result) {
-        $scope.complexResult  = "Name: " + result.name + ", age: " + result.age;
-        $scope.updatedDueDate = new Date();
+      ModalService.showModal({
+        item: item,
+        templateUrl: "templates/modal.html",
+        controller: "ModalController",
+        inputs: {
+          title: "Edit item"
+        }
+      }).then(function(modal) {
+        modal.element.modal();
+        modal.close.then(function(item) {
+        console.log("UserCtrl.js close: item $id: " + item.$id + " and name: " + item.a_text + " and item date " + item.b_dueDate);
+        $scope.updateItem(item, item.a_text, item.b_dueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish);
+
+        });
       });
-    });
 
-  };
+    };
 
 
     // End Custom Modal-------------------
@@ -112,8 +114,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       $scope.completionData();
     };
 
-    $scope.updateItem = function(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
-      ItemCrud.updateItem(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+    $scope.updateItem = function(item, updatedName, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
+      ItemCrud.updateItem(item, updatedName, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
     };
 
     $scope.updateItemCompletion = function(item, completion) {
