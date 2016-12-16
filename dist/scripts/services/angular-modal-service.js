@@ -1,4 +1,4 @@
-// Straight from dwmkerr's github: https://github.com/dwmkerr/angular-modal-service/blob/master/src/angular-modal-service.js
+// Source: Dave Kerr's github: https://github.com/dwmkerr/angular-modal-service/blob/master/src/angular-modal-service.js
 
 'use strict';
 

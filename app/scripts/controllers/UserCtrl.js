@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout',
-  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', "$element",
+  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout, $element) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -75,7 +75,30 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     // End Importance-----------------------------------------------
 
-    // Begin Custom Modal-----------------
+    // Begin Custom Modal---------------------------------------
+
+    //  This close function doesn't need to use jQuery or bootstrap, because
+    //  the button has the 'data-dismiss' attribute.
+    $scope.close = function() {
+   	  close({
+        name: $scope.name,
+        age: $scope.age
+      }, 500); // close, but give 500ms for bootstrap to animate
+    };
+
+    //  This cancel function must use the bootstrap, 'modal' function because
+    //  the doesn't have the 'data-dismiss' attribute.
+    $scope.cancel = function() {
+
+      //  Manually hide the modal.
+      $element.modal('hide');
+
+      //  Now call close, returning control to the caller.
+      close({
+        name: $scope.name,
+        age: $scope.age
+      }, 500); // close, but give 500ms for bootstrap to animate
+    };
 
     $scope.complexResult = null;
 
