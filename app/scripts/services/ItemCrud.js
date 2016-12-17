@@ -1,4 +1,3 @@
-
 listo.factory("ItemCrud", ["$firebaseArray",
   function($firebaseArray) {
 
@@ -50,7 +49,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
     var createUrgencyTxt = function(urgency) {
       if (urgency === true) {
-        urgencyTxt = "yes";
+        urgencyTxt = "7kuyes";
       } else {
         urgencyTxt = "no";
       }
@@ -84,7 +83,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
     var prioritize = function(item, dueDate, importanceTxt, newUrgency, eHour, eMinute) {
 
-      var timeTillDueDate = dueDate.getTime() - now;
+      var timeTillDueDate = dueDate - now;
+
       // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
       var estTime = calculateEstTime(eHour, eMinute);
       // ratio does not go into DB, but is used to figure out RANK below (words in all-caps refer to things that DO go into the DB)
@@ -195,18 +195,32 @@ listo.factory("ItemCrud", ["$firebaseArray",
         });
       }, // end of AddItem
 
-      updateItem: function(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
+      updateItem: function(item, itemName, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
 
-        var itemToBeUpdated = items.$getRecord(item.$id);
+        if (typeof updatedDueDate == "object") {
+          var updatedDueDate = updatedDueDate.getTime();
+        } else if (typeof updatedDueDate != "number") {
+        console.log("dueDate, " + updatedDueDate + ", is neither a Date Object nor a number, but a" + typeof updatedDueDate + ".");
+        } else {
+          console.log("dueDate is a " + typeof updatedDueDate + ".");
+        }
+
+        // var itemToBeUpdated = items.$getRecord(item.$id);
+        var itemToBeUpdated = item;
 
         var updatedItemProperties = prioritize(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
 
-        itemToBeUpdated.b_dueDate = updatedDueDate.getTime();
+        console.log("***************ItemCrud.updateItem $id: " + item.$id + " and name: " + itemToBeUpdated.a_text + " and item date " + itemToBeUpdated.b_dueDate);
+
+        itemToBeUpdated.a_text = itemName;
+        itemToBeUpdated.b_dueDate = updatedDueDate;
         itemToBeUpdated.p_importance = updatedImportance;
         itemToBeUpdated.r_urgent = updatedItemProperties.urgency;
         itemToBeUpdated.s_rank = updatedItemProperties.rank;
 
-        items.$save(itemToBeUpdated);
+        items.$save(itemToBeUpdated).then(function(ref) {
+          console.log("items.$save called");
+        });
       },
 
       updateItemCompletion: function(item, completion) {
