@@ -17,7 +17,7 @@ listo.controller('ModalController', [
     {text:"somewhat important"},
     {text:"important"},
     {text:"pretty important"},
-    {text:"job depends on it"}
+    {text:"job depends on it!"}
   ];
 
   //  This close function doesn't need to use jQuery or bootstrap, because
