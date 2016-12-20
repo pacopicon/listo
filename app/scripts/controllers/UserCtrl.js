@@ -80,9 +80,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     // $scope.item = null;
 
     $scope.showComplex = function(item) {
-      var oldItem = item;
+      $scope.oldItem = item;
       var t = new Date();
-      console.log("step 1 - old name: " + oldItem.a_text + ", old date: " + new Date(oldItem.b_dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+      console.log("step 1 - old name: " + $scope.oldItem.a_text + ", old date: " + new Date($scope.oldItem.b_dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
       // UserCtrl.js showComplex: item $id: -KUnjnUG90g4Ms_pkbC5 and name: short and item date 1478707118727
 
       ModalService.showModal({
@@ -97,15 +97,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
         // This instance of "close" receives the new updated item properties from the Modal controller
         modal.close.then(function(newItemProps) {
 
-          newName = newItemProps.name;
-          newDueDate = newItemProps.dueDate;
-          newImportance = newItemProps.importance;
-          newUrgent = newItemProps.urgent;
-          newHours = newItemProps.hours;
-          newMinutes = newItemProps.minutes;
+          console.log("newItemProps: " + newItemProps);
+
+          oldItem = $scope.oldItem;
+          newName = newItemProps.newName;
+          newDueDate = newItemProps.newDueDate;
+          newImportance = newItemProps.newImportance;
+          newUrgent = newItemProps.newUrgent;
+          newHours = newItemProps.newHours;
+          newMinutes = newItemProps.newMinutes;
 
           var t = new Date();
-          console.log("step 4 - UserCtrl close: old name: " + oldItem.name + ", new name: " + newName + ", date: " + newDueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+          console.log("step 4 - UserCtrl close: old name: " + oldItem.name + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
 
         $scope.updateItem(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
