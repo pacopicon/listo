@@ -71,17 +71,17 @@ listo.factory('ModalService', ['$animate', '$document', '$compile', '$controller
           //  helpful if there are closing animations which must finish first.
           var closeDeferred = $q.defer();
           var closedDeferred = $q.defer();
-          // var item = options.item;
+
           // console.log("showModal(modal) item $id: " + item.$id + " and name: " + item.a_text + " and item date " + item.b_dueDate);
           var inputs = {
             $scope: modalScope,
-            close: function(item, delay) {
-              // console.log("service close: item $id: " + item.$id + " and name: " + item.a_text + " and item date " + item.b_dueDate);
+            close: function(newItemProps, delay) {
+              var t = new Date();
+              console.log("step 2, i.e. is called by step 3 but resolves before sept 3 resolves - service close:  new name: " + newItemProps.newName + " and new date " + newItemProps.newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
               if (delay === undefined || delay === null) delay = 0;
               $timeout(function() {
-                var item = options.item;
-                // console.log("ang-mod-serv close: item $id: " + item.$id + " and name: " + item.a_text + " and item date " + item.b_dueDate);
-                cleanUpClose(item);
+
+                cleanUpClose(newItemProps);
 
               }, delay);
             }
@@ -125,16 +125,16 @@ listo.factory('ModalService', ['$animate', '$document', '$compile', '$controller
           //  ...which is passed to the caller via the promise.
           deferred.resolve(modal);
 
-          function cleanUpClose(item) {
+          function cleanUpClose(newItemProps) {
 
             //  Resolve the 'close' promise.
-            closeDeferred.resolve(item);
+            closeDeferred.resolve(newItemProps);
 
             //  Let angular remove the element and wait for animations to finish.
             $animate.leave(modalElement)
                     .then(function () {
                       //  Resolve the 'closed' promise.
-                      closedDeferred.resolve(item);
+                      closedDeferred.resolve(newItemProps);
 
                       //  We can now clean up the scope
                       modalScope.$destroy();

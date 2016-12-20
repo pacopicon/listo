@@ -44,11 +44,6 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             url: '/userYearly',
             controller: 'UserCtrl',
             templateUrl: '/templates/userYearly.html'
-        })
-        .state('editModal.tpl.html', {
-            url: '/editModal.tpl.html',
-            controller: 'UserCtrl',
-            templateUrl: '/templates/editModal.tpl.html'
         });
 
     angular.extend($datepickerProvider.defaults, {

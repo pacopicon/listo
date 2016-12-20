@@ -1,4 +1,3 @@
-
 listo.factory("ItemCrud", ["$firebaseArray",
   function($firebaseArray) {
 
@@ -196,30 +195,30 @@ listo.factory("ItemCrud", ["$firebaseArray",
         });
       }, // end of AddItem
 
-      updateItem: function(item, itemName, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
+      updateItem: function(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes) {
 
-        if (typeof updatedDueDate == "object") {
-          var updatedDueDate = updatedDueDate.getTime();
-        } else if (typeof updatedDueDate != "number") {
-        console.log("dueDate, " + updatedDueDate + ", is neither a Date Object nor a number");
+        if (typeof newDueDate == "object") {
+          var newDueDate = newDueDate.getTime();
+        } else if (typeof newDueDate != "number") {
+        console.log("dueDate, " + newDueDate + ", is neither a Date Object nor a number, but a " + typeof newDueDate + ".");
         } else {
-          console.log("dueDate is a " + typeof updatedDueDate + ".");
+          console.log("dueDate is a " + typeof newDueDate + ".");
         }
 
         // var itemToBeUpdated = items.$getRecord(item.$id);
-        var itemToBeUpdated = item;
 
-        var updatedItemProperties = prioritize(item, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+        var updatedItemProperties = prioritize(oldItem, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
-        console.log("***************ItemCrud.updateItem $id: " + item.$id + " and name: " + itemToBeUpdated.a_text + " and item date " + itemToBeUpdated.b_dueDate);
+        var t = new Date();
+        console.log("step 5 - ItemCrud.updateItem old name: " + oldItem.name + " and name: " + newName + " and item date " + newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
-        itemToBeUpdated.a_text = itemName;
-        itemToBeUpdated.b_dueDate = updatedDueDate;
-        itemToBeUpdated.p_importance = updatedImportance;
-        itemToBeUpdated.r_urgent = updatedItemProperties.urgency;
-        itemToBeUpdated.s_rank = updatedItemProperties.rank;
+        oldItem.a_text = newName;
+        oldItem.b_dueDate = newDueDate;
+        oldItem.p_importance = newImportance;
+        oldItem.r_urgent = updatedItemProperties.urgency;
+        oldItem.s_rank = updatedItemProperties.rank;
 
-        items.$save(itemToBeUpdated).then(function(ref) {
+        items.$save(oldItem).then(function(ref) {
           console.log("items.$save called");
         });
       },

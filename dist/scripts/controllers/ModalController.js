@@ -1,22 +1,17 @@
 listo.controller('ModalController', [
-  '$scope', '$element', 'title', 'close',
-  function($scope, $element, title, close) {
+  '$scope', '$element', 'title', 'item', 'close',
+  function($scope, $element, title, item, close) {
 
-  $scope.name = null;
-  $scope.updatedDueDate = new Date();
-  $scope.newHourEst = 0;
-  $scope.newMinuteEst = 0;
+  $scope.name = item.a_text;
+  $scope.updatedDueDate = new Date(item.b_dueDate);
+  $scope.importance = item.p_importance;
+  $scope.urgent = item.r_urgent;
+  $scope.hours = item.m_hoursToFinish;
+  $scope.minutes = item.n_minutesToFinish;
 
-  $scope.newImportanceTxt = {
-    repeatSelect: "important",
-    availableOptions: [
-      {id: '1', text: "not important at all"},
-      {id: '2', text: "somewhat important"},
-      {id: '3', text: "important"},
-      {id: '4', text: "pretty important"},
-      {id: '5', text: "job depends on it"}
-    ]
-  };
+
+
+  $scope.title = title;
 
   $scope.selectedPhrase = "";
   $scope.selectedPhrases = [];
@@ -31,14 +26,19 @@ listo.controller('ModalController', [
   //  This close function doesn't need to use jQuery or bootstrap, because
   //  the button has the 'data-dismiss' attribute.
   $scope.close = function() {
- 	  close({
-      a_text: $scope.name,
-      b_dueDate: $scope.updatedDueDate,
-      p_importance: $scope.importance,
-      r_urgent: $scope.urgent,
-      m_hoursToFinish: $scope.hours,
-      n_minutesToFinish: $scope.minutes
-    }, 500); // close, but give 500ms for bootstrap to animate
+
+    var newItemProps = {
+      newName: $scope.name,
+      newDueDate: $scope.updatedDueDate,
+      newImportance: $scope.selectedPhrase,
+      newUrgent: $scope.urgent,
+      newHours: $scope.hours,
+      newMinutes: $scope.minutes
+    };
+
+ 	  close(newItemProps, 500); // close, but give 500ms for bootstrap to animate
+    var t = new Date();
+    console.log("step 3 - ModalController close: new name: " + newItemProps.newName + ", item date: " + newItemProps.newDueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
   };
 
   //  This cancel function must use the bootstrap, 'modal' function because
@@ -48,15 +48,17 @@ listo.controller('ModalController', [
     //  Manually hide the modal.
     $element.modal('hide');
 
+    var oldItemProps = {
+      oldName: item.a_text,
+      oldDueDate: new Date(item.b_dueDate),
+      oldImportance: item.p_importance,
+      oldUrgent: item.r_urgent,
+      oldHours: item.m_hoursToFinish,
+      oldMinutes: item.n_minutesToFinish
+    };
+
     //  Now call close, returning control to the caller.
-    close({
-      a_text: $scope.name,
-      b_dueDate: $scope.updatedDueDate,
-      p_importance: $scope.importance,
-      r_urgent: $scope.urgent,
-      m_hoursToFinish: $scope.hours,
-      n_minutesToFinish: $scope.minutes
-    }, 500); // close, but give 500ms for bootstrap to animate
+    close(oldItemProps, 500); // close, but give 500ms for bootstrap to animate
   };
 
 }]);
