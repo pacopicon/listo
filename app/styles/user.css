@@ -9,8 +9,8 @@ section {
 
 .list-group {
   color: black;
-  /*margin-left: 17%;*/
-  width: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
   height: 100%;
   position: relative;
   font-size: 1.2em;
@@ -23,7 +23,6 @@ section {
   position: relative;
   font-size: 1.5em;
   overflow: auto;
-  margin-left: 0em;
   width: 25em;
   margin-bottom: 1em;
   padding-left: 1em;
@@ -36,13 +35,18 @@ section {
 }
 
 .itemContainer {
+  position: relative;
+  overflow: auto;
+  border-radius: 1em;
+
   /*background-color: #e7eaeb;*/
   background-color: white;
   padding: 1em;
 }
 
 .itemDisplay {
-  border-radius: 0.01em;
+  position: relative;
+  border-radius: 1em;
   /*background-color: white;*/
   background-color: #e7eaeb;
   /*border-style: solid;*/
@@ -54,7 +58,8 @@ section {
   width: 100%;
   height: 1.8em;
   float: left;
-  margin-bottom: 0.5em;
+  margin-bottom: 0.25em;
+  margin-top: 0.25em;
   padding-right: 0;
   /*padding-top: 0.2em;*/
   white-space: nowrap;
@@ -62,7 +67,9 @@ section {
 
 .itemDisplay:hover {
   background-color: white;
-  /*border-style: solid;*/
+  /*border-bottom-style: solid;
+  border-bottom-width: 0.001em;
+  border-bottom-color: #3f4e62;*/
 }
 
 .priorityAndCheckbox {
@@ -176,7 +183,7 @@ section {
 
 .deleteBtn p {
   text-align: center;
-  padding-top: 0.25em;
+  padding-top: 0.1em;
 }
 
 /*Elements inside the Well*/

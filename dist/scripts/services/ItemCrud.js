@@ -1,26 +1,12 @@
 listo.factory("ItemCrud", ["$firebaseArray",
   function($firebaseArray) {
 
-  // downloads data
+// downloads data from Firebase database
     var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
 
-        // holds items
+// holds data as array of objects.  Each object is one item.
     var items = $firebaseArray(ref);
 
-    // $scope.findSeriesWithoutFactory = function() {
-    //   var seriesRef = new Firebase(fbUrl+'/series');
-    //   var seriesCollection = $firebaseArray(seriesRef);
-    //
-    //   seriesCollection.$ref().orderByChild("name").equalTo($scope.seriesName).once("value", function(dataSnapshot){
-    //     var series = dataSnapshot.val();
-    //     if(dataSnapshot.exists()){
-    //       console.log("Found", series);
-    //       $scope.series = series;
-    //     } else {
-    //       console.warn("Not found.");
-    //     }
-    //   });
-    // };
 
     var now = Date.now();
     var week = 604800000;
@@ -235,33 +221,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
         return items;
       },
 
-      // getIncompleteItems: function() {
-      //   var incompleteItems = [];
-      //   var totalItems = items.length;
-      //
-      //   for (var i = 0; i < totalItems; i++) {
-      //     if (!items[i].q_completed) {
-      //       incompleteItems.push(items[i]);
-      //     }
-      //   }
-      //   return incompleteItems;
-      //   console.log("getIncompleteItems called, incompleteItems: " + incompleteItems.length);
-      // },
-      //
-      // getCompleteItems: function() {
-      //   var completeItems = [];
-      //   var totalItems = items.length;
-      //
-      //   for (var i = 0; i < totalItems; i++) {
-      //     if (items[i].q_completed) {
-      //       completeItems.push(items[i]);
-      //     }
-      //   }
-      //   return completeItems;
-      //   console.log("getCompleteItems called, completeItems: " + completeItems.length);
-      // },
-      // completedAt: timestamp
-
       itemsComplete: function () {
         var itemCount = 0;
         var hours = 0;
@@ -330,44 +289,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
           itemCount: itemCount
         }
       },
-
-      // getIncompleteItems: function() {
-      //   var incompleteItems = [];
-      //
-      //   items.$loaded().then(function(items) {
-      //     var totalItems = items.length;
-      //
-      //     for (var i = 0; i < totalItems; i++) {
-      //       if (!items[i].q_completed) {
-      //         incompleteItems.push(items[i]);
-      //       }
-      //     }
-      //     return incompleteItems;
-      //   });
-      // },
-      //
-      // getCompleteItems: function() {
-      //   var completeItems = [];
-      //
-      //   items.$loaded().then(function(items) {
-      //     var totalItems = items.length;
-      //
-      //     for (var i = 0; i < totalItems; i++) {
-      //       if (items[i].q_completed) {
-      //         completeItems.push(items[i]);
-      //       }
-      //
-      //       if (items[i].q_completed && items[i].b_dueDate + week < now) {
-      //         items.$remove(items[i]).then(function() {
-      //         });
-      //       }
-      //     }
-      //     return completeItems;
-      //   });
-      //
-      //   return completeItems;
-      //
-      // },
 
       getItemsPastDue: function() {
         var itemsPastDue = [];
