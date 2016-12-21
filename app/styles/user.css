@@ -43,16 +43,12 @@ section {
   color: #3f4e62;
   display: inline-block;
   width: 80%;
-  height: 1.75em;
+  height: 1.8em;
   float: left;
   margin-bottom: 0.5em;
   padding-right: 0;
   /*padding-top: 0.2em;*/
   white-space: nowrap;
-}
-
-.itemEditConsole {
-  height: 10em;
 }
 
 .editDeleteBox {
@@ -125,12 +121,18 @@ section {
 .editBtn {
   border-radius: 1em;
   width: 4em;
-  height: 100%;
+  height: 1.8em;
   background-color: #6FC853;
   color: #3f4e62;
   border-color: #e05d6f;
   border-style: none;
   float: right;
+  text-decoration: none;
+}
+
+.editBtn:hover {
+  color: white;
+  text-decoration: none;
 }
 
 .deleteBtn {
@@ -141,17 +143,12 @@ section {
   color: #3f4e62;
   border-style: none;
   float: right;
+  text-decoration: none;
 }
 
-.well {
-  border-radius: 1em;
-  height: 12em;
-  width: 50em;
-  background-color: #418bca;
-  border-style: none;
-  color: #ffb145;
-  overflow: auto;
-  float: left;
+.deleteBtn:hover {
+  color: white;
+  text-decoration: none;
 }
 
 /*Elements inside the Well*/
@@ -254,15 +251,9 @@ section {
   overflow: auto;
 }
 
-/*.btn {
-  border-radius: 0;
-  background-color: #3d7fba;
-}*/
-
 .text {
   color: #e05d6f;
 }
-
 
 /* End of CSS for listed items */
 
@@ -354,32 +345,17 @@ section {
   width: 3.5em;
 }
 
-/* Begin CSS for Datepicker popup */
-.full button span {
-    background-color: limegreen;
-    border-radius: 32px;
-    color: black;
-  }
-  .partially button span {
-    background-color: orange;
-    border-radius: 32px;
-    color: black;
-  }
-
-  /* End CSS for Datepicker popup*/
-
-.addButton {
-  position: relative;
-  overflow: auto;
-  width: 20em;
-  height: 1.8em;
-  color: white;
-  background-color: rgb(133,150,117);
+.btn-add {
+  border-radius: 1em;
+  width: 10em;
+  background-color: #418bca;
+  color: #3f4e62;
+  border-style: none;
 }
 
-/*.panel-body {
-  width: 30em;
-}*/
+.btn-add:hover {
+  color: white;
+}
 
 @media only screen and (max-width : 767px) {
 
@@ -433,43 +409,3 @@ section {
   }
 
 }
-
-/*clicToEdit directive template css*/
-
-/*body{
-  padding: 25px;
-  background-color: black;
-  color: gray;
-}*/
-
-/*.templateRoot{
-    display: inline-block;
-}
-.hover-edit-trigger {
-    padding: 3px;
-}
-.hover-edit-trigger:hover{
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-}
-.edit-pencil{
-    display: none;
-    margin-left: 3px;
-    padding: 3px;
-    border-left: 1px solid #dcdcdc;
-}
-.hover-text-field:hover .edit-pencil{
-    display: inline-block;
-}
-.edit-button-group{
-    border: 1px solid #dcdcdc;
-    border-top: none;
-    border-radius: 4px;
-    padding: 0px 3px 0px 3px;
-}
-.edit-button-group .glyphicon{
-    border: 1px solid #dcdcdc;
-    border-radius: 4px;
-    margin: 1px;
-    cursor: pointer;
-}*/
