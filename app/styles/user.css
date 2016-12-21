@@ -51,14 +51,6 @@ section {
   white-space: nowrap;
 }
 
-.editDeleteBox {
-  position: relative;
-  overflow: auto;
-  float: right;
-  height: 100%;
-  padding: 0;
-}
-
 .priorityAndCheckbox {
   padding-right: 0;
   padding-left: 0.5em;
@@ -118,37 +110,57 @@ section {
   padding-top: 0.2em;
 }
 
+.editDeleteBox {
+  position: relative;
+  overflow: auto;
+  float: right;
+  height: 100%;
+  padding: 0;
+}
+
 .editBtn {
   border-radius: 1em;
   width: 4em;
   height: 1.8em;
   background-color: #6FC853;
-  color: #3f4e62;
+  color: #e7eaeb;
   border-color: #e05d6f;
   border-style: none;
   float: right;
   text-decoration: none;
+  text-align: center;
 }
 
 .editBtn:hover {
   color: white;
-  text-decoration: none;
+  font-weight: bold;
+}
+
+.editBtn p {
+  text-align: center;
+  padding-top: 0.2em;
 }
 
 .deleteBtn {
   border-radius: 1em;
   width: 4em;
-  height: 100%;
+  height: 1.8em;
   background-color: #e05d6f;
-  color: #3f4e62;
+  color: #e7eaeb;
   border-style: none;
   float: right;
   text-decoration: none;
+  text-align: center;
 }
 
 .deleteBtn:hover {
   color: white;
-  text-decoration: none;
+  font-weight: bold;
+}
+
+.deleteBtn p {
+  text-align: center;
+  padding-top: 0.2em;
 }
 
 /*Elements inside the Well*/
@@ -349,12 +361,13 @@ section {
   border-radius: 1em;
   width: 10em;
   background-color: #418bca;
-  color: #3f4e62;
+  color: #e7eaeb;
   border-style: none;
 }
 
 .btn-add:hover {
   color: white;
+  font-weight: bold;
 }
 
 @media only screen and (max-width : 767px) {
