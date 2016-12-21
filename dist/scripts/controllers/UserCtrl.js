@@ -52,26 +52,22 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     // End Est--------------------------------------
 
     // Begin Importance-----------------------------
-    $scope.newImportanceTxt = {
-      repeatSelect: "important",
-      availableOptions: [
-        {id: '1', text: "not important at all"},
-        {id: '2', text: "somewhat important"},
-        {id: '3', text: "important"},
-        {id: '4', text: "pretty important"},
-        {id: '5', text: "job depends on it"}
-      ]
-    };
 
     $scope.selectedPhrase = "";
     $scope.selectedPhrases = [];
     $scope.phrases = [
-      {text:"not important at all"},
-      {text:"somewhat important"},
-      {text:"important"},
-      {text:"pretty important"},
-      {text:"job depends on it"}
+      {text:"!"},
+      {text:"!!"},
+      {text:"!!!"},
+      {text:"!!!!"},
+      {text:"!!!!!"}
     ];
+
+    // {text:"not important at all"},
+    // {text:"somewhat important"},
+    // {text:"important"},
+    // {text:"pretty important"},
+    // {text:"job depends on it"}
 
     // End Importance-----------------------------------------------
 

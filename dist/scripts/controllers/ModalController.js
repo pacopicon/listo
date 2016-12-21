@@ -13,11 +13,11 @@ listo.controller('ModalController', [
 
   $scope.selectedPhrases = [];
   $scope.phrases = [
-    {text:"not important at all"},
-    {text:"somewhat important"},
-    {text:"important"},
-    {text:"pretty important"},
-    {text:"job depends on it!"}
+    {text:"!"},
+    {text:"!!"},
+    {text:"!!!"},
+    {text:"!!!!"},
+    {text:"!!!!!"}
   ];
 
   //  This close function doesn't need to use jQuery or bootstrap, because
