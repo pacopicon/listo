@@ -51,6 +51,10 @@ section {
   white-space: nowrap;
 }
 
+.itemDisplay:hover {
+  background-color: green;
+}
+
 .priorityAndCheckbox {
   padding-right: 0;
   padding-left: 0.5em;
@@ -134,6 +138,7 @@ section {
 .editBtn:hover {
   color: white;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .editBtn p {
@@ -156,6 +161,7 @@ section {
 .deleteBtn:hover {
   color: white;
   font-weight: bold;
+  text-decoration: none;
 }
 
 .deleteBtn p {
