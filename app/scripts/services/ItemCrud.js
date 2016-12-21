@@ -200,7 +200,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
         if (typeof newDueDate == "object") {
           var newDueDate = newDueDate.getTime();
         } else if (typeof newDueDate != "number") {
-        console.log("dueDate, " + newDueDate + ", is neither a Date Object nor a number, but a " + typeof newDueDate + ".");
+          console.log("dueDate, " + newDueDate + ", is neither a Date Object nor a number, but a " + typeof newDueDate + ".");
         } else {
           console.log("dueDate is a " + typeof newDueDate + ".");
         }
@@ -277,8 +277,16 @@ listo.factory("ItemCrud", ["$firebaseArray",
           }
 
           if (items[i].q_completed && items[i].b_dueDate + week < now) {
+
+            console.log("item named " + items[i].a_text + " is about to be removed");
+
             items.$remove(items[i]).then(function() {
-              console.log("item named " + items[i].a_text + " removed");
+
+              if (items[i] != undefined) {
+                console.log("item named " + items[i].a_text + "has still not been deleted");
+              } else {
+                console.log("item, which is now " + items[i] + ", has been removed");
+              }
 
             itemsComplete();
             });

@@ -16,7 +16,9 @@ body {
   background-position: center;
   /*background-size: cover;*/
   font-family: 'Montserrat', sans-serif;
-  background-color: #e7eaeb;
+  /*background-color: #ccf0ff;*/
+  background-color: #d6f3ff;
+  /*background-color: #e5f7ff;*/
   min-height: 100%;
   padding-bottom: 200px;
  }
@@ -25,16 +27,18 @@ body {
   position: relative;
   height: 3rem;
   top: -3.4em;
-  /*background-color: #51445f;*/
-  background-color: #418bca;
+  /*background-color: #00b2ff;*/
+  /*background-color: #418bca;*/
+  background-color: #4c91cd;
+  /*background-color: #5898d0;*/
+  /*background-color: #609dd2;*/
   z-index: 1;
  }
 
  aside {
    position: absolute;
    display: block;
-   /*background-color: #51445f;*/
-   background-color: #418bca;
+   background-color: #707ED7;
    height: 100%;
    top: 4em;
    bottom: 0;

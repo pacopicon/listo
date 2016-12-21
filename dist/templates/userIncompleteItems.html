@@ -1,85 +1,86 @@
 <section ng-controller="UserCtrl" ng-init="completionData()" class="user">
 <body>
   <div class="list-group">
-    <!--                     CLOCK                     -->
-    <div class="clock">
-      <p><b>{{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
+    <div class="itemContainerContainer container">
+<!--Clock-->
+      <div class="clock">
+        <p><b>{{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
+      </div>
+      <div class="itemContainer container">
+<!--ItemDisplay-->
+        <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed" ng-class="itemEditConsole">
+<!--PRIORITY & CHECKBOX-->
+          <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+<!--CHECKBOX-->
+            <div class="completedBox">
+              <input type="checkbox" class="archiveCheckbox" ng-model="makeRed" />
+            </div>
+<!--PRIORITY-->
+            <div class="priorityCell">
+              <p>{{$index + 1}}</p>
+            </div>
+          </div>
+<!--NAME-->
+          <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'text': makeRed}">
+              <p>{{item.a_text}}</P>
+          </div>
+<!--DATE-->
+          <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'text': makeRed}">
+            {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
+          </div>
+<!--IMPORTANCE-->
+          <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'text': makeRed}">
+            {{item.p_importance}}
+          </div>
+      <!--                     URGENT                           -->
+          <!-- <div class="col-sm-1 urgentCell cell">
+            <div class="urgentLine" ng-class="{'text': makeRed}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+              {{item.r_urgent}}
+            </div>
+          </div> -->
+      <!--                       DURATION                         -->
+          <!-- <div class="col-sm-1 numberCell cell">
+            <div class="numberLine" ng-class="{'text': makeRed}">
+              {{item.m_hoursToFinish}}
+            </div>
+          </div>
+          <div class="col-sm-1 numberCell cell">
+            <div class="numberLine" ng-class="{'text': makeRed}">
+              {{item.n_minutesToFinish}}
+            </div>
+          </div> -->
+      <!--                      RANK                              -->
+          <!-- <div class="col-sm-1 rankCell cell" ng-class="{'text': makeRed}">
+            {{item.s_rank}}
+          </div> -->
+      <!--                     DATE CREATED                       -->
+          <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'text': makeRed}">
+            {{item.t_created_at | date: 'M/d/yy h:mm a'}}
+          </div> -->
+      <!--                 TIME TO COMPLETE                       -->
+          <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
+            <div class="dueCell cell" ng-class="{'text': makeRed}">
+              Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
+              <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
+              <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
+              <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
+              <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
+              <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
+              <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span>
+            </div>
+          </div> -->
+      <!--                EDIT + DELETE              -->
+          <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
+          <div class="editDeleteBox">
+            <!--Passing "item" into showComplex() INDEED works-->
+            <a href class="editBtn" ng-model="item" ng-hide="makeRed" ng-click="showComplex(item)"><p>edit</p></a>
+            <button class="deleteBtn" ng-model="item.q_completed" ng-change="items.$save(item)" ng-click="item.q_completed = true" ng-show="makeRed"><p>delete</p></button>
+
+
+          </div>
+        </div> <!-- item Display and ng-repeat end -->
+      </div>
     </div>
-    <!--                     ItemDisplay                     -->
-    <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed" ng-class="itemEditConsole">
-      <!--                 PRIORITY & CHECKBOX                -->
-      <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
-        <!--                     CHECKBOX                     -->
-        <div class="completedBox">
-          <input type="checkbox" class="archiveCheckbox" ng-model="makeRed" />
-        </div>
-    <!--                       PRIORITY                       -->
-        <div class="priorityCell">
-          <p>{{$index + 1}}</p>
-        </div>
-      </div>
-  <!--                       NAME                           -->
-      <!-- <div class="col-lg-3 col-sm-3 col-sx-3 nameCell" ng-class="{'text': makeRed}"> -->
-        <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'text': makeRed}">
-
-          <p>{{item.a_text}}</P>
-      </div>
-  <!--                       DATE                           -->
-      <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'text': makeRed}">
-        {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
-      </div>
-
-  <!--                       IMPORTANCE                     -->
-      <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'text': makeRed}">
-        {{item.p_importance}}
-      </div>
-  <!--                     URGENT                           -->
-      <!-- <div class="col-sm-1 urgentCell cell">
-        <div class="urgentLine" ng-class="{'text': makeRed}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-          {{item.r_urgent}}
-        </div>
-      </div> -->
-  <!--                       DURATION                         -->
-      <!-- <div class="col-sm-1 numberCell cell">
-        <div class="numberLine" ng-class="{'text': makeRed}">
-          {{item.m_hoursToFinish}}
-        </div>
-      </div>
-      <div class="col-sm-1 numberCell cell">
-        <div class="numberLine" ng-class="{'text': makeRed}">
-          {{item.n_minutesToFinish}}
-        </div>
-      </div> -->
-  <!--                      RANK                              -->
-      <!-- <div class="col-sm-1 rankCell cell" ng-class="{'text': makeRed}">
-        {{item.s_rank}}
-      </div> -->
-  <!--                     DATE CREATED                       -->
-      <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'text': makeRed}">
-        {{item.t_created_at | date: 'M/d/yy h:mm a'}}
-      </div> -->
-  <!--                 TIME TO COMPLETE                       -->
-      <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
-        <div class="dueCell cell" ng-class="{'text': makeRed}">
-          Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
-          <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
-          <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
-          <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
-          <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
-          <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
-          <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span>
-        </div>
-      </div> -->
-  <!--                EDIT + DELETE              -->
-      <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
-      <div class="editDeleteBox">
-        <!--Passing "item" into showComplex() INDEED works-->
-        <a href class="editBtn" ng-model="item" ng-hide="makeRed" ng-click="showComplex(item)"><p>edit</p></a>
-        <button class="deleteBtn" ng-model="item.q_completed" ng-click="item.q_completed = true" ng-show="makeRed"><p>delete</p></button>
-
-
-      </div>
-    </div> <!-- item Display and ng-repeat end -->
 
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
