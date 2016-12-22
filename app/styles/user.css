@@ -286,8 +286,13 @@ section {
   overflow: auto;
 }
 
-.text {
+/*This will color an item's text red when the item checkbox is checked.*/
+.redText {
   color: #e05d6f;
+}
+
+.redCell {
+  background-color: #e05d6f;
 }
 
 /* End of CSS for listed items */

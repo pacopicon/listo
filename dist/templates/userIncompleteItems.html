@@ -1,4 +1,4 @@
-<section ng-controller="UserCtrl" ng-init="completionData()" class="user">
+<section ng-controller="UserCtrl" ng-init="refreshTalliesAndData()" class="user">
 <body>
   <div class="list-group">
 <!--Clock-->
@@ -16,50 +16,50 @@
             <input type="checkbox" class="archiveCheckbox" ng-model="makeRed" />
           </div>
 <!--PRIORITY-->
-          <div class="priorityCell">
+          <div class="priorityCell" ng-class="{'redCell': makeRed}">
             <p>{{$index + 1}}</p>
           </div>
         </div>
 <!--NAME-->
-        <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'text': makeRed}">
+        <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'redText': makeRed}">
             <p>{{item.a_text}}</P>
         </div>
 <!--DATE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'text': makeRed}">
+        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'redText': makeRed}">
           {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
         </div>
 <!--IMPORTANCE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'text': makeRed}">
+        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'redText': makeRed}">
           {{item.p_importance}}
         </div>
     <!--                     URGENT                           -->
         <!-- <div class="col-sm-1 urgentCell cell">
-          <div class="urgentLine" ng-class="{'text': makeRed}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+          <div class="urgentLine" ng-class="{'redText': makeRed}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
             {{item.r_urgent}}
           </div>
         </div> -->
     <!--                       DURATION                         -->
         <!-- <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'text': makeRed}">
+          <div class="numberLine" ng-class="{'redText': makeRed}">
             {{item.m_hoursToFinish}}
           </div>
         </div>
         <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'text': makeRed}">
+          <div class="numberLine" ng-class="{'redText': makeRed}">
             {{item.n_minutesToFinish}}
           </div>
         </div> -->
     <!--                      RANK                              -->
-        <!-- <div class="col-sm-1 rankCell cell" ng-class="{'text': makeRed}">
+        <!-- <div class="col-sm-1 rankCell cell" ng-class="{'redText': makeRed}">
           {{item.s_rank}}
         </div> -->
     <!--                     DATE CREATED                       -->
-        <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'text': makeRed}">
+        <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'redText': makeRed}">
           {{item.t_created_at | date: 'M/d/yy h:mm a'}}
         </div> -->
     <!--                 TIME TO COMPLETE                       -->
         <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
-          <div class="dueCell cell" ng-class="{'text': makeRed}">
+          <div class="dueCell cell" ng-class="{'redText': makeRed}">
             Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
             <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
             <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
@@ -69,24 +69,18 @@
             <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span>
           </div>
         </div> -->
-    <!--                EDIT + DELETE              -->
+<!--EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
         <div class="editDeleteBox">
           <!--Passing "item" into showComplex() INDEED works-->
           <a href class="editBtn" ng-model="item" ng-hide="makeRed" ng-click="showComplex(item)"><p>edit</p></a>
-          <button class="deleteBtn" ng-model="item.q_completed"  ng-click="item.q_completed = true" ng-change="updateItemCompletion(item, item.q_completed)" ng-show="makeRed"><p>delete</p></button>
-
-
+          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeRed"><p>delete</p></button>
         </div>
       </div> <!-- item Display and ng-repeat end -->
     </div>
+<!--end ITEM DISPLAY-->
 
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!--                        GRAPH                           -->
-
+<!--begin GRAPH-->
     <div class="<div class=col-lg-12 col-sm-12 col-xs-12 allCharts">
       <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
         <canvas id="pie" class="chart chart-pie"
@@ -106,24 +100,12 @@
         </canvas>
       </div>
     </div>
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
+<!--end GRAPH-->
 
-
-
-<pre ng-show="complexResult">{{complexResult}}</pre>
-
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - -  -->
-  <!--                        FORM                           -->
-          <!-- push a new message onto the array -->
-    <form ng-submit="addItem()" class="form">
+<!--FORM-->
+    <form ng-submit="addItem()" class="form"><!-- push a new message onto the array -->
       <table class="outerTable">
-  <!--                       name                            -->
+<!--name-->
         <tr>
           <td class="formBox">
             Enter item name:
@@ -132,8 +114,7 @@
             <input class="col-xs-1 form-control name" ng-model="newItemName" />
           </td>
         </tr>
-
-  <!--                         date                           -->
+  <!--date-->
         <tr>
           <td class="formBox">
             Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :
@@ -161,8 +142,7 @@
           </div>
         </td>
       </tr>
-
-  <!--                     est. time                         -->
+<!--est. time-->
         <tr>
           <td class="formBox">
             Enter est. <i class="fa fa-clock-o"></i> to finish:

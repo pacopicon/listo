@@ -107,7 +107,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
           console.log("step 4 - UserCtrl close: old name: " + oldItem.name + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
 
-        $scope.updateItem(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
+          ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
+
+          if (oldItem.q_completed == true) {
+            $scope.updateCompletion(oldItem);
+          }
+
+          $scope.refreshTalliesAndData();
 
         });
       });
@@ -126,49 +132,64 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
 
-      $scope.completionData();
+      $scope.refreshTalliesAndData();
     };
 
-    $scope.updateItem = function(item, updatedName, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute) {
-      ItemCrud.updateItem(item, updatedName, updatedDueDate, updatedImportance, updatedUrgency, updatedHour, updatedMinute);
+    $scope.updateCompletion = function(item) {
+      ItemCrud.updateCompletion(item);
+      $scope.refreshTalliesAndData();
     };
 
-    $scope.updateItemCompletion = function(item, completion) {
+    var completionData = function() {
+      // $scope.incompleteItems = ItemCrud.tallyIncompleteItems().itemCount;
+      // $scope.millisecondsLeft = ItemCrud.tallyIncompleteItems().millisecondsLeft;
+      // $scope.hoursLeft = ItemCrud.tallyIncompleteItems().hoursLeft;
+      // $scope.minutesLeft = ItemCrud.tallyIncompleteItems().minutesLeft;
 
-      ItemCrud.updateItemCompletion(item, completion);
+      var incomItemTally = ItemCrud.tallyIncompleteItems();
+      $scope.incompleteItems = incomItemTally.itemCount;
+      $scope.hoursLeft = incomItemTally.hoursLeft;
+      $scope.minutesLeft = incomItemTally.minutesLeft;
+      $scope.millisecondsLeft = incomItemTally.millisecondsLeft;
 
-      $scope.completionData();
+      // $scope.completeItems = ItemCrud.tallyCompleteItems().itemCount;
+      // $scope.millisecondsWorked = ItemCrud.tallyCompleteItems().millisecondsWorked;
+      // $scope.hoursWorked = ItemCrud.tallyCompleteItems().hoursWorked;
+      // $scope.minutesWorked = ItemCrud.tallyCompleteItems().minutesWorked;
 
+      var comItemTally = ItemCrud.tallyCompleteItems();
+      $scope.completeItems = comItemTally.itemCount;
+      $scope.hoursWorked = comItemTally.hoursWorked;
+      $scope.minutesWorked = comItemTally.minutesWorked;
+      $scope.millisecondsWorked = comItemTally.millisecondsWorked;
+
+      $scope.itemLabels = ["items yet to complete", "items completed"];
+      $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
+      $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
+      $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
+      $scope.series = ["Hours worked", "Hours yet to work"];
+      $scope.hourData = [$scope.hoursWorked, $scope.hoursLeft];
+      $scope.hourLabel = ["Hours worked", "Hours yet to work"]
     };
-
-    $scope.completionData = function() {
-      $scope.incompleteItems = ItemCrud.itemsIncomplete().itemCount;
-      $scope.millisecondsLeft = ItemCrud.itemsIncomplete().millisecondsLeft;
-      $scope.hoursLeft = ItemCrud.itemsIncomplete().hoursLeft;
-      $scope.minutesLeft = ItemCrud.itemsIncomplete().minutesLeft;
-
-      $scope.completeItems = ItemCrud.itemsComplete().itemCount;
-      $scope.millisecondsWorked = ItemCrud.itemsComplete().millisecondsWorked;
-      $scope.hoursWorked = ItemCrud.itemsComplete().hoursWorked;
-      // console.log("hoursWorked: " + $scope.hoursWorked);
-      $scope.minutesWorked = ItemCrud.itemsComplete().minutesWorked;
 
       $scope.itemLabels = ["items yet to complete", "items completed"];
       $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
 
       $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
       $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
-      // $scope.millisecData = [$scope.hoursWorked, $scope.hoursLeft];
-      $scope.series = ["Hours worked", "Hours yet to work"];
-      $scope.hourData = [$scope.hoursWorked, $scope.hoursLeft];
-      $scope.hourLabel = ["Hours worked", "Hours yet to work"]
+
+// Callable by DOM:
+    $scope.refreshTalliesAndData = function() {
+      completionData();
+      ItemCrud.processOldCompleteItems();
+      ItemCrud.updateAllItemsPastDue();
     };
-
-    $scope.itemLabels = ["items yet to complete", "items completed"];
-    $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
-
-    $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
-    $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
+// Callable by app.js:
+    var refreshTalliesAndData = function() {
+      completionData();
+      ItemCrud.processOldCompleteItems();
+      ItemCrud.updateAllItemsPastDue();
+    };
 
   }
 ]);

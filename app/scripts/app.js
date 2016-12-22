@@ -1,7 +1,5 @@
 var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap", "chart.js"]);
 
-// , "ui.router.tabs"
-
 listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $modalProvider) {
 
     $locationProvider.html5Mode({
