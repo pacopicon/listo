@@ -8,7 +8,8 @@
 <!--Clock-->
     <div class="itemContainer">
 <!--ItemDisplay-->
-      <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed">
+      <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
+      <div class="itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed">
 <!--Just PRIORITY-->
         <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
 <!--PRIORITY-->

@@ -7,6 +7,12 @@ listo.factory("ItemCrud", ["$firebaseArray",
 // holds data as array of objects.  Each object is one item.
     var items = $firebaseArray(ref);
 
+    var checkIfComplete = function(item) {
+      if (item.q_completed == true) {
+        return item;
+      }
+    };
+
 // Public variables below
     var now = Date.now();
     var week = 604800000;
@@ -266,7 +272,10 @@ listo.factory("ItemCrud", ["$firebaseArray",
         for (var i = 0; i < totalItems; i++) {
           if (items[i].q_completed && items[i].b_dueDate + week < now) {
 
-            console.log("item named " + items[i].a_text + " is about to be removed");
+            // 'date' is part of the console.log
+            var date = new Date(items[i].b_dueDate);
+
+            console.log("item named " + items[i].a_text + " with date: " + date + ", is about to be removed");
 
             items.$remove(items[i]).then(function() {
               if (items[i] != undefined) {
@@ -274,7 +283,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
               } else {
                 console.log("item, which is now " + items[i] + ", has been removed");
               }
-            processOldCompleteItems();
             });
           }
         }
@@ -287,13 +295,11 @@ listo.factory("ItemCrud", ["$firebaseArray",
         for (var i = 0; i < totalItems; i++) {
           if (items[i].b_dueDate < now) {
             items[i].qq_pastDue = true;
-            console.log("1-The item called " + items[i].a_text + "is past due!");
             items.$save(items[i]);
             itemCount++;
           }
         }
         return itemCount;
-        console.log("getItemsPastDue was called, itemsPastDue array has: " + itemCount + "items past due");
       },
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
       updateCompletion: function(item) {

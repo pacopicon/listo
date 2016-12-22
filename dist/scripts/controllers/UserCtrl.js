@@ -8,6 +8,25 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     var items = $scope.items;
 
+    var checkIfComplete = function(item) {
+      if (item.q_completed == true) {
+        return item;
+      }
+    };
+
+    $scope.completeItems = items.filter(checkIfComplete);
+
+    var checkIfNotComplete = function(item) {
+      if (item.q_completed == false) {
+        return item;
+      }
+    };
+
+    $scope.incompleteItems = items.filter(checkIfNotComplete);
+
+
+
+
     var refreshTime = function() {
       time = Date.now();
       $scope.time = time;
@@ -147,7 +166,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       // $scope.minutesLeft = ItemCrud.tallyIncompleteItems().minutesLeft;
 
       var incomItemTally = ItemCrud.tallyIncompleteItems();
-      $scope.incompleteItems = incomItemTally.itemCount;
+      $scope.incomItemTally = incomItemTally.itemCount;
       $scope.hoursLeft = incomItemTally.hoursLeft;
       $scope.minutesLeft = incomItemTally.minutesLeft;
       $scope.millisecondsLeft = incomItemTally.millisecondsLeft;
@@ -158,13 +177,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       // $scope.minutesWorked = ItemCrud.tallyCompleteItems().minutesWorked;
 
       var comItemTally = ItemCrud.tallyCompleteItems();
-      $scope.completeItems = comItemTally.itemCount;
+      $scope.comItemTally = comItemTally.itemCount;
       $scope.hoursWorked = comItemTally.hoursWorked;
       $scope.minutesWorked = comItemTally.minutesWorked;
       $scope.millisecondsWorked = comItemTally.millisecondsWorked;
 
       $scope.itemLabels = ["items yet to complete", "items completed"];
-      $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
+      $scope.itemData = [$scope.incomItemTally, $scope.comItemTally];
       $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
       $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
       $scope.series = ["Hours worked", "Hours yet to work"];
@@ -173,7 +192,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     };
 
       $scope.itemLabels = ["items yet to complete", "items completed"];
-      $scope.itemData = [$scope.incompleteItems, $scope.completeItems];
+      $scope.itemData = [$scope.incomItemTally, $scope.comItemTally];
 
       $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
       $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];

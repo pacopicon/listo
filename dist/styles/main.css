@@ -25,6 +25,7 @@ body {
 
 .navbark {
   position: relative;
+  overflow: auto;
   height: 4em;
   top: -3.4em;
   /*background-color: #00b2ff;*/
@@ -38,7 +39,7 @@ body {
 .links-container {
   display: block;
   position: relative;
-  overflow: auto;
+  overflow: hidden;
   height: 100%;
   margin-left: 5%;
   text-decoration: none;
