@@ -23,18 +23,19 @@
             <p>{{$index + 1}}</p>
           </div>
         </div>
+<!--IMPORTANCE-->
+        <div class="col-lg-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          {{item.p_importance}}
+        </div>
 <!--NAME-->
-        <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+        <div class="col-lg-5 col-sm-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             <p>{{item.a_text}}</P>
         </div>
 <!--DATE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+        <div class="col-lg-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
           {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
         </div>
-<!--IMPORTANCE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.p_importance}}
-        </div>
+
     <!--                     URGENT                           -->
         <!-- <div class="col-sm-1 urgentCell cell">
           <div class="urgentLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
@@ -80,124 +81,132 @@
           <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p>delete</p></button>
         </div>
       </div> <!-- item Display and ng-repeat end -->
-    </div>
+    </div> <!--itemContainer end-->
 <!--end ITEM DISPLAY-->
 
 <!--begin GRAPH-->
-    <div class="<div class=col-lg-12 col-sm-12 col-xs-12 allCharts">
-      <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
-        <canvas id="pie" class="chart chart-pie"
-      chart-data="itemData" chart-labels="itemLabels">
-        </canvas>
-      </div>
+    <div class="containerPad">
+      <div class="itemContainer">
+        <div class="col-lg-12 col-sm-12 col-xs-12 allCharts">
+          <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
+            <canvas id="pie" class="chart chart-pie"
+          chart-data="itemData" chart-labels="itemLabels">
+            </canvas>
+          </div>
 
-      <div>
-        <canvas id="doughnut" class="chart chart-doughnut"
-      chart-data="millisecData" chart-labels="millisecLabels">
-        </canvas>
-      </div>
+          <div>
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="millisecData" chart-labels="millisecLabels">
+            </canvas>
+          </div>
 
-      <div>
-        <canvas id="bar" class="chart chart-bar"
-      chart-data="hourData" chart-labels="hourLabel" chart-series="series">
-        </canvas>
+          <div>
+            <canvas id="bar" class="chart chart-bar"
+          chart-data="hourData" chart-labels="hourLabel" chart-series="series">
+            </canvas>
+          </div>
+        </div>
       </div>
     </div>
 <!--end GRAPH-->
 
 <!--FORM-->
-    <form ng-submit="addItem()" class="form"><!-- push a new message onto the array -->
-      <table class="outerTable">
+    <div class="containerPad">
+      <div class="itemContainer">
+        <form ng-submit="addItem()" class="form"><!-- push a new message onto the array -->
+          <table class="outerTable">
 <!--name-->
-        <tr>
-          <td class="formBox">
-            Enter item name:
-          </td>
-          <td class="formBox">
-            <input class="col-xs-1 form-control name" ng-model="newItemName" />
-          </td>
-        </tr>
-  <!--date-->
-        <tr>
-          <td class="formBox">
-            Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :
-          </td>
-          <td class="formBox">
-            <div class="row">
-              <div class="col-md-6">
-                <form name="timepickerForm" class="form-inline" role="form">
-                  <table class="innerTableOne">
-                    <tr>
-                      <td>
-                        <div class="date">
-                          <input type="text" size="10" class="form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="Date" bs-datepicker>
-                        </div>
-                      </td>
-                      <td>
-                        <div class="time">
-                          <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
-                        </div>
-                      </td>
-                    </tr>
-                  </table>
-                </form>
-            </div>
-          </div>
-        </td>
-      </tr>
+            <tr>
+              <td class="formBox">
+                Enter item name:
+              </td>
+              <td class="formBox">
+                <input class="col-xs-1 form-control name" ng-model="newItemName" />
+              </td>
+            </tr>
+<!--date-->
+            <tr>
+              <td class="formBox">
+                Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :
+              </td>
+              <td class="formBox">
+                <div class="row">
+                  <div class="col-md-6">
+                    <form name="timepickerForm" class="form-inline" role="form">
+                      <table class="innerTableOne">
+                        <tr>
+                          <td>
+                            <div class="date">
+                              <input type="text" size="10" class="form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="Date" bs-datepicker>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="time">
+                              <input type="text" size="8" class="form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
+                            </div>
+                          </td>
+                        </tr>
+                      </table>
+                    </form>
+                </div>
+              </div>
+            </td>
+          </tr>
 <!--est. time-->
-        <tr>
-          <td class="formBox">
-            Enter est. <i class="fa fa-clock-o"></i> to finish:
-          </td>
-          <td class="formBox">
-            <table class="innerTableTwo">
-              <tr>
-                <td>
-                  <select class="form-control number" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
+            <tr>
+              <td class="formBox">
+                Enter est. <i class="fa fa-clock-o"></i> to finish:
+              </td>
+              <td class="formBox">
+                <table class="innerTableTwo">
+                  <tr>
+                    <td>
+                      <select class="form-control number" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select>
 
-                  <!-- <button type="button" class="btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="timeOption.hour as timeOption.hour for timeOption in timeOptions" bs-select><span class="caret"></span> -->
+                      <!-- <button type="button" class="btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="timeOption.hour as timeOption.hour for timeOption in timeOptions" bs-select><span class="caret"></span> -->
 
-                </td>
-                <td class="hourPickerCaption">hours and</td>
-                <td class="minutePicker">
-                  <select class="form-control number" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
+                    </td>
+                    <td class="hourPickerCaption">hours and</td>
+                    <td class="minutePicker">
+                      <select class="form-control number" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select>
 
-                  <!-- <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span> -->
+                      <!-- <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span> -->
 
-                </td>
-                <td class="minutePickerCaption">minutes</td>
-              </tr>
-            </table>
-          </td>
-        </tr>
-  <!--                            importance                             -->
-        <tr>
-          <td class="formBox">
-            Enter importance:
-          </td>
-          <!-- <td class="formBox">
-            <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control importance formBox">
-              <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}
-              </option>
-            </select>
-          </td> -->
+                    </td>
+                    <td class="minutePickerCaption">minutes</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+<!--importance-->
+            <tr>
+              <td class="formBox">
+                Enter importance:
+              </td>
+              <!-- <td class="formBox">
+                <select id="repeatSelect" ng-model="newImportanceTxt.repeatSelect" class="form-control importance formBox">
+                  <option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}
+                  </option>
+                </select>
+              </td> -->
 
-          <td class="formBox">
-            <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
-            </button>
-          </td>
-        </tr>
-  <!--                            Add Button                             -->
+              <td class="formBox">
+                <button type="button" class="btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+                </button>
+              </td>
+            </tr>
+<!--Add Button-->
 
-        <tr>
-          <td></td>
-          <td><button type="submit" type="button" class="btn-add">Add to-do item</button></td>
-        </tr>
+            <tr>
+              <td></td>
+              <td><button type="submit" type="button" class="btn-add">Add to-do item</button></td>
+            </tr>
 
-      </table>
+          </table>
 
-    </form>
+        </form>
+      </div>
+    </div>
   </div>
 </body>
 </section>

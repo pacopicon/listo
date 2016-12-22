@@ -115,11 +115,18 @@ section {
   text-align: center;
 }
 
+.importanceCell {
+  position: relative;
+  padding-top: 0.2em;
+  padding-right: 0;
+  margin-right: -1em;
+}
 
 .nameCell {
   position: relative;
   overflow: auto;
   padding-top: 0.2em;
+  padding-left: 0;
 }
 
 .nameCell p {
@@ -128,11 +135,6 @@ section {
 }
 
 .dateCell {
-  padding-top: 0.2em;
-}
-
-.importanceCell {
-  position: relative;
   padding-top: 0.2em;
 }
 
@@ -191,7 +193,7 @@ section {
   padding-top: 0.1em;
 }
 
-/*Elements inside the Well*/
+/*Elements inside the Modal*/
 
 .nameEditBox {
   margin-left: 2.9em;
@@ -254,7 +256,11 @@ section {
   /*width: 100%;*/
 }
 
-/*End Well*/
+/*End Modal*/
+
+.containerPad {
+  margin-top: 5%;
+}
 
 .allCharts {
 
@@ -332,7 +338,7 @@ section {
 
 .form {
   color: black;
-  margin-left: 2.42em;
+  /*margin-left: 2.42em;*/
 }
 
 .tableRow {
