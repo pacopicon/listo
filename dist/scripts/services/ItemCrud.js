@@ -297,6 +297,10 @@ listo.factory("ItemCrud", ["$firebaseArray",
             items[i].qq_pastDue = true;
             items.$save(items[i]);
             itemCount++;
+          } else {
+            items[i].qq_pastDue = false;
+            items.$save(items[i]);
+            itemCount--;
           }
         }
         return itemCount;

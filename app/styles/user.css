@@ -295,6 +295,16 @@ section {
   background-color: #e05d6f;
 }
 
+.yellowText {
+  /*color: #B3B300;*/
+  color: #C3C300;
+}
+
+.yellowCell {
+  /*background-color: #B3B300;*/
+  background-color: #C3C300;
+}
+
 /* End of CSS for listed items */
 
 /* Begin Charts CSS */

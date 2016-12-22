@@ -8,6 +8,7 @@
 <!--Clock-->
     <div class="itemContainer">
 <!--ItemDisplay-->
+      <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
       <div class="itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed">
 <!--Just PRIORITY-->
