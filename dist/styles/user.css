@@ -44,6 +44,11 @@ section {
   padding: 1em;
 }
 
+.noItemAnnounce {
+  text-align: center;
+  padding-top: 0.6em;
+}
+
 .itemDisplay {
   position: relative;
   border-radius: 1em;
@@ -167,7 +172,7 @@ section {
   border-radius: 1em;
   width: 4em;
   height: 1.8em;
-  background-color: #e05d6f;
+  background-color: #C3C300;
   color: #e7eaeb;
   border-style: none;
   float: right;

@@ -7,6 +7,7 @@
     </div>
 <!--Clock-->
     <div class="itemContainer">
+      <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
@@ -15,53 +16,53 @@
         <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
 <!--CHECKBOX-->
           <div class="completedBox">
-            <input type="checkbox" class="archiveCheckbox" ng-model="makeRed" />
+            <input type="checkbox" class="archiveCheckbox" ng-model="makeYellow" />
           </div>
 <!--PRIORITY-->
-          <div class="priorityCell" ng-class="{'yellowCell': (item.qq_pastDue && !makeRed), redCell: makeRed}">
+          <div class="priorityCell" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}">
             <p>{{$index + 1}}</p>
           </div>
         </div>
 <!--NAME-->
-        <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+        <div class="col-lg-3 col-sm-3 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             <p>{{item.a_text}}</P>
         </div>
 <!--DATE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
           {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
         </div>
 <!--IMPORTANCE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
           {{item.p_importance}}
         </div>
     <!--                     URGENT                           -->
         <!-- <div class="col-sm-1 urgentCell cell">
-          <div class="urgentLine" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+          <div class="urgentLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
             {{item.r_urgent}}
           </div>
         </div> -->
     <!--                       DURATION                         -->
         <!-- <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+          <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             {{item.m_hoursToFinish}}
           </div>
         </div>
         <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+          <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             {{item.n_minutesToFinish}}
           </div>
         </div> -->
     <!--                      RANK                              -->
-        <!-- <div class="col-sm-1 rankCell cell" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+        <!-- <div class="col-sm-1 rankCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
           {{item.s_rank}}
         </div> -->
     <!--                     DATE CREATED                       -->
-        <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+        <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
           {{item.t_created_at | date: 'M/d/yy h:mm a'}}
         </div> -->
     <!--                 TIME TO COMPLETE                       -->
         <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
-          <div class="dueCell cell" ng-class="{'yellowText': (item.qq_pastDue && !makeRed), redText: makeRed}">
+          <div class="dueCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
             <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
             <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
@@ -75,8 +76,8 @@
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
         <div class="editDeleteBox">
           <!--Passing "item" into showComplex() INDEED works-->
-          <a href class="editBtn" ng-model="item" ng-hide="makeRed" ng-class="{'yellowCell': (item.qq_pastDue && !makeRed), redCell: makeRed}" ng-click="showComplex(item)"><p>edit</p></a>
-          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeRed"><p>delete</p></button>
+          <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p>edit</p></a>
+          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p>delete</p></button>
         </div>
       </div> <!-- item Display and ng-repeat end -->
     </div>

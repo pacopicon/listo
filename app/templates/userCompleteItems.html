@@ -7,6 +7,7 @@
     </div>
 <!--Clock-->
     <div class="itemContainer">
+      <p class="noItemAnnounce" ng-if="comItemTally == 0">There are no archived items at this time</p>
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
@@ -14,20 +15,20 @@
 <!--Just PRIORITY-->
         <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
 <!--PRIORITY-->
-          <div class="priorityCell redCell">
+          <div class="priorityCell yellowCell">
             <p>{{$index + 1}}</p>
           </div>
         </div>
 <!--NAME-->
-        <div class="col-lg-3 col-sm-3 nameCell redText">
+        <div class="col-lg-3 col-sm-3 nameCell yellowText">
             <p>{{item.a_text}}</P>
         </div>
 <!--DATE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell redText">
+        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell yellowText">
           {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
         </div>
 <!--IMPORTANCE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell redText">
+        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell yellowText">
           {{item.p_importance}}
         </div>
 <!--EDIT + DELETE-->

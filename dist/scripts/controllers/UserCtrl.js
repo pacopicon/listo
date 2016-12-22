@@ -24,7 +24,23 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     $scope.incompleteItems = items.filter(checkIfNotComplete);
 
+    $scope.noCompleteItems = function() {
+      if (!$scope.completeItems[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    };
 
+    $scope.noIncompleteItems = function() {
+      if (!$scope.incompleteItems[0]) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    
 
 
     var refreshTime = function() {
