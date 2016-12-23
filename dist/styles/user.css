@@ -192,8 +192,9 @@ section {
   text-align: center;
   padding-top: 0.1em;
 }
+/*End Item Display elements*/
 
-/*Elements inside the Modal*/
+/*Begin Modal elements*/
 
 .nameEditBox {
   margin-left: 2.9em;
@@ -256,10 +257,22 @@ section {
   /*width: 100%;*/
 }
 
-/*End Modal*/
+/*End Modal elements*/
+
+/*Begin Chart elements */
 
 .containerPad {
   margin-top: 5%;
+}
+
+.chartContainer {
+  position: relative;
+  overflow: auto;
+  border-radius: 1em;
+
+  /*background-color: #e7eaeb;*/
+  background-color: white;
+  padding: 1em;
 }
 
 .allCharts {
