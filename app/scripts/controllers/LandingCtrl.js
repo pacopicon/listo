@@ -1,6 +1,6 @@
 listo.controller("LandingCtrl", function($scope, $rootScope) {
     $scope.hero = {};
-    $scope.hero.title = "Organize your life!"
+    $scope.hero.title = "Listo!"
 
 
 
