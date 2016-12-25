@@ -20,14 +20,14 @@ body {
   background-color: #d6f3ff;
   /*background-color: #e5f7ff;*/
   min-height: 100%;
-  padding-bottom: 200px;
+  /*padding-bottom: 200px;*/
+  padding-top: 0;
  }
 
-.navbark {
-  position: relative;
-  overflow: auto;
-  height: 4em;
-  top: -3.4em;
+.navbar-collapse {
+  /*position: relative;*/
+  /*overflow: auto;*/
+  /*height: 4em;*/
   /*background-color: #00b2ff;*/
   /*background-color: #418bca;*/
   background-color: #4c91cd;
@@ -41,7 +41,7 @@ body {
   position: relative;
   overflow: hidden;
   height: 100%;
-  margin-left: 5%;
+  /*margin-left: 5%;*/
   text-decoration: none;
 }
 
@@ -49,22 +49,14 @@ body {
   display: inline-block;
   position: relative;
   height: 100%;
-  padding-right: 4%;
+  /*padding-right: 4%;*/
   bottom: 0.2em;
-  /* #4 */
-  /*vertical-align: middle;*/
   color: white;
   font-size: 3em;
   letter-spacing: 0.05rem;
   font-weight: 700;
-  /*text-transform: uppercase;*/
-  /* #3 */
   text-decoration: none;
   cursor: pointer;
-/*
-  -webkit-transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
-  transition: padding-right 0.5s, font-size 0.5s, letter-spacing 0.5s, color 0.5s, -webkit-transform 0.5s;
-*/
 }
 
 .links-container .link:active {
@@ -76,22 +68,22 @@ body {
   color: black;
 }
 
-.navbark .fa {
+.navbar-collapse .fa {
   color: #e7eaeb;
   font-size: 0.5em;
   /*font-family: 'Montserrat', sans-serif;*/
 }
 
-.navbark p {
+.navbar-collapse p {
   float: right;
   font-family: 'Montserrat', sans-serif;
 }
 
-.navbark p .fa {
+.navbar-collapse p .fa {
   padding-bottom: 2em;
 }
 
-.navbark .fa:hover {
+.navbar-collapse .fa:hover {
   color: white;
   font-weight: bold;
   /*-webkit-transition: color 0.5s, -webkit-transform 0.5s;
