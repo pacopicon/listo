@@ -24,123 +24,92 @@ body {
   padding-top: 0;
  }
 
-.navbar-collapse {
-  /*position: relative;*/
-  /*overflow: auto;*/
-  /*height: 4em;*/
-  /*background-color: #00b2ff;*/
-  /*background-color: #418bca;*/
+.navbar {
   background-color: #4c91cd;
-  /*background-color: #5898d0;*/
-  /*background-color: #609dd2;*/
   z-index: 1;
  }
 
-.links-container {
-  display: block;
-  position: relative;
-  overflow: hidden;
-  height: 100%;
-  /*margin-left: 5%;*/
-  text-decoration: none;
-}
+ .left {
+   width: 34em;
+ }
 
-.links-container .link {
+.link {
   display: inline-block;
   position: relative;
   height: 100%;
-  /*padding-right: 4%;*/
-  bottom: 0.2em;
+  bottom: 0.35em;
   color: white;
   font-size: 3em;
-  letter-spacing: 0.05rem;
   font-weight: 700;
   text-decoration: none;
   cursor: pointer;
 }
 
-.links-container .link:active {
+.left:active {
   color: rgb(122, 197, 244);
   background-color: white;
 }
 
-.fa {
-  color: black;
+li {
+  padding-left: 0.5em;
 }
 
-.navbar-collapse .fa {
+.navbar .fa {
   color: #e7eaeb;
   font-size: 0.5em;
   /*font-family: 'Montserrat', sans-serif;*/
 }
 
-.navbar-collapse p {
+.navbar p {
   float: right;
   font-family: 'Montserrat', sans-serif;
 }
 
-.navbar-collapse p .fa {
+.navbar p .fa {
   padding-bottom: 2em;
 }
 
-.navbar-collapse .fa:hover {
+.navbar .fa:hover {
   color: white;
   font-weight: bold;
   /*-webkit-transition: color 0.5s, -webkit-transform 0.5s;
   transition: color 0.5s, -webkit-transform 0.5s;*/
 }
 
+.navbar-header {
+  float: right;
+}
+
+.navbar-toggle {
+  padding-top: 0.85em;
+  padding-right: 0.8em;
+  padding-bottom: 0;
+  padding-left: 0;
+  margin: 0;
+}
+
+.navbar-header .fa {
+  font-size: 2.5em;
+}
+
+
 /*Put ASIDE (below) into a media query that targets phones and tablets oriented in landscape */
 
 
-aside {
-  position: absolute;
-  display: block;
-  background-color: #4c91cd;
-  height: 100%;
-  top: 4em;
-  bottom: 0;
-  width: 10.5em;
-  /*width: 10%;*/
-  left: 0;
-  z-index: 1;
-}
-
 @media only screen and (max-width : 767px) {
 
-  aside {
-    width: 4em;
-  }
 
-  .links-container .link {
-      padding-left: 0.5rem;
-      padding-right: 0.5rem;
-  }
+}
 
-  aside .fa {
-    color: #e7eaeb;
-    font-size: 1em;
-  }
+@media only screen and (min-width : 768px) {
 
-  aside p {
-    display: none
+  .hamburger {
+    display: none;
   }
 
 }
 
 @media only screen and (min-width : 768px) and (max-width : 992px) {
-
-  aside {
-    width: 7.5em;
-  }
-
-  aside .fa {
-    font-size: 0.34em;
-  }
-
-  aside p {
-    font-size: 1.04em;
-  }
 
 }
 

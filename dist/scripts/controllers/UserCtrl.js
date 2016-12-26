@@ -40,7 +40,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       }
     };
 
-    
+
 
 
     var refreshTime = function() {

@@ -163,16 +163,35 @@
   <link rel="stylesheet" type="text/css" href="/styles/modal.css">
 </head>
 <body>
-  <nav class="collapse navbar-collapse">
-<!-- <ul class="links-container"> -->
-    <div class="row links-container">
-      <div ui-sref="user" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 col-lg-offset-1 col-md-offset-1 col-sm-offset-1 col-xs-offset-1 link login"><i class="fa fa-sign-in">&nbsp<p>login</p></i></div>
-      <div ui-sref="userIncompleteItems" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 link todo"><i class="fa fa-pencil-square">&nbsp<p> to do </p></i></div>
-      <div ui-sref="userCompleteItems" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></div>
-      <div ui-sref="userWeekly" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 link weekly"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></div>
-      <!-- <div ui-sref="userMonthly" class="col-lg-2 col-sm-2 col-xs-2 link monthly"><i class="fa fa-calendar">&nbsp<p> monthly</p></i></div> -->
-      <!-- <div ui-sref="userYearly" class="col-lg-2 col-sm-2 col-xs-2 link yearly"><i class="fa fa-calendar">&nbsp<p> yearly</p></i></div> -->
-      <div ui-sref="landing" class="col-lg-2 col-md-2 col-sm-2 col-xs-2 link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></div>
+  <nav class="navbar">
+
+    <div class="navbar-header hamburger">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false"><i class="fa fa-bars"></i>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <!-- <a class="navbar-brand" href="#">Listo!</a> -->
+    </div>
+
+    <div class="container-fluid">
+
+      <div class="collapse navbar-collapse" id="myNavbar">
+
+        <ul class="nav navbar-nav left">
+          <li ui-sref="userIncompleteItems" class="link todo"><i class="fa fa-pencil-square">&nbsp<p> to do</p></i></li>
+          <li ui-sref="calendar" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
+          <li ui-sref="userCompleteItems" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
+        </ul>
+
+        <ul class="nav navbar-nav navbar-right">
+          <li ui-sref="signup" class="link signup"><i class="fa fa-user-plus">&nbsp<p> sign up</p></i></li>
+          <li ui-sref="user" ng-hide="logged-in"class="link login"><i class="fa fa-sign-in">&nbsp<p> login</p></i></li>
+          <li ui-sref="landing" ng-hide="!logged-in"class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
+        </ul>
+
+      </div> <!-- End collapse navbar-collapse -->
+      <!-- <hide-hamburger ng-model="hideHamburger"></hide-hamburger> -->
     </div>
   </nav>
   <!-- <aside>

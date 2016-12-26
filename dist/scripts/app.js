@@ -28,20 +28,15 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             controller: 'UserCtrl',
             templateUrl: '/templates/userCompleteItems.html'
         })
-        .state('userWeekly', {
-            url: '/userWeekly',
+        .state('calendar', {
+            url: '/calendar',
             controller: 'UserCtrl',
-            templateUrl: '/templates/userWeekly.html'
+            templateUrl: '/templates/calendar.html'
         })
-        .state('userMonthly', {
-            url: '/userMonthly',
+        .state('signup', {
+            url: '/signup',
             controller: 'UserCtrl',
-            templateUrl: '/templates/userMonthly.html'
-        })
-        .state('userYearly', {
-            url: '/userYearly',
-            controller: 'UserCtrl',
-            templateUrl: '/templates/userYearly.html'
+            templateUrl: '/templates/signup.html'
         });
 
     angular.extend($datepickerProvider.defaults, {
