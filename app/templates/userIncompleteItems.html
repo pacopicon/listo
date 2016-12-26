@@ -6,7 +6,7 @@
       <p><b>{{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
     </div>
 <!--Clock-->
-    <div class="itemContainer">
+    <div class="container-fluid body">
       <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
@@ -86,7 +86,7 @@
 
 <!--begin GRAPH-->
     <div class="containerPad">
-      <div class="chartContainer">
+      <div class="container-fluid body">
         <div class="col-lg-12 col-sm-12 col-xs-12 allCharts">
           <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
             <canvas id="pie" class="chart chart-pie"

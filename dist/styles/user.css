@@ -34,6 +34,12 @@ section {
   text-align: left;
 }
 
+.body {
+  border-radius: 1em;
+  background-color: white;
+  padding: 1em;
+}
+
 .itemContainer {
   position: relative;
   overflow: auto;
