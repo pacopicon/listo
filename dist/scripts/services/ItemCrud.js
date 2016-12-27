@@ -276,7 +276,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
             var date = new Date(items[i].b_dueDate);
 
             console.log("item named " + items[i].a_text + " with date: " + date + ", is about to be removed");
-
             items.$remove(items[i]).then(function() {
               if (items[i] != undefined) {
                 console.log("item named " + items[i].a_text + "has still not been deleted");
@@ -284,6 +283,8 @@ listo.factory("ItemCrud", ["$firebaseArray",
                 console.log("item, which is now " + items[i] + ", has been removed");
               }
             });
+            // Still figuring out how to $destroy items and avoid memory leaks.
+            // items.$destroy(items[i]);
           }
         }
       },

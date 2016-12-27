@@ -3,6 +3,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
+// db {
+//   users: {
+//     {userID: 123, tasks: {}}, {userID: 124, tasks: {}}
+//   }
+// }
+
     $scope.items = ItemCrud.getAllItems();
     // $scope.incompleteItems = ItemCrud.getIncompleteItems();
 
@@ -40,9 +46,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       }
     };
 
-
-
-
     var refreshTime = function() {
       time = Date.now();
       $scope.time = time;
@@ -57,36 +60,43 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       return countdown;
     };
 
-    // db {
-    //   users: {},
-    //   tasks: {
-    //     userId
-    //   }
-    // }
+    $scope.isCurrentOrPreviousYear = function(itemDueYear) {
 
+      var currentTimeObj = new Date($scope.time);
+      var CurrentYear = currentTimeObj.getFullYear();
 
+      if (typeof itemDueYear == 'number') {
+        var itemDueDate = new Date(itemDueYear);
+        var itemDueYear = itemDueDate.getFullYear();
+      } else {
+        var itemDueYear = itemDueYear.getFullYear();
+      }
 
+      if (CurrentYear >= itemDueYear) {
+        return true;
+      } else {
+        return false;
+      }
+    };
 
-    // Begin AngularStrap timePicker----------------
+// Begin AngularStrap timePicker----------------
 
     $scope.newDueDate = new Date(new Date().setMinutes(0, 0));
-
     $scope.updatedDueDate = new Date();
 
-    // End AngularStrap timePicker------------------
+// End AngularStrap timePicker------------------
 
-    // Begin Est------------------------------------
+// Begin Est------------------------------------
     $scope.newHourEst = 0;
     $scope.newMinuteEst = 0;
-
     $scope.timeOptions = {
       hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       minute: [0, 5, 10, 15, 25, 30, 45]
     };
 
-    // End Est--------------------------------------
+// End Est--------------------------------------
 
-    // Begin Importance-----------------------------
+// Begin Importance-----------------------------
 
     $scope.selectedPhrase = "";
     $scope.selectedPhrases = [];
@@ -104,11 +114,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     // {text:"pretty important"},
     // {text:"job depends on it"}
 
-    // End Importance-----------------------------------------------
+// End Importance-----------------------------------------------
 
-    // Begin Custom Modal-----------------
-
-    // $scope.item = null;
+// Begin Custom Modal-----------------
 
     $scope.showComplex = function(item) {
       $scope.oldItem = item;

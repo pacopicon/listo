@@ -3,7 +3,7 @@
   <div class="list-group">
 <!--Clock-->
     <div class="clock">
-      <p><b>{{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
+      <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
     </div>
 <!--Clock-->
     <div class="container-fluid body">
@@ -11,25 +11,25 @@
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
-      <div class="itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed">
+      <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed">
 <!--Just PRIORITY-->
-        <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
 <!--PRIORITY-->
           <div class="priorityCell yellowCell">
             <p>{{$index + 1}}</p>
           </div>
         </div>
+<!--IMPORTANCE-->
+        <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          {{item.p_importance}}
+        </div>
 <!--NAME-->
-        <div class="col-lg-3 col-sm-3 nameCell yellowText">
+        <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             <p>{{item.a_text}}</P>
         </div>
 <!--DATE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 dateCell yellowText">
-          {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
-        </div>
-<!--IMPORTANCE-->
-        <div class="col-lg-3 col-sm-3 col-sx-3 importanceCell yellowText">
-          {{item.p_importance}}
+        <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
         </div>
 <!--EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->

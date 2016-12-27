@@ -18,11 +18,10 @@ section {
 .clock {
   background-color: #3f4e62;
   color: white;
-  /*color: #957F5B;*/
-  position: relative;
+  position: relative/;
   font-size: 1.5em;
   overflow: auto;
-  width: 25em;
+  max-width: 22em;
   margin-bottom: 1em;
   margin-top: 1em;
   padding-left: 1em;
@@ -40,54 +39,29 @@ section {
   padding: 1em;
 }
 
-.itemContainer {
-  position: relative;
-  overflow: auto;
-  border-radius: 1em;
-  width: 65em;
-  /*background-color: #e7eaeb;*/
-  background-color: white;
-  padding: 1em;
-}
-
 .noItemAnnounce {
   text-align: center;
   padding-top: 0.6em;
 }
 
 .itemDisplay {
-  position: relative;
   border-radius: 1em;
-  /*background-color: white;*/
   background-color: #e7eaeb;
-  /*border-style: solid;*/
-  /*border-width: 1em;*/
-  /*border-color: #e7eaeb;*/
-  /*color: #ffb145;*/
   color: #3f4e62;
-  display: inline-block;
-  width: 100%;
-  height: 1.8em;
-  float: left;
-  margin-bottom: 0.25em;
-  margin-top: 0.25em;
-  padding-right: 0;
-  /*padding-top: 0.2em;*/
-  white-space: nowrap;
+  min-height: 1.8em;
+  margin: 0.5em;
 }
 
 .itemDisplay:hover {
   background-color: white;
-  /*border-bottom-style: solid;
-  border-bottom-width: 0.001em;
-  border-bottom-color: #3f4e62;*/
 }
 
 .priorityAndCheckbox {
   padding-right: 0;
   padding-left: 0.5em;
   height: 1.7em;
-  min-width: 3.5em;
+  /*min-width: 3.5em;*/
+  width: 3.5em;
   overflow: hidden;
 }
 
@@ -101,7 +75,9 @@ section {
 .archiveCheckbox {
   overflow: hidden;
   border-radius: 1px;
-  background-color: green;
+  width: 1em;
+  height: 1em;
+  /*background-color: green;*/
 }
 
 .priorityCell {
@@ -132,7 +108,9 @@ section {
 
 .nameCell {
   position: relative;
-  overflow: auto;
+  display: block;
+  overflow-x: hidden;
+  min-height: 1.5em;
   padding-top: 0.2em;
   padding-left: 0;
 }
@@ -372,6 +350,7 @@ section {
 
 .formBox {
   padding-bottom: 1em;
+  color: #3f4e62;
 }
 
 .name {
@@ -384,7 +363,7 @@ section {
 }
 
 .fa {
-  color: black;
+  color: #3f4e62;
 }
 
 .time {
@@ -444,13 +423,32 @@ section {
   font-weight: bold;
 }
 
-@media only screen and (max-width : 767px) {
+@media only screen and (max-width : 619px) {
+/*actually 844*/
+  .clock {
+    max-width: 10em;
+    margin-right: 1%;
+    margin-left: 1%;
+    /*margin-bottom: 0;
+    margin-top: 0;*/
 
-  .nameCell {
-    width: 1em;
-    margin-right: -100em;
   }
 
+}
+
+@media only screen and (max-width : 767px) {
+/*actually 844*/
+  /*.nameCell {
+    width: 1em;
+    margin-right: -100em;
+  }*/
+
+}
+
+@media only screen and (min-width : 768px) {
+  .itemDisplay {
+     height: 1.8em;
+  }
 }
 
 @media only screen and (min-width : 768px) and (max-width : 992px) {
@@ -461,7 +459,7 @@ section {
 
 @media only screen and (max-width : 784px) {
 
-  .itemDisplay {
+  /*.itemDisplay {
     width: 60%;
   }
 
@@ -484,15 +482,15 @@ section {
 
   .editDeleteBox {
     float: none;
-  }
+  }*/
 
 }
 
 
 @media only screen and (min-width : 1041px) {
 
-  .itemDisplay {
+  /*.itemDisplay {
     width: 60em;
-  }
+  }*/
 
 }

@@ -52,12 +52,12 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
 listo.config(['ChartJsProvider', function (ChartJsProvider) {
     // Configure all charts
     ChartJsProvider.setOptions({
-      chartColors: ['#3f4e62', '#6FC853', '#e05d6f', '#4c91cd'],
-      responsive: false
+      chartColors: ['#e05d6f', '#4c91cd', '#3f4e62', '#6FC853'],
+      responsive: true
     });
     // Configure all line charts
     ChartJsProvider.setOptions('line', {
-      showLines: false
+      showLines: true
     });
   }]);
 

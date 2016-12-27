@@ -3,7 +3,7 @@
   <div class="list-group">
 <!--Clock-->
     <div class="clock">
-      <p><b>{{time | date: 'fullDate'}} at {{time | date: 'mediumTime'}}</b></p>
+      <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
     </div>
 <!--Clock-->
     <div class="container-fluid body">
@@ -11,9 +11,10 @@
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
-      <div class="itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed">
+      <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed">
 <!--PRIORITY & CHECKBOX-->
-        <div class="col-lg-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+        <!-- <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox"> -->
+        <div class="priorityAndCheckbox">
 <!--CHECKBOX-->
           <div class="completedBox">
             <input type="checkbox" class="archiveCheckbox" ng-model="makeYellow" />
@@ -24,16 +25,19 @@
           </div>
         </div>
 <!--IMPORTANCE-->
-        <div class="col-lg-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+        <!-- <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
+        <div class="importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
           {{item.p_importance}}
         </div>
 <!--NAME-->
-        <div class="col-lg-5 col-sm-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+        <!-- <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
+        <div class="nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
             <p>{{item.a_text}}</P>
         </div>
 <!--DATE-->
-        <div class="col-lg-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.b_dueDate | date: 'MMM d, y h:mm a'}}
+        <!-- <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
+        <div class="dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
         </div>
 
     <!--                     URGENT                           -->
@@ -76,12 +80,11 @@
 <!--EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
         <div class="editDeleteBox">
-          <!--Passing "item" into showComplex() INDEED works-->
           <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p>edit</p></a>
           <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p>delete</p></button>
         </div>
       </div> <!-- item Display and ng-repeat end -->
-    </div> <!--itemContainer end-->
+    </div> <!--container-fluid body end-->
 <!--end ITEM DISPLAY-->
 
 <!--begin GRAPH-->
@@ -112,7 +115,7 @@
 
 <!--FORM-->
     <div class="containerPad">
-      <div class="itemContainer">
+      <div class="container-fluid body">
         <form ng-submit="addItem()" class="form"><!-- push a new message onto the array -->
           <table class="outerTable">
 <!--name-->
