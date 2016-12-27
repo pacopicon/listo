@@ -74,7 +74,7 @@ section {
   position: relative;
   overflow: hidden;
   float: left;
-  padding-top: 0.2em;
+  padding-top: 0.15em;
 }
 
 .archiveCheckbox {
@@ -84,18 +84,18 @@ section {
   height: 1em;
 }
 
+.priorityCell, .editBtn, .deleteBtn {
+  width: 1.7em;
+  height: 1.7em;
+}
+
 .priorityCell {
   border-radius: 1em;
-  width: 1.7em;
-  /*width: 5em;*/
-  /*height: 1.25em;*/
-  height: 1em;
   background-color: #3f4e62;
   color: white;
   border-style: none;
   text-align: center;
   float: right;
-  height: 100%;
   padding-top: 0.2em;
 }
 
@@ -103,20 +103,21 @@ section {
   text-align: center;
 }
 
-.importanceCell {
+.importanceCell, .nameCell, .dateCell {
   position: relative;
   padding-top: 0.2em;
-  padding-right: 0;
+  padding-right: 1em;
+  padding-left: 0;
+}
+
+.importanceCell {
   margin-right: -0.5em;
+  padding-left: 0.5em;
+  min-width: 0.5em;
 }
 
 .nameCell {
-  position: relative;
   display: block;
-  overflow-x: hidden;
-  /*min-height: 1.5em;*/
-  padding-top: 0.2em;
-  padding-left: 0;
   width: 53%;
 }
 
@@ -127,65 +128,58 @@ section {
 }
 
 .dateCell {
-  padding-top: 0.2em;
   min-width: 10em;
   right: 1em;
 }
 
-.editDeleteBox {
+.editDeleteCell {
   position: relative;
   overflow: hidden;
   float: right;
-  height: 100%;
   padding: 0;
 }
 
-.editBtn {
+.editBtn, .deleteBtn {
   border-radius: 1em;
-  width: 4em;
-  height: 1.8em;
-  background-color: #6FC853;
-  color: #e7eaeb;
-  border-color: #e05d6f;
   border-style: none;
   float: right;
   text-decoration: none;
   text-align: center;
 }
 
-.editBtn:hover {
+.editBtn {
+  background-color: #6FC853;
+  color: #e7eaeb;
+}
+
+.editBtn .fa-pencil, .deleteBtn .fa-times {
+  text-align: center;
+  color: #e7eaeb;
+}
+
+.editBtn .fa-pencil {
+  font-size: 1.2em;
+  padding-top: 0.15em;
+}
+
+.deleteBtn .fa-times {
+  font-size: 1.3em;
+  padding-top: 0em;
+  padding-left: 0;
+}
+
+
+.editBtn .fa-pencil:hover, .deleteBtn .fa-times:hover {
   color: white;
   font-weight: bold;
   text-decoration: none;
-}
-
-.editBtn p {
-  text-align: center;
-  padding-top: 0.25em;
 }
 
 .deleteBtn {
-  border-radius: 1em;
-  width: 4em;
-  height: 1.8em;
   background-color: #C3C300;
   color: #e7eaeb;
-  border-style: none;
-  float: right;
-  text-decoration: none;
-  text-align: center;
 }
 
-.deleteBtn:hover {
-  color: white;
-  font-weight: bold;
-  text-decoration: none;
-}
-
-.deleteBtn p {
-  text-align: center;
-  padding-top: 0.1em;
-}
 /*End Item Display elements*/
 
 /*Begin Modal elements*/

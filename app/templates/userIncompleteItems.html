@@ -82,9 +82,9 @@
         </div> -->
 <!--EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
-        <div class="editDeleteBox">
-          <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p>edit</p></a>
-          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p>delete</p></button>
+        <div class="editDeleteCell">
+          <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
+          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p><i class="fa fa-times"></i></p></button>
         </div>
       </div> <!-- item Display and ng-repeat end -->
     </div> <!--container-fluid body end-->
