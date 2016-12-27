@@ -66,7 +66,6 @@ section {
   padding-left: 0.5em;
   height: 1.7em;
   min-width: 3.7em;
-  /*max-width: 40em;*/
   overflow: hidden;
 }
 
@@ -84,12 +83,12 @@ section {
   height: 1em;
 }
 
-.priorityCell, .editBtn, .deleteBtn {
+.priorityCell, .lonePriorityCell, .editBtn, .deleteBtn {
   width: 1.7em;
   height: 1.7em;
 }
 
-.priorityCell {
+.priorityCell, .lonePriorityCell {
   border-radius: 1em;
   background-color: #3f4e62;
   color: white;
@@ -99,7 +98,11 @@ section {
   padding-top: 0.2em;
 }
 
-.priorityCell p {
+.lonePriorityCell {
+  float: left;
+}
+
+.priorityCell p, .lonePriorityCell p {
   text-align: center;
 }
 
@@ -132,6 +135,7 @@ section {
   width: 10em;
   right: -0.5em;
   padding-right: 0;
+  overflow: hidden;
 }
 
 .editDeleteCell {

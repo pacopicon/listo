@@ -101,11 +101,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     $scope.selectedPhrase = "";
     $scope.selectedPhrases = [];
     $scope.phrases = [
-      {text:"!"},
-      {text:"!!"},
-      {text:"!!!"},
-      {text:"!!!!"},
-      {text:"!!!!!"}
+      // {text:"!"},
+      // {text:"!!"},
+      // {text:"!!!"},
+      // {text:"!!!!"},
+      // {text:"!!!!!"}
+      {text:"<i class='fa fa-star'></i>"},
+      {text:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
+      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
     ];
 
     // {text:"not important at all"},

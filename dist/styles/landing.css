@@ -9,7 +9,7 @@ body.landing {
     width: 30%;
     height: 3%;
     top: 0; left: 0; bottom: 0; right: 0;
-    color: black;
+    color: #3f4e62;
 }
 
 .hero-content {
@@ -47,7 +47,7 @@ body.landing {
      width: 33.3%;
      padding: 2rem;
      text-align: center;
-     color: black;
+     color: #3f4e62;
      opacity: 1;
      -webkit-transform: scaleX(0.9) translateY(3rem);
      -moz-transform: scaleX(0.9) translateY(3rem);
