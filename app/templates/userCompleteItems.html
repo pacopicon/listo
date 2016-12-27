@@ -11,25 +11,28 @@
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
+
       <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed">
+        <div class="priorityCheckboxImportanceNameDate">
 <!--Just PRIORITY-->
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
 <!--PRIORITY-->
-          <div class="priorityCell yellowCell">
-            <p>{{$index + 1}}</p>
+            <div class="priorityCell yellowCell">
+              <p>{{$index + 1}}</p>
+            </div>
           </div>
-        </div>
 <!--IMPORTANCE-->
-        <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.q_completed}">
+          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.q_completed}">
           {{item.p_importance}}
-        </div>
+          </div>
 <!--NAME-->
-        <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.q_completed}">
+          <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.q_completed}">
             <p>{{item.a_text}}</P>
-        </div>
+          </div>
 <!--DATE-->
-        <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'yellowText': item.q_completed}">
+          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'yellowText': item.q_completed}">
           {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
+          </div>
         </div>
 <!--EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
@@ -37,12 +40,12 @@
           <!--Passing "item" into showComplex() INDEED works-->
           <a href class="deleteBtn" ng-model="item" ng-show="item.q_completed" ng-click="showComplex(item)"><p>edit</p></a>
         </div>
-      </div> <!-- item Display and ng-repeat end -->
-    </div>
+      </div> <!--end item Display and ng-repeat-->
+    </div> <!--end container-fluid-->
 <!--end ITEM DISPLAY-->
 
 <!--begin GRAPH-->
-    <div class="<div class=col-lg-12 col-sm-12 col-xs-12 allCharts">
+    <div class="div class=col-lg-12 col-sm-12 col-xs-12 allCharts">
       <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
         <canvas id="pie" class="chart chart-pie"
       chart-data="itemData" chart-labels="itemLabels">
@@ -62,7 +65,6 @@
       </div>
     </div>
 <!--end GRAPH-->
-
-  </div>
+  </div> <!--end list-group-->
 </body>
 </section>

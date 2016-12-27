@@ -56,6 +56,11 @@ section {
   background-color: white;
 }
 
+.priorityCheckboxImportanceNameDate {
+  float: left;
+  width: 89%;
+}
+
 .priorityAndCheckbox {
   padding-right: 0;
   padding-left: 0.5em;
@@ -112,7 +117,7 @@ section {
   /*min-height: 1.5em;*/
   padding-top: 0.2em;
   padding-left: 0;
-  width: 55%;
+  width: 53%;
 }
 
 .nameCell p {
@@ -124,7 +129,7 @@ section {
 .dateCell {
   padding-top: 0.2em;
   min-width: 10em;
-  left: -1em;
+  right: 1em;
 }
 
 .editDeleteBox {

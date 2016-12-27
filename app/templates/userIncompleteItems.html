@@ -12,33 +12,35 @@
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
       <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed">
+        <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
-        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
         <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
-          <div class="completedBox">
-            <input type="checkbox" class="archiveCheckbox" ng-model="makeYellow" />
-          </div>
+            <div class="completedBox">
+              <input type="checkbox" class="archiveCheckbox" ng-model="makeYellow" />
+            </div>
 <!--PRIORITY-->
-          <div class="priorityCell" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}">
-            <p>{{$index + 1}}</p>
+            <div class="priorityCell" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}">
+              <p>{{$index + 1}}</p>
+            </div>
           </div>
-        </div>
 <!--IMPORTANCE-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          <!-- <div class="importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
-            {{item.p_importance}}
-          </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+            <!-- <div class="importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
+              {{item.p_importance}}
+            </div>
 <!--NAME-->
-          <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          <!-- <div class="nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
-              <p>{{item.a_text}}</P>
-          </div>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+            <!-- <div class="nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
+                <p>{{item.a_text}}</P>
+            </div>
 
 <!--DATE-->
-        <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-        <!-- <div class="dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
-          {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
+          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          <!-- <div class="dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
+            {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
+          </div>
         </div>
 
     <!--                     URGENT                           -->
