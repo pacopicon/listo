@@ -56,12 +56,12 @@ section {
   background-color: white;
 }
 
-.priorityAndCheckbox {
+.priorityCheckboxImportanceName {
   padding-right: 0;
   padding-left: 0.5em;
-  height: 1.7em;
+  /*height: 1.7em;*/
   /*min-width: 3.5em;*/
-  width: 3.5em;
+  max-width: 40em;
   overflow: hidden;
 }
 
@@ -90,7 +90,7 @@ section {
   color: white;
   border-style: none;
   text-align: center;
-  float: right;
+  /*float: right;*/
   height: 100%;
   padding-top: 0.2em;
 }
@@ -118,6 +118,7 @@ section {
 .nameCell p {
   /*float: right;*/
   text-align: left;
+  white-space: normal;
 }
 
 .dateCell {
@@ -446,10 +447,10 @@ section {
 }
 
 @media only screen and (min-width : 768px) {
-  .itemDisplay {
+  /*.itemDisplay {
      height: 1.8em;
   }
-}
+}*/
 
 @media only screen and (min-width : 768px) and (max-width : 992px) {
 
