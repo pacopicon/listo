@@ -58,14 +58,14 @@ section {
 
 .priorityCheckboxImportanceNameDate {
   float: left;
-  width: 89%;
+  width: 94%;
 }
 
 .priorityAndCheckbox {
   padding-right: 0;
   padding-left: 0.5em;
   height: 1.7em;
-  min-width: 3.5em;
+  min-width: 3.7em;
   /*max-width: 40em;*/
   overflow: hidden;
 }
@@ -118,7 +118,8 @@ section {
 
 .nameCell {
   display: block;
-  width: 53%;
+  min-width: 56%;
+  padding-right: 0;
 }
 
 .nameCell p {
@@ -128,8 +129,9 @@ section {
 }
 
 .dateCell {
-  min-width: 10em;
-  right: 1em;
+  width: 10em;
+  right: -0.5em;
+  padding-right: 0;
 }
 
 .editDeleteCell {
@@ -149,7 +151,6 @@ section {
 
 .editBtn {
   background-color: #6FC853;
-  color: #e7eaeb;
 }
 
 .editBtn .fa-pencil, .deleteBtn .fa-times {
@@ -168,21 +169,22 @@ section {
   padding-left: 0;
 }
 
-
-.editBtn .fa-pencil:hover, .deleteBtn .fa-times:hover {
-  color: white;
-  font-weight: bold;
+.editBtn .fa-pencil:hover, .deleteBtn .fa-times:hover, .btn-add:hover {
+  color: #d6f3ff;
   text-decoration: none;
 }
 
 .deleteBtn {
   background-color: #C3C300;
-  color: #e7eaeb;
 }
 
 /*End Item Display elements*/
 
 /*Begin Modal elements*/
+
+/*.nameEditBox, .dateEditBox, .importanceEditBox, .urgentCell, .numberCell {
+  color: #3f4e62;
+}
 
 .nameEditBox {
   margin-left: 2.9em;
@@ -194,20 +196,6 @@ section {
 
 .dateCell {
   position: relative;
-  /*overflow: auto;*/
-  /*margin-bottom: 0.5em;*/
-}
-
-.dateEditBox {
-  /*width: 100%;*/
-  color: black;
-  /*overflow: auto;*/
-}
-
-.importanceEditBox {
-  /*width: 11.5em;*/
-  /*height: 2.5em;*/
-  color: black;
 }
 
 .urgentCell {
@@ -215,7 +203,6 @@ section {
   overflow: auto;
   width: 6em;
   height: 3.5em;
-  color: black;
 }
 
 .urgentLine {
@@ -234,16 +221,7 @@ section {
   position: relative;
   overflow: auto;
   width: 3.5em;
-  color: black;
-}
-
-.numberLine {
-  /*width: 100%;*/
-}
-
-.numberEditBox {
-  /*width: 100%;*/
-}
+}*/
 
 /*End Modal elements*/
 
@@ -271,26 +249,22 @@ section {
 
 }
 
-
-.rankCell {
+.rankCell, .createdAtCell, .dueCell {
   position: relative;
   overflow: auto;
-  width: 5em;
   color: black;
+}
+
+.rankCell {
+  width: 5em;
 }
 
 .createdAtCell {
-  position: relative;
-  overflow: auto;
   width: 9em;
-  color: black;
 }
 
 .dueCell {
-  position: relative;
-  overflow: auto;
   width: 17em;
-  color: white;
 }
 
 .deleteBox {
@@ -308,12 +282,10 @@ section {
 }
 
 .yellowText {
-  /*color: #B3B300;*/
   color: #C3C300;
 }
 
 .yellowCell {
-  /*background-color: #B3B300;*/
   background-color: #C3C300;
 }
 
@@ -338,7 +310,7 @@ section {
 }
 
 .form {
-  color: black;
+  /*color: black;*/
   /*margin-left: 2.42em;*/
 }
 
@@ -420,11 +392,6 @@ section {
   border-style: none;
 }
 
-.btn-add:hover {
-  color: white;
-  font-weight: bold;
-}
-
 @media only screen and (max-width : 619px) {
 /*actually 844*/
   .clock {
@@ -438,20 +405,38 @@ section {
 
 }
 
+@media only screen and (max-width : 585px) {
+/*actually 641*/
+.priorityCheckboxImportanceNameDate {
+  width: 85%;
+}
+
+}
+
 @media only screen and (max-width : 767px) {
 /*actually 844*/
-  /*.nameCell {
-    width: 1em;
-    margin-right: -100em;
-  }*/
+  .priorityAndCheckbox, .nameCell {
+    padding-left: 1em;
+  }
+
+  .dateCell {
+    padding-left: 0.5em;
+  }
+}
+
+@media only screen and (max-width : 781px) {
+  /*actually 858*/
+  .nameCell {
+    min-width: 50%;
+    /*margin-left: -100em;*/
+  }
 
 }
 
 @media only screen and (min-width : 768px) {
-  /*.itemDisplay {
-     height: 1.8em;
-  }
-}*/
+  /*actually 845*/
+
+}
 
 @media only screen and (min-width : 768px) and (max-width : 992px) {
 

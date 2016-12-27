@@ -14,13 +14,9 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
-  /*background-size: cover;*/
   font-family: 'Montserrat', sans-serif;
-  /*background-color: #ccf0ff;*/
   background-color: #d6f3ff;
-  /*background-color: #e5f7ff;*/
   min-height: 100%;
-  /*padding-bottom: 200px;*/
   padding-top: 0;
  }
 
@@ -45,9 +41,9 @@ body {
   cursor: pointer;
 }
 
-.left:active {
-  color: rgb(122, 197, 244);
-  background-color: white;
+.link:active {
+  /*border: solid 0.01em #d6f3ff;
+  font-size: 80%;*/
 }
 
 li {
@@ -71,10 +67,7 @@ li {
 }
 
 .navbar .fa:hover {
-  color: white;
-  font-weight: bold;
-  /*-webkit-transition: color 0.5s, -webkit-transform 0.5s;
-  transition: color 0.5s, -webkit-transform 0.5s;*/
+  color: #d6f3ff;
 }
 
 .navbar-header {
