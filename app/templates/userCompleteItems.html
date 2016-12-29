@@ -1,12 +1,14 @@
 <section ng-controller="UserCtrl" ng-init="refreshTalliesAndData()" class="user">
+  <!-- <section ng-controller="UserCtrl" class="user"> -->
 <body>
   <div class="list-group">
 <!--Clock-->
     <div class="clock">
+      <div ng-show="complete == true">complete!</div>
       <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
     </div>
 <!--Clock-->
-    <div class="container-fluid body">
+    <div class="container-fluid main-body">
       <p class="noItemAnnounce" ng-if="comItemTally == 0">There are no archived items at this time</p>
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
@@ -23,7 +25,8 @@
           </div>
 <!--IMPORTANCE-->
           <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.q_completed}">
-          {{item.p_importance}}
+            {{item.p_importance}}
+            <!-- <p ng-bind-html="item.p_importance"></p> -->
           </div>
 <!--NAME-->
           <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.q_completed}">
@@ -41,27 +44,25 @@
           <a href class="editBtn" ng-class="{'yellowCell': item.q_completed}" ng-model="item" ng-show="item.q_completed" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
         </div>
       </div> <!--end item Display and ng-repeat-->
-    </div> <!--end container-fluid-->
+    </div> <!--container-fluid main-body end-->
 <!--end ITEM DISPLAY-->
 
 <!--begin GRAPH-->
-    <div class="div class=col-lg-12 col-sm-12 col-xs-12 allCharts">
-      <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
-        <canvas id="pie" class="chart chart-pie"
-      chart-data="itemData" chart-labels="itemLabels">
-        </canvas>
-      </div>
+    <div class="containerPad">
+      <div class="container-fluid main-body">
+        <div class="allCharts">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pieChart">
+            <canvas id="pie" class="chart chart-pie"
+          chart-data="itemData" chart-labels="itemLabels">
+            </canvas>
+          </div>
 
-      <div>
-        <canvas id="doughnut" class="chart chart-doughnut"
-      chart-data="millisecData" chart-labels="millisecLabels">
-        </canvas>
-      </div>
-
-      <div>
-        <canvas id="bar" class="chart chart-bar"
-      chart-data="hourData" chart-labels="hourLabel" chart-series="series">
-        </canvas>
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="millisecData" chart-labels="millisecLabels">
+            </canvas>
+          </div>
+        </div>
       </div>
     </div>
 <!--end GRAPH-->

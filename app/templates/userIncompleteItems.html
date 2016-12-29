@@ -1,124 +1,15 @@
 <section ng-controller="UserCtrl" ng-init="refreshTalliesAndData()" class="user">
+<!-- <section ng-controller="UserCtrl" class="user"> -->
 <body>
   <div class="list-group">
-<!--Clock-->
+<!--begin Clock-->
     <div class="clock">
       <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
     </div>
-<!--Clock-->
-    <div class="container-fluid body">
-      <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
-<!--ItemDisplay-->
-      <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-      <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
-      <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed">
-        <div class="priorityCheckboxImportanceNameDate">
-<!--PRIORITY & CHECKBOX-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
-        <!-- <div class="priorityCheckboxImportanceName"> -->
-<!--CHECKBOX-->
-            <div class="completedBox">
-              <input type="checkbox" class="archiveCheckbox" ng-model="makeYellow" />
-            </div>
-<!--PRIORITY-->
-            <div class="priorityCell" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}">
-              <p>{{$index + 1}}</p>
-            </div>
-          </div>
-<!--IMPORTANCE-->
-            <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-            <!-- <div class="importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
-              {{item.p_importance}}
-            </div>
-<!--NAME-->
-            <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-            <!-- <div class="nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
-                <p>{{item.a_text}}</P>
-            </div>
-
-<!--DATE-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          <!-- <div class="dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"> -->
-            {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
-          </div>
-        </div>
-
-    <!--                     URGENT                           -->
-        <!-- <div class="col-sm-1 urgentCell cell">
-          <div class="urgentLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-            {{item.r_urgent}}
-          </div>
-        </div> -->
-    <!--                       DURATION                         -->
-        <!-- <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-            {{item.m_hoursToFinish}}
-          </div>
-        </div>
-        <div class="col-sm-1 numberCell cell">
-          <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-            {{item.n_minutesToFinish}}
-          </div>
-        </div> -->
-    <!--                      RANK                              -->
-        <!-- <div class="col-sm-1 rankCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.s_rank}}
-        </div> -->
-    <!--                     DATE CREATED                       -->
-        <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.t_created_at | date: 'M/d/yy h:mm a'}}
-        </div> -->
-    <!--                 TIME TO COMPLETE                       -->
-        <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
-          <div class="dueCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-            Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
-            <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
-            <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
-            <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
-            <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
-            <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
-            <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span>
-          </div>
-        </div> -->
-<!--EDIT + DELETE-->
-        <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
-        <div class="editDeleteCell">
-          <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
-          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p><i class="fa fa-times"></i></p></button>
-        </div>
-      </div> <!-- item Display and ng-repeat end -->
-    </div> <!--container-fluid body end-->
-<!--end ITEM DISPLAY-->
-
-<!--begin GRAPH-->
+<!--end Clock-->
+<!--begin FORM-->
     <div class="containerPad">
-      <div class="container-fluid body">
-        <div class="col-lg-12 col-sm-12 col-xs-12 allCharts">
-          <div class="col-lg-6 col-sm-6 col-xs-6 pieChart">
-            <canvas id="pie" class="chart chart-pie"
-          chart-data="itemData" chart-labels="itemLabels">
-            </canvas>
-          </div>
-
-          <div>
-            <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="millisecData" chart-labels="millisecLabels">
-            </canvas>
-          </div>
-
-          <div>
-            <canvas id="bar" class="chart chart-bar"
-          chart-data="hourData" chart-labels="hourLabel" chart-series="series">
-            </canvas>
-          </div>
-        </div>
-      </div>
-    </div>
-<!--end GRAPH-->
-
-<!--FORM-->
-    <div class="containerPad">
-      <div class="container-fluid body">
+      <div class="container-fluid main-body">
         <form ng-submit="addItem()" class="form"><!-- push a new message onto the array -->
           <table class="outerTable">
 <!--name-->
@@ -213,6 +104,108 @@
         </form>
       </div>
     </div>
+<!--end FORM-->
+<!--ItemDisplay-->
+    <div class="container-fluid main-body">
+      <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
+      <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
+      <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
+      <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed">
+        <div class="priorityCheckboxImportanceNameDate">
+<!--PRIORITY & CHECKBOX-->
+          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+        <!-- <div class="priorityCheckboxImportanceName"> -->
+<!--CHECKBOX-->
+            <div class="completedBox">
+              <input type="checkbox" class="archiveCheckbox" ng-model="makeYellow" />
+            </div>
+<!--PRIORITY-->
+            <div class="priorityCell" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}">
+              <p>{{$index + 1}}</p>
+            </div>
+          </div>
+<!--IMPORTANCE-->
+            <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+              {{item.p_importance}}
+              <!-- <p ng-bind-html="item.p_importance"></p> -->
+            </div>
+<!--NAME-->
+            <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+                <p>{{item.a_text}}</P>
+            </div>
+
+<!--DATE-->
+          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+            {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
+          </div>
+        </div>
+
+    <!--                     URGENT                           -->
+        <!-- <div class="col-sm-1 urgentCell cell">
+          <div class="urgentLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
+            {{item.r_urgent}}
+          </div>
+        </div> -->
+    <!--                       DURATION                         -->
+        <!-- <div class="col-sm-1 numberCell cell">
+          <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+            {{item.m_hoursToFinish}}
+          </div>
+        </div>
+        <div class="col-sm-1 numberCell cell">
+          <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+            {{item.n_minutesToFinish}}
+          </div>
+        </div> -->
+    <!--                      RANK                              -->
+        <!-- <div class="col-sm-1 rankCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          {{item.s_rank}}
+        </div> -->
+    <!--                     DATE CREATED                       -->
+        <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+          {{item.t_created_at | date: 'M/d/yy h:mm a'}}
+        </div> -->
+    <!--                 TIME TO COMPLETE                       -->
+        <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
+          <div class="dueCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
+            Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
+            <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
+            <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
+            <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
+            <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
+            <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
+            <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span>
+          </div>
+        </div> -->
+<!--EDIT + DELETE-->
+        <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
+        <div class="editDeleteCell">
+          <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
+          <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p><i class="fa fa-times"></i></p></button>
+        </div>
+      </div> <!-- item Display and ng-repeat end -->
+    </div> <!--container-fluid main-body end-->
+<!--end ITEM DISPLAY-->
+
+<!--begin GRAPH-->
+    <div class="containerPad">
+      <div class="container-fluid main-body">
+        <div class="allCharts">
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pieChart">
+            <canvas id="pie" class="chart chart-pie"
+          chart-data="itemData" chart-labels="itemLabels">
+            </canvas>
+          </div>
+
+          <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="millisecData" chart-labels="millisecLabels">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+<!--end GRAPH-->
   </div>
 </body>
 </section>

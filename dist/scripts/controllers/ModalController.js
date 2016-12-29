@@ -12,12 +12,13 @@ listo.controller('ModalController', [
   $scope.title = title;
 
   $scope.selectedPhrases = [];
+  $scope.phrases = [];
   $scope.phrases = [
-    {text:"!"},
-    {text:"!!"},
-    {text:"!!!"},
-    {text:"!!!!"},
-    {text:"!!!!!"}
+      {text:"*"},
+      {text:"**"},
+      {text:"***"},
+      {text:"****"},
+      {text:"*****"}
   ];
 
   //  This close function doesn't need to use jQuery or bootstrap, because

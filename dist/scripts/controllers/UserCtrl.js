@@ -1,14 +1,6 @@
 listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout',
   function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout) {
 
-    // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
-
-// db {
-//   users: {
-//     {userID: 123, tasks: {}}, {userID: 124, tasks: {}}
-//   }
-// }
-
     $scope.items = ItemCrud.getAllItems();
     // $scope.incompleteItems = ItemCrud.getIncompleteItems();
 
@@ -101,16 +93,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     $scope.selectedPhrase = "";
     $scope.selectedPhrases = [];
     $scope.phrases = [
-      // {text:"!"},
-      // {text:"!!"},
-      // {text:"!!!"},
-      // {text:"!!!!"},
-      // {text:"!!!!!"}
-      {text:"<i class='fa fa-star'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
+      {text:"*"},
+      {text:"**"},
+      {text:"***"},
+      {text:"****"},
+      {text:"*****"}
     ];
 
     // {text:"not important at all"},
@@ -154,15 +141,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
           var t = new Date();
           console.log("step 4 - UserCtrl close: old name: " + oldItem.name + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
-
           ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
           if (oldItem.q_completed == true) {
             $scope.updateCompletion(oldItem);
           }
-
           $scope.refreshTalliesAndData();
-
         });
       });
 
@@ -180,15 +164,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
 
-      $scope.refreshTalliesAndData();
+      // $scope.refreshCompletionData();
     };
 
     $scope.updateCompletion = function(item) {
       ItemCrud.updateCompletion(item);
-      $scope.refreshTalliesAndData();
+      $scope.refreshCompletionData();
     };
 
-    var completionData = function() {
+    $scope.refreshCompletionData = function() {
       // $scope.incompleteItems = ItemCrud.tallyIncompleteItems().itemCount;
       // $scope.millisecondsLeft = ItemCrud.tallyIncompleteItems().millisecondsLeft;
       // $scope.hoursLeft = ItemCrud.tallyIncompleteItems().hoursLeft;
@@ -226,17 +210,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
       $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
 
-// Callable by DOM:
-    $scope.refreshTalliesAndData = function() {
-      completionData();
+// This is not yet called
+    $scope.processPastDueAndComplete = function() {
       ItemCrud.processOldCompleteItems();
       ItemCrud.updateAllItemsPastDue();
     };
-// Callable by app.js:
-    var refreshTalliesAndData = function() {
-      completionData();
+
+    $scope.refreshTalliesAndData = function() {
       ItemCrud.processOldCompleteItems();
       ItemCrud.updateAllItemsPastDue();
+      $scope.refreshCompletionData();
     };
 
   }

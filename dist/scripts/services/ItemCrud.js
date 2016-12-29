@@ -3,6 +3,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
 // downloads data from Firebase database
     var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
+// Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
 // holds data as array of objects.  Each object is one item.
     var items = $firebaseArray(ref);
@@ -55,7 +56,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
     };
 // This function below returns 'urgency', another parameter used to calculate Rank.  It basically gives higher estimated time to time till due date 'ratio''s an even higher value than it would have otherwise.
     var calculateUrgency = function(ratio) {
-      console.log("item is undefined and calculateUrgency was called");
       if (ratio >= 0.4) {
         urgency = true;
       } else {

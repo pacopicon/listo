@@ -21,11 +21,10 @@ section {
   position: relative/;
   font-size: 1.5em;
   overflow: auto;
-  max-width: 22em;
+  max-width: 23.7em;
   margin-bottom: 1em;
   margin-top: 1em;
   padding-left: 1em;
-
 }
 
 .clock p {
@@ -33,10 +32,11 @@ section {
   text-align: left;
 }
 
-.body {
+.main-body {
   border-radius: 1em;
   background-color: white;
   padding: 1em;
+  margin-bottom: 2em;
 }
 
 .noItemAnnounce {
@@ -232,7 +232,7 @@ section {
 /*Begin Chart elements */
 
 .containerPad {
-  margin-top: 5%;
+  margin-top: 2em;
 }
 
 .chartContainer {
