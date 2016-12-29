@@ -12,9 +12,9 @@
       <p class="noItemAnnounce" ng-if="comItemTally == 0">There are no archived items at this time</p>
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-      <!-- <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
+      <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed">
 
-      <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed">
+      <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
         <div class="priorityCheckboxImportanceNameDate">
 <!--Just PRIORITY-->
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
@@ -25,8 +25,8 @@
           </div>
 <!--IMPORTANCE-->
           <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.q_completed}">
-            {{item.p_importance}}
-            <!-- <p ng-bind-html="item.p_importance"></p> -->
+            <!-- {{item.p_importance}} -->
+            <p ng-bind-html="item.p_importance"></p>
           </div>
 <!--NAME-->
           <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.q_completed}">
