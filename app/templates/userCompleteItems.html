@@ -12,7 +12,7 @@
       <p class="noItemAnnounce" ng-if="comItemTally == 0">There are no archived items at this time</p>
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-      <div class="itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed">
+      <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed">
 
       <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
         <div class="priorityCheckboxImportanceNameDate">

@@ -59,6 +59,8 @@ section {
 .priorityCheckboxImportanceNameDate {
   float: left;
   width: 94%;
+  min-height: 1.8em;
+  overflow: hidden;
 }
 
 .priorityAndCheckbox {
@@ -66,6 +68,7 @@ section {
   padding-left: 0.5em;
   height: 1.7em;
   min-width: 3.7em;
+  max-width: 3.8em;
   overflow: hidden;
 }
 
@@ -109,19 +112,19 @@ section {
 .importanceCell, .nameCell, .dateCell {
   position: relative;
   padding-top: 0.2em;
-  padding-right: 1em;
+  padding-right: 0;
   padding-left: 0;
 }
 
 .importanceCell {
-  margin-right: -0.5em;
-  padding-left: 0.5em;
+  margin-right: 0.1em;
+  padding-left: 0.1em;
   min-width: 0.5em;
 }
 
 .nameCell {
   display: block;
-  min-width: 56%;
+  min-width: 50%;
   padding-right: 0;
 }
 
@@ -132,8 +135,8 @@ section {
 }
 
 .dateCell {
-  width: 10em;
-  right: -0.5em;
+  width: 11em;
+  right: -0.3em;
   padding-right: 0;
   overflow: hidden;
 }

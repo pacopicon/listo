@@ -6,45 +6,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     var items = $scope.items;
 
-// THIS FUNCTIONALITY MAKES DATA DISPLAY A-SYNCHRONOUS AND NEGATIVELY IMPACTS UX
-    var checkIfComplete = function(item) {
-      if (item.q_completed == true) {
-        return item;
-      }
-    };
-
-    $scope.completeItems = items.filter(checkIfComplete);
-
-    var checkIfNotComplete = function(item) {
-      if (item.q_completed == false) {
-        return item;
-      }
-    };
-
-    $scope.incompleteItems = items.filter(checkIfNotComplete);
-
-  // THIS FUNCTIONALITY MAKES DATA DISPLAY A-SYNCHRONOUS AND NEGATIVELY IMPACTS UX
-
-// CAN'T FIND WHERE THIS IS CALLED: UNDER REVIE-W
-
-    $scope.noCompleteItems = function() {
-      if (!$scope.completeItems[0]) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    $scope.noIncompleteItems = function() {
-      if (!$scope.incompleteItems[0]) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-// CAN'T FIND WHERE THIS IS CALLED: UNDER REVIE-W
-
+// begin Clock display function
     var refreshTime = function() {
       time = Date.now();
       $scope.time = time;
@@ -52,13 +14,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     }
 
     $interval(refreshTime, 1000);
+// end Clock display function
 
+// begin item time pop-up: mousing over to do items will trigger a pop-up that displays more detailed info about the item.  This function displays more detailed time info.
     $scope.parseTime = function(dueDate) {
       var timeLeftInMillisecs = ItemCrud.calculateTimeTillDueDate(dueDate, $scope.time);
       var countdown = ItemCrud.parseTime(timeLeftInMillisecs);
       return countdown;
     };
+// end item time pop-up
 
+// begin current/previous year fn: if item due date year is current or previous year it will not display.
     $scope.isCurrentOrPreviousYear = function(itemDueYear) {
 
       var currentTimeObj = new Date($scope.time);
@@ -77,15 +43,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
         return false;
       }
     };
+// end current/previous year fn:
 
-// Begin AngularStrap timePicker----------------
+// begin AngularStrap timePicker: this picks the item due date property ----------------
 
     $scope.newDueDate = new Date(new Date().setMinutes(0, 0));
     $scope.updatedDueDate = new Date();
 
-// End AngularStrap timePicker------------------
+// end AngularStrap timePicker------------------
 
-// Begin Est------------------------------------
+// begin Est: sets the item estimated time to completion property in hours and minutes ------------------------------------
     $scope.newHourEst = 0;
     $scope.newMinuteEst = 0;
     $scope.timeOptions = {
@@ -93,9 +60,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       minute: [0, 5, 10, 15, 25, 30, 45]
     };
 
-// End Est--------------------------------------
+// end Est--------------------------------------
 
-// Begin Importance-----------------------------
+// begin Importance: sets the importance priority property for the item -----------------------------
 
     $scope.selectedPhrase = "";
     $scope.selectedPhrases = [];
@@ -113,12 +80,13 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     // {text:"pretty important"},
     // {text:"job depends on it"}
 
-// End Importance-----------------------------------------------
+// end Importance-----------------------------------------------
 
-// Begin Complex Modal-----------------
+// begin Complex Modal: the following complex modal is an adaptation of Dave Kerr's complex modal (http://www.dwmkerr.com/the-only-angularjs-modal-service-youll-ever-need/).  It has my own modifications in order to adapt the modal into a an item property updater. -----------------
 
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
+      // begin console.log for modal step 1, which creates a modal pre-populated with the properties of the item selected to be updated
       var t = new Date();
       console.log("step 1 - old name: " + $scope.oldItem.a_text + ", old date: " + new Date($scope.oldItem.b_dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
       // UserCtrl.js showComplex: item $id: -KUnjnUG90g4Ms_pkbC5 and name: short and item date 1478707118727
@@ -132,7 +100,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
         }
       }).then(function(modal) {
         modal.element.modal();
-        // This instance of "close" receives the new updated item properties from the Modal controller
+        // This instance of "close" receives the new updated item properties from the Modal controller and calls "ItemCrud.updateItem" below in order to $save those properties.
         modal.close.then(function(newItemProps) {
 
           console.log("newItemProps: " + newItemProps);
@@ -156,17 +124,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
           $scope.refreshTalliesAndData();
         });
       });
-
     };
+// end Complex Modal-------------------
 
-
-// End Complex Modal-------------------
-
-// Begin Completed----------------------------------------------
+// begin Completed: marks item as completed or incomplete. ----------------------------------------------
 
     $scope.isCompleted = false;
 
-// Begin CRUD Functions-------------------------------
+// end Completed----------------------------------------------
+
+// begin CRUD Functions-------------------------------
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
