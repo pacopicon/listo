@@ -39,6 +39,81 @@ section {
   margin-bottom: 2em;
 }
 
+/* Begin CSS for Form */
+
+.formBox {
+  padding-bottom: 1em;
+  color: #3f4e62;
+}
+
+.name {
+  width: 17.5em;
+}
+
+.date, .hourPicker, .hourPickerCaption, .minutePickerCaption {
+  padding: 0;
+  width: 11em;
+  /*height: 2.5em;*/
+}
+
+.fa {
+  color: #3f4e62;
+}
+
+.time {
+  width: 6.2em;
+  /*height: 2.5em;*/
+}
+
+.datepicker.dropdown-menu {
+  width: 250px;
+  height: 270px;
+  button {
+    outline: none;
+    border: 0px;
+  }
+  tbody {
+    height: 180px;
+  }
+  tbody button {
+    padding: 6px;
+  }
+  &.datepicker-mode-1, &.datepicker-mode-2 {
+    tbody button {
+      height: 65px;
+    }
+  }
+}
+
+.importance {
+  width: 14em;
+  height: 2.5em;
+  /*padding-bottom: 1em;*/
+}
+
+.buttonBox {
+  height: 2.5em;
+}
+
+.innerTableTwo {
+  width: 18em;
+}
+
+
+.number {
+  width: 3.5em;
+}
+
+.btn-add {
+  border-radius: 1em;
+  width: 10em;
+  background-color: #4c91cd;
+  color: #e7eaeb;
+  border-style: none;
+}
+
+/* end CSS for Form */
+
 .noItemAnnounce {
   text-align: center;
   padding-top: 0.6em;
@@ -120,6 +195,11 @@ section {
   margin-right: 0.1em;
   padding-left: 0.1em;
   min-width: 0.5em;
+  height: 1.7em;
+}
+
+.importanceCell .fa {
+
 }
 
 .nameCell {
@@ -182,6 +262,23 @@ section {
 }
 
 .deleteBtn {
+  background-color: #C3C300;
+}
+
+.redText {
+  /*This will color an item's text red when the item checkbox is checked.*/
+  color: #e05d6f;
+}
+
+.redCell {
+  background-color: #e05d6f;
+}
+
+.yellowText {
+  color: #C3C300;
+}
+
+.yellowCell {
   background-color: #C3C300;
 }
 
@@ -256,50 +353,6 @@ section {
 
 }
 
-.rankCell, .createdAtCell, .dueCell {
-  position: relative;
-  overflow: auto;
-  color: black;
-}
-
-.rankCell {
-  width: 5em;
-}
-
-.createdAtCell {
-  width: 9em;
-}
-
-.dueCell {
-  width: 17em;
-}
-
-.deleteBox {
-  position: relative;
-  overflow: auto;
-}
-
-/*This will color an item's text red when the item checkbox is checked.*/
-.redText {
-  color: #e05d6f;
-}
-
-.redCell {
-  background-color: #e05d6f;
-}
-
-.yellowText {
-  color: #C3C300;
-}
-
-.yellowCell {
-  background-color: #C3C300;
-}
-
-/* End of CSS for listed items */
-
-/* Begin Charts CSS */
-
 .graphTable {
   width: 60em;
 }
@@ -308,96 +361,11 @@ section {
   width: 20em;
 }
 
-/* Emd Charts CSS */
+/*End Chart elements */
 
-/* Begin CSS for Form */
+/*begin popup item info*/
 
-.outerTable {
-  width: 41em;
-}
-
-.form {
-  /*color: black;*/
-  /*margin-left: 2.42em;*/
-}
-
-.tableRow {
-  margin-bottom: 10em;
-}
-
-.innerTableOne {
-  width: 17.75em;
-}
-
-.formBox {
-  padding-bottom: 1em;
-  color: #3f4e62;
-}
-
-.name {
-  width: 17.5em;
-}
-
-.date {
-  width: 11em;
-  /*height: 2.5em;*/
-}
-
-.fa {
-  color: #3f4e62;
-}
-
-.time {
-  width: 6.2em;
-  /*height: 2.5em;*/
-}
-
-.datepicker.dropdown-menu {
-  width: 250px;
-  height: 270px;
-  button {
-    outline: none;
-    border: 0px;
-  }
-  tbody {
-    height: 180px;
-  }
-  tbody button {
-    padding: 6px;
-  }
-  &.datepicker-mode-1, &.datepicker-mode-2 {
-    tbody button {
-      height: 65px;
-    }
-  }
-}
-
-.importance {
-  width: 14em;
-  height: 2.5em;
-  /*padding-bottom: 1em;*/
-}
-
-.buttonBox {
-  height: 2.5em;
-}
-
-.innerTableTwo {
-  width: 18em;
-}
-
-
-.number {
-  width: 3.5em;
-}
-
-.btn-add {
-  border-radius: 1em;
-  width: 10em;
-  background-color: #4c91cd;
-  color: #e7eaeb;
-  border-style: none;
-}
+/*end popup item info*/
 
 @media only screen and (max-width : 619px) {
 /*actually 844*/

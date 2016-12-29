@@ -54,11 +54,40 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
 // begin Est: sets the item estimated time to completion property in hours and minutes ------------------------------------
     $scope.newHourEst = 0;
-    $scope.newMinuteEst = 0;
-    $scope.timeOptions = {
-      hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      minute: [0, 5, 10, 15, 25, 30, 45]
-    };
+    $scope.newMinuteEst = 5;
+    $scope.hourOptions = [
+      {hour: 0},
+      {hour: 1},
+      {hour: 2},
+      {hour: 3},
+      {hour: 4},
+      {hour: 5},
+      {hour: 6},
+      {hour: 7},
+      {hour: 8},
+      {hour: 9},
+      {hour: 10},
+      {hour: 11},
+      {hour: 12}
+    ];
+
+    $scope.minuteOptions = [
+      {minute: 0},
+      {minute: 5},
+      {minute: 10},
+      {minute: 15},
+      {minute: 20},
+      {minute: 25},
+      {minute: 30},
+      {minute: 35},
+      {minute: 40},
+      {minute: 45},
+      {minute: 50},
+      {minute: 55}
+    ];
+
+      // hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      // minute: [0, 5, 10, 15, 25, 30, 45]
 
 // end Est--------------------------------------
 
