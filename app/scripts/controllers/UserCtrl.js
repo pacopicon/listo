@@ -6,6 +6,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     var items = $scope.items;
 
+// THIS FUNCTIONALITY MAKES DATA DISPLAY A-SYNCHRONOUS AND NEGATIVELY IMPACTS UX
     var checkIfComplete = function(item) {
       if (item.q_completed == true) {
         return item;
@@ -22,6 +23,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     $scope.incompleteItems = items.filter(checkIfNotComplete);
 
+  // THIS FUNCTIONALITY MAKES DATA DISPLAY A-SYNCHRONOUS AND NEGATIVELY IMPACTS UX
+
+// CAN'T FIND WHERE THIS IS CALLED: UNDER REVIE-W
+
     $scope.noCompleteItems = function() {
       if (!$scope.completeItems[0]) {
         return true;
@@ -37,6 +42,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
         return false;
       }
     };
+
+// CAN'T FIND WHERE THIS IS CALLED: UNDER REVIE-W
 
     var refreshTime = function() {
       time = Date.now();
@@ -108,7 +115,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
 // End Importance-----------------------------------------------
 
-// Begin Custom Modal-----------------
+// Begin Complex Modal-----------------
 
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
@@ -153,23 +160,25 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     };
 
 
-    // End Custom Modal-------------------
+// End Complex Modal-------------------
 
-    // Begin Completed----------------------------------------------
+// Begin Completed----------------------------------------------
 
     $scope.isCompleted = false;
 
-    // Begin CRUD Functions-------------------------------
+// Begin CRUD Functions-------------------------------
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
 
+      $scope.refreshTalliesAndData();
       // $scope.refreshCompletionData();
     };
 
     $scope.updateCompletion = function(item) {
       ItemCrud.updateCompletion(item);
-      $scope.refreshCompletionData();
+      $scope.refreshTalliesAndData();
+      // $scope.refreshCompletionData();
     };
 
     $scope.refreshCompletionData = function() {
