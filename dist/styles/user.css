@@ -41,19 +41,56 @@ section {
 
 /* Begin CSS for Form */
 
-.formBox {
+.form {
+  width: 100%;
+  /*display: inline-flex;*/
+}
+
+.formFormat {
   padding-bottom: 1em;
   color: #3f4e62;
+  padding-right: 0;
+  overflow: hidden;
+  position: relative;
 }
 
 .name {
-  width: 17.5em;
+  position: relative;
 }
 
-.date, .hourPicker, .hourPickerCaption, .minutePickerCaption {
-  padding: 0;
-  width: 11em;
-  /*height: 2.5em;*/
+.date, .time, .hour, .minute {
+  padding-right: 0em;
+  padding-left: 0em;
+}
+
+.date-and-time {
+  min-width: 20em;
+}
+
+.date-and-time, .importance, .hour-and-minute {
+  overflow: visible;
+}
+
+.date-and-time, .hour-and-minute {
+  padding-bottom: 0;
+}
+
+.date, .time, .hour, .minute {
+  padding-bottom: 0.9em;
+}
+
+.date {
+  min-width: 10.5em;
+  position: relative;
+  padding-right: 0.9em;
+}
+
+.btn-date {
+  min-width: 11.5em;
+}
+
+.btn-time {
+  min-width: 5em;
 }
 
 .fa {
@@ -86,27 +123,32 @@ section {
 }
 
 .importance {
-  width: 14em;
-  height: 2.5em;
-  /*padding-bottom: 1em;*/
+  min-width: 6em;
 }
 
-.buttonBox {
-  height: 2.5em;
+.hour {
+  min-width: 6em;
+  padding-right: 0.9em;
 }
 
-.innerTableTwo {
-  width: 18em;
+.minute {
+  min-width: 6em;
 }
 
+.hour-and-minute {
 
-.number {
-  width: 3.5em;
 }
+/*
+button .btn-add {
+  min-width: 8em;
+  max-width: 50em;
+}*/
 
 .btn-add {
   border-radius: 1em;
-  width: 10em;
+  min-height: 2em;
+  min-width: 8em;
+  width: 100%;
   background-color: #4c91cd;
   color: #e7eaeb;
   border-style: none;
@@ -396,6 +438,11 @@ section {
 
   .dateCell {
     padding-left: 0.5em;
+  }
+
+  .name {
+    padding-right: 0.9em;
+    position: relative;
   }
 }
 
