@@ -9,45 +9,40 @@
 <!--end Clock-->
 <!--begin FORM-->
   <div class="containerPad">
-    <div class="container-fluid main-body">
-      <div class="row">
-        <form ng-submit="addItem()" class="form"><!-- push a new message onto the array-->
+    <div class="container-fluid main-body form-body">
+      <div class="form row">
+        <form ng-submit="addItem()"><!-- push a new message onto the array-->
 <!--name-->
-          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-12 formFormat name">
+          <div class="col-lg-3 col-md-5 col-sm-5 col-xs-12 formFormat name">
             <input class="form-control" ng-model="newItemName" placeholder="enter item name" />
           </div>
 <!--date-->
-          <div class="col-lg-3 col-md-3 col-sm-3 col-xs-6 formFormat date-and-time">
-            <form name="timepickerForm" class="form-inline" role="form">
-              <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 date">
-                <input type="text" size="10" class="btn-date form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="enter <i class='fa fa-calendar'></i>" bs-datepicker>
-              </div>
-              <div class="col-lg-1 col-md-1 col-sm-1 col-xs-3 time">
-                <input type="text" size="8" class="btn-time form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="1" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
-              </div>
-            </form>
+          <!-- <form name="timepickerForm" class="form-inline" role="form"> -->
+            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 date">
+              <input type="text" size="1" class="btn-date form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="enter <i class='fa fa-calendar'></i>" bs-datepicker>
+            </div>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 time">
+              <input type="text" size="1" class="btn-time form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="3" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
+            </div>
+          <!-- </form> -->
             <!-- <small>Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :</small> -->
-          </div>
   <!--importance-->
-          <div class="col-lg-2 col-md-2 col-sm-2 col-xs-3 importance formFormat">
+          <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 importance formFormat">
             <button type="button" class="btn-importance btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
             </button>
           </div>
-  <!--est. time-->
-          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 formFormat hour-and-minute">
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 hour">
-              <!-- <select class="form-control number" ng-model="newHourEst" ng-options="opt for opt in timeOptions.hour"></select> -->
-
+<!--est. time-->
+          <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 hour-and-minute">
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 hour">
               <button type="button" class="btn-hour btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-options="hourOption.hour as hourOption.hour for hourOption in hourOptions" bs-select><span class="caret"></span>
             </div>
-            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-6 minute">
-              <!-- <select class="form-control number" ng-model="newMinuteEst" ng-options="opt for opt in timeOptions.minute"></select> -->
-
-              <button type="button" class="btn-minute btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="minuteOption.minute as minuteOption.minute for minuteOption in minuteOptions" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span>
+            <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 minute">
+              <button type="button" class="btn-minute btn btn-default" ng-model="newMinuteEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="minuteOption.minute as minuteOption.minute for minuteOption in minuteOptions" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span>
             </div>
           </div>
-  <!--Add Button-->
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12"><button type="submit" type="button" class="btn-add">Add to-do item</button></div>
+
+<!--Add Button-->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-div"><button type="submit" type="button" class="btn-add">Add to-do item</button></div>
         </form>
       </div> <!--end row-->
     </div> <!--end container-fluid-->

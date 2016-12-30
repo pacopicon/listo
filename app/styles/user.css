@@ -15,15 +15,19 @@ section {
   font-size: 1.2em;
 }
 
+/* begin css for clock */
+
 .clock {
   background-color: #3f4e62;
   color: white;
-  position: relative/;
+  position: relative;
   font-size: 1.5em;
-  overflow: auto;
+  overflow: hidden;
   max-width: 23.7em;
+  min-width: 7.5em;
   margin-bottom: 1em;
   margin-top: 1em;
+  padding-right: 1em;
   padding-left: 1em;
 }
 
@@ -31,6 +35,8 @@ section {
   padding-top: 0.45em;
   text-align: left;
 }
+
+/* end css for clock */
 
 .main-body {
   border-radius: 1em;
@@ -41,65 +47,43 @@ section {
 
 /* Begin CSS for Form */
 
-.form {
-  width: 100%;
-  /*display: inline-flex;*/
+.name, .date, .importance, .time, .hour, .minute {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+.name, .date, .importance, .time, .hour-and-minute, .minute {
+  margin-left: 0.9em;
 }
 
 .formFormat {
   padding-bottom: 1em;
   color: #3f4e62;
   padding-right: 0;
-  overflow: hidden;
-  position: relative;
 }
 
-.name {
-  position: relative;
-}
-
-.date, .time, .hour, .minute {
-  padding-right: 0em;
-  padding-left: 0em;
-}
-
-.date-and-time {
-  min-width: 20em;
-}
-
-.date-and-time, .importance, .hour-and-minute {
+.date, .minute, .importance {
   overflow: visible;
-}
-
-.date-and-time, .hour-and-minute {
-  padding-bottom: 0;
 }
 
 .date, .time, .hour, .minute {
   padding-bottom: 0.9em;
 }
 
-.date {
-  min-width: 10.5em;
-  position: relative;
-  padding-right: 0.9em;
+.date, .time, .importance, .hour, .minute, .hour-and-minute, .btn-add {
+  min-width: 4em;
 }
 
-.btn-date {
-  min-width: 11.5em;
+.date, .btn-date, .time, .btn-time, .importance, .btn-importance, .hour-and-minute, .hour, .btn-hour, .minute, .btn-minute {
+  resize: horizontal;
 }
 
-.btn-time {
-  min-width: 5em;
+.btn-date, .btn-time, .btn-importance, .btn-hour, .btn-minute, .btn-add {
+  width: 100%
 }
 
 .fa {
   color: #3f4e62;
-}
-
-.time {
-  width: 6.2em;
-  /*height: 2.5em;*/
 }
 
 .datepicker.dropdown-menu {
@@ -122,33 +106,28 @@ section {
   }
 }
 
-.importance {
-  min-width: 6em;
+.hour-and-minute {
+  width: 33.1%;
+  padding: 0;
+  margin-right: 0;
 }
 
 .hour {
-  min-width: 6em;
-  padding-right: 0.9em;
+  width: 47.5%;
 }
 
 .minute {
-  min-width: 6em;
+  width: 47.5%;
 }
 
-.hour-and-minute {
-
+.btn-div {
+  padding-right: 0.9;
+  padding-left: 0.9;
 }
-/*
-button .btn-add {
-  min-width: 8em;
-  max-width: 50em;
-}*/
 
 .btn-add {
   border-radius: 1em;
   min-height: 2em;
-  min-width: 8em;
-  width: 100%;
   background-color: #4c91cd;
   color: #e7eaeb;
   border-style: none;
@@ -248,6 +227,7 @@ button .btn-add {
   display: block;
   min-width: 50%;
   padding-right: 0;
+  overflow: hidden;
 }
 
 .nameCell p {
@@ -409,24 +389,24 @@ button .btn-add {
 
 /*end popup item info*/
 
+@media only screen and (max-width : 585px) {
+/*actually 641*/
+  .priorityCheckboxImportanceNameDate {
+    width: 85%;
+  }
+
+}
+
 @media only screen and (max-width : 619px) {
 /*actually 844*/
-  .clock {
+  /*.clock {
     max-width: 10em;
     margin-right: 1%;
     margin-left: 1%;
     /*margin-bottom: 0;
     margin-top: 0;*/
 
-  }
-
-}
-
-@media only screen and (max-width : 585px) {
-/*actually 641*/
-.priorityCheckboxImportanceNameDate {
-  width: 85%;
-}
+  }*/
 
 }
 
@@ -443,63 +423,256 @@ button .btn-add {
   .name {
     padding-right: 0.9em;
     position: relative;
+    min-width: 85%
   }
+
+  /*.hour, .minute {
+    width: 31%;
+  }*/
+}
+
+@media only screen and (max-width : 767px) {
+
+  .priorityAndCheckbox {
+    margin-left: 0.5em;
+  }
+
+  .nameCell {
+    margin-left: 0.9em;
+  }
+
+  .dateCell {
+    margin-left: 0.55em;
+  }
+
 }
 
 @media only screen and (max-width : 781px) {
   /*actually 858*/
   .nameCell {
     min-width: 50%;
-    /*margin-left: -100em;*/
   }
 
 }
 
-@media only screen and (min-width : 768px) {
-  /*actually 845*/
+@media only screen and (max-width : 429px) {
+
+  .name, .hour, .minute {
+    width: 95%
+  }
+
+   .importance, .date, .time {
+     width: 91%;
+   }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    /*margin-left: 0.9em;*/
+    width: 95%
+  }
+
+  .minute {
+    margin-left: 0;
+  }
 
 }
 
-@media only screen and (min-width : 768px) and (max-width : 992px) {
+@media only screen and (min-width : 430px) and (max-width : 507px) {
 
 
+  .name {
+    width: 97%
+  }
+
+  .date, .time {
+    width: 44.5%;
+  }
+
+  .importance {
+    width: 29%;
+  }
+
+  .hour, .minute {
+    width: 45%;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    /*margin-left: 0.9em;*/
+    width: 59%
+  }
 
 }
 
-@media only screen and (max-width : 784px) {
+@media only screen and (min-width : 508px) and (max-width : 634px) {
 
-  /*.itemDisplay {
-    width: 60%;
+
+  .name {
+    width: 97%
   }
 
-  .list-group {
-    min-width: 45em;
+  .date, .time {
+    width: 45.5%;
   }
 
-  .nameCell {
+  .importance {
+    width: 30%;
+  }
+
+  .hour, .minute {
+    width: 45%;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    /*margin-left: 0.9em;*/
+    width: 60%
+  }
+
+}
+
+@media only screen and (min-width : 635px) and (max-width : 767px) {
+
+
+  .name {
+    width: 97%
+  }
+
+  .date, .time {
+    width: 45.5%;
+  }
+
+  .importance {
+    width: 31%;
+  }
+
+  .hour, .minute {
+    width: 45%;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    /*margin-left: 0.9em;*/
+    width: 61%
+  }
+
+}
+
+@media only screen and (min-width : 768px) and (max-width : 929px) {
+
+  .importance {
+    width: 13%;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    margin-left: 0.9em;
+    width: 100%
+  }
+
+}
+
+
+@media only screen and (min-width : 930px) and (max-width : 1076px) {
+
+  .importance {
+    width: 20.5%;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    margin-left: 0.9em;
+    width: 100%
+  }
+
+}
+
+@media only screen and (min-width : 1077px) and (max-width : 1199px) {
+
+  /*.name {
     width: 70%;
-    margin-right: 0;
-  }
-
-  .dateCell {
-    display: none;
-  }
-
-  .importanceCell {
-    display: none;
-  }
-
-  .editDeleteBox {
-    float: none;
   }*/
+
+  .importance {
+    width: 25.5%;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    margin-left: 0.9em;
+    width: 100%
+  }
 
 }
 
+@media only screen and (min-width : 1200px) and (max-width : 1425px) {
 
-@media only screen and (min-width : 1041px) {
-
-  /*.itemDisplay {
-    width: 60em;
+  /*.name {
+    width: 70%;
   }*/
+
+  .importance {
+    width: 9.5%;
+  }
+
+  .hour-and-minute {
+    /*margin-right: 0.9em;*/
+    /*margin-left: 0.9em;*/
+    /*width: 100%*/
+  }
+
+}
+
+@media only screen and (min-width : 1426px) and (max-width : 1716px) {
+
+  /*.name {
+    width: 70%;
+  }*/
+
+  .importance {
+    width: 11%;
+  }
+
+  .hour-and-minute {
+    /*margin-right: 0.9em;*/
+    /*margin-left: 0.9em;*/
+    /*width: 100%*/
+  }
+
+}
+
+@media only screen and (min-width : 1717px) and (max-width : 2153px) {
+
+  /*.name {
+    width: 70%;
+  }*/
+
+  .importance {
+    width: 12%;
+  }
+
+  .hour-and-minute {
+    /*margin-right: 0.9em;*/
+    /*margin-left: 0.9em;*/
+    /*width: 100%*/
+  }
+
+}
+
+@media only screen and (min-width : 2154px) and (max-width : 2600px) {
+
+  /*.name {
+    width: 70%;
+  }*/
+
+  .importance {
+    width: 13%;
+  }
+
+  .hour-and-minute {
+    /*margin-right: 0.9em;*/
+    /*margin-left: 0.9em;*/
+    /*width: 100%*/
+  }
 
 }
