@@ -465,13 +465,17 @@ section {
   font-size: 1.5em;
 }
 
+.barChart {
+  margin-top: 5%;
+}
+
 .chart-legend {
   margin-top: 1em;
 }
 
 .statement {
   float: right;
-  width: 10%
+  width: 30%
 }
 
 .statement2 {
@@ -479,9 +483,9 @@ section {
   width: 40%
 }
 
-.itemsCompleted, .itemsYetToComplete, .timeCompleted, .timeYetToComplete {
+.itemsCompleted, .itemsYetToComplete, .itemsOverdue, .itemsDueComplete, .timeCompleted, .timeYetToComplete, .timeOverdue, .timeDueComplete {
   color: white;
-  width: 85%;
+  width: 70%;
   float: left;
 }
 
@@ -494,24 +498,18 @@ section {
 }
 
 .itemsOverdue, .timeOverdue, .overdueNumber {
-  /*color: #e7eaeb;
-  color: #3f4e62;*/
   color: #e05d6f;
 }
 
-.itemsCompleted p, .itemsYetToComplete p {
-  /*padding-left: 1em;*/
+.itemsDueComplete, .timeDueComplete, .dueCompleteNumber {
+  color: #3f4e62;
 }
 
-.comNumber {
+.comNumber, .incomNumber, .overdueNumber, .dueCompleteNumber {
   float: left;
 }
 
-.incomNumber {
-  float: left;
-}
-
-.timeCompleted, .timeYetToComplete {
+.timeCompleted, .timeYetToComplete, .timeOverdue, .timeDueComplete {
   width: 55%;
 }
 
