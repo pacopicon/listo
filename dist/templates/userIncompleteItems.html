@@ -83,7 +83,17 @@
   <div class="container-fluid main-body">
     <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
     <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-    <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
+    <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
+    <div ng-if="hover" class="pacoover">
+      <p>{{item.r_urgent}}{{item.m_hoursToFinish}}{{item.m_hoursToFinish}}{{item.t_created_at | date: 'M/d/yy h:mm a'}}<p>
+      <p>Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
+      <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
+      <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
+      <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
+      <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
+      <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
+      <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span></p>
+    </div>
     <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
       <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
@@ -127,7 +137,7 @@
       </div>
       <div class="col-sm-1 numberCell cell">
         <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.n_minutesToFinish}}
+          {{item.m_hoursToFinish}}
         </div>
       </div> -->
   <!--                      RANK                              -->
@@ -158,7 +168,7 @@
     </div> <!-- item Display and ng-repeat end -->
   </div> <!--container-fluid main-body end-->
 <!--end ITEM DISPLAY-->
-<!--begin last 7 day GRAPHS-->
+<!--begin lastSeven day GRAPHS-->
 <div class="containerPad">
   <div class="container-fluid main-body">
     <div class="allCharts">
@@ -197,7 +207,47 @@
     </div>
   </div>
 </div>
-<!--end last 7 day GRAPHS-->
+<!--end lastSeven GRAPHS-->
+<!--begin nextSeven day GRAPHS-->
+<div class="containerPad">
+  <div class="container-fluid main-body">
+    <div class="allCharts">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity breakdown: next week</div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+        <canvas id="doughnut" class="chart chart-doughnut"
+      chart-data="itemDataNextSeven" chart-labels="itemLabelsNextSeven">
+        </canvas>
+        <div class="chart-legend">
+          <p class="itemsCompleted">complete: </p><div class="statement"><p class="comNumber">{{itemWorkedCountNextSeven}} ( {{percentItemsCompleteOnTimeNextSeven}}%) </p></div>
+          <p class="itemsYetToComplete">incomplete: </p><div class="statement"><p class="incomNumber">{{itemLeftCountNextSeven}}  ({{percentTotalIncompleteNotOverdueNextSeven}}%) </p></div>
+          <p class="itemsOverdue">overdue: </p><div class="statement"><p class="overdueNumber">{{itemOverdueCountNextSeven}} ( {{percentTotalOverdueNotCompleteNextSeven}}%) </p></div>
+          <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountNextSeven}} ({{percentTotalOverdueCompleteNextSeven}}%) </p></div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
+        <canvas id="bar" class="chart chart-bar"
+      chart-data="hourDataNextSeven" chart-labels="hourLabelsNextSeven" chart-series="seriesNextSeven" chart-options="options">
+        </canvas>
+        <!-- <div class="chart-legend">
+            <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorked}} hrs, {{minutesWorked}} mins</p></div>
+            <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeft}} hrs, {{minutesLeft}} mins</p></div>
+            <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdue}} hrs, {{minutesOverdue}} mins</p></div>
+            <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
+        </div> -->
+      </div>
+      <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+        <canvas id="doughnut" class="chart chart-doughnut"
+      chart-data="itemDataCompleteIncompleteTotalNextSeven" chart-labels="itemLabelsCompleteIncompleteTotalNextSeven">
+        </canvas>
+        <div class="chart-legend">
+          <p class="itemsCompleted">complete: </p><div class="statement"><p class="comNumber">{{totalCompleteCountNextSeven}} ( {{percentTotalIncompleteNextSeven}}%) </p></div>
+          <p class="itemsYetToComplete">incomplete: </p><div class="statement"><p class="incomNumber">{{totalIncompleteCountNextSeven}}  ({{percentTotalCompleteNextSeven}}%) </p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--end nextSeven day GRAPHS-->
 <!--begin OVERALL GRAPHS-->
   <div class="containerPad">
     <div class="container-fluid main-body">

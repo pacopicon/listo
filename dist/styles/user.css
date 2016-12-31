@@ -253,6 +253,11 @@ section {
   background-color: white;
 }
 
+.pacoover {
+  position: absolute;
+  z-index: 999;
+}
+
 .priorityCheckboxImportanceNameDate {
   float: left;
   width: 94%;

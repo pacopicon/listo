@@ -1,6 +1,6 @@
 var listo = angular.module("listo", ["ui.router", "firebase", "ui.bootstrap", "ngAnimate", "ngSanitize", "mgcrea.ngStrap", "chart.js"]);
 
-listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $modalProvider) {
+listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $modalProvider, $popoverProvider) {
 
     $locationProvider.html5Mode({
         enabled: true,
@@ -47,6 +47,11 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
     angular.extend($modalProvider.defaults, {
       html: true
     });
+
+    angular.extend($popoverProvider.defaults, {
+      html: true
+    });
+
 });
 
 listo.config(['ChartJsProvider', function (ChartJsProvider) {

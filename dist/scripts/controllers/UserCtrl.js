@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout',
-  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover",
+  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout, $q, $sce, $tooltip, $popover) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -40,9 +40,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       }
     };
 
-
-
-
     var refreshTime = function() {
       time = Date.now();
       $scope.time = time;
@@ -57,15 +54,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       return countdown;
     };
 
-    // db {
-    //   users: {},
-    //   tasks: {
-    //     userId
-    //   }
-    // }
+    // Begin AngularStrap popover
 
-
-
+    // End AngularStrap popover
 
     // Begin AngularStrap timePicker----------------
 
@@ -299,7 +290,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
       // Graph labels for lastSeven
 
-      $scope.seriesLastSeven = ['in the past week'];
+      $scope.seriesLastSeven = ['last week'];
 
       $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven, $scope.itemLeftCountLastSeven, $scope.itemOverdueCountLastSeven, $scope.itemDueCompleteCountLastSeven];
       $scope.itemLabelsLastSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
