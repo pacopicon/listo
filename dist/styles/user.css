@@ -2,16 +2,18 @@
 .navbar {
   background-color: #4c91cd;
   z-index: 1;
+  min-height: 4.5em;
  }
 
  .left {
-   width: 34em;
+   width: 44em;
  }
 
 .link {
   display: inline-block;
   position: relative;
   height: 100%;
+  width: 3.5em;
   bottom: 0.35em;
   color: white;
   font-size: 3em;
@@ -31,18 +33,20 @@ li {
 }
 
 .navbar .fa {
-  color: #e7eaeb;
+  color: white;
   font-size: 0.5em;
   /*font-family: 'Montserrat', sans-serif;*/
 }
 
 .navbar p {
+  color: white;
   float: right;
   font-family: 'Montserrat', sans-serif;
 }
 
 .navbar p .fa {
   padding-bottom: 2em;
+  border: 0;
 }
 
 .navbar .fa:hover {
@@ -72,8 +76,6 @@ li {
   height: 100%
 }
 
-
-
 section {
   height: 100%;
 }
@@ -88,13 +90,16 @@ section {
 
 /* begin css for clock */
 
-.clock {
-  background-color: #3f4e62;
-  color: white;
+.clock-container, .clock-row {
+  margin: 0;
+  padding: 0;
+}
+
+.clock, .page-name {
   position: relative;
   font-size: 1.5em;
   overflow: hidden;
-  max-width: 23.7em;
+  /*max-width: 23.7em;*/
   min-width: 7.5em;
   margin-bottom: 1em;
   margin-top: 1em;
@@ -102,9 +107,21 @@ section {
   padding-left: 1em;
 }
 
-.clock p {
+.clock {
+  background-color: #3f4e62;
+  color: white;
+  padding-top: 0.09em;
+  padding-bottom: 0.09em;
+}
+
+.clock p, .page-name p {
   padding-top: 0.45em;
-  text-align: left;
+  text-align: center;
+}
+
+.page-name {
+  background-color: #d6f3ff;
+  border: 2.5px solid #3f4e62;
 }
 
 /* end css for clock */

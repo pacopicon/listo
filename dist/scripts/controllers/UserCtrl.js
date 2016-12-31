@@ -79,10 +79,39 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     $scope.newHourEst = 0;
     $scope.newMinuteEst = 0;
 
-    $scope.timeOptions = {
-      hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      minute: [0, 5, 10, 15, 25, 30, 45]
-    };
+    $scope.hourOptions = [
+      {hour: 0},
+      {hour: 1},
+      {hour: 2},
+      {hour: 3},
+      {hour: 4},
+      {hour: 5},
+      {hour: 6},
+      {hour: 7},
+      {hour: 8},
+      {hour: 9},
+      {hour: 10},
+      {hour: 11},
+      {hour: 12}
+    ];
+
+    $scope.minuteOptions = [
+      {minute: 0},
+      {minute: 5},
+      {minute: 10},
+      {minute: 15},
+      {minute: 20},
+      {minute: 25},
+      {minute: 30},
+      {minute: 35},
+      {minute: 40},
+      {minute: 45},
+      {minute: 50},
+      {minute: 55}
+    ];
+
+      // hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+      // minute: [0, 5, 10, 15, 25, 30, 45]
 
     // End Est--------------------------------------
 
@@ -176,21 +205,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
     };
 
     var completionData = function() {
-      // $scope.incompleteItems = ItemCrud.tallyIncompleteItems().itemCount;
-      // $scope.millisecondsLeft = ItemCrud.tallyIncompleteItems().millisecondsLeft;
-      // $scope.hoursLeft = ItemCrud.tallyIncompleteItems().hoursLeft;
-      // $scope.minutesLeft = ItemCrud.tallyIncompleteItems().minutesLeft;
-
       var incomItemTally = ItemCrud.tallyIncompleteItems();
       $scope.incomItemTally = incomItemTally.itemCount;
       $scope.hoursLeft = incomItemTally.hoursLeft;
       $scope.minutesLeft = incomItemTally.minutesLeft;
       $scope.millisecondsLeft = incomItemTally.millisecondsLeft;
-
-      // $scope.completeItems = ItemCrud.tallyCompleteItems().itemCount;
-      // $scope.millisecondsWorked = ItemCrud.tallyCompleteItems().millisecondsWorked;
-      // $scope.hoursWorked = ItemCrud.tallyCompleteItems().hoursWorked;
-      // $scope.minutesWorked = ItemCrud.tallyCompleteItems().minutesWorked;
 
       var comItemTally = ItemCrud.tallyCompleteItems();
       $scope.comItemTally = comItemTally.itemCount;
@@ -207,24 +226,28 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       $scope.hourLabel = ["Hours worked", "Hours yet to work"]
     };
 
-      $scope.itemLabels = ["items yet to complete", "items completed"];
-      $scope.itemData = [$scope.incomItemTally, $scope.comItemTally];
+    var toggle = function () {
+      if ($scope.complete == false || $scope.complete == undefined) {
+        return $scope.complete = true;
+      } else {
+        return $scope.complete = false;
+      }
+    };
 
-      $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
-      $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
+    $scope.showIncompleteOrComplete = function() {
+      if ($scope.complete == false) {
+        return "item.q_completed";
+      } else {
+        return "!item.q_completed";
+      }
+    }
 
-// Callable by DOM:
+// The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
     $scope.refreshTalliesAndData = function() {
       completionData();
       ItemCrud.processOldCompleteItems();
       ItemCrud.updateAllItemsPastDue();
+      toggle();
     };
-// Callable by app.js:
-    var refreshTalliesAndData = function() {
-      completionData();
-      ItemCrud.processOldCompleteItems();
-      ItemCrud.updateAllItemsPastDue();
-    };
-
   }
 ]);

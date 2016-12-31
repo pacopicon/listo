@@ -16,22 +16,22 @@ body.landing {
   top: 0; left: 0; bottom: 0; right: 0;*/
  }
 
-.link {
+.signup, .login {
   height: 1em;
   width: 3em;
   border-radius: 1em;
   border: 2.5px solid #4c91cd;
 }
 
-.link:hover {
+.signup:hover, .login:hover {
   bottom: 0.2em;
 }
 
-.link:active {
+.signup:active, .login:active {
   background-color: #4c91cd;
 }
 
-.link p:active {
+.signup p:active, .login p:active {
   color: white;
 }
 
@@ -39,7 +39,7 @@ body.landing {
   margin-left: 2em;
 }
 
-.link p {
+.signup p, .login p {
   font-size: 20px;
   letter-spacing: 0;
   text-align: center;

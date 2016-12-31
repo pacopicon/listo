@@ -1,15 +1,44 @@
-<section ng-controller="UserCtrl" ng-init="refreshTalliesAndData()" class="user">
-  <!-- <section ng-controller="UserCtrl" class="user"> -->
+<section ng-controller="UserCtrl" class="user">
+<nav class="navbar">
+
+  <div class="navbar-header hamburger">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false"><i class="fa fa-bars"></i>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <!-- <a class="navbar-brand" href="#">Listo!</a> -->
+  </div>
+
+  <div class="container-fluid nav-container">
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav left">
+        <li ui-sref="userIncompleteItems" ng-click="refreshTalliesAndData()" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
+        <li ui-sref="calendar" ng-click="refreshTalliesAndData()" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
+        <li ui-sref="userCompleteItems" ng-click="refreshTalliesAndData()" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
+        <li ui-sref="landing" ng-click="refreshTalliesAndData()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+
+
+      </ul>
+
+    </div> <!-- End collapse navbar-collapse -->
+  </div>
+</nav>
 <body>
   <div class="list-group">
 <!--Clock-->
     <div class="clock">
-      <div ng-show="complete == true">complete!</div>
       <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
     </div>
 <!--Clock-->
     <div class="container-fluid main-body">
       <p class="noItemAnnounce" ng-if="comItemTally == 0">There are no archived items at this time</p>
+
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
       <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed">
