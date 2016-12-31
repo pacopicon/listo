@@ -170,6 +170,10 @@ section {
   resize: horizontal;
 }
 
+.btn-date:hover, .btn-time:hover, .name:hover {
+  color: #d8dddf;
+}
+
 .btn-date, .btn-time, .btn-importance, .btn-hour, .btn-minute, .btn-add {
   width: 100%
 }
@@ -241,7 +245,7 @@ section {
   padding-top: 0.6em;
 }
 
-.itemDisplay {
+.itemDisplay, .pacoover {
   border-radius: 1em;
   background-color: #e7eaeb;
   color: #3f4e62;
@@ -250,12 +254,25 @@ section {
 }
 
 .itemDisplay:hover {
-  background-color: white;
+  background-color: #d8dddf;
+  /*background-color: white;*/
+  /*border: 0.1px solid #3f4e62;*/
 }
 
 .pacoover {
   position: absolute;
+  right: 6.9%;
   z-index: 999;
+  width: 30%;
+  margin-bottom: 1em;
+  /*border: 0.1px solid #3f4e62;*/
+  border: 5px solid white;
+  background-color: #d8dddf;
+}
+
+.pacoover p {
+  margin-left: 0.5em;
+  margin-bottom: 0.1em;
 }
 
 .priorityCheckboxImportanceNameDate {
@@ -362,6 +379,12 @@ section {
   float: right;
   text-decoration: none;
   text-align: center;
+}
+
+.fa-info-circle {
+  color: #3f4e62;
+  font-size: 1.8em;
+  padding-top: 0em;
 }
 
 .editBtn {

@@ -83,17 +83,7 @@
   <div class="container-fluid main-body">
     <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
     <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-    <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed" ng-mouseenter="hover = true" ng-mouseleave="hover = false">
-    <div ng-if="hover" class="pacoover">
-      <p>{{item.r_urgent}}{{item.m_hoursToFinish}}{{item.m_hoursToFinish}}{{item.t_created_at | date: 'M/d/yy h:mm a'}}<p>
-      <p>Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
-      <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
-      <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
-      <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
-      <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
-      <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
-      <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span></p>
-    </div>
+    <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
     <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
       <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
@@ -123,48 +113,45 @@
         </div>
       </div>
 
-  <!--                     URGENT                           -->
-      <!-- <div class="col-sm-1 urgentCell cell">
-        <div class="urgentLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" ng-hide="urgentEdit" ng-Mouseover="urgentEdit=true" ng-Mouseleave="urgentEdit=false">
-          {{item.r_urgent}}
-        </div>
-      </div> -->
-  <!--                       DURATION                         -->
-      <!-- <div class="col-sm-1 numberCell cell">
-        <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.m_hoursToFinish}}
-        </div>
+<!-- begin INFO TOOLTIP -->
+      <div ng-if="hover" class="pacoover">
+        <p><span ng-if="item.r_urgent">item status: urgent </span><span ng-if="!item.r_urgent">item status: not urgent </span></p>
+        <p>time to finish: {{item.m_hoursToFinish}} hrs, {{item.m_hoursToFinish}} mins</p>
+        <p>item created on {{item.t_created_at | date: 'M/d/yy h:mm a'}}</p>
+        <span ng-if="item.u_completed_at > 0"><p>item completed on {{item.u_completed_at | date: 'M/d/yy h:mm a'}}</p></span>
+        <p>
+          <span ng-if="!item.qq_pastDue">item due in: </span>
+          <span ng-if="parseTime(item.b_dueDate).year == 1">{{parseTime(item.b_dueDate).year}} year,</span><span ng-if="parseTime(item.b_dueDate).year > 1">{{parseTime(item.b_dueDate).year}} years,</span>
+          <span ng-if="parseTime(item.b_dueDate).month == 1">{{parseTime(item.b_dueDate).month}} month</span><span ng-if="parseTime(item.b_dueDate).month > 1">{{parseTime(item.b_dueDate).month}} months</span>
+          <span ng-if="parseTime(item.b_dueDate).day == 1">{{parseTime(item.b_dueDate).day}} day</span><span ng-if="parseTime(item.b_dueDate).day > 1">{{parseTime(item.b_dueDate).day}} days</span>
+          <span ng-if="parseTime(item.b_dueDate).hour == 1">{{parseTime(item.b_dueDate).hour}} hour</span><span ng-if="parseTime(item.b_dueDate).hour > 1">{{parseTime(item.b_dueDate).hour}} hours</span>
+          <span ng-if="parseTime(item.b_dueDate).minute == 1">{{parseTime(item.b_dueDate).minute}} minute</span><span ng-if="parseTime(item.b_dueDate).minute > 1">{{parseTime(item.b_dueDate).minute}} minutes</span>
+          <span ng-if="parseTime(item.b_dueDate).second == 1">{{parseTime(item.b_dueDate).second}} second</span><span ng-if="parseTime(item.b_dueDate).second > 1">{{parseTime(item.b_dueDate).second}} seconds</span>
+          <span ng-if="item.qq_pastDue">item was due>
+        <!-- <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0"> -->
+          <p>Item was due
+        <span ng-if="parseTime(item.b_dueDate).year == parseTime(Date.now()).year - 1">{{parseTime(item.b_dueDate).year}} - {{parseTime(Date.now()).year}} years</span>
+        <span ng-if="parseTime(item.b_dueDate).year > parseTime(Date.now()).year">{{parseTime(item.b_dueDate).year}} - {{parseTime(Date.now()).year}} yr</span>,
+        <span ng-if="parseTime(item.b_dueDate).month == parseTime(Date.now()).month - 1">{{parseTime(item.b_dueDate).month}} - {{parseTime(Date.now()).month}} month</span>
+        <span ng-if="parseTime(item.b_dueDate).month > parseTime(Date.now()).month">{{parseTime(item.b_dueDate).month}} - {{parseTime(Date.now()).month}}  months</span>,
+        <span ng-if="parseTime(item.b_dueDate).day == parseTime(Date.now()).day - 1">{{parseTime(item.b_dueDate).day}} - {{parseTime(Date.now()).day}} day</span>
+        <span ng-if="parseTime(item.b_dueDate).day > parseTime(Date.now()).day">{{parseTime(item.b_dueDate).day}} - {{parseTime(Date.now()).day}} day</span>
+        <span ng-if="parseTime(item.b_dueDate).hour == parseTime(Date.now()).hour - 1">{{parseTime(item.b_dueDate).hour}} - {{parseTime(Date.now()).hour}} hour</span>
+        <span ng-if="parseTime(item.b_dueDate).hour > parseTime(Date.now()).hour">{{parseTime(item.b_dueDate).hour}} - {{parseTime(Date.now()).hour}} hours</span>,
+        <span ng-if="parseTime(item.b_dueDate).minute == parseTime(Date.now()).minute - 1">{{parseTime(item.b_dueDate).minute}} - {{parseTime(Date.now()).minute}} minute</span>
+        <span ng-if="parseTime(item.b_dueDate).minute > parseTime(Date.now()).minute">{{parseTime(item.b_dueDate).minute}} - {{parseTime(Date.now()).minute}} minutes</span> and
+
+        <span ng-if="parseTime(item.b_dueDate).second == parseTime(Date.now()).second - 1">{{parseTime(item.b_dueDate).second}} - {{parseTime(Date.now()).second}} second</span>
+        <span ng-if="parseTime(item.b_dueDate).second > parseTime(Date.now()).second">{{parseTime(item.b_dueDate).second}} - {{parseTime(Date.now()).second}} seconds</span> ago</p></span>
       </div>
-      <div class="col-sm-1 numberCell cell">
-        <div class="numberLine" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          {{item.m_hoursToFinish}}
-        </div>
-      </div> -->
-  <!--                      RANK                              -->
-      <!-- <div class="col-sm-1 rankCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-        {{item.s_rank}}
-      </div> -->
-  <!--                     DATE CREATED                       -->
-      <!-- <div class="col-sm-1 createdAtCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-        {{item.t_created_at | date: 'M/d/yy h:mm a'}}
-      </div> -->
-  <!--                 TIME TO COMPLETE                       -->
-      <!-- <div class="col-lg-3 col-sm-6 col-sm-12">
-        <div class="dueCell cell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-          Due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
-          <span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
-          <span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
-          <span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
-          <span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
-          <span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
-          <span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0">Item is overdue!</span>
-        </div>
-      </div> -->
-<!--EDIT + DELETE-->
+      <i ng-hide="item.q_completed" ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" class="fa fa-info-circle"></i>
+<!-- end INFO TOOLTIP -->
+<!-- being EDIT + DELETE-->
       <div class="editDeleteCell">
         <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
         <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p><i class="fa fa-times"></i></p></button>
       </div>
+<!-- end EDIT + DELETE-->
     </div> <!-- item Display and ng-repeat end -->
   </div> <!--container-fluid main-body end-->
 <!--end ITEM DISPLAY-->
