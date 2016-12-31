@@ -473,35 +473,51 @@ section {
 
 }
 
-.pie-chart-legend {
+.chart-legend {
   margin-top: 1em;
 }
 
-.itemsCompleted, .itemsYetToComplete {
+.statement {
   width: 50%;
+  /*height: 1.5em;*/
+  overflow: auto;
+  margin-left: 25%;
+}
+
+.itemsCompleted, .itemsYetToComplete, .timeCompleted, .timeYetToComplete {
   color: white;
-  margin;
+  width: 85%;
+  float: left;
 }
 
-.itemsYetToComplete {
-  background-color: #e05d6f;
+.itemsYetToComplete, .timeYetToComplete, .incomNumber {
+  color: #e05d6f;
 }
 
-.itemsCompleted {
-  background-color: #4c91cd;
-}
-
-.itemsCompleted p, .itemsYetToComplete p {
-  padding-left: 1em;
-}
-
-.comNumber {
+.itemsCompleted, .timeCompleted, .comNumber {
   color: #4c91cd;
 }
 
-.incomNumber {
-  color: #e05d6f;
+.itemsCompleted p, .itemsYetToComplete p {
+  /*padding-left: 1em;*/
 }
+
+.comNumber {
+  float: right;
+}
+
+.incomNumber {
+  float: right;
+}
+
+.timeCompleted, .timeYetToComplete {
+  width: 55%;
+}
+
+/*
+.itemsCompleted, .comNumber {
+  white-space: nowrap;
+}*/
 
 /*End Chart elements */
 
