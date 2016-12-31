@@ -1,189 +1,159 @@
 <!DOCTYPE html>
 <html ng-app="listo">
 <head lang="en">
-  <meta charset="UTF-8">
-  <title>Listo!</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta charset="UTF-8">
+<title>Listo!</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!--jQuery-->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<!--jQuery-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-  <!-- underscore -->
-  <!-- <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> -->
+<!-- underscore -->
+<!-- <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> -->
 
-  <!--AngularJS-->
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
+<!--AngularJS-->
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-animate.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular-sanitize.min.js"></script>
 
-  <!--AngularStrap-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.tpl.min.js"></script>
-  <script src="https://mgcrea.github.io/angular-strap/docs/angular-strap.docs.tpl.js" data-semver="v2.3.9"></script>
+<!--AngularStrap-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.tpl.min.js"></script>
+<script src="https://mgcrea.github.io/angular-strap/docs/angular-strap.docs.tpl.js" data-semver="v2.3.9"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.compat.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.compat.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/angular-strap.compat.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-formatter.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-formatter.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-formatter.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-formatter.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-parser.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-parser.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-parser.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/date-parser.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/datepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/datepicker.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/datepicker.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/datepicker.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/datepicker.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/datepicker.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dimensions.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dimensions.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dimensions.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dimensions.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dropdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dropdown.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dropdown.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dropdown.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dropdown.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/dropdown.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/modal.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/modal.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/modal.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/modal.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/modal.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/modal.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/navbar.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/navbar.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/navbar.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/navbar.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/parse-options.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/parse-options.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/parse-options.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/parse-options.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/popover.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/popover.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/popover.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/popover.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/popover.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/popover.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/raf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/raf.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/raf.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/raf.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/select.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/select.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/select.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/select.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/select.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/select.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tab.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tab.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tab.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tab.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tab.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tab.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/timepicker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/timepicker.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/timepicker.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/timepicker.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/timepicker.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/timepicker.tpl.min.js"></script>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tooltip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tooltip.min.js"></script>
 
-  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tooltip.min.js.map"></script> -->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tooltip.min.js.map"></script> -->
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tooltip.tpl.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-strap/2.3.9/modules/tooltip.tpl.min.js"></script>
 
-  <!--Firebase-->
-  <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
+<!--Firebase-->
+<script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
 
-  <!--AngularFire-->
-  <script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
+<!--AngularFire-->
+<script src="https://cdn.firebase.com/libs/angularfire/1.2.0/angularfire.min.js"></script>
 
-  <!--ui-router-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
+<!--ui-router-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 
-  <!--ui.bootstrap-->
-  <script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.1.3.js"></script>
+<!--ui.bootstrap-->
+<script src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-2.1.3.js"></script>
 
-  <!--Locale Files-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_en-us.js"></script>
+<!--Locale Files-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.8/angular-locale_en-us.js"></script>
 
 
-  <!--Chart.js-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+<!--Chart.js-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
 
-  <!--angular-chart.js-->
+<!--angular-chart.js-->
 
-  <script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/angular.chartjs/latest/angular-chart.min.js"></script>
 
-  <!--Native Script  files-->
+<!--Native Script  files-->
 
-  <script src="/scripts/app.js"></script>
-  <script src="/scripts/services/ItemCrud.js"></script>
-  <script src="/scripts/services/angular-modal-service.js"></script>
-  <script src="/scripts/controllers/LandingCtrl.js"></script>
-  <script src="/scripts/controllers/UserCtrl.js"></script>
-  <script src="/scripts/controllers/ModalController.js"></script>
+<script src="/scripts/app.js"></script>
+<script src="/scripts/services/ItemCrud.js"></script>
+<script src="/scripts/services/angular-modal-service.js"></script>
+<script src="/scripts/controllers/LandingCtrl.js"></script>
+<script src="/scripts/controllers/UserCtrl.js"></script>
+<script src="/scripts/controllers/ModalController.js"></script>
 
-  <!--Bootstrap CSS-->
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!--Bootstrap CSS-->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 
-  <!--AngularStrap CSS-->
-  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/libs.min.css">
-  <link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/docs.min.css">
+<!--AngularStrap CSS-->
+<link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/libs.min.css">
+<link rel="stylesheet" href="//mgcrea.github.io/angular-strap/styles/docs.min.css">
 
-  <!--Google Fonts and Other Icons-->
-  <link href="https://fonts.googleapis.com/css?family=Fredoka+One|Montserrat" rel="stylesheet">
-  <link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<!--Google Fonts and Other Icons-->
+<link href="https://fonts.googleapis.com/css?family=Fredoka+One|Montserrat" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
-   <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
 <!--Native style files-->
 
-  <link rel="stylesheet" type="text/css" href="/styles/normalize.css">
-  <link rel="stylesheet" type="text/css" href="/styles/main.css">
-  <link rel="stylesheet" type="text/css" href="/styles/landing.css">
-  <link rel="stylesheet" type="text/css" href="/styles/user.css">
-  <link rel="stylesheet" type="text/css" href="/styles/modal.css">
+<link rel="stylesheet" type="text/css" href="/styles/normalize.css">
+<link rel="stylesheet" type="text/css" href="/styles/main.css">
+<link rel="stylesheet" type="text/css" href="/styles/landing.css">
+<link rel="stylesheet" type="text/css" href="/styles/user.css">
+<link rel="stylesheet" type="text/css" href="/styles/modal.css">
 </head>
 <body>
-  <nav class="navbar">
-
-    <div class="navbar-header hamburger">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false"><i class="fa fa-bars"></i>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <!-- <a class="navbar-brand" href="#">Listo!</a> -->
-    </div>
-
-    <div class="container-fluid">
-
-      <div class="collapse navbar-collapse" id="myNavbar">
-
-        <ul class="nav navbar-nav left">
-          <li ui-sref="userIncompleteItems" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
-          <li ui-sref="calendar" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
-          <li ui-sref="userCompleteItems" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
-        </ul>
-
-        <ul class="nav navbar-nav navbar-right">
-          <li ui-sref="signup" class="link signup"><i class="fa fa-user-plus">&nbsp<p> sign up</p></i></li>
-          <li ui-sref="user" ng-hide="logged-in"class="link login"><i class="fa fa-sign-in">&nbsp<p> login</p></i></li>
-          <li ui-sref="landing" ng-hide="!logged-in"class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
-        </ul>
-
-      </div> <!-- End collapse navbar-collapse -->
-    </div>
-  </nav>
 
   <ui-view></ui-view>
 

@@ -1,20 +1,33 @@
 <section ng-controller="LandingCtrl" class="hero-content">
-     <h1 class="hero-title">{{ hero.title }}</h1>
+  <div class="hero-title">
+    <h1>{{hero.title}}</h1>
+  </div>
+</div>
 </section>
+<div class="link-container">
+  <div class="buttons">
+    <div ui-sref="signup" class="link signup">
+      <p>sign up</p>
+    </div>
+    <div ui-sref="user" class="link login">
+      <p>login</p>
+    </div>
+  </div>
+</div>
 <section class="selling-points container clearfix">
-    <div class="point column third">
-        <span class="ion-university"></span>
-        <h5 class="point-title">Smart</h5>
-        <p class="point-description">Listo! uses a specially-devised algorithm to prioritize what you need to do so that you do it exactly when you need to do it</p>
-    </div>
-    <div class="point column third">
-        <span class="ion-thumbsup"></span>
-        <h5 class="point-title">Easy</h5>
-        <p class="point-description">You don't need to be a rocket scientist to be productive here on Earth</p>
-    </div>
-    <div class="point column third">
-        <span class="ion-upload"></span>
-        <h5 class="point-title">Connected</h5>
-        <p class="point-description">Organize at home or on the go.  Listo! syncs your to do list across all of your devices</p>
-    </div>
+  <div class="point column third">
+    <span class="ion-university"></span>
+    <h5 class="point-title">Smart</h5>
+    <p class="point-description">Listo! uses a specially-devised algorithm to prioritize what you need to do so that you do it exactly when you need to do it</p>
+  </div>
+  <div class="point column third">
+    <span class="ion-thumbsup"></span>
+    <h5 class="point-title">Easy</h5>
+    <p class="point-description">You don't need to be a rocket scientist to be productive here on Earth</p>
+  </div>
+  <div class="point column third">
+    <span class="ion-upload"></span>
+    <h5 class="point-title">Connected</h5>
+    <p class="point-description">Organize at home or on the go.  Listo! syncs your to do list across all of your devices</p>
+  </div>
 </section>

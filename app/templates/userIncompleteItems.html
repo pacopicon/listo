@@ -1,5 +1,34 @@
 <section ng-controller="UserCtrl" ng-init="refreshTalliesAndData()" class="user">
-<!-- <section ng-controller="UserCtrl" class="user"> -->
+<nav class="navbar">
+
+  <div class="navbar-header hamburger">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false"><i class="fa fa-bars"></i>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <!-- <a class="navbar-brand" href="#">Listo!</a> -->
+  </div>
+
+  <div class="container-fluid">
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+
+      <ul class="nav navbar-nav left">
+        <li ui-sref="userIncompleteItems" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
+        <li ui-sref="calendar" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
+        <li ui-sref="userCompleteItems" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
+        <li ui-sref="landing" ng-hide="!logged-in"class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right">
+
+
+      </ul>
+
+    </div> <!-- End collapse navbar-collapse -->
+  </div>
+</nav>
 <body>
 <div class="list-group">
 <!--begin Clock-->
@@ -70,7 +99,7 @@
 <!--IMPORTANCE-->
         <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell">
           <!-- {{item.p_importance}} -->
-          <p ng-bind-html="item.p_importance"></p>
+          <i ng-bind-html="item.p_importance"></p>
         </div>
 <!--NAME-->
         <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell">

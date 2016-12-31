@@ -1,66 +1,117 @@
 body.landing {
      /*background-color: #4c91cd;*/
+}
+
+.link-container {
+  /*position: relative;*/
+  text-align: center;
+}
+
+.buttons {
+  /*width: 50%;
+  height: 50%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0; left: 0; bottom: 0; right: 0;*/
  }
 
+.link {
+  height: 1em;
+  width: 3em;
+  border-radius: 1em;
+  border: 2.5px solid #4c91cd;
+}
+
+.link:hover {
+  bottom: 0.2em;
+}
+
+.link:active {
+  background-color: #4c91cd;
+}
+
+.link p:active {
+  color: white;
+}
+
+.login {
+  margin-left: 2em;
+}
+
+.link p {
+  font-size: 20px;
+  letter-spacing: 0;
+  text-align: center;
+  padding-top: 0.4em;
+  font-family: 'Montserrat', sans-serif;
+  color: #4c91cd;
+}
+
+.fa-user-plus, .fa-sign-in {
+  color: #4c91cd;
+  font-size: 25px;
+}
+
 .textbox {
-    margin: auto;
-    position: absolute;
-    overflow: auto;
-    width: 30%;
-    height: 3%;
-    top: 0; left: 0; bottom: 0; right: 0;
-    color: #3f4e62;
+  margin: auto;
+  position: absolute;
+  overflow: auto;
+  width: 30%;
+  height: 3%;
+  top: 0; left: 0; bottom: 0; right: 0;
+  color: #3f4e62;
 }
 
 .hero-content {
-     position: relative;
-     min-height: 600px;
+  position: relative;
+  min-height: 600px;
 /*     background-image: url(../assets/images/bloc_jams_bg.jpg);*/
-     background-repeat: no-repeat;
-     background-position: center center;
-     background-size: cover;
- }
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+}
 
- .hero-content .hero-title {
-     position: absolute;
-     top: 40%;
-     /*-webkit-transform: translateY(-50%);
-     -moz-transform: translateY(-50%);
-     transform: translateY(-50%);*/
-     width: 100%;
-     color: #4c91cd;
-     text-align: center;
-     font-size: 4rem;
-     font-weight: 300;
-     text-transform: uppercase;
-     letter-spacing: 0.5em;
-     /*text-shadow: 12px 12px 12px #4c91cd;*/
- }
+.hero-content .hero-title {
+  position: absolute;
+  top: 40%;
+  /*-webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  transform: translateY(-50%);*/
+  width: 100%;
+  color: #4c91cd;
+  text-align: center;
+  font-size: 4rem;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+   /*text-shadow: 12px 12px 12px #4c91cd;*/
+}
 
- .selling-points {
-     position: relative;
- }
+.selling-points {
+  position: relative;
+}
 
- .point {
-     display: table-cell;
-     position: relative;
-     width: 33.3%;
-     padding: 2rem;
-     text-align: center;
-     color: #3f4e62;
-     opacity: 1;
-     -webkit-transform: scaleX(0.9) translateY(3rem);
-     -moz-transform: scaleX(0.9) translateY(3rem);
-     transform: scaleX(0.9) translateY(3rem);
-     }
+.point {
+  display: table-cell;
+  position: relative;
+  width: 33.3%;
+  padding: 2rem;
+  text-align: center;
+  color: #3f4e62;
+  opacity: 1;
+  -webkit-transform: scaleX(0.9) translateY(3rem);
+  -moz-transform: scaleX(0.9) translateY(3rem);
+  transform: scaleX(0.9) translateY(3rem);
+}
 
- .point .point-title {
-     font-size: 1.25rem;
- }
+.point .point-title {
+  font-size: 1.25rem;
+}
 
- .ion-university,
- .ion-thumbsup,
- .ion-upload {
-     color: #4c91cd;
-     font-size: 5rem;
- }
+.ion-university,
+.ion-thumbsup,
+.ion-upload {
+  color: #4c91cd;
+  font-size: 5rem;
+}
