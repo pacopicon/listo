@@ -119,6 +119,10 @@ section {
   text-align: center;
 }
 
+.page-name p {
+  /*letter-spacing: 0.2em;*/
+}
+
 .page-name {
   background-color: #d6f3ff;
   border: 2.5px solid #3f4e62;

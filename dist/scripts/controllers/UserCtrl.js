@@ -226,28 +226,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       $scope.hourLabel = ["Hours worked", "Hours yet to work"]
     };
 
-    var toggle = function () {
-      if ($scope.complete == false || $scope.complete == undefined) {
-        return $scope.complete = true;
-      } else {
-        return $scope.complete = false;
-      }
-    };
-
-    $scope.showIncompleteOrComplete = function() {
-      if ($scope.complete == false) {
-        return "item.q_completed";
-      } else {
-        return "!item.q_completed";
-      }
-    }
-
 // The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
     $scope.refreshTalliesAndData = function() {
       completionData();
       ItemCrud.processOldCompleteItems();
       ItemCrud.updateAllItemsPastDue();
-      toggle();
     };
   }
 ]);
