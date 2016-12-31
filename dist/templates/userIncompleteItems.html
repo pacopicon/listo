@@ -167,12 +167,19 @@
           <canvas id="pie" class="chart chart-pie"
         chart-data="itemData" chart-labels="itemLabels">
           </canvas>
+          <div class="pie-chart-legend">
+            <div></div>
+            <p class="itemsCompleted">number of items completed overall: </p><p class="comNumber">              {{comItemTally}}</p>
+            <p class="itemsYetToComplete">number of items yet to complete overall: </p><p class="incomNumber">{{incomItemTally}}</p>
+            </div>
+          </div>
         </div>
-
         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 pieChart">
           <canvas id="doughnut" class="chart chart-doughnut"
         chart-data="millisecData" chart-labels="millisecLabels">
           </canvas>
+          <div>
+          </div>
         </div>
       </div>
     </div>

@@ -449,7 +449,7 @@ section {
   position: relative;
   overflow: auto;
   width: 3.5em;
-}*/
+}
 
 /*End Modal elements*/
 
@@ -473,16 +473,34 @@ section {
 
 }
 
-.pieChart {
-
+.pie-chart-legend {
+  margin-top: 1em;
 }
 
-.graphTable {
-  width: 60em;
+.itemsCompleted, .itemsYetToComplete {
+  width: 50%;
+  color: white;
+  margin;
 }
 
-.graphRow {
-  width: 20em;
+.itemsYetToComplete {
+  background-color: #e05d6f;
+}
+
+.itemsCompleted {
+  background-color: #4c91cd;
+}
+
+.itemsCompleted p, .itemsYetToComplete p {
+  padding-left: 1em;
+}
+
+.comNumber {
+  color: #4c91cd;
+}
+
+.incomNumber {
+  color: #e05d6f;
 }
 
 /*End Chart elements */
