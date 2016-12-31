@@ -459,18 +459,10 @@ section {
   margin-top: 2em;
 }
 
-.chartContainer {
-  position: relative;
-  overflow: auto;
-  border-radius: 1em;
-
-  /*background-color: #e7eaeb;*/
-  background-color: white;
-  padding: 1em;
-}
-
-.allCharts {
-
+.label {
+  color: #3f4e62;
+  text-align: center;
+  font-size: 1.5em;
 }
 
 .chart-legend {
@@ -478,10 +470,13 @@ section {
 }
 
 .statement {
-  width: 50%;
-  /*height: 1.5em;*/
-  overflow: auto;
-  margin-left: 25%;
+  float: right;
+  width: 10%
+}
+
+.statement2 {
+  float: right;
+  width: 40%
 }
 
 .itemsCompleted, .itemsYetToComplete, .timeCompleted, .timeYetToComplete {
@@ -490,12 +485,18 @@ section {
   float: left;
 }
 
-.itemsYetToComplete, .timeYetToComplete, .incomNumber {
-  color: #e05d6f;
+.itemsCompleted, .timeCompleted, .comNumber {
+  color: #C3C300;
 }
 
-.itemsCompleted, .timeCompleted, .comNumber {
-  color: #4c91cd;
+.itemsYetToComplete, .timeYetToComplete, .incomNumber {
+  color: #6FC853;
+}
+
+.itemsOverdue, .timeOverdue, .overdueNumber {
+  /*color: #e7eaeb;
+  color: #3f4e62;*/
+  color: #e05d6f;
 }
 
 .itemsCompleted p, .itemsYetToComplete p {
@@ -503,11 +504,11 @@ section {
 }
 
 .comNumber {
-  float: right;
+  float: left;
 }
 
 .incomNumber {
-  float: right;
+  float: left;
 }
 
 .timeCompleted, .timeYetToComplete {

@@ -217,12 +217,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       $scope.minutesWorked = comItemTally.minutesWorked;
       $scope.millisecondsWorked = comItemTally.millisecondsWorked;
 
-      $scope.itemLabels = ["items yet to complete", "items completed"];
-      $scope.itemData = [$scope.incomItemTally, $scope.comItemTally];
-      $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done"];
-      $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft];
+      var overdueTally = ItemCrud.tallyOverdue();
+      $scope.overdueTally = overdueTally.overdueCount;
+      $scope.hoursOverdue = overdueTally.hoursOverdue;
+      $scope.minutesOverdue = overdueTally.minutesOverdue;
+      $scope.millisecondsOverdue = overdueTally.millisecondsOverdue;
+
+      $scope.itemLabels = ["items yet to complete", "items completed", "items overdue"];
+      $scope.itemData = [$scope.incomItemTally, $scope.comItemTally, $scope.overdueTally];
+      $scope.millisecLabels = ["amount of work yet to be done", "Amount of work done", "amount of work overdue"];
+      $scope.millisecData = [$scope.millisecondsWorked, $scope.millisecondsLeft, $scope.millisecondsOverdue];
       $scope.series = ["Hours worked", "Hours yet to work"];
-      $scope.hourData = [$scope.hoursWorked, $scope.hoursLeft];
+      $scope.hourData = [$scope.hoursWorked, $scope.hoursLeft, $scope.hoursOverdue];
       $scope.hourLabel = ["Hours worked", "Hours yet to work"]
     };
 

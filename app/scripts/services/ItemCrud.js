@@ -240,6 +240,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
         }
       },
 // Similar to function above, the one below gathers data for items marked as INcomplete.  It is called by UserCtrl function '$scope.completionData' when this latter is called when (1) userincompleteItems.html is initialized and (2) when '$scope.markAsComplete', (3) '$scope.markAsIncomplete', (4) '$scope.updateItem', and (5) '$scope.addItem' are called.
+
       tallyIncompleteItems: function () {
         var itemCount = 0;
         var hours = 0;
@@ -263,6 +264,32 @@ listo.factory("ItemCrud", ["$firebaseArray",
           minutesLeft: minutesLeft,
           millisecondsLeft: millisecondsLeft,
           itemCount: itemCount
+        }
+      },
+
+      tallyOverdue: function () {
+        var overdueCount = 0;
+        var hours = 0;
+        var minutes = 0;
+        var totalItems = items.length;
+
+        for (var i = 0; i < totalItems; i++) {
+          if (items[i].qq_pastDue) {
+            overdueCount++;
+            hours = hours + items[i].m_hoursToFinish;
+            minutes = minutes + items[i].n_minutesToFinish;
+          }
+        }
+
+        var hoursOverdue = clockTime(hours, minutes).hours;
+        var minutesOverdue = clockTime(hours, minutes).minutes;
+        var millisecondsOverdue = clockTime(hours, minutes).milliseconds;
+
+        return {
+          hoursOverdue: hoursOverdue,
+          minutesOverdue: minutesOverdue,
+          millisecondsOverdue: millisecondsOverdue,
+          overdueCount: overdueCount
         }
       },
 // The function below is the actual deletion process for items.  The user has the power to only mark items as complete.  Complete or Past Due (i.e. incomplete but not marked as complete after the due date) items are rescuable and able to be set as incomplete for up to a week.  After one week, all Complete and Past Due items are deleted when this function is called by UserCtrl function '$scope.refreshTalliesAndData', which is called when (1) 'userincompleteItems.html' is initialized, and when either (2) '$scope.updateItems', or (3) '$scope.addItem', or (4) '$scope.updateCompletion' are called.
@@ -306,6 +333,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
         }
         return itemCount;
       },
+
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
       updateCompletion: function(item) {
         var itemToBeUpdated = items.$getRecord(item.$id);
