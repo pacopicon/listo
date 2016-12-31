@@ -234,14 +234,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       }
     };
 
-    $scope.showIncompleteOrComplete = function() {
-      if ($scope.complete == false) {
-        return "item.q_completed";
-      } else {
-        return "!item.q_completed";
-      }
-    }
-
 // The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
     $scope.refreshTalliesAndData = function() {
       completionData();
