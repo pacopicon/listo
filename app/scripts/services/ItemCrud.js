@@ -2,7 +2,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
   function($firebaseArray) {
 
 // downloads data from Firebase database
-    var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
+    // var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
 
 
 
@@ -194,7 +194,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
           s_rank: itemProperties.rank,
-          t_created_at: Firebase.ServerValue.TIMESTAMP,
+          // t_created_at: Firebase.ServerValue.TIMESTAMP,
           u_completed_at: 0
         }).then(function(ref) {
           var id = ref.key();
