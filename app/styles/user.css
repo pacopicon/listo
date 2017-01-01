@@ -273,11 +273,12 @@ section {
 .pacoover p {
   margin-left: 0.5em;
   margin-bottom: 0.1em;
+  font-size: 0.8em;
 }
 
 .priorityCheckboxImportanceNameDate {
   float: left;
-  width: 94%;
+  width: 87%;
   min-height: 1.8em;
   overflow: hidden;
 }
@@ -366,11 +367,30 @@ section {
   overflow: hidden;
 }
 
-.editDeleteCell {
+.InfoEditDeleteCell {
   position: relative;
   overflow: hidden;
   float: right;
   padding: 0;
+  min-width: 3.5em;
+}
+
+/*.info-wrapper {
+  position: relative;
+  border-radius: 0.5em;
+  border: 2.5px solid #3f4e62;
+  height: 1.5em;
+  width: 1.5em;
+  float: left;
+  z-index: 0;
+}*/
+
+.fa-info-circle {
+  color: #3f4e62;
+  font-size: 1.5em;
+  z-index: 1;
+  margin: 0;
+  left: 1.5em;
 }
 
 .editBtn, .deleteBtn {
@@ -379,12 +399,6 @@ section {
   float: right;
   text-decoration: none;
   text-align: center;
-}
-
-.fa-info-circle {
-  color: #3f4e62;
-  font-size: 1.8em;
-  padding-top: 0em;
 }
 
 .editBtn {
@@ -422,6 +436,10 @@ section {
   color: #e05d6f;
 }
 
+.redBorder {
+  border: #e05d6f;
+}
+
 .redCell {
   background-color: #e05d6f;
 }
@@ -432,6 +450,10 @@ section {
 
 .yellowCell {
   background-color: #C3C300;
+}
+
+.yellowBorder {
+  border: #C3C300;
 }
 
 /*End Item Display elements*/
@@ -491,6 +513,23 @@ section {
   color: #3f4e62;
   text-align: center;
   font-size: 1.5em;
+}
+
+.btn-chart {
+  border-radius: 0.3em;
+  height: 1.5em;
+  width: 1.5em;
+  border-style: none;
+  background-color: #e7eaeb;
+  float: right;
+}
+
+.fa-pie-chart {
+  margin-top: 0.25em;
+}
+
+.btn-chart:hover {
+  background-color: #d8dddf;
 }
 
 .barChart {

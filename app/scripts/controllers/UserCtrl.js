@@ -182,7 +182,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     $scope.isCompleted = false;
 
-    // Begin CRUD Functions-------------------------------
+// Begin CRUD Functions
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
@@ -194,6 +194,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
       ItemCrud.updateCompletion(item);
       $scope.refreshTalliesAndData();
     };
+
+// End CRUD Functions
+
+// Begin calendar variables and functions
+
+    $scope.dateObject = function () {
+
+    };
+
+// End calendar variables and functions
 
     var completionData = function() {
       var sortedTallyLastSeven = ItemCrud.sortAndTally("lastSeven");

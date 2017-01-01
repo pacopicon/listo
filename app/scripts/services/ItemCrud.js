@@ -72,13 +72,13 @@ listo.factory("ItemCrud", ["$firebaseArray",
         urgencyAddend = 0;
       }
       // the below calculates the importanceMultiple according to the importance given by the user to the item
-      if (importanceTxt == '!!!!!') {
+      if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>") {
         importanceMultiple = 3 + urgencyAddend;
-      } else if (importanceTxt == '!!!!') {
+      } else if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>") {
         importanceMultiple = 2.5 + urgencyAddend;
-      } else if (importanceTxt == '!!!') {
+      } else if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star'></i>") {
         importanceMultiple = 2 + urgencyAddend;
-      } else if (importanceTxt == '!!') {
+      } else if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star-half'></i>") {
         importanceMultiple = 1.5 + urgencyAddend;
       } else {
         importanceMultiple = 1.1 + urgencyAddend;
@@ -235,26 +235,28 @@ listo.factory("ItemCrud", ["$firebaseArray",
         for (var i = 0; i < totalItems; i++) {
           // if option = true, then the function only picks out items from the last 7 days.  if option = false, it will pick all items.
           if (option == "lastSeven") {
-            var week = items[i].b_dueDate + week > now;
+            var weekBoolean = (items[i].b_dueDate >= now - week) && (items[i].b_dueDate <= now);
+            console.log("lastSeven weekBoolean is " + weekBoolean);
           } else if (option == "nextSeven"){
-            var week = items[i].b_dueDate + week <= now;;
+            var weekBoolean = (items[i].b_dueDate <= now + week) && (items[i].b_dueDate >= now);
+            console.log("nextSeven weekBoolean is " + weekBoolean);
           } else {
-            var week = true;
+            var weekBoolean = true;
           }
 
-          if (week && items[i].q_completed && !items[i].qq_pastDue) {
+          if (weekBoolean && items[i].q_completed && !items[i].qq_pastDue) {
             itemWorkedCount++;
             hoursWorked = hoursWorked + items[i].m_hoursToFinish;
             minutesWorked = minutesWorked + items[i].n_minutesToFinish;
-          } else if (week && !items[i].q_completed && !items[i].qq_pastDue) {
+          } else if (weekBoolean && !items[i].q_completed && !items[i].qq_pastDue) {
             itemLeftCount++;
             hoursLeft = hoursLeft + items[i].m_hoursToFinish;
             minutesLeft = minutesLeft + items[i].n_minutesToFinish;
-          } else if (week && !items[i].q_completed && items[i].qq_pastDue) {
+          } else if (weekBoolean && !items[i].q_completed && items[i].qq_pastDue) {
             itemOverdueCount++;
             hoursOverdue = hoursOverdue + items[i].m_hoursToFinish;
             minutesOverdue = minutesOverdue + items[i].n_minutesToFinish;
-          } else if (week && items[i].q_completed && items[i].qq_pastDue) {
+          } else if (weekBoolean && items[i].q_completed && items[i].qq_pastDue) {
             itemDueCompleteCount++;
             hoursDueComplete = hoursDueComplete + items[i].m_hoursToFinish;
             minutesDueComplete = minutesDueComplete + items[i].n_minutesToFinish;
