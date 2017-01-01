@@ -757,6 +757,10 @@ section {
 
 @media only screen and (min-width : 768px) and (max-width : 929px) {
 
+  .time {
+    width: 18%;
+  }
+
   .importance {
     width: 13%;
   }
@@ -771,6 +775,10 @@ section {
 
 
 @media only screen and (min-width : 930px) and (max-width : 1076px) {
+
+  .time {
+    width: 13%;
+  }
 
   .importance {
     width: 20.5%;
