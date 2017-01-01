@@ -1,5 +1,13 @@
-<section ng-controller="UserCtrl" class="user">
+<section ng-controller="UserCtrl" class="user" ng-cloak>
   <!-- <tabs data="tabData" type="tabs"></tabs> -->
 <h1>Log in page</h1>
+
+
 <div ui-sref="userIncompleteItems" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></div>
 </section>
+
+
+<form ng-submit="">
+  <input class="form-control" ng-model="userEmail" placeholder="enter your email" />
+  <input class="form-control" ng-model="userPassword" placeholder="enter your password" />
+</form>

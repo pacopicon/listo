@@ -8,12 +8,6 @@ listo.factory("ItemCrud", ["$firebaseArray",
 // holds data as array of objects.  Each object is one item.
     var items = $firebaseArray(ref);
 
-    var checkIfComplete = function(item) {
-      if (item.q_completed == true) {
-        return item;
-      }
-    };
-
 // Public variables below
     var now = Date.now();
     var week = 604800000;
@@ -110,6 +104,9 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
+      getRef: function() {
+        return ref;
+      },
       // The function below and the one underneath, 'parseTime' are both called by '$scope.parseTime' in UserCtrl to display detailed estimated time to completion info for item in DOM
       calculateTimeTillDueDate: function(dueDate, time) {
         if (typeof dueDate === "object") {
@@ -380,6 +377,24 @@ listo.factory("ItemCrud", ["$firebaseArray",
         }
         items.$save(itemToBeUpdated);
       },
+
+      checkItemArrayForCompletionStatus: function(items) {
+        var completeItemCount = 0;
+        var incompleteItemCount = 0;
+
+        for (var i = 0; i < items.length; i++) {
+          if (item.q_completed = true) {
+              completeItemCount++;
+          } else {
+              incompleteItemCount++;
+          }
+        }
+
+        return {
+          comCount: completeItemCount,
+          incomCount: incompleteItemCount
+        };
+      }
 
     }; // end of Return
 

@@ -15,7 +15,7 @@
         <li ui-sref="userIncompleteItems" ng-click="refreshTalliesAndData()" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
         <li ui-sref="calendar" ng-click="refreshTalliesAndData()" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
         <li ui-sref="userCompleteItems" ng-click="refreshTalliesAndData()" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
-        <li ui-sref="landing" ng-click="refreshTalliesAndData()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
+        <li ui-sref="landing" ng-click="authObj.$unauth()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
       </ul>
     </div> <!-- End collapse navbar-collapse -->
   </div>
@@ -39,7 +39,7 @@
 </div>
 <!--end Clock-->
 <!--begin FORM-->
-  <div ng-if="!incomplete" class="containerPad">
+  <div class="containerPad">
     <div class="container-fluid main-body form-body">
       <div class="form row">
         <form ng-submit="addItem()"><!-- push a new message onto the array-->
@@ -81,9 +81,10 @@
 <!--end FORM-->
 <!--ItemDisplay-->
   <div class="container-fluid main-body">
-    <p class="noItemAnnounce" ng-if="incomItemTally == 0">There are no to do items at this time</p>
+
     <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
     <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
+    <p class="noItemAnnounce" ng-if="itemTally.incomCount == 0">There are no to do items at this time</p>
     <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
       <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
@@ -143,20 +144,20 @@
           <span ng-if="parseTime(item.b_dueDate).second < parseTime(time).second - 1">{{parseTime(time).second - parseTime(item.b_dueDate).second}} seconds</span> ago</span>
         </p>
       </div>
-
 <!-- end INFO TOOLTIP -->
+
 <!-- being EDIT + DELETE + INFO-->
       <div class="InfoEditDeleteCell">
-        <!-- <div class="info-wrapper" ng-class="{'redBorder': (item.qq_pastDue && !makeYellow), yellowBorder: makeYellow}"> -->
         <i ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" class="fa fa-info-circle"></i>
-        <!-- </div> -->
         <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
         <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p><i class="fa fa-times"></i></p></button>
       </div>
 <!-- end EDIT + DELETE + INFO-->
+
     </div> <!-- item Display and ng-repeat end -->
   </div> <!--container-fluid main-body end-->
 <!--end ITEM DISPLAY-->
+
 <!--begin lastSeven day GRAPHS-->
   <div class="containerPad">
     <div class="container-fluid main-body">

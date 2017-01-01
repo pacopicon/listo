@@ -1,21 +1,6 @@
-<p> item due in: <span ng-if="parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}}yr</span>
-<span ng-if="parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}}mth</span>
-<span ng-if="parseTime(item.b_dueDate).day > 0">{{parseTime(item.b_dueDate).day}}days</span>
-<span ng-if="parseTime(item.b_dueDate).hour > 0">{{parseTime(item.b_dueDate).hour}}hrs </span>
-<span ng-if="parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}}mins</span>
-<span ng-if="parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}}secs</span>
-
-<span ng-if="parseTime(item.b_dueDate).year < 0 && parseTime(item.b_dueDate).month < 0 && parseTime(item.b_dueDate).day < 0 && parseTime(item.b_dueDate).hour < 0 && parseTime(item.b_dueDate).minute < 0 && parseTime(item.b_dueDate).second < 0"><p>Item was due
-<span ng-if="parseTime(item.b_dueDate).year == parseTime(Date.now()).year - 1">{{parseTime(item.b_dueDate).year}} - {{parseTime(Date.now()).year}} years</span>
-<span ng-if="parseTime(item.b_dueDate).year > parseTime(Date.now()).year">{{parseTime(item.b_dueDate).year}} - {{parseTime(Date.now()).year}} yr</span>,
-<span ng-if="parseTime(item.b_dueDate).month == parseTime(Date.now()).month - 1">{{parseTime(item.b_dueDate).month}} - {{parseTime(Date.now()).month}} month</span>
-<span ng-if="parseTime(item.b_dueDate).month > parseTime(Date.now()).month">{{parseTime(item.b_dueDate).month}} - {{parseTime(Date.now()).month}}  months</span>,
-<span ng-if="parseTime(item.b_dueDate).day == parseTime(Date.now()).day - 1">{{parseTime(item.b_dueDate).day}} - {{parseTime(Date.now()).day}} day</span>
-<span ng-if="parseTime(item.b_dueDate).day > parseTime(Date.now()).day">{{parseTime(item.b_dueDate).day}} - {{parseTime(Date.now()).day}} day</span>
-<span ng-if="parseTime(item.b_dueDate).hour == parseTime(Date.now()).hour - 1">{{parseTime(item.b_dueDate).hour}} - {{parseTime(Date.now()).hour}} hour</span>
-<span ng-if="parseTime(item.b_dueDate).hour > parseTime(Date.now()).hour">{{parseTime(item.b_dueDate).hour}} - {{parseTime(Date.now()).hour}} hours</span>,
-<span ng-if="parseTime(item.b_dueDate).minute == parseTime(Date.now()).minute - 1">{{parseTime(item.b_dueDate).minute}} - {{parseTime(Date.now()).minute}} minute</span>
-<span ng-if="parseTime(item.b_dueDate).minute > parseTime(Date.now()).minute">{{parseTime(item.b_dueDate).minute}} - {{parseTime(Date.now()).minute}} minutes</span> and
-
-<span ng-if="parseTime(item.b_dueDate).second == parseTime(Date.now()).second - 1">{{parseTime(item.b_dueDate).second}} - {{parseTime(Date.now()).second}} second</span>
-<span ng-if="parseTime(item.b_dueDate).second > parseTime(Date.now()).second">{{parseTime(item.b_dueDate).second}} - {{parseTime(Date.now()).second}} seconds</span> ago</p></span> 
+<!-- <div ui-sref="signup" class="link signup">
+  <p>sign up</p>
+</div>
+<div ui-sref="userIncompleteItems" class="link login">
+  <p>login</p>
+</div> -->

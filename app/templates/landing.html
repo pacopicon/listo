@@ -5,13 +5,11 @@
 </div>
 </section>
 <div class="link-container">
-  <div class="buttons">
-    <div ui-sref="signup" class="link signup">
-      <p>sign up</p>
-    </div>
-    <div ui-sref="user" class="link login">
-      <p>login</p>
-    </div>
+  <div ng-controller="AuthCtrl" class="buttons">
+    <button ng-click="signup()">Login with Github</button>
+    <button ng-click="login()">Login with Github</button>
+    <button ng-click="logout()">Logout</button>
+
   </div>
 </div>
 <section class="selling-points container clearfix">

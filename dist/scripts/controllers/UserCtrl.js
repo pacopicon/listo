@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover",
-  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout, $q, $sce, $tooltip, $popover) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
+  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -8,36 +8,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     var items = $scope.items;
 
-    var checkIfComplete = function(item) {
-      if (item.q_completed == true) {
-        return item;
-      }
-    };
+    $scope.checkItemArrayForCompletionStatus = function() {
+      var itemTally = ItemCrud.checkItemArrayForCompletionStatus(items);
 
-    $scope.completeItems = items.filter(checkIfComplete);
-
-    var checkIfNotComplete = function(item) {
-      if (item.q_completed == false) {
-        return item;
-      }
-    };
-
-    $scope.incompleteItems = items.filter(checkIfNotComplete);
-
-    $scope.noCompleteItems = function() {
-      if (!$scope.incompleteItems[0]) {
-        return true;
-      } else {
-        return false;
-      }
-    };
-
-    $scope.noinompleteItems = function() {
-      if (!$scope.incompleteItems[0]) {
-        return true;
-      } else {
-        return false;
-      }
+      return itemTally;
     };
 
     var refreshTime = function() {
