@@ -194,10 +194,10 @@ listo.factory("ItemCrud", ["$firebaseArray",
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
           s_rank: itemProperties.rank,
-          // t_created_at: Firebase.ServerValue.TIMESTAMP,
+          t_created_at: firebase.database.ServerValue.TIMESTAMP,
           u_completed_at: 0
         }).then(function(ref) {
-          var id = ref.key();
+          var id = ref.key;
           console.log("added item with id " + id);
           items.$indexFor(id);
         });
@@ -393,7 +393,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
         if (itemToBeUpdated.q_completed == false) {
           itemToBeUpdated.q_completed = true;
-          itemToBeUpdated.u_completed_at = Firebase.ServerValue.TIMESTAMP;
+          itemToBeUpdated.u_completed_at = firebase.database.ServerValue.TIMESTAMP;
         } else {
           itemToBeUpdated.q_completed = false;
           itemToBeUpdated.u_completed_at = 0;
