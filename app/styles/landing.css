@@ -7,45 +7,62 @@ body.landing {
   text-align: center;
 }
 
-.buttons {
-  /*width: 50%;
-  height: 50%;
-  overflow: auto;
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;*/
+.forms {
+  position: relative;
+  width: 30%;
+  min-width: 20em;
+  left: 33%;
+  height: 10em;
  }
 
+.emailForm, .passwordForm {
+  width: 100%;
+  height: 3em;
+  border-radius: 1.5em;
+  margin-bottom: 1em;
+}
+
 .signup, .login {
-  height: 1em;
-  width: 3em;
-  border-radius: 1em;
+  height: 3em;
+  width: 10em;
+  border-radius: 1.5em;
   border: 2.5px solid #4c91cd;
-}
-
-.signup:hover, .login:hover {
-  bottom: 0.2em;
-}
-
-.signup:active, .login:active {
-  background-color: #4c91cd;
-}
-
-.signup p:active, .login p:active {
-  color: white;
-}
-
-.login {
-  margin-left: 2em;
 }
 
 .signup p, .login p {
   font-size: 20px;
   letter-spacing: 0;
   text-align: center;
-  padding-top: 0.4em;
+  padding-top: 0.2em;
   font-family: 'Montserrat', sans-serif;
   color: #4c91cd;
+}
+
+.signup p:active, .login p:active {
+  color: white;
+}
+
+.login:active, .signup:active {
+  background-color: #4c91cd;
+}
+
+.signup {
+  float: left;
+  /*margin-left: 5em;*/
+}
+
+.login {
+  float: right;
+  /*margin-right: 5em;*/
+}
+
+.signup:hover, .login:hover {
+  /*background-color: #3f4e62;*/
+
+}
+
+.signup p:hover, .login p:hover {
+  color: white;
 }
 
 .fa-user-plus, .fa-sign-in {

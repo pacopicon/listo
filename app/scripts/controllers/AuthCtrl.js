@@ -1,19 +1,51 @@
 listo.controller('AuthCtrl', ["$scope", "ItemCrud", "$rootScope", "$firebaseAuth",
   function($scope, ItemCrud, $rootScope, $firebaseAuth) {
 
-    var ref = ItemCrud.getRef();
+    // var ref = ItemCrud.getRef();
+    var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
 
+
+    var authObj = $firebaseAuth(ref);
+
+
+    $scope.signup = function() {
+      authObj.$createUser({
+        email: "my@email.com",
+        password: "mypassword"
+      }).then(function(userData) {
+        console.log("User " + userData.uid + " created successfully!");
+
+        return $scope.authObj.$authWithPassword({
+          email: "my@email.com",
+          password: "mypassword"
+        });
+      }).then(function(authData) {
+        console.log("Logged in as:", authData.uid);
+      }).catch(function(error) {
+        console.error("Error: ", error);
+      });
+    };
+    //
+    // $scope.signup = function() {
+    //   auth.createUserWtihEmailAndPassword($scope.email, $scope.password);
+    // };
+
+
+
+    //
     // var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
-
-    var auth = $firebaseAuth(ref);
-
-    // returns promise
-    auth.signInWithEmailAndPassword(email, pass);
-    // returns promise
-    auth.createUserWtihEmailAndPassword(email, pass);
-
-    auth.onAuthStateChanged(firebaseUser );
-
+    //
+    // var auth = $firebaseAuth(ref);
+    //
+    // var githubAuth = auth.GithubAuthProvider();
+    //
+    // // returns promise
+    // auth.signInWithEmailAndPassword(email, pass);
+    // // returns promise
+    //
+    //
+    // auth.onAuthStateChanged(firebaseUser );
+    //
 
 
 

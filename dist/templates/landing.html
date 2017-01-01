@@ -5,12 +5,14 @@
 </div>
 </section>
 <div class="link-container">
-  <div ng-controller="AuthCtrl" class="buttons">
-    <button ng-click="signup()">Login with Github</button>
-    <button ng-click="login()">Login with Github</button>
-    <button ng-click="logout()">Logout</button>
+  <div ng-controller="AuthCtrl" class="form-group forms">
+    <input class="form-control emailForm" ng-model="email" placeholder="enter e-mail" />
+    <input class="form-control passwordForm" ng-model="password" placeholder="enter password" />
 
+    <div ng-click="signup()" class="signup"><p>sign up</p></div>
+    <div ng-click="login()" class="login"><p>log in</p></div>
   </div>
+</div>
 </div>
 <section class="selling-points container clearfix">
   <div class="point column third">
