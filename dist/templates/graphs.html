@@ -1,0 +1,123 @@
+<section ng-controller="UserCtrl" class="user">
+  
+  <!--begin lastSeven day GRAPHS-->
+    <div class="containerPad">
+      <div class="container-fluid main-body">
+        <div class="allCharts">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the last seven days <div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="itemDataLastSeven" chart-labels="itemLabelsLastSeven">
+            </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{itemWorkedCountLastSeven}} ( {{percentItemsCompleteOnTimeLastSeven}}%) </p></div>
+              <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemLeftCountLastSeven}}  ({{percentTotalIncompleteNotOverdueLastSeven}}%) </p></div>
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{itemOverdueCountLastSeven}} ( {{percentTotalOverdueNotCompleteLastSeven}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountLastSeven}} ({{percentTotalOverdueCompleteLastSeven}}%) </p></div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
+            <canvas id="bar" class="chart chart-bar"
+          chart-data="hourDataLastSeven" chart-labels="hourLabelsLastSeven" chart-series="seriesLastSeven" chart-options="options">
+            </canvas>
+            <!-- <div class="chart-legend">
+                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorked}} hrs, {{minutesWorked}} mins</p></div>
+                <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeft}} hrs, {{minutesLeft}} mins</p></div>
+                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdue}} hrs, {{minutesOverdue}} mins</p></div>
+                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
+            </div> -->
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="itemDataCompleteIncompleteTotalLastSeven" chart-labels="itemLabelsCompleteIncompleteTotalLastSeven">
+            </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">total complete: </p><div class="statement"><p class="comNumber">{{totalCompleteCountLastSeven}} ( {{percentTotalIncompleteLastSeven}}%) </p></div>
+              <p class="itemsYetToComplete">total incomplete: </p><div class="statement"><p class="incomNumber">{{totalIncompleteCountLastSeven}}  ({{percentTotalCompleteLastSeven}}%) </p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--end lastSeven GRAPHS-->
+  <!--begin nextSeven day GRAPHS-->
+    <div class="containerPad">
+      <div class="container-fluid main-body">
+        <div class="allCharts">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the next seven days<div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="itemDataNextSeven" chart-labels="itemLabelsNextSeven">
+            </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{itemWorkedCountNextSeven}} ( {{percentItemsCompleteOnTimeNextSeven}}%) </p></div>
+              <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemLeftCountNextSeven}}  ({{percentTotalIncompleteNotOverdueNextSeven}}%) </p></div>
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{itemOverdueCountNextSeven}} ( {{percentTotalOverdueNotCompleteNextSeven}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountNextSeven}} ({{percentTotalOverdueCompleteNextSeven}}%) </p></div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
+            <canvas id="bar" class="chart chart-bar"
+          chart-data="hourDataNextSeven" chart-labels="hourLabelsNextSeven" chart-series="seriesNextSeven" chart-options="options">
+            </canvas>
+            <!-- <div class="chart-legend">
+                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorked}} hrs, {{minutesWorked}} mins</p></div>
+                <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeft}} hrs, {{minutesLeft}} mins</p></div>
+                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdue}} hrs, {{minutesOverdue}} mins</p></div>
+                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
+            </div> -->
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="itemDataCompleteIncompleteTotalNextSeven" chart-labels="itemLabelsCompleteIncompleteTotalNextSeven">
+            </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">total complete: </p><div class="statement"><p class="comNumber">{{totalCompleteCountNextSeven}} ( {{percentTotalIncompleteNextSeven}}%) </p></div>
+              <p class="itemsYetToComplete">total incomplete: </p><div class="statement"><p class="incomNumber">{{totalIncompleteCountNextSeven}}  ({{percentTotalCompleteNextSeven}}%) </p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--end nextSeven day GRAPHS-->
+  <!--begin OVERALL GRAPHS-->
+    <div class="containerPad">
+      <div class="container-fluid main-body">
+        <div class="allCharts">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: overall<div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="itemDataOverall" chart-labels="itemLabelsOverall">
+            </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{itemWorkedCountOverall}} ( {{percentItemsCompleteOnTimeOverall}}%) </p></div>
+              <p class="itemsYetToComplete">due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemLeftCountOverall}}  ({{percentTotalIncompleteNotOverdueOverall}}%) </p></div>
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{itemOverdueCountOverall}} ( {{percentTotalOverdueNotCompleteOverall}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountOverall}} ({{percentTotalOverdueCompleteOverall}}%) </p></div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
+            <canvas id="bar" class="chart chart-bar"
+          chart-data="hourDataOverall" chart-labels="hourLabelsOverall" chart-series="seriesOverall" chart-options="options">
+            </canvas>
+            <!-- <div class="chart-legend">
+                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorked}} hrs, {{minutesWorked}} mins</p></div>
+                <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeft}} hrs, {{minutesLeft}} mins</p></div>
+                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdue}} hrs, {{minutesOverdue}} mins</p></div>
+                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
+            </div> -->
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+            <canvas id="doughnut" class="chart chart-doughnut"
+          chart-data="itemDataCompleteIncompleteTotalOverall" chart-labels="itemLabelsCompleteIncompleteTotalOverall">
+            </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">total complete: </p><div class="statement"><p class="comNumber">{{totalCompleteCountOverall}} ( {{percentTotalIncompleteOverall}}%) </p></div>
+              <p class="itemsYetToComplete">total incomplete: </p><div class="statement"><p class="incomNumber">{{totalIncompleteCountOverall}}  ({{percentTotalCompleteOverall}}%) </p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <!--end OVERALL GRAPHS-->
+</section>
