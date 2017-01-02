@@ -161,7 +161,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunch
             ItemCrud.updateCompletion(oldItem);
           }
 
-          UserCtrlRefreshTalliesAndData();
+          $scope.UserCtrlRefreshTalliesAndData();
         });
       });
 
@@ -177,28 +177,21 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunch
 // Begin CRUD Functions
 
 // Brought this over from GraphCtrl, since DOM makes many $scope calls to it and cannot simplify GraphCtrl into a service incjectable into the present controller.
-    var UserCtrlRefreshTalliesAndData = function() {
+    $scope.UserCtrlRefreshTalliesAndData = function() {
       $rootScope.$emit("refreshData", {});
     };
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
 
-      UserCtrlRefreshTalliesAndData();
+      $scope.UserCtrlRefreshTalliesAndData();
     };
 
     $scope.updateCompletion = function(item) {
       ItemCrud.updateCompletion(item);
 
-      UserCtrlRefreshTalliesAndData();
+      $scope.UserCtrlRefreshTalliesAndData();
     };
-
-    listo.run(function($rootScope, $urlRouter) {
-        $rootScope.$on('$locationChangeSuccess', function(evt) {
-          console.log("refresh fn called");
-          UserCtrlRefreshTalliesAndData();
-        });
-    });
 
 
 

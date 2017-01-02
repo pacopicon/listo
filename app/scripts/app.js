@@ -18,6 +18,11 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             controller: 'UserCtrl',
             templateUrl: '/templates/user.html'
         })
+        .state('navbar', {
+            url: '/navbar',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/navbar.html'
+        })
         .state('userIncompleteItems', {
             url: '/userIncompleteItems',
             controller: 'UserCtrl',

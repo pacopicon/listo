@@ -1,25 +1,5 @@
 <section ng-controller="UserCtrl" class="user">
-<nav class="navbar">
-
-  <div class="navbar-header hamburger">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false"><i class="fa fa-bars"></i>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <!-- <a class="navbar-brand" href="#">Listo!</a> -->
-  </div>
-  <div class="container-fluid nav-container">
-    <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav left">
-        <li ui-sref="userIncompleteItems" ng-click="refreshTalliesAndData()" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
-        <li ui-sref="calendar" ng-click="refreshTalliesAndData()" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
-        <li ui-sref="userCompleteItems" ng-click="refreshTalliesAndData()" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
-        <li ui-sref="landing" ng-click="refreshTalliesAndData()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
-      </ul>
-    </div> <!-- End collapse navbar-collapse -->
-  </div>
-</nav>
+  <div ng-include="'/templates/navbar.html'"></div>
 <body>
   <div class="list-group">
     <!--begin Clock-->
@@ -70,37 +50,10 @@
           </div>
         </div>
 
-<!-- begin INFO TOOLTIP -->
-        <div ng-if="hover" class="pacoover">
-          <p><span ng-if="item.r_urgent">item status: urgent </span><span ng-if="!item.r_urgent">item status: not urgent </span></p>
-          <p>time to finish: {{item.m_hoursToFinish}} hrs, {{item.m_hoursToFinish}} mins</p>
-          <p>item created on {{item.t_created_at | date: 'M/d/yy h:mm a'}}</p>
-          <span ng-if="item.u_completed_at > 0"><p>item completed on {{item.u_completed_at | date: 'M/d/yy h:mm a'}}</p></span>
-          <p>
-            <span ng-if="!item.qq_pastDue">item due in: </span>
-            <span ng-if="parseTime(item.b_dueDate).year == 1">{{parseTime(item.b_dueDate).year}} year,</span><span ng-if="parseTime(item.b_dueDate).year > 1">{{parseTime(item.b_dueDate).year}} years,</span>
-            <span ng-if="parseTime(item.b_dueDate).month == 1">{{parseTime(item.b_dueDate).month}} month</span><span ng-if="parseTime(item.b_dueDate).month > 1">{{parseTime(item.b_dueDate).month}} months</span>
-            <span ng-if="parseTime(item.b_dueDate).day == 1">{{parseTime(item.b_dueDate).day}} day</span><span ng-if="parseTime(item.b_dueDate).day > 1">{{parseTime(item.b_dueDate).day}} days</span>
-            <span ng-if="parseTime(item.b_dueDate).hour == 1">{{parseTime(item.b_dueDate).hour}} hour</span><span ng-if="parseTime(item.b_dueDate).hour > 1">{{parseTime(item.b_dueDate).hour}} hours</span>
-            <span ng-if="parseTime(item.b_dueDate).minute == 1">{{parseTime(item.b_dueDate).minute}} minute</span><span ng-if="parseTime(item.b_dueDate).minute > 1">{{parseTime(item.b_dueDate).minute}} minutes</span>
-            <span ng-if="parseTime(item.b_dueDate).second == 1">{{parseTime(item.b_dueDate).second}} second</span><span ng-if="parseTime(item.b_dueDate).second > 1">{{parseTime(item.b_dueDate).second}} seconds</span>
-
-            <span ng-if="item.qq_pastDue">item was due
-            <span ng-if="parseTime(item.b_dueDate).year == parseTime(time).year - 1">{{parseTime(time).year - parseTime(item.b_dueDate).year}} year,</span>
-            <span ng-if="parseTime(item.b_dueDate).year < parseTime(time).year - 1">{{parseTime(time).year - parseTime(item.b_dueDate).year}} years,</span>
-            <span ng-if="parseTime(item.b_dueDate).month == parseTime(time).month - 1">{{parseTime(time).month - parseTime(item.b_dueDate).month}} month,</span>
-            <span ng-if="parseTime(item.b_dueDate).month < parseTime(time).month - 1">{{parseTime(time).month - parseTime(item.b_dueDate).month}}  months,</span>
-            <span ng-if="parseTime(item.b_dueDate).day == parseTime(time).day - 1">{{parseTime(time).day - parseTime(item.b_dueDate).day}} day,</span>
-            <span ng-if="parseTime(item.b_dueDate).day < parseTime(time).day - 1">{{parseTime(time).day - parseTime(item.b_dueDate).day}} days,</span>
-            <span ng-if="parseTime(item.b_dueDate).hour == parseTime(time).hour - 1">{{parseTime(time).hour - parseTime(item.b_dueDate).hour}} hour,</span>
-            <span ng-if="parseTime(item.b_dueDate).hour < parseTime(time).hour - 1">{{parseTime(time).hour - parseTime(item.b_dueDate).hour}} hours,</span>
-            <span ng-if="parseTime(item.b_dueDate).minute == parseTime(time).minute - 1">{{parseTime(time).minute - parseTime(item.b_dueDate).minute}} minute and</span>
-            <span ng-if="parseTime(item.b_dueDate).minute < parseTime(time).minute - 1">{{parseTime(time).minute - parseTime(item.b_dueDate).minute}} minutes and</span>
-            <span ng-if="parseTime(item.b_dueDate).second == parseTime(time).second - 1">{{parseTime(time).second - parseTime(item.b_dueDate).second}} second </span>
-            <span ng-if="parseTime(item.b_dueDate).second < parseTime(time).second - 1">{{parseTime(time).second - parseTime(item.b_dueDate).second}} seconds</span> ago</span>
-          </p>
-        </div>
-        
+<<!-- begin INFO TOOLTIP -->
+      <div ng-if="hover" class="pacoover">
+        <div ng-include="'/templates/pacooverTooltip.html'"></div>
+      </div>
 <!-- end INFO TOOLTIP -->
 
 <!--HOVERINFO + EDIT + DELETE-->

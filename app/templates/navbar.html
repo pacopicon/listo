@@ -1,0 +1,24 @@
+<section ng-controller="UserCtrl" class="user">
+<nav class="navbar">
+
+  <div class="navbar-header hamburger">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar" aria-expanded="false"><i class="fa fa-bars"></i>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <!-- <a class="navbar-brand" href="#">Listo!</a> -->
+  </div>
+  <div class="container-fluid nav-container">
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav left">
+        <li ng-click="UserCtrlRefreshTalliesAndData()" ui-sref="userIncompleteItems" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
+        <li ng-click="UserCtrlRefreshTalliesAndData()" ui-sref="calendar" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
+        <li ng-click="UserCtrlRefreshTalliesAndData()" ui-sref="userCompleteItems" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
+        <!-- The link below needs ng-controller="AuthCtrl" in wrapping <div> tags!-->
+        <li ui-sref="landing" ng-click="logout()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
+      </ul>
+    </div> <!-- End collapse navbar-collapse -->
+  </div>
+</nav>
+</section>
