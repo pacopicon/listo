@@ -139,6 +139,13 @@ section {
 
 /* Begin CSS for Form */
 
+.tip {
+  width: 0;
+  height: 0;
+  margin: 0;
+  padding: 0;
+}
+
 .name, .date, .importance, .time, .hour, .minute {
   padding-right: 0;
   padding-left: 0;
@@ -245,7 +252,7 @@ section {
   padding-top: 0.6em;
 }
 
-.itemDisplay, .pacoover {
+.itemDisplay {
   border-radius: 1em;
   background-color: #e7eaeb;
   color: #3f4e62;
@@ -260,20 +267,23 @@ section {
 }
 
 .pacoover {
+  min-height: 1.8em;
+  border-radius: 0.5em;
   position: absolute;
   right: 6.9%;
   z-index: 999;
   width: 30%;
   margin-bottom: 1em;
   /*border: 0.1px solid #3f4e62;*/
-  border: 5px solid white;
-  background-color: #d8dddf;
+  /*border: 5px solid white;*/
+  background-color: black;
 }
 
 .pacoover p {
   margin-left: 0.5em;
-  margin-bottom: 0.1em;
+  margin-bottom: 0.05em;
   font-size: 0.8em;
+  color: white;
 }
 
 .priorityCheckboxImportanceNameDate {
@@ -417,7 +427,7 @@ section {
 
 .deleteBtn .fa-times {
   font-size: 1.3em;
-  padding-top: 0em;
+  padding-top: 0.1em;
   padding-left: 0;
 }
 
@@ -769,7 +779,6 @@ section {
     margin-right: 0.9em;
     margin-left: 0.9em;
     width: 100%
-  }
 
 }
 

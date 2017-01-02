@@ -30,6 +30,31 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     // Begin AngularStrap popover
 
+    $scope.importanceTip = {
+      "title": "rate importance with stars",
+      "checked": false
+    };
+
+    $scope.dateTip = {
+      "title": "enter estimated time to complete in hours",
+      "checked": false
+    };
+
+    $scope.timeTip = {
+      "title": "enter estimated time to complete in minutes",
+      "checked": false
+    };
+
+    $scope.chartTip = {
+      "title": "click on me to refresh the charts",
+      "checked": false
+    };
+
+    $scope.editDeleteTip = {
+      "title": "click on me to edit, or check the item off and delete!",
+      "checked": false
+    };
+
     // End AngularStrap popover
 
     // Begin AngularStrap timePicker----------------
