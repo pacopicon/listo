@@ -1,10 +1,10 @@
-<section ng-controller="UserCtrl" class="user">
-  
+<section ng-controller="GraphCtrl" class="user">
+
   <!--begin lastSeven day GRAPHS-->
     <div class="containerPad">
       <div class="container-fluid main-body">
         <div class="allCharts">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the last seven days <div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the last seven days <div class="btn-chart" ng-click="GraphCtrlRefreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
           chart-data="itemDataLastSeven" chart-labels="itemLabelsLastSeven">
@@ -44,7 +44,7 @@
     <div class="containerPad">
       <div class="container-fluid main-body">
         <div class="allCharts">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the next seven days<div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the next seven days<div class="btn-chart" ng-click="GraphCtrlRefreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
           chart-data="itemDataNextSeven" chart-labels="itemLabelsNextSeven">
@@ -84,8 +84,8 @@
     <div class="containerPad">
       <div class="container-fluid main-body">
         <div class="allCharts">
-          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: overall<div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: overall<div class="btn-chart" ng-click="GraphCtrlRefreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
           chart-data="itemDataOverall" chart-labels="itemLabelsOverall">
             </canvas>
@@ -96,7 +96,7 @@
               <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountOverall}} ({{percentTotalOverdueCompleteOverall}}%) </p></div>
             </div>
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 barChart">
             <canvas id="bar" class="chart chart-bar"
           chart-data="hourDataOverall" chart-labels="hourLabelsOverall" chart-series="seriesOverall" chart-options="options">
             </canvas>
@@ -107,10 +107,20 @@
                 <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
             </div> -->
           </div>
-          <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
           chart-data="itemDataCompleteIncompleteTotalOverall" chart-labels="itemLabelsCompleteIncompleteTotalOverall">
             </canvas>
+            <div class="chart-legend">
+              <p class="itemsCompleted">total complete: </p><div class="statement"><p class="comNumber">{{totalCompleteCountOverall}} ( {{percentTotalIncompleteOverall}}%) </p></div>
+              <p class="itemsYetToComplete">total incomplete: </p><div class="statement"><p class="incomNumber">{{totalIncompleteCountOverall}}  ({{percentTotalCompleteOverall}}%) </p></div>
+            </div>
+          </div>
+          <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12 lineChart">
+            <canvas id="line" class="chart chart-line" chart-data="data"
+chart-labels="labels" chart-series="series" chart-options="options"
+chart-dataset-override="datasetOverride" chart-click="onClick">
+            </canvas
             <div class="chart-legend">
               <p class="itemsCompleted">total complete: </p><div class="statement"><p class="comNumber">{{totalCompleteCountOverall}} ( {{percentTotalIncompleteOverall}}%) </p></div>
               <p class="itemsYetToComplete">total incomplete: </p><div class="statement"><p class="incomNumber">{{totalIncompleteCountOverall}}  ({{percentTotalCompleteOverall}}%) </p></div>

@@ -2,10 +2,10 @@
 
 'use strict';
 
-listo.factory('ModalService', ['$animate', '$document', '$compile', '$controller', '$http', '$rootScope', '$q', '$templateRequest', '$timeout',
+listo.factory('modalService', ['$animate', '$document', '$compile', '$controller', '$http', '$rootScope', '$q', '$templateRequest', '$timeout',
   function($animate, $document, $compile, $controller, $http, $rootScope, $q, $templateRequest, $timeout) {
 
-  function ModalService() {
+  function modalService() {
 
     var self = this;
 
@@ -165,5 +165,5 @@ listo.factory('ModalService', ['$animate', '$document', '$compile', '$controller
 
   }
 
-  return new ModalService();
+  return new modalService();
 }]);

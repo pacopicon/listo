@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService', "$interval", "$log", "$http", "$locale", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
-  function($scope, ItemCrud, $rootScope, ModalService, $interval, $log, $http, $locale, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCruncher", "modalService", "$rootScope", "$interval", "$log", "$http", "$locale", "$location", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
+  function($scope, ItemCrud, graphCruncher, dateCruncher, modalService, $rootScope, $interval, $log, $http, $locale, $location, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -42,11 +42,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     $scope.timeTip = {
       "title": "enter estimated time to complete in minutes",
-      "checked": false
-    };
-
-    $scope.chartTip = {
-      "title": "click on me to refresh the charts",
       "checked": false
     };
 
@@ -127,15 +122,14 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
     // Begin Custom Modal-----------------
 
-    // $scope.item = null;
-
+    // Begin Custom Modal-----------------
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
       var t = new Date();
       console.log("step 1 - old name: " + $scope.oldItem.a_text + ", old date: " + new Date($scope.oldItem.b_dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
       // UserCtrl.js showComplex: item $id: -KUnjnUG90g4Ms_pkbC5 and name: short and item date 1478707118727
 
-      ModalService.showModal({
+      modalService.showModal({
         templateUrl: "templates/modal.html",
         controller: "ModalController",
         inputs: {
@@ -164,16 +158,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
           ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
           if (oldItem.q_completed == true) {
-            $scope.updateCompletion(oldItem);
+            ItemCrud.updateCompletion(oldItem);
           }
 
-          $scope.refreshTalliesAndData();
-
+          UserCtrlRefreshTalliesAndData();
         });
       });
 
-    };
-
+        };
+    // End Custom Modal-------------------
 
     // End Custom Modal-------------------
 
@@ -183,195 +176,33 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "$rootScope", 'ModalService'
 
 // Begin CRUD Functions
 
+// Brought this over from GraphCtrl, since DOM makes many $scope calls to it and cannot simplify GraphCtrl into a service incjectable into the present controller.
+    var UserCtrlRefreshTalliesAndData = function() {
+      $rootScope.$emit("refreshData", {});
+    };
+
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
 
-      $scope.refreshTalliesAndData();
+      UserCtrlRefreshTalliesAndData();
     };
 
     $scope.updateCompletion = function(item) {
       ItemCrud.updateCompletion(item);
-      $scope.refreshTalliesAndData();
+
+      UserCtrlRefreshTalliesAndData();
     };
+
+    listo.run(function($rootScope, $urlRouter) {
+        $rootScope.$on('$locationChangeSuccess', function(evt) {
+          console.log("refresh fn called");
+          UserCtrlRefreshTalliesAndData();
+        });
+    });
+
+
 
 // End CRUD Functions
 
-// Begin calendar variables and functions
-
-    $scope.dateObject = function () {
-
-    };
-
-// End calendar variables and functions
-
-    var completionData = function() {
-      var sortedTallyLastSeven = ItemCrud.sortAndTally("lastSeven");
-      var sortedTallyNextSeven = ItemCrud.sortAndTally("nextSeven");
-      var sortedTallyOverall = ItemCrud.sortAndTally("overall");
-
-      // Data for overall:
-
-      $scope.itemLeftCountOverall = sortedTallyOverall.itemLeftCount;
-      $scope.hoursLeftOverall = sortedTallyOverall.hoursLeft;
-      $scope.minutesLeftOverall = sortedTallyOverall.minutesLeft;
-      $scope.millisecondsLeftOverall = sortedTallyOverall.millisecondsLeft;
-
-      $scope.itemWorkedCountOverall = sortedTallyOverall.itemWorkedCount;
-      $scope.hoursWorkedOverall = sortedTallyOverall.hoursWorked;
-      $scope.minutesWorkedOverall = sortedTallyOverall.minutesWorked;
-      $scope.millisecondsWorkedOverall = sortedTallyOverall.millisecondsWorked;
-
-      $scope.itemOverdueCountOverall = sortedTallyOverall.itemOverdueCount;
-      $scope.hoursOverdueOverall = sortedTallyOverall.hoursOverdue;
-      $scope.minutesOverdueOverall = sortedTallyOverall.minutesOverdue;
-      $scope.millisecondsOverdueOverall = sortedTallyOverall.millisecondsOverdue;
-
-      $scope.itemDueCompleteCountOverall = sortedTallyOverall.itemDueCompleteCount;
-      $scope.hoursDueCompleteOverall = sortedTallyOverall.hoursDueComplete;
-      $scope.minutesDueCompleteOverall = sortedTallyOverall.minutesDueComplete;
-      $scope.millisecondsDueCompleteOverall = sortedTallyOverall.millisecondsDueComplete;
-
-      $scope.totalItemCountOverall = sortedTallyOverall.totalItemCount;
-      $scope.totalCompleteCountOverall = sortedTallyOverall.totalCompleteCount;
-      $scope.totalIncompleteCountOverall = sortedTallyOverall.totalIncompleteCount;
-      $scope.totalOverdueCountOverall = sortedTallyOverall.totalOverdueCount;
-      $scope.totalOverdueCountOverall = sortedTallyOverall.totalNotOverdueCount;
-
-      $scope.percentTotalIncompleteOverall = sortedTallyOverall.percentTotalIncomplete;
-      $scope.percentTotalCompleteOverall = sortedTallyOverall.percentTotalComplete;
-      $scope.percentTotalOverdueOverall = sortedTallyOverall.percentTotalOverdue;
-      $scope.percentItemsCompleteOnTimeOverall = sortedTallyOverall.percentItemsCompleteOnTime;
-      $scope.percentTotalIncompleteNotOverdueOverall = sortedTallyOverall.percentTotalIncompleteNotOverdue;
-      $scope.percentTotalOverdueNotCompleteOverall = sortedTallyOverall.percentTotalOverdueNotComplete;
-      $scope.percentTotalOverdueCompleteOverall = sortedTallyOverall.percentTotalOverdueComplete;
-
-      // Graph labels for overall
-
-      $scope.seriesOverall = ['overall'];
-
-      $scope.itemDataOverall = [$scope.itemWorkedCountOverall, $scope.itemLeftCountOverall, $scope.itemOverdueCountOverall, $scope.itemDueCompleteCountOverall];
-      $scope.itemLabelsOverall = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
-
-      $scope.hourDataOverall = [$scope.hoursWorkedOverall, $scope.hoursLeftOverall, $scope.hoursOverdueOverall, $scope.hoursDueCompleteOverall];
-      $scope.hourLabelsOverall = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
-
-      $scope.itemDataCompleteIncompleteTotalOverall = [$scope.totalIncompleteCountOverall, $scope.totalCompleteCountOverall];
-      $scope.itemLabelsCompleteIncompleteTotalOverall = ["items yet to complete", "items completed"];
-
-      $scope.itemDataOverdueCompleteDueTotalOverall = [$scope.totalOverdueCountOverall, $scope.totalOverdueCountOverall];
-      $scope.itemLabelsOverdueCompleteDueTotalOverall = ["items overdue", "items not yet due"];
-
-      // Data for lastSeven:
-
-      $scope.itemLeftCountLastSeven = sortedTallyLastSeven.itemLeftCount;
-      $scope.hoursLeftLastSeven = sortedTallyLastSeven.hoursLeft;
-      $scope.minutesLeftLastSeven = sortedTallyLastSeven.minutesLeft;
-      $scope.millisecondsLeftLastSeven = sortedTallyLastSeven.millisecondsLeft;
-
-      $scope.itemWorkedCountLastSeven = sortedTallyLastSeven.itemWorkedCount;
-      $scope.hoursWorkedLastSeven = sortedTallyLastSeven.hoursWorked;
-      $scope.minutesWorkedLastSeven = sortedTallyLastSeven.minutesWorked;
-      $scope.millisecondsWorkedLastSeven = sortedTallyLastSeven.millisecondsWorked;
-
-      $scope.itemOverdueCountLastSeven = sortedTallyLastSeven.itemOverdueCount;
-      $scope.hoursOverdueLastSeven = sortedTallyLastSeven.hoursOverdue;
-      $scope.minutesOverdueLastSeven = sortedTallyLastSeven.minutesOverdue;
-      $scope.millisecondsOverdueLastSeven = sortedTallyLastSeven.millisecondsOverdue;
-
-      $scope.itemDueCompleteCountLastSeven = sortedTallyLastSeven.itemDueCompleteCount;
-      $scope.hoursDueCompleteLastSeven = sortedTallyLastSeven.hoursDueComplete;
-      $scope.minutesDueCompleteLastSeven = sortedTallyLastSeven.minutesDueComplete;
-      $scope.millisecondsDueCompleteLastSeven = sortedTallyLastSeven.millisecondsDueComplete;
-
-      $scope.totalItemCountLastSeven = sortedTallyLastSeven.totalItemCount;
-      $scope.totalCompleteCountLastSeven = sortedTallyLastSeven.totalCompleteCount;
-      $scope.totalIncompleteCountLastSeven = sortedTallyLastSeven.totalIncompleteCount;
-      $scope.totalOverdueCountLastSeven = sortedTallyLastSeven.totalOverdueCount;
-      $scope.totalNotOverdueCountLastSeven = sortedTallyLastSeven.totalNotOverdueCount;
-
-      $scope.percentTotalIncompleteLastSeven = sortedTallyLastSeven.percentTotalIncomplete;
-      $scope.percentTotalCompleteLastSeven = sortedTallyLastSeven.percentTotalComplete;
-      $scope.percentTotalOverdueLastSeven = sortedTallyLastSeven.percentTotalOverdue;
-      $scope.percentItemsCompleteOnTimeLastSeven = sortedTallyLastSeven.percentItemsCompleteOnTime;
-      $scope.percentTotalIncompleteNotOverdueLastSeven = sortedTallyLastSeven.percentTotalIncompleteNotOverdue;
-      $scope.percentTotalOverdueNotCompleteLastSeven = sortedTallyLastSeven.percentTotalOverdueNotComplete;
-      $scope.percentTotalOverdueCompleteLastSeven = sortedTallyLastSeven.percentTotalOverdueComplete;
-
-      // Graph labels for lastSeven
-
-      $scope.seriesLastSeven = ['last week'];
-
-      $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven, $scope.itemLeftCountLastSeven, $scope.itemOverdueCountLastSeven, $scope.itemDueCompleteCountLastSeven];
-      $scope.itemLabelsLastSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
-
-      $scope.hourDataLastSeven = [$scope.hoursWorkedLastSeven, $scope.hoursLeftLastSeven, $scope.hoursOverdueLastSeven, $scope.hoursDueCompleteLastSeven];
-      $scope.hourLabelsLastSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
-
-      $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.totalIncompleteCountLastSeven, $scope.totalCompleteCountLastSeven];
-      $scope.itemLabelsCompleteIncompleteTotalLastSeven = ["items yet to complete", "items completed"];
-
-      $scope.itemDataOverdueCompleteDueTotalLastSeven = [$scope.totalOverdueCountLastSeven, $scope.totalOverdueCountLastSeven];
-      $scope.itemLabelsOverdueCompleteDueTotalLastSeven = ["items overdue", "items not yet due"];
-
-      // Data for nextSeven:
-
-      $scope.itemLeftCountNextSeven = sortedTallyNextSeven.itemLeftCount;
-      $scope.hoursLeftNextSeven = sortedTallyNextSeven.hoursLeft;
-      $scope.minutesLeftNextSeven = sortedTallyNextSeven.minutesLeft;
-      $scope.millisecondsLeftNextSeven = sortedTallyNextSeven.millisecondsLeft;
-
-      $scope.itemWorkedCountNextSeven = sortedTallyNextSeven.itemWorkedCount;
-      $scope.hoursWorkedNextSeven = sortedTallyNextSeven.hoursWorked;
-      $scope.minutesWorkedNextSeven = sortedTallyNextSeven.minutesWorked;
-      $scope.millisecondsWorkedNextSeven = sortedTallyNextSeven.millisecondsWorked;
-
-      $scope.itemOverdueCountNextSeven = sortedTallyNextSeven.itemOverdueCount;
-      $scope.hoursOverdueNextSeven = sortedTallyNextSeven.hoursOverdue;
-      $scope.minutesOverdueNextSeven = sortedTallyNextSeven.minutesOverdue;
-      $scope.millisecondsOverdueNextSeven = sortedTallyNextSeven.millisecondsOverdue;
-
-      $scope.itemDueCompleteCountNextSeven = sortedTallyNextSeven.itemDueCompleteCount;
-      $scope.hoursDueCompleteNextSeven = sortedTallyNextSeven.hoursDueComplete;
-      $scope.minutesDueCompleteNextSeven = sortedTallyNextSeven.minutesDueComplete;
-      $scope.millisecondsDueCompleteNextSeven = sortedTallyNextSeven.millisecondsDueComplete;
-
-      $scope.totalItemCountNextSeven = sortedTallyNextSeven.totalItemCount;
-      $scope.totalCompleteCountNextSeven = sortedTallyNextSeven.totalCompleteCount;
-      $scope.totalIncompleteCountNextSeven = sortedTallyNextSeven.totalIncompleteCount;
-      $scope.totalOverdueCountNextSeven = sortedTallyNextSeven.totalOverdueCount;
-      $scope.totalOverdueCountNextSeven = sortedTallyNextSeven.totalNotOverdueCount;
-
-      $scope.percentTotalIncompleteNextSeven = sortedTallyNextSeven.percentTotalIncomplete;
-      $scope.percentTotalCompleteNextSeven = sortedTallyNextSeven.percentTotalComplete;
-      $scope.percentTotalOverdueNextSeven = sortedTallyNextSeven.percentTotalOverdue;
-      $scope.percentItemsCompleteOnTimeNextSeven = sortedTallyNextSeven.percentItemsCompleteOnTime;
-      $scope.percentTotalIncompleteNotOverdueNextSeven = sortedTallyNextSeven.percentTotalIncompleteNotOverdue;
-      $scope.percentTotalOverdueNotCompleteNextSeven = sortedTallyNextSeven.percentTotalOverdueNotComplete;
-      $scope.percentTotalOverdueCompleteNextSeven = sortedTallyNextSeven.percentTotalOverdueComplete;
-
-      // Graph labels for NextSeven
-
-      $scope.seriesNextSeven = ['next week'];
-
-      $scope.itemDataNextSeven = [$scope.itemWorkedCountNextSeven, $scope.itemLeftCountNextSeven, $scope.itemOverdueCountNextSeven, $scope.itemDueCompleteCountNextSeven];
-      $scope.itemLabelsNextSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
-
-      $scope.hourDataNextSeven = [$scope.hoursWorkedNextSeven, $scope.hoursLeftNextSeven, $scope.hoursOverdueNextSeven, $scope.hoursDueCompleteNextSeven];
-      $scope.hourLabelsNextSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
-
-      $scope.itemDataCompleteIncompleteTotalNextSeven = [$scope.totalIncompleteCountNextSeven, $scope.totalCompleteCountNextSeven];
-      $scope.itemLabelsCompleteIncompleteTotalNextSeven = ["items yet to complete", "items completed"];
-
-      $scope.itemDataOverdueCompleteDueTotalNextSeven = [$scope.totalOverdueCountNextSeven, $scope.totalOverdueCountNextSeven];
-      $scope.itemLabelsOverdueCompleteDueTotalNextSeven = ["items overdue", "items not yet due"];
-
-    };
-
-// The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
-    $scope.refreshTalliesAndData = function() {
-      completionData();
-      ItemCrud.processOldCompleteItems();
-      ItemCrud.updateAllItemsPastDue();
-    };
   }
 ]);
