@@ -21,14 +21,12 @@ listo.factory("ItemCrud", ["$firebaseArray",
     var ref = firebase.database().ref().child("items");
 
 
-
-
-
-
-
 // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
 // holds data as array of objects.  Each object is one item.
+
+    var user = $firebaseArray(ref);
+
     var items = $firebaseArray(ref);
 
 // Public variables below

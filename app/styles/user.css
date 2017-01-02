@@ -552,12 +552,12 @@ section {
 
 .statement {
   float: right;
-  width: 30%
+  width: 30%;
 }
 
 .statement2 {
   float: right;
-  width: 40%
+  width: 40%;
 }
 
 .itemsCompleted, .itemsYetToComplete, .itemsOverdue, .itemsDueComplete, .timeCompleted, .timeYetToComplete, .timeOverdue, .timeDueComplete {
@@ -630,7 +630,7 @@ section {
   .name {
     padding-right: 0.9em;
     position: relative;
-    min-width: 85%
+    min-width: 85%;
   }
 
   /*.hour, .minute {
@@ -665,7 +665,7 @@ section {
 @media only screen and (max-width : 429px) {
 
   .name, .hour, .minute {
-    width: 95%
+    width: 95%;
   }
 
    .importance, .date, .time {
@@ -675,7 +675,7 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     /*margin-left: 0.9em;*/
-    width: 95%
+    width: 95%;
   }
 
   .minute {
@@ -706,7 +706,7 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     /*margin-left: 0.9em;*/
-    width: 59%
+    width: 59%;
   }
 
 }
@@ -733,7 +733,7 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     /*margin-left: 0.9em;*/
-    width: 60%
+    width: 60%;
   }
 
 }
@@ -760,16 +760,16 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     /*margin-left: 0.9em;*/
-    width: 61%
+    width: 61%;
   }
 
 }
 
 @media only screen and (min-width : 768px) and (max-width : 929px) {
 
-  .time {
+  /*.time {
     width: 18%;
-  }
+  }*/
 
   .importance {
     width: 13%;
@@ -778,15 +778,19 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     margin-left: 0.9em;
-    width: 100%
+    width: 100%;
 
 }
 
 
 @media only screen and (min-width : 930px) and (max-width : 1076px) {
 
-  .time {
+  /*.time {
     width: 13%;
+  }*/
+
+  .date {
+    width: 20.5%;
   }
 
   .importance {
@@ -796,8 +800,20 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     margin-left: 0.9em;
-    width: 100%
+    width: 150%;
   }
+
+  .page-name p {
+    background-color: blue;
+  }
+
+  /*.hour {
+    width: 50%;
+  }
+
+  .minute {
+    width: 20%;
+  }*/
 
 }
 
@@ -814,7 +830,7 @@ section {
   .hour-and-minute {
     margin-right: 0.9em;
     margin-left: 0.9em;
-    width: 100%
+    width: 100%;
   }
 
 }
@@ -832,7 +848,7 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    /*width: 100%*/
+    width: 100%;
   }
 
 }
@@ -850,7 +866,7 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    /*width: 100%*/
+    width: 100%;
   }
 
 }
@@ -868,7 +884,7 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    /*width: 100%*/
+    width: 100%;
   }
 
 }
@@ -886,7 +902,7 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    /*width: 100%*/
+    width: 100%;
   }
 
 }
