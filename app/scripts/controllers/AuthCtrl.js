@@ -5,9 +5,6 @@ listo.controller('AuthCtrl', ["$scope", "ItemCrud", "$rootScope", "$firebaseAuth
     // var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
 
 
-<<<<<<< HEAD
-
-=======
     // var authObj = $firebaseAuth(ref);
     //
     //
@@ -110,22 +107,5 @@ listo.controller('AuthCtrl', ["$scope", "ItemCrud", "$rootScope", "$firebaseAuth
         //   console.log("Logged out");
         // }
         //
->>>>>>> update-Firebase-and-Angularfire
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 ]);
