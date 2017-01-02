@@ -15,7 +15,7 @@
         <li ui-sref="userIncompleteItems" ng-click="refreshTalliesAndData()" class="link todo"><i class="fa fa-list-ol">&nbsp<p> to do</p></i></li>
         <li ui-sref="calendar" ng-click="refreshTalliesAndData()" class="link calendar"><i class="fa fa-calendar">&nbsp<p> calendar</p></i></li>
         <li ui-sref="userCompleteItems" ng-click="refreshTalliesAndData()" class="link complete"><i class="fa fa-archive">&nbsp<p> archive</p></i></li>
-        <li ui-sref="landing" ng-click="authObj.$unauth()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
+        <li ui-sref="landing" ng-click="logout()" class="link logout"><i class="fa fa-sign-out">&nbsp<p> log out</p></i></li>
       </ul>
     </div> <!-- End collapse navbar-collapse -->
   </div>
@@ -59,16 +59,16 @@
             <!-- <small>Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :</small> -->
   <!--importance-->
           <div class="col-lg-1 col-md-2 col-sm-2 col-xs-12 importance formFormat">
-            <button type="button" class="btn-importance btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
-            </button>
+            <a href class="tip" data-animation="am-flip-x" bs-tooltip="importanceTip"><button type="button" class="btn-importance btn btn-default" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+            </button></a>
           </div>
 <!--est. time-->
           <div class="col-lg-4 col-md-12 col-sm-12 col-xs-12 hour-and-minute">
             <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 hour">
-              <button type="button" class="btn-hour btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-options="hourOption.hour as hourOption.hour for hourOption in hourOptions" bs-select><span class="caret"></span>
+              <a href class="tip" data-animation="am-flip-x" bs-tooltip="dateTip"><button type="button" class="btn-hour btn btn-default" ng-model="newHourEst" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-options="hourOption.hour as hourOption.hour for hourOption in hourOptions" bs-select><span class="caret"></span></button></a>
             </div>
             <div class="col-lg-2 col-md-6 col-sm-6 col-xs-12 minute">
-              <button type="button" class="btn-minute btn btn-default" ng-model="newMinuteEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="minuteOption.minute as minuteOption.minute for minuteOption in minuteOptions" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span>
+              <a href class="tip" data-animation="am-flip-x" bs-tooltip="timeTip"><button type="button" class="btn-minute btn btn-default" ng-model="newMinuteEst" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="minuteOption.minute as minuteOption.minute for minuteOption in minuteOptions" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span></button></a>
             </div>
           </div>
 
@@ -126,7 +126,7 @@
           <span ng-if="parseTime(item.b_dueDate).month == 1">{{parseTime(item.b_dueDate).month}} month</span><span ng-if="parseTime(item.b_dueDate).month > 1">{{parseTime(item.b_dueDate).month}} months</span>
           <span ng-if="parseTime(item.b_dueDate).day == 1">{{parseTime(item.b_dueDate).day}} day</span><span ng-if="parseTime(item.b_dueDate).day > 1">{{parseTime(item.b_dueDate).day}} days</span>
           <span ng-if="parseTime(item.b_dueDate).hour == 1">{{parseTime(item.b_dueDate).hour}} hour</span><span ng-if="parseTime(item.b_dueDate).hour > 1">{{parseTime(item.b_dueDate).hour}} hours</span>
-          <span ng-if="parseTime(item.b_dueDate).minute == 1">{{parseTime(item.b_dueDate).minute}} minute</span><span ng-if="parseTime(item.b_dueDate).minute > 1">{{parseTime(item.b_dueDate).minute}} minutes</span>
+          <span ng-if="parseTime(item.b_dueDate).minute == 1">{{parseTime(item.b_dueDate).minute}} minute and</span><span ng-if="parseTime(item.b_dueDate).minute > 1">{{parseTime(item.b_dueDate).minute}} minutes and</span>
           <span ng-if="parseTime(item.b_dueDate).second == 1">{{parseTime(item.b_dueDate).second}} second</span><span ng-if="parseTime(item.b_dueDate).second > 1">{{parseTime(item.b_dueDate).second}} seconds</span>
 
           <span ng-if="item.qq_pastDue">item was due
@@ -145,7 +145,6 @@
         </p>
       </div>
 <!-- end INFO TOOLTIP -->
-
 <!-- being EDIT + DELETE + INFO-->
       <div class="InfoEditDeleteCell">
         <i ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" class="fa fa-info-circle"></i>
@@ -162,7 +161,7 @@
   <div class="containerPad">
     <div class="container-fluid main-body">
       <div class="allCharts">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the last seven days <div class="btn-chart" ng-click="refreshTalliesAndData()"><i class="fa fa-pie-chart"></i></div></div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the last seven days <div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
           <canvas id="doughnut" class="chart chart-doughnut"
         chart-data="itemDataLastSeven" chart-labels="itemLabelsLastSeven">
@@ -202,7 +201,7 @@
   <div class="containerPad">
     <div class="container-fluid main-body">
       <div class="allCharts">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the next seven days<div class="btn-chart" ng-click="refreshTalliesAndData()"><i class="fa fa-pie-chart"></i></div></div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the next seven days<div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
           <canvas id="doughnut" class="chart chart-doughnut"
         chart-data="itemDataNextSeven" chart-labels="itemLabelsNextSeven">
@@ -242,7 +241,7 @@
   <div class="containerPad">
     <div class="container-fluid main-body">
       <div class="allCharts">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: overall<div class="btn-chart" ng-click="refreshTalliesAndData()"><i class="fa fa-pie-chart"></i></div></div>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: overall<div class="btn-chart" ng-click="refreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-pie-chart"></i></a></div></div>
         <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
           <canvas id="doughnut" class="chart chart-doughnut"
         chart-data="itemDataOverall" chart-labels="itemLabelsOverall">

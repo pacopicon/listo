@@ -2,7 +2,30 @@ listo.factory("ItemCrud", ["$firebaseArray",
   function($firebaseArray) {
 
 // downloads data from Firebase database
-    var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
+    // var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
+
+
+
+
+// Initialize Firebase
+    var config = {
+      apiKey: "AIzaSyDJSMDWkPVq7PGxvfB8XRMWlfVNOfmQj9I",
+      authDomain: "listo-1f3db.firebaseapp.com",
+      databaseURL: "https://listo-1f3db.firebaseio.com",
+      storageBucket: "listo-1f3db.appspot.com",
+      messagingSenderId: "1095679246609"
+    };
+
+    firebase.initializeApp(config);
+
+    var ref = firebase.database().ref().child("items");
+
+
+
+
+
+
+
 // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
 // holds data as array of objects.  Each object is one item.
@@ -171,10 +194,10 @@ listo.factory("ItemCrud", ["$firebaseArray",
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
           s_rank: itemProperties.rank,
-          t_created_at: Firebase.ServerValue.TIMESTAMP,
+          t_created_at: firebase.database.ServerValue.TIMESTAMP,
           u_completed_at: 0
         }).then(function(ref) {
-          var id = ref.key();
+          var id = ref.key;
           console.log("added item with id " + id);
           items.$indexFor(id);
         });
@@ -370,7 +393,7 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
         if (itemToBeUpdated.q_completed == false) {
           itemToBeUpdated.q_completed = true;
-          itemToBeUpdated.u_completed_at = Firebase.ServerValue.TIMESTAMP;
+          itemToBeUpdated.u_completed_at = firebase.database.ServerValue.TIMESTAMP;
         } else {
           itemToBeUpdated.q_completed = false;
           itemToBeUpdated.u_completed_at = 0;
