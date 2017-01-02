@@ -652,6 +652,10 @@ section {
     margin-left: 0.55em;
   }
 
+  .minute {
+    margin-left: 0;
+  }
+
 }
 
 @media only screen and (max-width : 781px) {
@@ -662,19 +666,48 @@ section {
 
 }
 
-@media only screen and (max-width : 429px) {
-
-  .name, .hour, .minute {
-    width: 95%;
-  }
-
-   .importance, .date, .time {
-     width: 91%;
-   }
+@media only screen and (max-width : 969px) {
 
   .hour-and-minute {
     margin-right: 0.9em;
-    /*margin-left: 0.9em;*/
+    width: 100%;
+  }
+
+}
+
+@media only screen and (max-width : 429px) {
+
+  .name {
+    width: 95%;
+  }
+
+  .date, .time, .importance, .hour, .minute {
+    /*padding-right: -1em;*/
+    width: 93%;
+  }
+
+}
+
+@media only screen and (max-width : 529px) and (min-width : 430px) {
+
+  .name {
+    width: 96%;
+  }
+
+  .date, .time, .importance, .hour, .minute {
+    /*padding-right: -1em;*/
+    width: 94%;
+  }
+
+}
+
+@media only screen and (max-width : 607px) and (min-width : 530px) {
+
+  .name {
+    width: 97%;
+  }
+
+  .date, .time, .importance, .hour, .minute {
     width: 95%;
   }
 
@@ -682,71 +715,71 @@ section {
     margin-left: 0;
   }
 
+  .hour-and-minute {
+    margin-right: 0.9em;
+    width: 100%;
+  }
+
 }
 
-@media only screen and (min-width : 430px) and (max-width : 507px) {
+@media only screen and (max-width : 767px) and (min-width : 608px) {
+
+  .name {
+    width: 97%;
+  }
+
+  .date, .time, .importance, .hour, .minute {
+    width: 95%
+  }
+
+  .minute {
+    margin-left: 0;
+  }
+
+  .hour-and-minute {
+    margin-right: 0.9em;
+    /*margin-left: 0;*/
+    width: 100%;
+  }
+
+}
+
+@media only screen and (max-width : 799px) and (min-width : 768px) {
 
 
   .name {
-    width: 97%
+    width: 96.2%
   }
 
   .date, .time {
-    width: 44.5%;
+    width: 30.5%;
   }
 
   .importance {
-    width: 29%;
+    width: 30.5%;
   }
 
   .hour, .minute {
-    width: 45%;
+    width: 46.7%;
   }
 
   .hour-and-minute {
     margin-right: 0.9em;
     /*margin-left: 0.9em;*/
-    width: 59%;
+    width: 100%;
   }
 
 }
 
-@media only screen and (min-width : 508px) and (max-width : 634px) {
+@media only screen and (max-width : 969px) and (min-width : 800px) {
 
 
   .name {
-    width: 97%
+    width: 96.6%
   }
 
   .date, .time {
-    width: 45.5%;
-  }
-
-  .importance {
-    width: 30%;
-  }
-
-  .hour, .minute {
-    width: 45%;
-  }
-
-  .hour-and-minute {
-    margin-right: 0.9em;
-    /*margin-left: 0.9em;*/
-    width: 60%;
-  }
-
-}
-
-@media only screen and (min-width : 635px) and (max-width : 767px) {
-
-
-  .name {
-    width: 97%
-  }
-
-  .date, .time {
-    width: 45.5%;
+    width: 31%;
   }
 
   .importance {
@@ -754,57 +787,72 @@ section {
   }
 
   .hour, .minute {
-    width: 45%;
+    width: 47.5%;
   }
 
   .hour-and-minute {
     margin-right: 0.9em;
     /*margin-left: 0.9em;*/
-    width: 61%;
+    width: 100%;
   }
 
 }
 
-@media only screen and (min-width : 768px) and (max-width : 929px) {
+@media only screen and (max-width : 991px) and (min-width : 970px) {
 
   /*.time {
     width: 18%;
   }*/
 
+  .name {
+    width: 18%;
+  }
+
+  .time {
+    width: 10%;
+  }
+
+  .date {
+    width: 14%;
+  }
+
   .importance {
-    width: 13%;
+    width: 9%;
   }
 
   .hour-and-minute {
     margin-right: 0.9em;
     margin-left: 0.9em;
-    width: 100%;
+    width: 38.2%;
+  }
 
 }
 
 
-@media only screen and (min-width : 930px) and (max-width : 1076px) {
+@media only screen and (max-width : 1076px) and (min-width : 992px) {
 
   /*.time {
     width: 13%;
   }*/
 
+
+
   .date {
-    width: 20.5%;
+    width: 14%;
+  }
+
+  .time {
+    width: 10%;
   }
 
   .importance {
-    width: 20.5%;
+    width: 10%;
   }
 
   .hour-and-minute {
     margin-right: 0.9em;
     margin-left: 0.9em;
-    width: 150%;
-  }
-
-  .page-name p {
-    background-color: blue;
+    width: 38.8%;
   }
 
   /*.hour {
@@ -817,25 +865,25 @@ section {
 
 }
 
-@media only screen and (min-width : 1077px) and (max-width : 1199px) {
+@media only screen and (max-width : 1199px) and (min-width : 1077px) {
 
   /*.name {
     width: 70%;
   }*/
 
   .importance {
-    width: 25.5%;
+    width: 9%;
   }
 
   .hour-and-minute {
     margin-right: 0.9em;
     margin-left: 0.9em;
-    width: 100%;
+    width: 39.8%;
   }
 
 }
 
-@media only screen and (min-width : 1200px) and (max-width : 1425px) {
+@media only screen and (max-width : 1425px) and (min-width : 1200px) {
 
   /*.name {
     width: 70%;
@@ -848,12 +896,12 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    width: 100%;
+    width: 40.2%;
   }
 
 }
 
-@media only screen and (min-width : 1426px) and (max-width : 1716px) {
+@media only screen and (max-width : 1716px) and (min-width : 1426px) {
 
   /*.name {
     width: 70%;
@@ -866,12 +914,12 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    width: 100%;
+    width: 40.6%;
   }
 
 }
 
-@media only screen and (min-width : 1717px) and (max-width : 2153px) {
+@media only screen and (max-width : 2153px) and (min-width : 1717px) {
 
   /*.name {
     width: 70%;
@@ -884,12 +932,12 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    width: 100%;
+    width: 41%;
   }
 
 }
 
-@media only screen and (min-width : 2154px) and (max-width : 2600px) {
+@media only screen and (max-width : 2600px) and (min-width : 2154px) {
 
   /*.name {
     width: 70%;
@@ -902,7 +950,7 @@ section {
   .hour-and-minute {
     /*margin-right: 0.9em;*/
     /*margin-left: 0.9em;*/
-    width: 100%;
+    width: 41.4%;
   }
 
 }
