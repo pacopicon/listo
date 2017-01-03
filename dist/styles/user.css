@@ -590,16 +590,29 @@ section {
   width: 55%;
 }
 
-/*
-.itemsCompleted, .comNumber {
-  white-space: nowrap;
-}*/
-
 /*End Chart elements */
 
-/*begin popup item info*/
+/*begin Daily, Weekly and Monthly (calendar) views*/
 
-/*end popup item info*/
+
+
+.dayCell {
+  border: 2.5px solid #3f4e62;
+  /*margin-left: 0;*/
+}
+
+
+
+
+
+
+
+
+
+
+
+/*end Daily, Weekly and Monthly (calendar) views*/
+
 
 @media only screen and (min-width : 768px) {
 
