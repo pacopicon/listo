@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCruncher", "modalService", "$rootScope", "$interval", "$log", "$http", "$locale", "$location", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
-  function($scope, ItemCrud, graphCruncher, dateCruncher, modalService, $rootScope, $interval, $log, $http, $locale, $location, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher", "dateCruncher", "modalService", "$rootScope", "$interval", "$log", "$http", "$locale", "$location", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
+  function($scope, ItemCrud, UserCrud, graphCruncher, dateCruncher, modalService, $rootScope, $interval, $log, $http, $locale, $location, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -104,6 +104,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunch
 
     $scope.selectedPhrase = "";
     $scope.selectedPhrases = [];
+    $scope.phrases = [];
     $scope.phrases = [
       {text:"<i class='fa fa-star'></i>"},
       {text:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},

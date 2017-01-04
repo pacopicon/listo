@@ -1,11 +1,5 @@
-listo.factory("ItemCrud", ["$firebaseArray",
-  function($firebaseArray) {
-
-// downloads data from Firebase database
-    // var ref = new Firebase("https://listo-1f3db.firebaseio.com/");
-
-
-
+listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
+  function($firebaseArray, UserCrud) {
 
 // Initialize Firebase
     var config = {
@@ -20,13 +14,11 @@ listo.factory("ItemCrud", ["$firebaseArray",
 
     var ref = firebase.database().ref().child("items");
 
-
-// Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
+// handing ref over quickly to UserCrud.js for User creation, updating and deletion:
+    var ItemCrud = this; // goes to UserCrud.js
+    var ItemCrud.ref = ref; // goes to UserCrud.js
 
 // holds data as array of objects.  Each object is one item.
-
-    var user = $firebaseArray(ref);
-
     var items = $firebaseArray(ref);
 
 // Public variables below

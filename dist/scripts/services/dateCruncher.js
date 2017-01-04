@@ -41,70 +41,26 @@ listo.factory("dateCruncher", ["ItemCrud",
       return newDateNum;
     };
 
-    var setFirstDayOfCurrentMonth = function(cellNum) {
-      var firstDayOfMonth = now.setDate(1);
-      var firstDayObj = new Date(firstDayOfMonth);
-      var year = firstDayObj.getFullYear();
-      var month = firstDayObj.getMonth();
-      var day = firstDayObj.getDay();
-      var hours = firstDayObj.getHours();
-      var minutes = firstDayObj.getMinutes();
-      var seconds = firstDayObj.getSeconds();
-      var millis = firstDayObj.getMilliseconds();
+    var setDay = function(cellNum) {
+      var dayObj = new Date();
+      var year = dayObj.getFullYear();
+      var month = dayObj.getMonth();
+      var day = dayObj.getDay();
+      var hours = dayObj.getHours();
+      var minutes = dayObj.getMinutes();
+      var seconds = dayObj.getSeconds();
+      var millis = dayObj.getMilliseconds();
       var beginDay = new Date(year, month, 1, 0, 0, 0, 0);
       var beginDayNum = beginDay.getTime();
-      var endDay = new Date(year, month, 1, 0, 0, 0, 0);
+      var endDay = new Date(year, month, 1, 23, 59, 59, 999);
 
-    }
-
-    var setDayOfCurrentMonth = function (cellNum) {
-
-      if (cellNum < 8) {
-
-      }
-
-
-
-      switch (new Date().getDay()) {
-        case 0:
-            day = "day1";
-            break;
-        case 1:
-            day = "day2";
-            break;
-        case 2:
-            day = "day3";
-            break;
-        case 3:
-            day = "day4";
-            break;
-        case 4:
-            day = "day5";
-            break;
-        case 5:
-            day = "day6";
-            break;
-        case  6:
-            day = "day7";
-      }
-
-      if (firstSunday.hasClass(day)) {
-        firstSunday.text(firstDayString);
-      } else if (firstMonday.hasClass(day)) {
-        firstMonday.text(firstDayString);
-      } else if (firstTuesday.hasClass(day)) {
-        firstTuesday.text(firstDayString);
-      } else if (firstWednesday.hasClass(day)) {
-        firstWednesday.text(firstDayString);
-      } else if (firstThursday.hasClass(day)) {
-        firstThursday.text(firstDayString);
-      } else if (firstFriday.hasClass(day)) {
-        firstFriday.text(firstDayString);
-      } else {
-        firstSaturday.text(firstDayString);
-      }
-
+      return {
+        beginDay: beginDay,
+        endDay: endDay
+      };
     };
+
+
 
 
 

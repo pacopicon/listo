@@ -35,18 +35,23 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
         })
         .state('calendar', {
             url: '/calendar',
-            controller: 'UserCtrl',
+            controller: 'CalendarCtrl',
             templateUrl: '/templates/calendar.html'
         })
         .state('daily', {
             url: '/daily',
-            controller: 'UserCtrl',
+            controller: 'CalendarCtrl',
             templateUrl: '/templates/daily.html'
         })
         .state('weekly', {
             url: '/weekly',
-            controller: 'UserCtrl',
+            controller: 'CalendarCtrl',
             templateUrl: '/templates/weekly.html'
+        })
+        .state('monthly', {
+            url: '/monthly',
+            controller: 'CalendarCtrl',
+            templateUrl: '/templates/monthly.html'
         })
         .state('graphs', {
             url: '/graphs',
