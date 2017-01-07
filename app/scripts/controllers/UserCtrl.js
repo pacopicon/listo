@@ -50,72 +50,65 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       "checked": false
     };
 
-    // End AngularStrap popover
-
-    // Begin AngularStrap timePicker----------------
+// Begin AngularStrap timePicker
 
     $scope.newDueDate = new Date(new Date().setMinutes(0, 0));
 
     $scope.updatedDueDate = new Date();
 
-    // End AngularStrap timePicker------------------
+// End AngularStrap timePicker
 
-    // Begin Est------------------------------------
+// Begin Estimate
 
-
-    // $scope.hours = [
-    //   {time: 0},
-    //   {time: 1},
-    //   {time: 2},
-    //   {time: 3},
-    //   {time: 4},
-    //   {time: 5},
-    //   {time: 6},
-    //   {time: 7},
-    //   {time: 8},
-    //   {time: 9},
-    //   {time: 10},
-    //   {time: 11},
-    //   {time: 12}
-    // ];
-    $scope.selectedHour = 0;
-    // $scope.selectedHour = $scope.hours[0].time;
-    // $scope.selectedHour = 1;
-
-
-    // $scope.minutes = [
-    //   {time: 0},
-    //   {time: 5},
-    //   {time: 10},
-    //   {time: 15},
-    //   {time: 20},
-    //   {time: 25},
-    //   {time: 30},
-    //   {time: 35},
-    //   {time: 40},
-    //   {time: 45},
-    //   {time: 50},
-    //   {time: 55}
-    // ];
-    // $scope.selectedMinute = $scope.minutes[0].time;
-    // $scope.selectedMinute = 2;
-    $scope.selectedMinute = 0;
-
-    // End Est--------------------------------------
-
-    // Begin Importance-----------------------------
-    $scope.selectedIcon = '';
-    $scope.icons = [
-      {value: "1 star", label:"<i class='fa fa-star'></i>"},
-      {value: "1 & 1/2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {value: "2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
-      {value: "2 & 1/2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {value: "3 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
+    $scope.hourwrap = {};
+    $scope.hours = [
+      {time: 0},
+      {time: 1},
+      {time: 2},
+      {time: 3},
+      {time: 4},
+      {time: 5},
+      {time: 6},
+      {time: 7},
+      {time: 8},
+      {time: 9},
+      {time: 10},
+      {time: 11},
+      {time: 12}
     ];
 
-// End Importance------------
+    $scope.minutewrap = {};
+    $scope.minutes = [
+      {time: 0},
+      {time: 5},
+      {time: 10},
+      {time: 15},
+      {time: 20},
+      {time: 25},
+      {time: 30},
+      {time: 35},
+      {time: 40},
+      {time: 45},
+      {time: 50},
+      {time: 55}
+    ];
 
-// Begin Custom Modal-----------------
+// End Estimate
+
+// Begin Importance
+
+    $scope.iconwrap = {};
+    $scope.icons = [
+      {label:"<i class='fa fa-star'></i>"},
+      {label:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+      {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
+      {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+      {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
+    ];
+
+// End Importance
+
+// Begin Custom Modal
 
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
@@ -176,7 +169,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedIcon, $scope.selectedHour, $scope.selectedMinute);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
       console.log("importance is: " + $scope.selectedIcon);
 
       $scope.UserCtrlRefreshTalliesAndData();

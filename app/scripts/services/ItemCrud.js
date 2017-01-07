@@ -155,6 +155,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // This function is called by the submit button in userincompleteItems.html when user creates an item in the form
       addItem: function(itemName, dueDate, importance, eHour, eMinute) {
         // empty the below variables in order to contextualize the 'prioritize' call for the 'addItem' function
+        console.log("importance = " + importance)
         var item = null;
         var urgency = null;
 
