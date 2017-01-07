@@ -104,14 +104,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     // End Est--------------------------------------
 
     // Begin Importance-----------------------------
-    $scope.selectedIcon = '';
-    $scope.icons = [
-      {value: "1 star", label:"<i class='fa fa-star'></i>"},
-      {value: "1 & 1/2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {value: "2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
-      {value: "2 & 1/2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {value: "3 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
-    ];
+    // $scope.icon = '';
+
+    $scope.icons = {
+      default: null,
+      availableOptions: [
+        {id: "1", label:"<i class='fa fa-star'></i>"},
+        {id: "2", label:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+        {id: "3", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
+        {id: "4", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+        {id: "5", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
+      ]
+    };
 
 // End Importance------------
 
@@ -176,7 +180,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedIcon, $scope.selectedHour, $scope.selectedMinute);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.icons.default, $scope.selectedHour, $scope.selectedMinute);
       console.log("importance is: " + $scope.selectedIcon);
 
       $scope.UserCtrlRefreshTalliesAndData();

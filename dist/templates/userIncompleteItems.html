@@ -40,8 +40,24 @@
   <!--importance-->
           <div class="col-lg-1 col-md-1 col-sm-2 col-xs-12 importance formFormat">
             <a href class="tip" data-animation="am-flip-x" bs-tooltip="importanceTip">
-              <button type="button" class="btn-importance btn btn-default" ng-model="selectedIcon" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="icon.value as icon.label for icon in icons" bs-select>Action<span class="caret"></span>
-            </button></a>
+              <!-- <button type="button" class="btn-importance btn btn-default" ng-model="selectedIcon" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="icon.value as icon.label for icon in icons" bs-select>Action<span class="caret"></span>
+              </button></a> -->
+              <!-- <button type="button" class="btn-importance btn btn-default" ng-model="selectedIcon" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="option in icons.availableOptions" bs-select>Action<span class="caret"></span>
+              </button> -->
+              <!-- <div ng-repeat="icon in icons">
+                <p ng-bind-html="icon.label"></p>
+              </div> -->
+              <!-- <select class="btn-importance btn btn-default" ng-model="selected">
+                <option ng-repeat="icons in icons" ng-bind-html="icons.id" value="{{icons.id}}">
+                </option>
+              </select> -->
+
+                <select class="btn-importance btn btn-default" name="repeatSelect" id="repeatSelect" ng-model="icons.default">
+                  <option ng-repeat="option in icons.availableOptions"  ng-bind-html-safe="option.label" value={{option.label}}>
+                      <p>{{option.label}}</p>
+                  </option>
+                </select>
+              </a>
           </div>
 <!--est. time-->
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 hour-and-minute">
