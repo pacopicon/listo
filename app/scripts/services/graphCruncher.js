@@ -46,10 +46,8 @@ listo.factory("graphCruncher", ["ItemCrud",
           // if option = true, then the function only picks out items from the last 7 days.  if option = false, it will pick all items.
           if (option == "lastSeven") {
             var weekBoolean = (items[i].b_dueDate >= now - week) && (items[i].b_dueDate <= now);
-            console.log("lastSeven weekBoolean is " + weekBoolean);
           } else if (option == "nextSeven"){
             var weekBoolean = (items[i].b_dueDate <= now + week) && (items[i].b_dueDate >= now);
-            console.log("nextSeven weekBoolean is " + weekBoolean);
           } else {
             var weekBoolean = true;
           }

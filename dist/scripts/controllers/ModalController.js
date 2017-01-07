@@ -1,6 +1,12 @@
 listo.controller('ModalController', [
-  '$scope', '$element', 'title', 'item', 'close',
-  function($scope, $element, title, item, close) {
+  '$scope', '$element', 'title', 'item', 'close', '$tooltip',
+  function($scope, $element, title, item, close, $tooltip) {
+
+    $scope.urgencyTip = {
+      "title": "is it urgent?",
+      "checked": false
+    };
+
 
   $scope.name = item.a_text;
   $scope.updatedDueDate = new Date(item.b_dueDate);

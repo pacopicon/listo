@@ -1,25 +1,23 @@
-listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
-  function($firebaseArray, UserCrud) {
+listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
+  function($firebaseArray, FirebaseRef, UserCrud) {
 
-// Initialize Firebase
-    var config = {
-      apiKey: "AIzaSyDJSMDWkPVq7PGxvfB8XRMWlfVNOfmQj9I",
-      authDomain: "listo-1f3db.firebaseapp.com",
-      databaseURL: "https://listo-1f3db.firebaseio.com",
-      storageBucket: "listo-1f3db.appspot.com",
-      messagingSenderId: "1095679246609"
-    };
+    // var config = {
+    //   apiKey: "AIzaSyDJSMDWkPVq7PGxvfB8XRMWlfVNOfmQj9I",
+    //   authDomain: "listo-1f3db.firebaseapp.com",
+    //   databaseURL: "https://listo-1f3db.firebaseio.com",
+    //   storageBucket: "listo-1f3db.appspot.com",
+    //   messagingSenderId: "1095679246609"
+    // };
+    //
+    // firebase.initializeApp(config);
+    //
+    // var ref = firebase.database().ref().child("items");
 
-    firebase.initializeApp(config);
-
-    var ref = firebase.database().ref().child("items");
-
-// handing ref over quickly to UserCrud.js for User creation, updating and deletion:
-    var ItemCrud = this; // goes to UserCrud.js
-    var ItemCrud.ref = ref; // goes to UserCrud.js
 
 // holds data as array of objects.  Each object is one item.
-    var items = $firebaseArray(ref);
+    var itemsRef = FirebaseRef.getItemsRef();
+
+    var items = FirebaseRef.getItems();
 
 // Public variables below
     var now = Date.now();
@@ -58,7 +56,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
       return urgency;
     };
 // This function below collects the parameters shown in order to calculate an item's Rank
-    var calculateRank = function(importanceTxt, ratio, urgency) {
+    var calculateRank = function(importance, ratio, urgency) {
       // if urgency = true, then it helps to create a higher importanceMultiple than otherwise (see beneath)
       if (urgency) {
         urgencyAddend = 2.9;
@@ -66,13 +64,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
         urgencyAddend = 0;
       }
       // the below calculates the importanceMultiple according to the importance given by the user to the item
-      if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>") {
+      if (importance == "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>") {
         importanceMultiple = 3 + urgencyAddend;
-      } else if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>") {
+      } else if (importance == "<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>") {
         importanceMultiple = 2.5 + urgencyAddend;
-      } else if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star'></i>") {
+      } else if (importance == "<i class='fa fa-star'></i><i class='fa fa-star'></i>") {
         importanceMultiple = 2 + urgencyAddend;
-      } else if (importanceTxt == "<i class='fa fa-star'></i><i class='fa fa-star-half'></i>") {
+      } else if (importance == "<i class='fa fa-star'></i><i class='fa fa-star-half'></i>") {
         importanceMultiple = 1.5 + urgencyAddend;
       } else {
         importanceMultiple = 1.1 + urgencyAddend;
@@ -82,7 +80,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
       return rank;
     };
 // The function below calls all of the public functions related to Rank above in order to return 'rank' and 'urgency'.  This function is called both when an item is newly created and when it is updated.
-    var prioritize = function(item, dueDate, importanceTxt, newUrgency, eHour, eMinute) {
+    var prioritize = function(item, dueDate, importance, newUrgency, eHour, eMinute) {
       var timeTillDueDate = dueDate - now;
       // estTime comes out in milliseconds and does not go into the database, it is used by calculate ratio below
       var estTime = calculateEstTime(eHour, eMinute);
@@ -95,7 +93,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
         // in case the item already exists and is just being updated
         var currentUrgency = newUrgency;
       }
-      var rank = calculateRank(importanceTxt, ratio, currentUrgency);
+      var rank = calculateRank(importance, ratio, currentUrgency);
       return {
         urgency: currentUrgency,
         rank: rank
@@ -104,6 +102,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
 
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
+      // handing ref over to AuthCtrl.js for User creation and authentication.
       getRef: function() {
         return ref;
       },
@@ -154,19 +153,19 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
         };
       },
 // This function is called by the submit button in userincompleteItems.html when user creates an item in the form
-      addItem: function(itemName, dueDate, importanceTxt, eHour, eMinute) {
+      addItem: function(itemName, dueDate, importance, eHour, eMinute) {
         // empty the below variables in order to contextualize the 'prioritize' call for the 'addItem' function
         var item = null;
         var urgency = null;
 
-        var itemProperties = prioritize(item, dueDate, importanceTxt, urgency, eHour, eMinute);
+        var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
         // the below function lists the properties inside the item being created
         items.$add({
           a_text: itemName,
           b_dueDate: dueDate.getTime(),
           m_hoursToFinish: eHour,
           n_minutesToFinish: eMinute,
-          p_importance: importanceTxt,
+          p_importance: importance,
           q_completed: false,
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
@@ -288,5 +287,5 @@ listo.factory("ItemCrud", ["$firebaseArray", "UserCrud",
 
     }; // end of Return
 
-  } // end of firebase function
+  } // end of ItemCrud function
 ]); // end of factory initialization

@@ -61,69 +61,62 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     // End AngularStrap timePicker------------------
 
     // Begin Est------------------------------------
-    $scope.newHourEst = 0;
-    $scope.newMinuteEst = 0;
 
-    $scope.hourOptions = [
-      {hour: 0},
-      {hour: 1},
-      {hour: 2},
-      {hour: 3},
-      {hour: 4},
-      {hour: 5},
-      {hour: 6},
-      {hour: 7},
-      {hour: 8},
-      {hour: 9},
-      {hour: 10},
-      {hour: 11},
-      {hour: 12}
-    ];
 
-    $scope.minuteOptions = [
-      {minute: 0},
-      {minute: 5},
-      {minute: 10},
-      {minute: 15},
-      {minute: 20},
-      {minute: 25},
-      {minute: 30},
-      {minute: 35},
-      {minute: 40},
-      {minute: 45},
-      {minute: 50},
-      {minute: 55}
-    ];
+    // $scope.hours = [
+    //   {time: 0},
+    //   {time: 1},
+    //   {time: 2},
+    //   {time: 3},
+    //   {time: 4},
+    //   {time: 5},
+    //   {time: 6},
+    //   {time: 7},
+    //   {time: 8},
+    //   {time: 9},
+    //   {time: 10},
+    //   {time: 11},
+    //   {time: 12}
+    // ];
+    $scope.selectedHour = 0;
+    // $scope.selectedHour = $scope.hours[0].time;
+    // $scope.selectedHour = 1;
 
-      // hour: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-      // minute: [0, 5, 10, 15, 25, 30, 45]
+
+    // $scope.minutes = [
+    //   {time: 0},
+    //   {time: 5},
+    //   {time: 10},
+    //   {time: 15},
+    //   {time: 20},
+    //   {time: 25},
+    //   {time: 30},
+    //   {time: 35},
+    //   {time: 40},
+    //   {time: 45},
+    //   {time: 50},
+    //   {time: 55}
+    // ];
+    // $scope.selectedMinute = $scope.minutes[0].time;
+    // $scope.selectedMinute = 2;
+    $scope.selectedMinute = 0;
 
     // End Est--------------------------------------
 
     // Begin Importance-----------------------------
-
-    $scope.selectedPhrase = "";
-    $scope.selectedPhrases = [];
-    $scope.phrases = [];
-    $scope.phrases = [
-      {text:"<i class='fa fa-star'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
-      {text:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
+    $scope.selectedIcon = '';
+    $scope.icons = [
+      {value: "1 star", label:"<i class='fa fa-star'></i>"},
+      {value: "1 & 1/2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+      {value: "2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i>"},
+      {value: "2 & 1/2 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
+      {value: "3 stars", label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
     ];
 
-    // {text:"not important at all"},
-    // {text:"somewhat important"},
-    // {text:"important"},
-    // {text:"pretty important"},
-    // {text:"job depends on it"}
+// End Importance------------
 
-    // End Importance-----------------------------------------------
+// Begin Custom Modal-----------------
 
-    // Begin Custom Modal-----------------
-
-    // Begin Custom Modal-----------------
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
       var t = new Date();
@@ -183,7 +176,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedPhrase, $scope.newHourEst, $scope.newMinuteEst);
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.selectedIcon, $scope.selectedHour, $scope.selectedMinute);
+      console.log("importance is: " + $scope.selectedIcon);
 
       $scope.UserCtrlRefreshTalliesAndData();
     };

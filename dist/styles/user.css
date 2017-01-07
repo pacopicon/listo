@@ -6,7 +6,7 @@
  }
 
  .left {
-   width: 44em;
+   width: 63em;
  }
 
 .link {
@@ -25,6 +25,10 @@
 .link:active {
   /*border: solid 0.01em #d6f3ff;
   font-size: 80%;*/
+}
+
+.admin {
+  width: 7em;
 }
 
 li {
@@ -149,6 +153,7 @@ section {
 .name, .date, .importance, .time, .hour, .minute {
   padding-right: 0;
   padding-left: 0;
+  /*height: 4em;*/
 }
 
 .name, .date, .importance, .time, .hour-and-minute, .minute {
@@ -309,12 +314,31 @@ section {
   padding-top: 0.15em;
 }
 
-.archiveCheckbox {
+/*@import url(//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css);
+
+input[type="checkbox"] {
+  display:none;
   overflow: hidden;
   border-radius: 1px;
   width: 1em;
   height: 1em;
 }
+
+input[type="checkbox"] + label:before {
+  display:inline-block;
+   width:19px;
+   height:21px;
+   vertical-align:middle;
+   font-family: FontAwesome;
+   cursor:pointer;
+   content: "\f006";
+   letter-spacing: 10px;
+}
+
+input[type="checkbox"]:checked + label:before {
+    content: "\f005";
+    letter-spacing: 10px;
+}*/
 
 .priorityCell, .lonePriorityCell, .editBtn, .deleteBtn {
   width: 1.7em;

@@ -53,6 +53,11 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             controller: 'CalendarCtrl',
             templateUrl: '/templates/monthly.html'
         })
+        .state('clock', {
+            url: '/clock',
+            controller: 'UserCtrl',
+            templateUrl: '/templates/clock.html'
+        })
         .state('graphs', {
             url: '/graphs',
             controller: 'UserCtrl',
@@ -62,6 +67,11 @@ listo.config(function($stateProvider, $locationProvider, $datepickerProvider, $m
             url: '/pacooverTooltip',
             controller: 'UserCtrl',
             templateUrl: '/templates/pacooverTooltip.html'
+        })
+        .state('adminPortal', {
+            url: '/adminPortal',
+            controller: 'AdminCtrl',
+            templateUrl: '/templates/adminPortal.html'
         });
 
     angular.extend($datepickerProvider.defaults, {

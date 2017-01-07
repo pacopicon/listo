@@ -1,0 +1,32 @@
+<section ng-controller="AdminCtrl" class="user">
+  <div ng-include="'/templates/navbar.html'"></div>
+<body>
+<div class="list-group">
+<!--begin FORM-->
+  <div class="containerPad">
+    <div class="container-fluid main-body form-body">
+      <div class="form row">
+        <form ng-submit="addUser()"><!-- push a new message onto the array-->
+<!--name-->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 formFormat name">
+            <input class="form-control" ng-model="newUserName" placeholder="enter user name" change="users.$save(user)"/>
+          </div>
+<!--email-->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 formFormat email">
+            <input class="form-control" ng-model="newUserEmail" placeholder="enter user password" change="users.$save(user)"/>
+          </div>
+<!--password-->
+          <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4 formFormat password">
+            <input class="form-control" ng-model="newUserPass" placeholder="enter user password" change="users.$save(user)"/>
+          </div>
+
+<!--Add Button-->
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-div"><button type="submit" type="button" class="btn-add">Add to-do item</button></div>
+        </form>
+      </div> <!--end row-->
+    </div> <!--end container-fluid-->
+  </div> <!--end containerPad-->
+
+</div>
+</body>
+</section>

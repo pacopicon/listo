@@ -10,37 +10,35 @@
 		<form class="form-horizontal" role="form">
 <!--Edit Name-->
       <div class="form-group">
-		    <label for="name" class="col-sm-2 control-label">edit name</label>
-		    <div class="col-sm-10">
-		      <input type="text" class="form-control" id="name" placeholder="Your Name" ng-model="name"/>
+		    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+		      <input type="text" class="form-control" id="name" placeholder="Enter new Name" ng-model="name"/>
 		    </div>
 		  </div>
 <!--Edit Date-->
 		  <div class="form-group">
-		    <label for="due date" class="col-sm-2 control-label">edit due date</label>
-		    <div class="col-sm-10">
+		    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 		      <input type="datetime-local" class="form-control" placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate"/>
 		    </div>
 		  </div>
 <!--Edit Importance-->
       <div class="form-group">
-		    <label for="importance" class="col-sm-2 control-label">edit importance</label>
-		    <div class="col-sm-10">
+		    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
           <button type="button" class="importanceButton" ng-model="selectedPhrase" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="<i class='fa fa-star'></i> - <i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>" bs-options="phrase.text as phrase.text for phrase in phrases" bs-select>Action<span class="caret"></span>
+          <!-- <span uib-rating ng-model="importance" max="max" read-only="isReadonly" ng-click="hoveringOver(value)" on-leave="overStar = null" titles="['one','two','three']" aria-labelledby="default-rating"></span> -->
           </button>
 		    </div>
 		  </div>
 <!--Edit Urgency-->
       <div class="form-group">
-        <label for="urgency" class="col-sm-2 control-label">edit urgency</label>
-        <div class="col-sm-10">
-          <input type="checkbox" class="form-control" ng-model="urgent"/>
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+          <a href class="tip" data-animation="am-flip-x" bs-tooltip="importanceTip">
+            <input type="checkbox" class="form-control" ng-model="urgent"/>
+          </a>
         </div>
       </div>
 <!--Edit Hour and Minute-->
 		  <div class="form-group">
-		    <label for="time est." class="col-sm-2 control-label">edit time est.</label>
-		    <div class="col-sm-10">
+        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
 		      <input type="number" class="form-control" ng-model="hours"/>
 
           <input type="number" class="form-control" ng-model="minutes"/>
