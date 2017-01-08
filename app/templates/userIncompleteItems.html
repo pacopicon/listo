@@ -68,7 +68,7 @@
     <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
     <div class="row itemDisplay">
       <input type="checkbox" ng-model="makeYellow" /><p>select all</p>
-      <input type="checkbox" ng-click="deleteSelected(itemsToDelete)" /><p>delete selected</p>
+      <input type="checkbox" ng-click="deleteSelected()" /><p>delete selected</p>
     </div>
     <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
 
@@ -80,7 +80,7 @@
       <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
           <div class="completedBox">
-            <input type="checkbox" id="cb" ng-model="makeYellow" ng-click="selectItemToDelete(item)" ng-change="isAllSelected"/>
+            <input type="checkbox" id="cb" ng-model="makeYellow" ng-click="toggleItemToDelete(item)" ng-change="isAllSelected"/>
             <!-- <label for="cb"></label> -->
           </div>
 <!--PRIORITY-->

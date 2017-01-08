@@ -167,7 +167,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           m_hoursToFinish: eHour,
           n_minutesToFinish: eMinute,
           p_importance: importance,
-          pp_readyToComplete: false,
+          pp_isSafeToComplete: false,
           q_completed: false,
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
@@ -253,6 +253,20 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           }
         }
         return itemCount;
+      },
+
+      toggleItemToDelete: function(item) {
+        var queriedItem = items.$getRecord(item.$id);
+
+        if (!queriedItem.pp_isSafeToComplete) {
+          item.pp_isSafeToComplete = true;
+        } else if (queriedItem.pp_isSafeToComplete){
+          item.pp_isSafeToComplete = false;
+        }
+
+        items.$save(queriedItem);
+
+        console.log("is item ready to be completed? " + item.pp_isSafeToComplete);
       },
 
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.

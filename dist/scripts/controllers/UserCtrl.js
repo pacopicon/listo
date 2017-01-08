@@ -8,7 +8,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     var items = $scope.items;
 
-    $scope.checkItemArrayForCompletionStatus = function() {
+    $scope.checkItemArrayForCompletionStatus = function(items) {
       var itemTally = ItemCrud.checkItemArrayForCompletionStatus(items);
 
       return itemTally;
@@ -175,14 +175,15 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       $scope.UserCtrlRefreshTalliesAndData();
     };
 
-    $scope.itemsToDelete = [];
+    $scope.toggleItemToDelete = function(item) {
+      ItemCrud.toggleItemToDelete(item);
+    };
 
-    $scope.selectItemToDelete = function(item) {
-      $scope.itemsToDelete.push(item);
-    }
-
-    $scope.deleteSelected = function(items) {
-      angular.forEach(items, $scope.updateCompletion(item));
+    $scope.deleteSelected = function() {
+      for (var i = 0; i < items.length; i++ )
+        if (items[i].pp_readyToComplete) {
+          $scope.updateCompletion(items[i]);
+        }
     };
 
     $scope.updateCompletion = function(item) {
