@@ -93,9 +93,9 @@ listo.factory("graphCruncher", ["ItemCrud",
         var totalOverdueCount = itemOverdueCount + itemDueCompleteCount;
         var totalNotOverdueCount = totalItemCount - totalOverdueCount;
 
-        var percentTotalIncomplete = Math.floor(totalIncompleteCount /totalItemCount * 100);
-        var percentTotalComplete = Math.floor(totalCompleteCount /totalItemCount * 100);
-        var percentTotalOverdue = Math.floor(totalOverdueCount /totalItemCount * 100);
+        var percentTotalIncomplete = Math.floor(totalIncompleteCount / totalItemCount * 100);
+        var percentTotalComplete = Math.floor(totalCompleteCount / totalItemCount * 100);
+        var percentTotalOverdue = Math.floor(totalOverdueCount / totalItemCount * 100);
         var percentItemsCompleteOnTime = Math.floor(itemWorkedCount / totalItemCount * 100);
         var percentTotalIncompleteNotOverdue = Math.floor(itemLeftCount / totalItemCount * 100);
         var percentTotalOverdueNotComplete = Math.floor(itemOverdueCount / totalItemCount * 100);

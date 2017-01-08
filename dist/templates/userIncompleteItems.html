@@ -68,7 +68,7 @@
     <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
     <div class="row itemDisplay">
       <input type="checkbox" ng-model="makeYellow" /><p>select all</p>
-      <input type="checkbox" ng-click="updateCompletion(item)" /><p>delete selected</p>
+      <input type="checkbox" ng-click="deleteSelected(itemsToDelete)" /><p>delete selected</p>
     </div>
     <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed">
 
@@ -80,7 +80,7 @@
       <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
           <div class="completedBox">
-            <input type="checkbox" id="cb" ng-model="makeYellow" ng-change="isAllSelected"/>
+            <input type="checkbox" id="cb" ng-model="makeYellow" ng-click="selectItemToDelete(item)" ng-change="isAllSelected"/>
             <!-- <label for="cb"></label> -->
           </div>
 <!--PRIORITY-->
@@ -112,7 +112,10 @@
       <div class="InfoEditDeleteCell">
         <i ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}" class="fa fa-info-circle"></i>
         <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
-        <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow"><p><i class="fa fa-times"></i></p></button>
+        <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow" ><p><i class="fa fa-times"></i></p></button>
+        <!-- <div class="deleteCheckbox">
+          <input type="checkbox" id="cb" ng-change="updateCompletion(item)"/>
+        </div> -->
       </div>
 <!-- end EDIT + DELETE + INFO-->
 

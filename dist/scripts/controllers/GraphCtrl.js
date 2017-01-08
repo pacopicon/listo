@@ -11,6 +11,13 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
       var sortedTallyNextSeven = graphCruncher.sortAndTally("nextSeven");
       var sortedTallyOverall = graphCruncher.sortAndTally("overall");
 
+      // Dummy $scope values to hack the color scheme:
+
+      $scope.w = 0;
+      $scope.x = 0;
+      $scope.y = 0;
+      $scope.z = 0;
+
       // Data for overall:
 
       $scope.itemLeftCountOverall = sortedTallyOverall.itemLeftCount;
@@ -51,15 +58,19 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 
       $scope.seriesOverall = ['overall'];
 
+      // complete count Vs. incomplete count Vs. overdue count Vs. overdue but done count
       $scope.itemDataOverall = [$scope.itemWorkedCountOverall, $scope.itemLeftCountOverall, $scope.itemOverdueCountOverall, $scope.itemDueCompleteCountOverall];
       $scope.itemLabelsOverall = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
 
+      // hours worked, left, overdue, and overdue but complete
       $scope.hourDataOverall = [$scope.hoursWorkedOverall, $scope.hoursLeftOverall, $scope.hoursOverdueOverall, $scope.hoursDueCompleteOverall];
       $scope.hourLabelsOverall = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
 
-      $scope.itemDataCompleteIncompleteTotalOverall = [$scope.totalIncompleteCountOverall, $scope.totalCompleteCountOverall];
-      $scope.itemLabelsCompleteIncompleteTotalOverall = ["items yet to complete", "items completed"];
+      // Total complete Vs. Total incomplete:
+      $scope.itemDataCompleteIncompleteTotalOverall = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountOverall, $scope.totalCompleteCountOverall];
+      $scope.itemLabelsCompleteIncompleteTotalOverall = ["w", "x", "y", "z", "items yet to complete", "items completed"];
 
+      // items overdue
       $scope.itemDataOverdueCompleteDueTotalOverall = [$scope.totalOverdueCountOverall, $scope.totalOverdueCountOverall];
       $scope.itemLabelsOverdueCompleteDueTotalOverall = ["items overdue", "items not yet due"];
 
@@ -103,15 +114,19 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 
       $scope.seriesLastSeven = ['last week'];
 
+      // complete count Vs. incomplete count Vs. overdue count Vs. overdue but done count
       $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven, $scope.itemLeftCountLastSeven, $scope.itemOverdueCountLastSeven, $scope.itemDueCompleteCountLastSeven];
       $scope.itemLabelsLastSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
 
+      // hours worked, left, overdue, and overdue but complete
       $scope.hourDataLastSeven = [$scope.hoursWorkedLastSeven, $scope.hoursLeftLastSeven, $scope.hoursOverdueLastSeven, $scope.hoursDueCompleteLastSeven];
       $scope.hourLabelsLastSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
 
-      $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.totalIncompleteCountLastSeven, $scope.totalCompleteCountLastSeven];
-      $scope.itemLabelsCompleteIncompleteTotalLastSeven = ["items yet to complete", "items completed"];
+      // Total complete Vs. Total incomplete:
+      $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountLastSeven, $scope.totalCompleteCountLastSeven];
+      $scope.itemLabelsCompleteIncompleteTotalLastSeven = ["w", "x", "y", "z", "items yet to complete", "items completed"];
 
+      // items overdue
       $scope.itemDataOverdueCompleteDueTotalLastSeven = [$scope.totalOverdueCountLastSeven, $scope.totalOverdueCountLastSeven];
       $scope.itemLabelsOverdueCompleteDueTotalLastSeven = ["items overdue", "items not yet due"];
 
@@ -158,12 +173,15 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
       $scope.itemDataNextSeven = [$scope.itemWorkedCountNextSeven, $scope.itemLeftCountNextSeven, $scope.itemOverdueCountNextSeven, $scope.itemDueCompleteCountNextSeven];
       $scope.itemLabelsNextSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
 
+      // hours worked, left, overdue, and overdue but complete
       $scope.hourDataNextSeven = [$scope.hoursWorkedNextSeven, $scope.hoursLeftNextSeven, $scope.hoursOverdueNextSeven, $scope.hoursDueCompleteNextSeven];
       $scope.hourLabelsNextSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
 
-      $scope.itemDataCompleteIncompleteTotalNextSeven = [$scope.totalIncompleteCountNextSeven, $scope.totalCompleteCountNextSeven];
-      $scope.itemLabelsCompleteIncompleteTotalNextSeven = ["items yet to complete", "items completed"];
+      // Total complete Vs. Total incomplete:
+      $scope.itemDataCompleteIncompleteTotalNextSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountNextSeven, $scope.totalCompleteCountNextSeven];
+      $scope.itemLabelsCompleteIncompleteTotalNextSeven = ["w", "x", "y", "z", "items yet to complete", "items completed"];
 
+      // items overdue
       $scope.itemDataOverdueCompleteDueTotalNextSeven = [$scope.totalOverdueCountNextSeven, $scope.totalOverdueCountNextSeven];
       $scope.itemLabelsOverdueCompleteDueTotalNextSeven = ["items overdue", "items not yet due"];
 

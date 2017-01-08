@@ -175,6 +175,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       $scope.UserCtrlRefreshTalliesAndData();
     };
 
+    $scope.itemsToDelete = [];
+
+    $scope.selectItemToDelete = function(item) {
+      $scope.itemsToDelete.push(item);
+    }
+
+    $scope.deleteSelected = function(items) {
+      angular.forEach(items, $scope.updateCompletion(item));
+    };
+
     $scope.updateCompletion = function(item) {
       ItemCrud.updateCompletion(item);
 

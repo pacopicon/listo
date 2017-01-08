@@ -465,6 +465,13 @@ input[type="checkbox"]:checked + label:before {
   background-color: #C3C300;
 }
 
+.deleteCheckbox {
+  margin: 0;
+  padding: 0;
+  height: 0;
+  width: 0;
+}
+
 .redText {
   /*This will color an item's text red when the item checkbox is checked.*/
   color: #e05d6f;
@@ -604,6 +611,14 @@ input[type="checkbox"]:checked + label:before {
 
 .itemsDueComplete, .timeDueComplete, .dueCompleteNumber {
   color: #3f4e62;
+}
+
+.total {
+  color: #AC6D39;
+}
+
+.totalPercent {
+  color: #8E5EC5;
 }
 
 .comNumber, .incomNumber, .overdueNumber, .dueCompleteNumber {
