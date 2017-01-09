@@ -64,7 +64,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 
       // hours worked, left, overdue, and overdue but complete
       $scope.hourDataOverall = [$scope.hoursWorkedOverall, $scope.hoursLeftOverall, $scope.hoursOverdueOverall, $scope.hoursDueCompleteOverall];
-      $scope.hourLabelsOverall = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
+      $scope.hourLabelsOverall = ["hours worked", "hours yet to work", "hours overdue", "hours after deadline"];
 
       // Total complete Vs. Total incomplete:
       $scope.itemDataCompleteIncompleteTotalOverall = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountOverall, $scope.totalCompleteCountOverall];

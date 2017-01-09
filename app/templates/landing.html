@@ -7,10 +7,10 @@
 <div class="link-container">
   <div ng-controller="AuthCtrl" class="form-group forms">
     <input class="form-control emailForm" ng-model="email" placeholder="enter e-mail" />
-    <input class="form-control passwordForm" ng-model="password" placeholder="enter password" />
+    <input class="form-control passwordForm" ng-model="pass" placeholder="enter password" />
 
     <div ng-click="signup()" class="signup"><p>sign up</p></div>
-    <div ng-click="login()" class="login"><p>log in</p></div>
+    <div ng-click="login(email, pass)" class="login"><p>log in</p></div>
   </div>
 </div>
 </div>

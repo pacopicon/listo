@@ -5,19 +5,29 @@ listo.controller('AuthCtrl', ["$scope", "ItemCrud", "UserCrud", "$rootScope", "$
 
     var auth = $firebaseAuth(ref);
 
-    var user = $firebaseArray(ref);
+    // var user = $firebaseArray(ref);
 
     // sign in
 
-    auth.signInWithEmailAndPassword(email, pass);
 
     promise.catch(e => console.log(e.message));
 
-
-
-    auth.createUserWithEmailAndPassword(email, pass);
-
-    auth.onAuthStateChanged(user, callback); // triggers callback
+    $scope.login = function(email, pass) {
+      console.log("login called")
+      auth.signInWithEmailAndPassword(email, pass).then(function (authData) {
+        console.log(AuthData);
+      }, function(error) {
+        if (error){
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          if (errorCode === 'auth/wrong-password') {
+            alert('Wrong password.');
+          } else {
+            alert(errorMessage);
+          }
+        }
+      });
+    };
 
   }
 ]);
