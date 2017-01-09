@@ -23,7 +23,7 @@
 
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-      <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed">
+      <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="!item.q_completed" ng-mouseleave="hover = false">
       <p class="noItemAnnounce" ng-if="itemTally.comCount == 0">There are no archived items at this time</p>
 
       <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
@@ -50,7 +50,7 @@
           </div>
         </div>
 
-<<!-- begin INFO TOOLTIP -->
+<!-- begin INFO TOOLTIP -->
       <div ng-if="hover" class="pacoover">
         <div ng-include="'/templates/pacooverTooltip.html'"></div>
       </div>
@@ -59,7 +59,7 @@
 <!--HOVERINFO + EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
         <div class="InfoEditDeleteCell">
-          <i ng-mouseenter="hover = true" ng-mouseleave="hover = false" ng-class="{'yellowText': item.q_completed}" class="fa fa-info-circle"></i>
+          <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'yellowText': item.q_completed}"></i></div>
           <a href class="editBtn" ng-class="{'yellowCell': item.q_completed}" ng-model="item" ng-show="item.q_completed" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
         </div>
       </div> <!--end item Display and ng-repeat-->

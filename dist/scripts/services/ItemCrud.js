@@ -167,7 +167,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           m_hoursToFinish: eHour,
           n_minutesToFinish: eMinute,
           p_importance: importance,
-          pp_isSafeToComplete: false,
+          pp_isUnsafeToComplete: true,
           q_completed: false,
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
@@ -258,15 +258,35 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       toggleItemToDelete: function(item) {
         var queriedItem = items.$getRecord(item.$id);
 
-        if (!queriedItem.pp_isSafeToComplete) {
-          item.pp_isSafeToComplete = true;
-        } else if (queriedItem.pp_isSafeToComplete){
-          item.pp_isSafeToComplete = false;
+        if (!queriedItem.pp_isUnsafeToComplete) {
+          item.pp_isUnsafeToComplete = true;
+        } else if (queriedItem.pp_isUnsafeToComplete){
+          item.pp_isUnsafeToComplete = false;
         }
 
         items.$save(queriedItem);
 
-        console.log("is item ready to be completed? " + item.pp_isSafeToComplete);
+        console.log("is safe to complete? " + item.pp_isUnsafeToComplete);
+      },
+
+      toggleSelectForDelete: function(items) {
+        incompleteArray = [];
+
+        for (var i = 0; i < items.length; i++) {
+          if (!items[i].q_completed) {
+            incompleteArray.push(items[i]);
+          }
+        }
+
+        for (var i = 0; i < incompleteArray.length; i++) {
+          if (incompleteArray[i].pp_isUnsafeToComplete) {
+            incompleteArray[i].pp_isUnsafeToComplete = false;
+            console.log("is item, " + items[i].a_text + ", unsafe to complete? " + incompleteArray[i].pp_isUnsafeToComplete);
+          } else {
+            incompleteArray[i].pp_isUnsafeToComplete = true;
+          }
+          items.$save(incompleteArray[i]);
+        }
       },
 
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.

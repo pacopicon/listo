@@ -252,6 +252,49 @@ section {
 
 /* end CSS for Form */
 
+.formControls {
+  border-radius: 1em;
+  background-color: white;
+  min-height: 1.8em;
+  margin: 0.5em;
+}
+
+.left-wrap {
+  padding-left: 0;
+  margin-left: 0;
+}
+
+.right-wrap {
+  padding-right: 0;
+  margin-right: 0;
+}
+
+.btn-wrap {
+
+}
+
+.controlBtn {
+  border: 2.5px solid #3f4e62;
+  background-color: white;
+  color: #3f4e62;
+  height: 1.8em;
+  border-radius: 1em;
+  text-decoration: none;
+  text-align: center;
+  overflow: hidden;
+  width: 100%;
+  /*margin-left: 1em;*/
+}
+
+.controlBtn:hover {
+  background-color: #3f4e62;
+  color: white
+}
+
+.controlBtn:active {
+  background-color: #e7eaeb;
+}
+
 .noItemAnnounce {
   text-align: center;
   padding-top: 0.6em;
@@ -270,6 +313,8 @@ section {
   /*background-color: white;*/
   /*border: 0.1px solid #3f4e62;*/
 }
+
+
 
 .pacoover {
   min-height: 1.8em;
@@ -339,6 +384,8 @@ input[type="checkbox"]:checked + label:before {
     content: "\f005";
     letter-spacing: 10px;
 }*/
+
+
 
 .priorityCell, .lonePriorityCell, .editBtn, .deleteBtn {
   width: 1.7em;
@@ -419,12 +466,22 @@ input[type="checkbox"]:checked + label:before {
   z-index: 0;
 }*/
 
+.info {
+  height: 1.5em;
+  width: 1.3em;
+  padding: 0em;
+  margin: 0em;
+  margin-right: 0em;
+  left: 1.5em;
+  float: left;
+  z-index: 100;
+}
+
 .fa-info-circle {
   color: #3f4e62;
   font-size: 1.5em;
   z-index: 1;
   margin: 0;
-  left: 1.5em;
 }
 
 .editBtn, .deleteBtn {
@@ -565,7 +622,7 @@ input[type="checkbox"]:checked + label:before {
   float: right;
 }
 
-.fa-pie-chart {
+.fa-refresh {
   margin-top: 0.25em;
 }
 
@@ -684,9 +741,16 @@ input[type="checkbox"]:checked + label:before {
     min-width: 85%;
   }
 
-  /*.hour, .minute {
-    width: 31%;
-  }*/
+  .btn-wrap {
+    padding-left: 0;
+    margin-left: 0;
+    padding-right: 0;
+    margin-right: 0;
+  }
+
+  .middle-wrap, .left-wrap {
+    margin-bottom: 0.5em;
+  }
 }
 
 @media only screen and (max-width : 767px) {
@@ -856,7 +920,7 @@ input[type="checkbox"]:checked + label:before {
   }*/
 
   .name {
-    width: 18%;
+    width: 16.5%;
   }
 
   .time {
@@ -868,7 +932,7 @@ input[type="checkbox"]:checked + label:before {
   }
 
   .importance {
-    width: 9%;
+    width: 10%;
   }
 
   .hour-and-minute {

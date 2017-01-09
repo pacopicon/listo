@@ -144,8 +144,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
           ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
-          if (oldItem.q_completed == true) {
+          if (oldItem.q_completed) {
             ItemCrud.updateCompletion(oldItem);
+          }
+
+          if (!oldItem.pp_isUnsafeToComplete) {
+            ItemCrud.toggleItemToDelete(item);
           }
 
           $scope.UserCtrlRefreshTalliesAndData();
@@ -179,9 +183,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       ItemCrud.toggleItemToDelete(item);
     };
 
+    $scope.selectForDelete = function(items) {
+      ItemCrud.toggleSelectForDelete(items);
+      $scope.makeYellow = true;
+    };
+
+    $scope.undoSelectForDelete = function(items) {
+      ItemCrud.toggleSelectForDelete(items);
+      $scope.makeYellow = false;
+    }
+
     $scope.deleteSelected = function() {
       for (var i = 0; i < items.length; i++ )
-        if (items[i].pp_readyToComplete) {
+        if (!items[i].pp_isUnsafeToComplete) {
           $scope.updateCompletion(items[i]);
         }
     };
