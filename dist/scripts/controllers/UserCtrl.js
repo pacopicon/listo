@@ -8,10 +8,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     var items = $scope.items;
 
-    $scope.checkItemArrayForCompletionStatus = function(items) {
-      var itemTally = ItemCrud.checkItemArrayForCompletionStatus(items);
-
-      return itemTally;
+    $scope.itemTally = function(items) {
+      ItemCrud.checkItemArrayForCompletionStatus(items);
     };
 
     var refreshTime = function() {

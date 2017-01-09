@@ -220,17 +220,18 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         for (var i = 0; i < totalItems; i++) {
           if (items[i].q_completed && items[i].b_dueDate + week < now) {
 
-            // 'date' is part of the console.log
-            var date = new Date(items[i].b_dueDate);
+            var itemToDelete = items.$getRecord(items[i].$id);
 
-            console.log("item named " + items[i].a_text + " with date: " + date + ", is about to be removed");
-            items.$remove(items[i]).then(function() {
-              if (items[i] != undefined) {
-                console.log("item named " + items[i].a_text + "has still not been deleted");
-              } else {
-                console.log("item, which is now " + items[i] + ", has been removed");
-              }
-            });
+            // 'date' is part of the console.log
+            var date = new Date(itemToDelete.b_dueDate);
+
+            console.log("item named " + itemToDelete.a_text + " with date: " + date + ", is about to be removed");
+
+            // itemToDelete = null;
+
+            items.$remove(itemToDelete).then(function() {
+                console.log("item, which is now " + itemToDelete + ", has been removed");
+              });
             // Still figuring out how to $destroy items and avoid memory leaks.
             // items.$destroy(items[i]);
           }
@@ -258,9 +259,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       toggleItemToDelete: function(item) {
         var queriedItem = items.$getRecord(item.$id);
 
-        if (!queriedItem.pp_isUnsafeToComplete) {
+        if (!queriedItem.pp_isUnsafeToComplete && !queriedItem.q_completed) {
           item.pp_isUnsafeToComplete = true;
-        } else if (queriedItem.pp_isUnsafeToComplete){
+        } else if (queriedItem.pp_isUnsafeToComplete && !queriedItem.q_completed){
           item.pp_isUnsafeToComplete = false;
         }
 
@@ -270,22 +271,14 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       },
 
       toggleSelectForDelete: function(items) {
-        incompleteArray = [];
-
         for (var i = 0; i < items.length; i++) {
-          if (!items[i].q_completed) {
-            incompleteArray.push(items[i]);
+          if (items[i].pp_isUnsafeToComplete && !items[i].q_completed) {
+            items[i].pp_isUnsafeToComplete = false;
+            console.log("is item, " + items[i].a_text + ", unsafe to complete? " + items[i].pp_isUnsafeToComplete);
+          } else if (!items[i].pp_isUnsafeToComplete && !items[i].q_completed) {
+            items[i].pp_isUnsafeToComplete = true;
           }
-        }
-
-        for (var i = 0; i < incompleteArray.length; i++) {
-          if (incompleteArray[i].pp_isUnsafeToComplete) {
-            incompleteArray[i].pp_isUnsafeToComplete = false;
-            console.log("is item, " + items[i].a_text + ", unsafe to complete? " + incompleteArray[i].pp_isUnsafeToComplete);
-          } else {
-            incompleteArray[i].pp_isUnsafeToComplete = true;
-          }
-          items.$save(incompleteArray[i]);
+          items.$save(items[i]);
         }
       },
 
@@ -293,10 +286,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       updateCompletion: function(item) {
         var itemToBeUpdated = items.$getRecord(item.$id);
 
-        if (itemToBeUpdated.q_completed == false) {
+        if (!itemToBeUpdated.q_completed && !itemToBeUpdated.pp_isUnsafeToComplete) {
           itemToBeUpdated.q_completed = true;
           itemToBeUpdated.u_completed_at = firebase.database.ServerValue.TIMESTAMP;
-        } else {
+        } else if (itemToBeUpdated.q_completed && itemToBeUpdated.pp_isUnsafeToComplete) {
           itemToBeUpdated.q_completed = false;
           itemToBeUpdated.u_completed_at = 0;
         }
