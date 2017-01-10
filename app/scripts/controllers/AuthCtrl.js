@@ -8,17 +8,17 @@ listo.controller('AuthCtrl', ["$scope", "$state", "ItemCrud", "UserCrud", "$root
 
     // var user = $firebaseArray(ref);
 
-    var changeState = function('state') {
-      $state.go('state')
-    };
-
-    $scope.login = function(email, pass) {
-      if (email === 'guest@guest.com' && pass === "palmtreerooskee@gmail.com") {
-        changeState('/userIncompleteItems');
-      } else {
-        $window.alert.("wrong e-mail and password");
-      }
-    };
+    // var changeState = function('state') {
+    //   $state.go('state')
+    // };
+    //
+    // $scope.login = function(email, pass) {
+    //   if (email === 'guest@guest.com' && pass === "palmtreerooskee@gmail.com") {
+    //     changeState('/userIncompleteItems');
+    //   } else {
+    //     $window.alert.("wrong e-mail and password");
+    //   }
+    // };
 
 
 
