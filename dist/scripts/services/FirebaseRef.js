@@ -28,3 +28,19 @@ listo.factory("FirebaseRef", ["$firebaseArray",
 
   } // end of FirebaseRef function
 ]); // end of factory initialization
+
+// firebase.json
+// {
+//   "database": {
+//     "rules" :"database.rules.json"
+//   },
+//   "hosting": {
+//     "public": "public",
+//     "rewrites": [
+//       {
+//         "source": "**",
+//         "destination": "/index.html"
+//       }
+//     ]
+//   }
+// }

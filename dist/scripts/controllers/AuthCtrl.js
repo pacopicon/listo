@@ -7,7 +7,7 @@ listo.controller('AuthCtrl', ["$scope", "ItemCrud", "UserCrud", "$rootScope", "$
     var auth = $firebaseAuth();
 
     // var user = $firebaseArray(ref);
-
+ 
     // sign in
 
 
