@@ -130,17 +130,31 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var millisecsInMinute = 60000;
         var millisecsInSecs = 1000;
 
-        var years = timeInMillisecs / millisecsInYear;
-        var lessThanYear = timeInMillisecs % millisecsInYear;
-        var months = lessThanYear / millisecsInMonth;
-        var lessThanMonth = lessThanYear % millisecsInMonth;
-        var days = lessThanMonth / millisecsInDay;
-        var lessThanDay = lessThanMonth % millisecsInDay;
-        var hours = lessThanDay / millisecsInHour;
-        var lessThanHour = lessThanDay % millisecsInHour;
-        var minutes = lessThanHour / millisecsInMinute;
-        var lessThanMinute = lessThanHour % millisecsInMinute;
-        var seconds = Math.round(lessThanMinute / millisecsInSecs);
+        if (timeInMillisecs < 0) {
+          var years = Math.abs(timeInMillisecs / millisecsInYear);
+          var lessThanYear = Math.abs(timeInMillisecs % millisecsInYear);
+          var months = Math.abs(lessThanYear / millisecsInMonth);
+          var lessThanMonth = Math.abs(lessThanYear % millisecsInMonth);
+          var days = Math.abs(lessThanMonth / millisecsInDay);
+          var lessThanDay = Math.abs(lessThanMonth % millisecsInDay);
+          var hours = Math.abs(lessThanDay / millisecsInHour);
+          var lessThanHour = Math.abs(lessThanDay % millisecsInHour);
+          var minutes = Math.abs(lessThanHour / millisecsInMinute);
+          var lessThanMinute = Math.abs(lessThanHour % millisecsInMinute);
+          var seconds = Math.abs(Math.round(lessThanMinute / millisecsInSecs));
+        } else {
+          var years = timeInMillisecs / millisecsInYear;
+          var lessThanYear = timeInMillisecs % millisecsInYear;
+          var months = lessThanYear / millisecsInMonth;
+          var lessThanMonth = lessThanYear % millisecsInMonth;
+          var days = lessThanMonth / millisecsInDay;
+          var lessThanDay = lessThanMonth % millisecsInDay;
+          var hours = lessThanDay / millisecsInHour;
+          var lessThanHour = lessThanDay % millisecsInHour;
+          var minutes = lessThanHour / millisecsInMinute;
+          var lessThanMinute = lessThanHour % millisecsInMinute;
+          var seconds = Math.round(lessThanMinute / millisecsInSecs);
+        }
 
         return {
           total: timeInMillisecs,
@@ -167,7 +181,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           m_hoursToFinish: eHour,
           n_minutesToFinish: eMinute,
           p_importance: importance,
-          pp_isUnsafeToComplete: true,
+          pp_isSafeToComplete: false,
           q_completed: false,
           qq_pastDue: false,
           r_urgent: itemProperties.urgency,
@@ -194,7 +208,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var updatedItemProperties = prioritize(oldItem, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
         var t = new Date();
-        console.log("step 5 - ItemCrud.updateItem old name: " + oldItem.name + " and name: " + newName + " and item date " + newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+        console.log("step 5 - ItemCrud.updateItem old name: " + oldItem.a_text + " and name: " + newName + " and item date " + newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
         oldItem.a_text = newName;
         oldItem.b_dueDate = newDueDate;
@@ -259,24 +273,24 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       toggleItemToDelete: function(item) {
         var queriedItem = items.$getRecord(item.$id);
 
-        if (!queriedItem.pp_isUnsafeToComplete && !queriedItem.q_completed) {
-          item.pp_isUnsafeToComplete = true;
-        } else if (queriedItem.pp_isUnsafeToComplete && !queriedItem.q_completed){
-          item.pp_isUnsafeToComplete = false;
+        if (!queriedItem.pp_isSafeToComplete) {
+          item.pp_isSafeToComplete = true;
+        } else if (queriedItem.pp_isSafeToComplete){
+          item.pp_isSafeToComplete = false;
         }
 
         items.$save(queriedItem);
 
-        console.log("is safe to complete? " + item.pp_isUnsafeToComplete);
+        console.log("is Safe to complete? " + item.pp_isSafeToComplete);
       },
 
       toggleSelectForDelete: function(items) {
         for (var i = 0; i < items.length; i++) {
-          if (items[i].pp_isUnsafeToComplete && !items[i].q_completed) {
-            items[i].pp_isUnsafeToComplete = false;
-            console.log("is item, " + items[i].a_text + ", unsafe to complete? " + items[i].pp_isUnsafeToComplete);
-          } else if (!items[i].pp_isUnsafeToComplete && !items[i].q_completed) {
-            items[i].pp_isUnsafeToComplete = true;
+          if (!items[i].pp_isSafeToComplete && !items[i].q_complete) {
+            items[i].pp_isSafeToComplete = true;
+            console.log("is item, " + items[i].a_text + ", Safe to complete? " + items[i].pp_isSafeToComplete);
+          } else if (items[i].pp_isSafeToComplete && !items[i].q_completed) {
+            items[i].pp_isSafeToComplete = false;
           }
           items.$save(items[i]);
         }
@@ -286,10 +300,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       updateCompletion: function(item) {
         var itemToBeUpdated = items.$getRecord(item.$id);
 
-        if (!itemToBeUpdated.q_completed && !itemToBeUpdated.pp_isUnsafeToComplete) {
+        if (!itemToBeUpdated.q_completed) {
           itemToBeUpdated.q_completed = true;
           itemToBeUpdated.u_completed_at = firebase.database.ServerValue.TIMESTAMP;
-        } else if (itemToBeUpdated.q_completed && itemToBeUpdated.pp_isUnsafeToComplete) {
+        } else if (itemToBeUpdated.q_completed) {
           itemToBeUpdated.q_completed = false;
           itemToBeUpdated.u_completed_at = 0;
         }

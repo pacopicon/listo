@@ -66,24 +66,22 @@
 <!--select all / clear selected / delete selected-->
   <div class="row formControls">
     <!-- <input type="checkbox" ng-model="makeYellow" ng-click="toggleAllToDelete(items)" /><p>select all</p> -->
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 left-wrap btn-wrap">
-      <button class="controlBtn selectAll" ng-click="selectForDelete(items)" ng-model="makeYellow">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap">
+      <button class="controlBtn selectAll" ng-click="selectForDelete(items)" ng-model="makeYellow" ng-hide="hideSelectAll" ng-init="!hideSelectAll">
         <p>select all</p>
       </button>
-    </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 middle-wrap btn-wrap">
-      <button class="controlBtn clearAll" ng-model="makeYellow" ng-click="undoSelectForDelete(items)">
+      <button class="controlBtn clearAll" ng-model="makeYellow" ng-click="undoSelectForDelete(items)" ng-hide="!hideSelectAll">
         <p>clear selected</p>
       </button>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12 right-wrap btn-wrap">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-wrap btn-wrap">
       <button class="controlBtn deleteSelected" ng-click="deleteSelected()">
         <p>delete selected</p>
       </button>
     </div>
   </div>
 <!--select all / clear selected / delete selected-->
-  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-hide="item.q_completed" ng-mouseleave="hover = false">
+  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-show="!item.q_completed" ng-hide="item.q_completed" ng-mouseleave="hover = false">
 
   <p class="noItemAnnounce" ng-if="itemTally.incomCount == 0">There are no to do items at this time</p>
   <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->

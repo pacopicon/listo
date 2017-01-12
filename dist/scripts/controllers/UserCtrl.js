@@ -127,7 +127,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
         modal.close.then(function(newItemProps) {
 
           console.log("newItemProps: " + newItemProps);
-
+          // oldItem seems to not be needed since functions below utilize item successfully.  However, I don't understand how yet, keeping it here until I do.
           oldItem = $scope.oldItem;
           newName = newItemProps.newName;
           newDueDate = newItemProps.newDueDate;
@@ -142,13 +142,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
           ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
-          if (oldItem.q_completed) {
-            ItemCrud.updateCompletion(oldItem);
+          if (item.q_completed) {
+            ItemCrud.updateCompletion(item);
+            ItemCrud.toggleItemToDelete(item);
+            console.log("toggleItemToDelete fired");
           }
 
-          if (!oldItem.pp_isUnsafeToComplete) {
-            ItemCrud.toggleItemToDelete(item);
-          }
 
           $scope.UserCtrlRefreshTalliesAndData();
         });
@@ -182,12 +181,14 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     };
 
     $scope.selectForDelete = function(items) {
-      ItemCrud.toggleSelectForDelete(items);
       $scope.makeYellow = true;
+      $scope.hideSelectAll = true;
+      ItemCrud.toggleSelectForDelete(items);
     };
 
     $scope.undoSelectForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);
+      $scope.hideSelectAll = false;
       $scope.makeYellow = false;
     }
 
