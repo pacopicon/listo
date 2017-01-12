@@ -221,7 +221,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 // The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
 
     $rootScope.$on("refreshData", function() {
-      $scope.GraphCtrlRefreshTalliesAndData();
+      $scope.completionData();
     });
 
     $scope.GraphCtrlRefreshTalliesAndData = function() {

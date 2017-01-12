@@ -167,14 +167,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 // Brought this over from GraphCtrl, since DOM makes many $scope calls to it and cannot simplify GraphCtrl into a service incjectable into the present controller.
     $scope.UserCtrlRefreshTalliesAndData = function() {
       $rootScope.$emit("refreshData", {});
+      ItemCrud.processOldCompleteItems();
+      ItemCrud.updateAllItemsPastDue();
     };
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
       console.log("importance is: " + $scope.selectedIcon);
 
+    }.then(function($scope.UserCtrlRefreshTalliesAndData()) {
       $scope.UserCtrlRefreshTalliesAndData();
-    };
+    });
 
     $scope.toggleItemToDelete = function(item) {
       ItemCrud.toggleItemToDelete(item);

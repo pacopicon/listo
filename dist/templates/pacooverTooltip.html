@@ -13,7 +13,7 @@
     <span ng-if="parseTime(item.b_dueDate).minute == 1">{{parseTime(item.b_dueDate).minute}} minute and</span><span ng-if="parseTime(item.b_dueDate).minute > 1">{{parseTime(item.b_dueDate).minute}} minutes and</span>
     <span ng-if="parseTime(item.b_dueDate).second == 1">{{parseTime(item.b_dueDate).second}} second</span><span ng-if="parseTime(item.b_dueDate).second > 1">{{parseTime(item.b_dueDate).second}} seconds</span></span>
 
-    <span ng-if="item.qq_pastDue">item was due </span>
+    <span ng-if="item.qq_pastDue">item was due
     <span ng-if="parseTime(item.b_dueDate).year < 2 && parseTime(item.b_dueDate).year > 0">{{parseTime(item.b_dueDate).year}} year,</span>
     <span ng-if="parseTime(item.b_dueDate).year >= 2">{{parseTime(item.b_dueDate).year}} years,</span>
     <span ng-if="parseTime(item.b_dueDate).month < 2 && parseTime(item.b_dueDate).month > 0">{{parseTime(item.b_dueDate).month}} month,</span>
@@ -25,6 +25,6 @@
     <span ng-if="parseTime(item.b_dueDate).minute < 2 && parseTime(item.b_dueDate).minute > 0">{{parseTime(item.b_dueDate).minute}} minute and</span>
     <span ng-if="parseTime(item.b_dueDate).minute >= 2">{{parseTime(item.b_dueDate).minute}} minutes and</span>
     <span ng-if="parseTime(item.b_dueDate).second < 2 && parseTime(item.b_dueDate).second > 0">{{parseTime(item.b_dueDate).second}} second </span>
-    <span ng-if="parseTime(item.b_dueDate).second >= 2">{{parseTime(item.b_dueDate).second}} seconds</span> ago
+    <span ng-if="parseTime(item.b_dueDate).second >= 2">{{parseTime(item.b_dueDate).second}} seconds</span> ago</span>
   </p>
 </section>
