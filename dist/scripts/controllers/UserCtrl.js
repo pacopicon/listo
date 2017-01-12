@@ -172,10 +172,14 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     };
 
     $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
+      var deferred = $q.defer();
+
+      var action = ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
+
+      deferred.resolve(action);
       console.log("importance is: " + $scope.selectedIcon);
 
-    }.then(function($scope.UserCtrlRefreshTalliesAndData()) {
+    }.then(function(action) {
       $scope.UserCtrlRefreshTalliesAndData();
     });
 
