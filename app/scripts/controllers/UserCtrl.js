@@ -175,9 +175,14 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
       console.log("importance is: " + $scope.selectedIcon);
 
-    }.then(function($scope.UserCtrlRefreshTalliesAndData()) {
-      $scope.UserCtrlRefreshTalliesAndData();
-    });
+      $timeout($scope.UserCtrlRefreshTalliesAndData(), 500)
+    };
+
+    // var refreshData = function() {
+    //   if ($scope.addItem()) {
+    //     $scope.UserCtrlRefreshTalliesAndData();
+    //   }
+    // };
 
     $scope.toggleItemToDelete = function(item) {
       ItemCrud.toggleItemToDelete(item);

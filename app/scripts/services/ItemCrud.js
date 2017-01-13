@@ -239,7 +239,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // 'date' is part of the console.log
             var date = new Date(itemToDelete.b_dueDate);
 
-            console.log("item named " + itemToDelete.a_text + " with date: " + date + ", is about to be removed");
+            console.log("item named " + itemToDelete.a_text + " with date: " + date.toString() + ", is about to be removed");
 
             // itemToDelete = null;
 
@@ -321,6 +321,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               incompleteItemCount++;
           }
         }
+
+        console.log("itemTally called");
 
         return {
           comCount: completeItemCount,

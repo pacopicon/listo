@@ -226,7 +226,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 
     $scope.GraphCtrlRefreshTalliesAndData = function() {
       $scope.completionData();
-      ItemCrud.processOldCompleteItems();
+      // ItemCrud.processOldCompleteItems();
       ItemCrud.updateAllItemsPastDue();
     };
 
