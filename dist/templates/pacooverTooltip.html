@@ -1,4 +1,5 @@
 <section ng-controller="UserCtrl" class="user">
+  <p>item safe to complete?: {{item.pp_isSafeToComplete}}</p>
   <p>item rank: {{item.s_rank}}</p>
   <p><span ng-if="item.r_urgent">item status: urgent </span><span ng-if="!item.r_urgent">item status: not urgent </span></p>
   <p>time to finish: {{item.m_hoursToFinish}} hrs, {{item.m_hoursToFinish}} mins</p>

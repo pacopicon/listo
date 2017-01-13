@@ -173,9 +173,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-      console.log("importance is: " + $scope.selectedIcon);
 
-      $timeout($scope.UserCtrlRefreshTalliesAndData(), 500)
+      if ($scope.UserCtrlRefreshTalliesAndData()) {
+        console.log("UserCtrlRefreshTalliesAndData was called");
+      }
     };
 
     // var refreshData = function() {
@@ -201,8 +202,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     }
 
     $scope.deleteSelected = function() {
-      for (var i = 0; i < items.length; i++ )
-        if (!items[i].pp_isUnsafeToComplete) {
+      for (var i = 0; i < items.length; i++)
+        if (items[i].q_completed === false && items[i].pp_isSafeToComplete === true) {
           $scope.updateCompletion(items[i]);
         }
     };

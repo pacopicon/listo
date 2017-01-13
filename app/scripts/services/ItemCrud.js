@@ -273,9 +273,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       toggleItemToDelete: function(item) {
         var queriedItem = items.$getRecord(item.$id);
 
-        if (!queriedItem.pp_isSafeToComplete) {
+        if (queriedItem.pp_isSafeToComplete === false) {
           item.pp_isSafeToComplete = true;
-        } else if (queriedItem.pp_isSafeToComplete){
+        } else if (queriedItem.pp_isSafeToComplete === true){
           item.pp_isSafeToComplete = false;
         }
 

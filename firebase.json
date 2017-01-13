@@ -1,8 +1,33 @@
 {
-  "database": {
-    "rules": "database.rules.json"
-  },
   "hosting": {
-    "public": "app"
+    "public": "app",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "redirects": [ {
+      "source" : "/firebase/*",
+      "destination" : "https://www.firebase.com",
+      "type" : 302
+      }
+    ],
+    "rewrites": [ {
+      "source": "/app/userIncompleteItems",
+      "destination": "/app/userIncompleteItems"
+      }, {
+      "source": "/app/userCompleteItems",
+      "destination": "/app/userCompleteItems"
+      }, {
+      "source": "/app/calendar",
+      "destination": "/app/calendar"
+      }, {
+      "source": "/app/adminPortal",
+      "destination": "/app/AdminPortal"
+      }
+    ],
+    "database": {
+      "rules": "database.rules.json"
+    }
   }
 }
