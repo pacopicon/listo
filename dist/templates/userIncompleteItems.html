@@ -105,6 +105,7 @@
       <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell">
         <!-- {{item.importance}} -->
         <p ng-bind-html="item.importance"></p>
+        <div data-ng-bind-html="trustAsHtml(htmlString)"></div>
       </div>
 <!--NAME-->
       <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell">

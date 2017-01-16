@@ -106,6 +106,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 // Begin Importance
 
     $scope.iconwrap = {};
+
+    $scope.string1 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i>";
+    $scope.string2 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star-half'></i>";
+    $scope.string3 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i>";
+    $scope.string4 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>";
+    $scope.string5 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+
+    $scope.trustAsHtml = function(string) {
+      return $sce.trustAsHtml(string);
+    }
+
     $scope.icons = [
       {label:"<i class='fa fa-star'></i>"},
       {label:"<i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
@@ -113,6 +124,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
       {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
     ];
+
+    $scope.trustAsHtml =
 
 // End Importance
 
