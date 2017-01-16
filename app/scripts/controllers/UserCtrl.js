@@ -18,7 +18,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
       for (var i = 0; i < items.length; i++) {
         if (items[i].dueDate < time) {
-          items[i].isPastDue = true;
+          ItemCrud.updateAllItemsPastDue();
         }
       }
       return time;

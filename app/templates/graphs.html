@@ -1,5 +1,7 @@
 <section ng-controller="GraphCtrl" class="user">
 
+  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
+
   <!--begin lastSeven day GRAPHS-->
     <div class="containerPad">
       <div class="container-fluid main-body">

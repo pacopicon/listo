@@ -6,6 +6,8 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
       "checked": false
     };
 
+    $scope.items = ItemCrud.getAllItems();
+
     $scope.completionData = function() {
       var sortedTallyLastSeven = graphCruncher.sortAndTally("lastSeven");
       var sortedTallyNextSeven = graphCruncher.sortAndTally("nextSeven");
