@@ -176,18 +176,18 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
         // the below function lists the properties inside the item being created
         items.$add({
-          a_text: itemName,
-          b_dueDate: dueDate.getTime(),
-          m_hoursToFinish: eHour,
-          n_minutesToFinish: eMinute,
-          p_importance: importance,
-          pp_isSafeToComplete: false,
-          q_completed: false,
-          qq_pastDue: false,
-          r_urgent: itemProperties.urgency,
-          s_rank: itemProperties.rank,
-          t_created_at: firebase.database.ServerValue.TIMESTAMP,
-          u_completed_at: 0
+          name: itemName,
+          dueDate: dueDate.getTime(),
+          eHour: eHour,
+          eMinute: eMinute,
+          importance: importance,
+          isSafeToComplete: false,
+          isComplete: false,
+          isPastDue: false,
+          isUrgent: itemProperties.urgency,
+          rank: itemProperties.rank,
+          created_at: firebase.database.ServerValue.TIMESTAMP,
+          completed_at: 0
         }).then(function(ref) {
           var id = ref.key;
           console.log("added item with id " + id);
@@ -208,15 +208,15 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var updatedItemProperties = prioritize(oldItem, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
         var t = new Date();
-        console.log("step 5 - ItemCrud.updateItem old name: " + oldItem.a_text + " and name: " + newName + " and item date " + newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+        console.log("step 5 - ItemCrud.updateItem old name: " + oldItem.name + " and name: " + newName + " and item date " + newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
-        oldItem.a_text = newName;
-        oldItem.b_dueDate = newDueDate;
-        oldItem.p_importance = newImportance;
-        oldItem.r_urgent = updatedItemProperties.urgency;
-        oldItem.m_hoursToFinish = newHours;
-        oldItem.n_minutesToFinish = newMinutes;
-        oldItem.s_rank = updatedItemProperties.rank;
+        oldItem.name = newName;
+        oldItem.dueDate = newDueDate;
+        oldItem.importance = newImportance;
+        oldItem.isUrgent = updatedItemProperties.urgency;
+        oldItem.eHour = newHours;
+        oldItem.eMinute = newMinutes;
+        oldItem.rank = updatedItemProperties.rank;
 
         items.$save(oldItem).then(function(ref) {
           console.log("items.$save called");
@@ -232,14 +232,14 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var totalItems = items.length;
 
         for (var i = 0; i < totalItems; i++) {
-          if (items[i].q_completed && items[i].b_dueDate + week < now) {
+          if (items[i].isComplete && items[i].dueDate + week < now) {
 
             var itemToDelete = items.$getRecord(items[i].$id);
 
             // 'date' is part of the console.log
-            var date = new Date(itemToDelete.b_dueDate);
+            var date = new Date(itemToDelete.dueDate);
 
-            console.log("item named " + itemToDelete.a_text + " with date: " + date.toString() + ", is about to be removed");
+            console.log("item named " + itemToDelete.name + " with date: " + date.toString() + ", is about to be removed");
 
             // itemToDelete = null;
 
@@ -257,12 +257,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var totalItems = items.length;
 
         for (var i = 0; i < totalItems; i++) {
-          if (items[i].b_dueDate < now) {
-            items[i].qq_pastDue = true;
+          if (items[i].dueDate < now) {
+            items[i].isPastDue = true;
             items.$save(items[i]);
             itemCount++;
           } else {
-            items[i].qq_pastDue = false;
+            items[i].isPastDue = false;
             items.$save(items[i]);
             itemCount--;
           }
@@ -273,24 +273,24 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       toggleItemToDelete: function(item) {
         var queriedItem = items.$getRecord(item.$id);
 
-        if (queriedItem.pp_isSafeToComplete === false) {
-          item.pp_isSafeToComplete = true;
-        } else if (queriedItem.pp_isSafeToComplete === true){
-          item.pp_isSafeToComplete = false;
+        if (queriedItem.isSafeToComplete === false) {
+          item.isSafeToComplete = true;
+        } else if (queriedItem.isSafeToComplete === true){
+          item.isSafeToComplete = false;
         }
 
         items.$save(queriedItem);
 
-        console.log("is Safe to complete? " + item.pp_isSafeToComplete);
+        console.log("is Safe to complete? " + item.isSafeToComplete);
       },
 
       toggleSelectForDelete: function(items) {
         for (var i = 0; i < items.length; i++) {
-          if (!items[i].pp_isSafeToComplete && !items[i].q_complete) {
-            items[i].pp_isSafeToComplete = true;
-            console.log("is item, " + items[i].a_text + ", Safe to complete? " + items[i].pp_isSafeToComplete);
-          } else if (items[i].pp_isSafeToComplete && !items[i].q_completed) {
-            items[i].pp_isSafeToComplete = false;
+          if (!items[i].isSafeToComplete && !items[i].q_complete) {
+            items[i].isSafeToComplete = true;
+            console.log("is item, " + items[i].name + ", Safe to complete? " + items[i].isSafeToComplete);
+          } else if (items[i].isSafeToComplete && !items[i].isComplete) {
+            items[i].isSafeToComplete = false;
           }
           items.$save(items[i]);
         }
@@ -300,12 +300,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       updateCompletion: function(item) {
         var itemToBeUpdated = items.$getRecord(item.$id);
 
-        if (!itemToBeUpdated.q_completed) {
-          itemToBeUpdated.q_completed = true;
-          itemToBeUpdated.u_completed_at = firebase.database.ServerValue.TIMESTAMP;
-        } else if (itemToBeUpdated.q_completed) {
-          itemToBeUpdated.q_completed = false;
-          itemToBeUpdated.u_completed_at = 0;
+        if (!itemToBeUpdated.isComplete) {
+          itemToBeUpdated.isComplete = true;
+          itemToBeUpdated.completed_at = firebase.database.ServerValue.TIMESTAMP;
+        } else if (itemToBeUpdated.isComplete) {
+          itemToBeUpdated.isComplete = false;
+          itemToBeUpdated.completed_at = 0;
         }
         items.$save(itemToBeUpdated);
       },
@@ -315,7 +315,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var incompleteItemCount = 0;
 
         for (var i = 0; i < items.length; i++) {
-          if (item.q_completed = true) {
+          if (item.isComplete = true) {
               completeItemCount++;
           } else {
               incompleteItemCount++;

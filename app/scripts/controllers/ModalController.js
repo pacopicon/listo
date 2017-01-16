@@ -8,12 +8,12 @@ listo.controller('ModalController', [
     };
 
 
-  $scope.name = item.a_text;
-  $scope.updatedDueDate = new Date(item.b_dueDate);
-  $scope.selectedPhrase = item.p_importance;
-  $scope.urgent = item.r_urgent;
-  $scope.hours = item.m_hoursToFinish;
-  $scope.minutes = item.n_minutesToFinish;
+  $scope.name = item.name;
+  $scope.updatedDueDate = new Date(item.dueDate);
+  $scope.selectedPhrase = item.importance;
+  $scope.urgent = item.isUrgent;
+  $scope.hours = item.eHour;
+  $scope.minutes = item.eMinute;
 
   $scope.title = title;
 
@@ -53,12 +53,12 @@ listo.controller('ModalController', [
     $element.modal('hide');
 
     // var oldItemProps = {
-    //   newName: item.a_text,
-    //   newDueDate: new Date(item.b_dueDate),
-    //   newImportance: item.p_importance,
-    //   newUrgent: item.r_urgent,
-    //   newHours: item.m_hoursToFinish,
-    //   newMinutes: item.n_minutesToFinish
+    //   newName: item.name,
+    //   newDueDate: new Date(item.dueDate),
+    //   newImportance: item.importance,
+    //   newUrgent: item.isUrgent,
+    //   newHours: item.eHour,
+    //   newMinutes: item.eMinute
     // };
 
     //  Now call close, returning control to the caller.

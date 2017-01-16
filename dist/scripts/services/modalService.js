@@ -72,7 +72,7 @@ listo.factory('modalService', ['$animate', '$document', '$compile', '$controller
           var closeDeferred = $q.defer();
           var closedDeferred = $q.defer();
 
-          // console.log("showModal(modal) item $id: " + item.$id + " and name: " + item.a_text + " and item date " + item.b_dueDate);
+          // console.log("showModal(modal) item $id: " + item.$id + " and name: " + item.name + " and item date " + item.dueDate);
           var inputs = {
             $scope: modalScope,
             close: function(newItemProps, delay) {

@@ -115,7 +115,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
       var t = new Date();
-      console.log("step 1 - old name: " + $scope.oldItem.a_text + ", old date: " + new Date($scope.oldItem.b_dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+      console.log("step 1 - old name: " + $scope.oldItem.name + ", old date: " + new Date($scope.oldItem.dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
       // UserCtrl.js showComplex: item $id: -KUnjnUG90g4Ms_pkbC5 and name: short and item date 1478707118727
 
       modalService.showModal({
@@ -146,7 +146,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
           ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
-          if (item.q_completed) {
+          if (item.isComplete) {
             ItemCrud.updateCompletion(item);
             ItemCrud.toggleItemToDelete(item);
             console.log("toggleItemToDelete fired");
@@ -207,7 +207,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     $scope.deleteSelected = function() {
       for (var i = 0; i < items.length; i++)
-        if (items[i].q_completed === false && items[i].pp_isSafeToComplete === true) {
+        if (items[i].isComplete === false && items[i].isSafeToComplete === true) {
           $scope.updateCompletion(items[i]);
         }
     };

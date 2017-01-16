@@ -45,29 +45,29 @@ listo.factory("graphCruncher", ["ItemCrud",
         for (var i = 0; i < totalItems; i++) {
           // if option = true, then the function only picks out items from the last 7 days.  if option = false, it will pick all items.
           if (option == "lastSeven") {
-            var weekBoolean = (items[i].b_dueDate >= now - week) && (items[i].b_dueDate <= now);
+            var weekBoolean = (items[i].dueDate >= now - week) && (items[i].dueDate <= now);
           } else if (option == "nextSeven"){
-            var weekBoolean = (items[i].b_dueDate <= now + week) && (items[i].b_dueDate >= now);
+            var weekBoolean = (items[i].dueDate <= now + week) && (items[i].dueDate >= now);
           } else {
             var weekBoolean = true;
           }
 
-          if (weekBoolean && items[i].q_completed && !items[i].qq_pastDue) {
+          if (weekBoolean && items[i].isComplete && !items[i].isPastDue) {
             itemWorkedCount++;
-            hoursWorked = hoursWorked + items[i].m_hoursToFinish;
-            minutesWorked = minutesWorked + items[i].n_minutesToFinish;
-          } else if (weekBoolean && !items[i].q_completed && !items[i].qq_pastDue) {
+            hoursWorked = hoursWorked + items[i].eHour;
+            minutesWorked = minutesWorked + items[i].eMinute;
+          } else if (weekBoolean && !items[i].isComplete && !items[i].isPastDue) {
             itemLeftCount++;
-            hoursLeft = hoursLeft + items[i].m_hoursToFinish;
-            minutesLeft = minutesLeft + items[i].n_minutesToFinish;
-          } else if (weekBoolean && !items[i].q_completed && items[i].qq_pastDue) {
+            hoursLeft = hoursLeft + items[i].eHour;
+            minutesLeft = minutesLeft + items[i].eMinute;
+          } else if (weekBoolean && !items[i].isComplete && items[i].isPastDue) {
             itemOverdueCount++;
-            hoursOverdue = hoursOverdue + items[i].m_hoursToFinish;
-            minutesOverdue = minutesOverdue + items[i].n_minutesToFinish;
-          } else if (weekBoolean && items[i].q_completed && items[i].qq_pastDue) {
+            hoursOverdue = hoursOverdue + items[i].eHour;
+            minutesOverdue = minutesOverdue + items[i].eMinute;
+          } else if (weekBoolean && items[i].isComplete && items[i].isPastDue) {
             itemDueCompleteCount++;
-            hoursDueComplete = hoursDueComplete + items[i].m_hoursToFinish;
-            minutesDueComplete = minutesDueComplete + items[i].n_minutesToFinish;
+            hoursDueComplete = hoursDueComplete + items[i].eHour;
+            minutesDueComplete = minutesDueComplete + items[i].eMinute;
           }
         }
 

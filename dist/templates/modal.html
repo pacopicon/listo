@@ -50,13 +50,13 @@
 
       <!--                  Edit Name                       -->
         <!-- <div class= "col-lg-6 col-sm-6 col-xs-6">
-          enter name: <input class="nameEditBox" type="inputText" ng-model="item.a_text" ng-change="items.$save(item)"/>
+          enter name: <input class="nameEditBox" type="inputText" ng-model="item.name" ng-change="items.$save(item)"/>
         </div> -->
 
 
       <!--                  Edit Date                      -->
         <!-- <div class= "col-lg-6 col-sm-6 col-xs-6">
-          enter date: <input class="dateEditBox" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" /> -->
+          enter date: <input class="dateEditBox" type="datetime-local" placeholder="yyyy-MM-ddTHH:mm" ng-model="updatedDueDate" ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)" /> -->
 
 
 
@@ -66,11 +66,11 @@
             <div class="form-group">
               <div class="form-group">
                 <input type="text" size="10" class="form-control" ng-model="updatedDueDate"
-                ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-autoclose="1" placeholder="Date" bs-datepicker>
+                ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)" data-autoclose="1" placeholder="Date" bs-datepicker>
               </div>
               <div class="form-group">
                 <input type="text" size="8" class="form-control" ng-model="updatedDueDate"
-                ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
+                ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)" data-time-format="h:mm a" data-autoclose="1" placeholder="Time" bs-timepicker>
               </div>
             </div>
           </form> -->
@@ -79,18 +79,18 @@
 
 
 
-          <!-- enter importance: <select class="importanceEditBox" id="repeatSelect" ng-model="item.p_importance" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select> -->
+          <!-- enter importance: <select class="importanceEditBox" id="repeatSelect" ng-model="item.importance" ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)"><option ng-repeat="option in newImportanceTxt.availableOptions" value="{{option.text}}">{{option.text}}</option></select> -->
 
 
 
           <!-- <div class="col-lg-6 col-sm-6 col-xs-6 urgentEditBox">
-            Check if urgent: <input type="checkbox" ng-model="item.r_urgent" ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)" />
+            Check if urgent: <input type="checkbox" ng-model="item.isUrgent" ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)" />
           </div>
 
           <div class="col-lg-6 col-sm-6 col-xs-6 hourAndMinute">
-            <input class="numberEditBox" type="number" ng-model="item.m_hoursToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
+            <input class="numberEditBox" type="number" ng-model="item.eHour"  ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)"/>
 
-            <input class="numberEditBox" type="number" ng-model="item.n_minutesToFinish"  ng-change="updateItem(item, updatedDueDate, item.p_importance, item.r_urgent, item.m_hoursToFinish, item.n_minutesToFinish)"/>
+            <input class="numberEditBox" type="number" ng-model="item.eMinute"  ng-change="updateItem(item, updatedDueDate, item.importance, item.isUrgent, item.eHour, item.eMinute)"/>
           </div> -->
 
 		</form>

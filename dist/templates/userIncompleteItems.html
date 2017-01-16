@@ -83,10 +83,10 @@
     </div>
   </div>
 <!--select all / clear selected / delete selected-->
-  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-show="!item.q_completed" ng-hide="item.q_completed" ng-mouseleave="hover = false">
+  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
 
   <p class="noItemAnnounce" ng-if="itemTally.incomCount == 0">There are no to do items at this time</p>
-  <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-s_rank'" ng-hide="item.q_completed"> -->
+  <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-rank'" ng-hide="item.isComplete"> -->
     <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
@@ -97,22 +97,22 @@
           <!-- <label for="cb"></label> -->
         </div>
 <!--PRIORITY-->
-        <div class="priorityCell" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}">
+        <div class="priorityCell" ng-class="{'redCell': (item. && !makeYellow), yellowCell: makeYellow}">
           <p>{{$index + 1}}</p>
         </div>
       </div>
 <!--IMPORTANCE-->
       <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell">
-        <!-- {{item.p_importance}} -->
-        <p ng-bind-html="item.p_importance"></p>
+        <!-- {{item.importance}} -->
+        <p ng-bind-html="item.importance"></p>
       </div>
 <!--NAME-->
       <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell">
-          <p ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">{{item.a_text}}</P>
+          <p ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}">{{item.name}}</P>
       </div>
 <!--DATE-->
-      <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}">
-        {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
+      <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}">
+        {{item.dueDate | date: 'MMM'}} {{item.dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.dueDate)">{{item.dueDate | date: 'yyyy'}}</span>  {{item.dueDate | date: 'shortTime'}}
       </div>
     </div>
 <!-- begin INFO TOOLTIP -->
@@ -123,9 +123,9 @@
 
 <!-- being EDIT + DELETE + INFO-->
     <div class="InfoEditDeleteCell">
-      <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'redText': (item.qq_pastDue && !makeYellow), yellowText: makeYellow}"></i></div>
+      <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}"></i></div>
       <!-- ng-mouseleave="hover = false" -->
-      <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.qq_pastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
+      <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.isPastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
       <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow" ><p><i class="fa fa-times"></i></p></button>
       <!-- <div class="deleteCheckbox">
         <input type="checkbox" id="cb" ng-change="updateCompletion(item)"/>

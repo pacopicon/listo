@@ -23,10 +23,10 @@
 
 <!--ItemDisplay-->
       <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-      <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-s_rank'" ng-show="item.q_completed" ng-hide="!item.q_completed" ng-mouseleave="hover = false">
+      <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="item.isComplete" ng-hide="!item.isComplete" ng-mouseleave="hover = false">
       <p class="noItemAnnounce" ng-if="itemTally.comCount == 0">There are no archived items at this time</p>
 
-      <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-s_rank'" ng-hide="!item.q_completed"> -->
+      <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-rank'" ng-hide="!item.isComplete"> -->
         <div class="priorityCheckboxImportanceNameDate">
 <!--Just PRIORITY-->
           <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
@@ -36,17 +36,17 @@
             </div>
           </div>
 <!--IMPORTANCE-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.q_completed}">
-            <!-- {{item.p_importance}} -->
-            <p ng-bind-html="item.p_importance"></p>
+          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.isComplete}">
+            <!-- {{item.importance}} -->
+            <p ng-bind-html="item.importance"></p>
           </div>
 <!--NAME-->
-          <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.q_completed}">
-            <p>{{item.a_text}}</P>
+          <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.isComplete}">
+            <p>{{item.name}}</P>
           </div>
 <!--DATE-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'yellowText': item.q_completed}">
-          {{item.b_dueDate | date: 'MMM'}} {{item.b_dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.b_dueDate)">{{item.b_dueDate | date: 'yyyy'}}</span>  {{item.b_dueDate | date: 'shortTime'}}
+          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'yellowText': item.isComplete}">
+          {{item.dueDate | date: 'MMM'}} {{item.dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.dueDate)">{{item.dueDate | date: 'yyyy'}}</span>  {{item.dueDate | date: 'shortTime'}}
           </div>
         </div>
 
@@ -59,8 +59,8 @@
 <!--HOVERINFO + EDIT + DELETE-->
         <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
         <div class="InfoEditDeleteCell">
-          <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'yellowText': item.q_completed}"></i></div>
-          <a href class="editBtn" ng-class="{'yellowCell': item.q_completed}" ng-model="item" ng-show="item.q_completed" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
+          <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'yellowText': item.isComplete}"></i></div>
+          <a href class="editBtn" ng-class="{'yellowCell': item.isComplete}" ng-model="item" ng-show="item.isComplete" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
         </div>
       </div> <!--end item Display and ng-repeat-->
     </div> <!--container-fluid main-body end-->
