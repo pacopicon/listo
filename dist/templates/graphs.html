@@ -1,6 +1,6 @@
-<section ng-controller="GraphCtrl" class="user">
+<section ng-controller="GraphCtrl" class="user" ng-init="completionData()">
 
-  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
+  <!-- <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false"> -->
 
   <!--begin lastSeven day GRAPHS-->
     <div class="containerPad">
