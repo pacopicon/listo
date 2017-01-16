@@ -107,15 +107,23 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     $scope.iconwrap = {};
 
-    $scope.string1 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i>";
-    $scope.string2 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star-half'></i>";
-    $scope.string3 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i>";
-    $scope.string4 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>";
-    $scope.string5 ="<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
-
-    $scope.trustAsHtml = function(string) {
-      return $sce.trustAsHtml(string);
-    }
+    // var string1 = "<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i>";
+    // var string2 = "<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star-half'></i>";
+    // var string3 = "<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i>";
+    // var string4 = "<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>";
+    // var string5 = "<i ng-class='{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}' class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>";
+    //
+    // $scope.trustAsHtml = function(string) {
+    //   return $sce.trustAsHtml(string);
+    // }
+    //
+    // $scope.icons = [
+    //   {label: $scope.trustAsHtml(string1)},
+    //   {label: $scope.trustAsHtml(string2)},
+    //   {label: $scope.trustAsHtml(string3)},
+    //   {label: $scope.trustAsHtml(string4)},
+    //   {label: $scope.trustAsHtml(string5)}
+    // ];
 
     $scope.icons = [
       {label:"<i class='fa fa-star'></i>"},
@@ -124,8 +132,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star-half'></i>"},
       {label:"<i class='fa fa-star'></i><i class='fa fa-star'></i><i class='fa fa-star'></i>"}
     ];
-
-    $scope.trustAsHtml =
 
 // End Importance
 
