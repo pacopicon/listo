@@ -164,7 +164,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     // Begin Completed----------------------------------------------
 
-    $scope.isCompleted = false;
+    // $scope.isCompleted = false;
 
 // Begin CRUD Functions
 
