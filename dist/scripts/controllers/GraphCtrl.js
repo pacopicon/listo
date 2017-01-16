@@ -5,6 +5,12 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     //   $scope.completionData();
     // });
 
+    // obj.$bindTo($scope, "data").then(function() {
+    //   console.log($scope.data); // { foo: "bar" }
+    //   $scope.data.foo = "baz";  // will be saved to the database
+    //   ref.set({ foo: "baz" });  // this would update the database and $scope.data
+    // });
+
     $scope.chartTip = {
       "title": "click on me to refresh the charts",
       "checked": false

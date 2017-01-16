@@ -1,5 +1,5 @@
-listo.factory("FirebaseRef", ["$firebaseArray",
-  function($firebaseArray) {
+listo.factory("FirebaseRef", ["$firebaseArray", "$firebaseObject",
+  function($firebaseArray, $firebaseObject) {
 
 // Initialize Firebase
     var config = {
@@ -13,8 +13,10 @@ listo.factory("FirebaseRef", ["$firebaseArray",
     firebase.initializeApp(config);
 
     var itemsRef = firebase.database().ref().child("items");
+    var itemsDataRef = firebase.database().ref("itemsData");
 
     var items = $firebaseArray(itemsRef);
+    var itemsData = $firebaseObject(itemsDataRef);
 
     return {
       getItems: function() {
@@ -23,24 +25,16 @@ listo.factory("FirebaseRef", ["$firebaseArray",
 
       getItemsRef: function() {
         return itemsRef;
+      },
+
+      getItemsData: function() {
+        return itemsData;
+      },
+
+      getItemsDataRef: function() {
+        return itemsDataRef;
       }
     };
 
   } // end of FirebaseRef function
 ]); // end of factory initialization
-
-// firebase.json
-// {
-//   "database": {
-//     "rules" :"database.rules.json"
-//   },
-//   "hosting": {
-//     "public": "public",
-//     "rewrites": [
-//       {
-//         "source": "**",
-//         "destination": "/index.html"
-//       }
-//     ]
-//   }
-// }

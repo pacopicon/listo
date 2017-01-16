@@ -1,23 +1,15 @@
-listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
-  function($firebaseArray, FirebaseRef, UserCrud) {
-
-    // var config = {
-    //   apiKey: "AIzaSyDJSMDWkPVq7PGxvfB8XRMWlfVNOfmQj9I",
-    //   authDomain: "listo-1f3db.firebaseapp.com",
-    //   databaseURL: "https://listo-1f3db.firebaseio.com",
-    //   storageBucket: "listo-1f3db.appspot.com",
-    //   messagingSenderId: "1095679246609"
-    // };
-    //
-    // firebase.initializeApp(config);
-    //
-    // var ref = firebase.database().ref().child("items");
+listo.factory("ItemCrud", ["FirebaseRef", "UserCrud",
+  function(FirebaseRef, UserCrud) {
 
 
 // holds data as array of objects.  Each object is one item.
     var itemsRef = FirebaseRef.getItemsRef();
 
     var items = FirebaseRef.getItems();
+
+    var itemsDataRef = FirebaseRef.getItemsDataRef();
+
+    var itemsData = FirebaseRef.getItemsData();
 
 // Public variables below
     var now = Date.now();
@@ -328,6 +320,17 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           comCount: completeItemCount,
           incomCount: incompleteItemCount
         };
+      },
+
+      updateItemsData: function(property, value) {
+
+        if (itemsData.property == null || itemsData.property == undefined) {
+          itemsData.property = value;
+        } else {
+          itemsData.property = itemsData.property + value;
+        }
+
+        itemsData.$save();
       }
 
     }; // end of Return
