@@ -59,37 +59,41 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 // Begin Estimate
 
     $scope.hourwrap = {};
-    $scope.hours = [
-      {time: 0},
-      {time: 1},
-      {time: 2},
-      {time: 3},
-      {time: 4},
-      {time: 5},
-      {time: 6},
-      {time: 7},
-      {time: 8},
-      {time: 9},
-      {time: 10},
-      {time: 11},
-      {time: 12}
-    ];
+    // $scope.hours = [
+    //   {time: 0},
+    //   {time: 1},
+    //   {time: 2},
+    //   {time: 3},
+    //   {time: 4},
+    //   {time: 5},
+    //   {time: 6},
+    //   {time: 7},
+    //   {time: 8},
+    //   {time: 9},
+    //   {time: 10},
+    //   {time: 11},
+    //   {time: 12}
+    // ];
+
+    $scope.hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     $scope.minutewrap = {};
-    $scope.minutes = [
-      {time: 0},
-      {time: 5},
-      {time: 10},
-      {time: 15},
-      {time: 20},
-      {time: 25},
-      {time: 30},
-      {time: 35},
-      {time: 40},
-      {time: 45},
-      {time: 50},
-      {time: 55}
-    ];
+    // $scope.minutes = [
+    //   {time: 0},
+    //   {time: 5},
+    //   {time: 10},
+    //   {time: 15},
+    //   {time: 20},
+    //   {time: 25},
+    //   {time: 30},
+    //   {time: 35},
+    //   {time: 40},
+    //   {time: 45},
+    //   {time: 50},
+    //   {time: 55}
+    // ];
+
+    $scope.minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
 // End Estimate
 
