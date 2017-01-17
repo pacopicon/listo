@@ -221,15 +221,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     };
 
     $scope.selectForDelete = function(items) {
-      $scope.makeYellow = true;
-      $scope.hideSelectAll = true;
       ItemCrud.toggleSelectForDelete(items);
+      $scope.allSelected = true;
     };
 
     $scope.undoSelectForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);
-      $scope.hideSelectAll = false;
-      $scope.makeYellow = false;
+      $scope.allSelected = false;
+    }
+
+    $scope.invertSelectForDelete = function(items) {
+      ItemCrud.toggleSelectForDelete(items);
     }
 
     $scope.deleteSelected = function() {

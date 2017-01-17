@@ -67,12 +67,15 @@
 <div class="container-fluid main-body">
 <!--select all / clear selected / delete selected-->
   <div class="row formControls">
-    <!-- <input type="checkbox" ng-model="makeYellow" ng-click="toggleAllToDelete(items)" /><p>select all</p> -->
+    <!-- <input type="checkbox" ng-model="item.isSafeToComplete" ng-click="toggleAllToDelete(items)" /><p>select all</p> -->
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap">
-      <button class="controlBtn selectAll" ng-click="selectForDelete(items)" ng-model="makeYellow" ng-hide="hideSelectAll" ng-init="!hideSelectAll">
+      <button class="controlBtn selectAll" ng-click="selectForDelete(items)" ng-hide="allSelected" ng-init="!allSelected">
         <p>select all</p>
       </button>
-      <button class="controlBtn clearAll" ng-model="makeYellow" ng-click="undoSelectForDelete(items)" ng-hide="!hideSelectAll">
+      <button class="controlBtn clearAll" ng-click="invertSelectForDelete(items)" ng-hide="!allSelected">
+        <p>clear selected</p>
+      </button>
+      <button class="controlBtn clearAll" ng-click="undoSelectForDelete(items)" ng-hide="!allSelected">
         <p>clear selected</p>
       </button>
     </div>
@@ -85,7 +88,7 @@
 <!--select all / clear selected / delete selected-->
   <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
 
-  <p class="noItemAnnounce" ng-if="itemTally.incomCount == 0">There are no to do items at this time</p>
+  <p class="noItemAnnounce" ng-if="itemsData.itemLeftCount == 0">There are no to do items at this time</p>
   <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-rank'" ng-hide="item.isComplete"> -->
     <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
@@ -93,11 +96,10 @@
     <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
         <div class="completedBox">
-          <input type="checkbox" id="cb" ng-model="items.isSafeToComplete" ng-click="toggleItemToDelete(item)" ng-change="items.$save(item)"/>
-          <!-- <label for="cb"></label> -->
+          <input type="checkbox" id="cb" ng-model="item.isSafeToComplete" ng-change="items.$save(item)"/>
         </div>
 <!--PRIORITY-->
-        <div class="priorityCell" ng-class="{'redCell': (item.isPastDue && !makeYellow), yellowCell: makeYellow}">
+        <div class="priorityCell" ng-class="{'redCell': (item.isPastDue && !item.isSafeToComplete), yellowCell: item.isSafeToComplete}">
           <p>{{$index + 1}}</p>
         </div>
       </div>
@@ -105,14 +107,14 @@
       <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell">
         <!-- {{item.importance}} -->
         <p ng-bind-html="item.importance"></p>
-        <!-- <div ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}" data-ng-bind-html="item.importance"></div> -->
+        <!-- <div ng-class="{'redText': (item.isPastDue && !item.isSafeToComplete), yellowText: item.isSafeToComplete}" data-ng-bind-html="item.importance"></div> -->
       </div>
 <!--NAME-->
       <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell">
-          <p ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}">{{item.name}}</P>
+          <p ng-class="{'redText': (item.isPastDue && !item.isSafeToComplete), yellowText: item.isSafeToComplete}">{{item.name}}</P>
       </div>
 <!--DATE-->
-      <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'redText': (item.isPastDue && !item.isSafeToComplete), yellowText: item.isSafeToComplete}">
         {{item.dueDate | date: 'MMM'}} {{item.dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.dueDate)">{{item.dueDate | date: 'yyyy'}}</span>  {{item.dueDate | date: 'shortTime'}}
       </div>
     </div>
@@ -124,10 +126,10 @@
 
 <!-- being EDIT + DELETE + INFO-->
     <div class="InfoEditDeleteCell">
-      <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'redText': (item.isPastDue && !makeYellow), yellowText: makeYellow}"></i></div>
+      <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'redText': (item.isPastDue && !item.isSafeToComplete), yellowText: item.isSafeToComplete}"></i></div>
       <!-- ng-mouseleave="hover = false" -->
-      <a href class="editBtn" ng-model="item" ng-hide="makeYellow" ng-class="{'redCell': (item.isPastDue && !makeYellow), yellowCell: makeYellow}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
-      <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="makeYellow" ><p><i class="fa fa-times"></i></p></button>
+      <a href class="editBtn" ng-model="item" ng-hide="item.isSafeToComplete" ng-class="{'redCell': (item.isPastDue && !item.isSafeToComplete), yellowCell: item.isSafeToComplete}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
+      <button class="deleteBtn" ng-click="updateCompletion(item)" ng-show="item.isSafeToComplete" ><p><i class="fa fa-times"></i></p></button>
       <!-- <div class="deleteCheckbox">
         <input type="checkbox" id="cb" ng-change="updateCompletion(item)"/>
       </div> -->
