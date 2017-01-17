@@ -216,19 +216,44 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     //   }
     // };
 
-    $scope.toggleItemToDelete = function(item) {
-      ItemCrud.toggleItemToDelete(item);
+    // $scope.selectionInversion = function() {
+    //   ItemCrud.checkIfAnySafe();
+    // };
+
+    $scope.toggleInvertAndSave = function(item) {
+
+      if (!item.isSafeToComplete) {
+        $scope.selectionInversion = false;
+        console.log("selection IS inverted");
+      } else {
+        $scope.selectionInversion = true;
+        console.log("selection IS NOT inverted");
+      }
+      items.$save(item);
     };
 
-    $scope.selectForDelete = function(items) {
+    // $scope.toggleItemToDelete = function(item) {
+    //
+    //   ItemCrud.toggleItemToDelete(item);
+    //
+    //   if (!item.isSafeToComplete) {
+    //     $scope.selectionInversion = false;
+    //     console.log("selection IS inverted");
+    //   } else {
+    //     $scope.selectionInversion = true;
+    //     console.log("selection IS NOT inverted");
+    //   }
+    // };
+
+    $scope.selectAllForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);
       $scope.allSelected = true;
     };
 
-    $scope.undoSelectForDelete = function(items) {
+    $scope.undoAllSelectForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);
       $scope.allSelected = false;
-    }
+    };
 
     $scope.invertSelectForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);

@@ -306,7 +306,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       toggleSelectForDelete: function(items) {
         for (var i = 0; i < items.length; i++) {
-          if (!items[i].isSafeToComplete && !items[i].q_complete) {
+          if (!items[i].isSafeToComplete && !items[i].isComplete) {
             items[i].isSafeToComplete = true;
             console.log("is item, " + items[i].name + ", Safe to complete? " + items[i].isSafeToComplete);
           } else if (items[i].isSafeToComplete && !items[i].isComplete) {
@@ -335,7 +335,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var incompleteItemCount = 0;
 
         for (var i = 0; i < items.length; i++) {
-          if (item.isComplete = true) {
+          if (item.isComplete) {
               completeItemCount++;
           } else {
               incompleteItemCount++;

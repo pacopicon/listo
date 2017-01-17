@@ -69,14 +69,14 @@
   <div class="row formControls">
     <!-- <input type="checkbox" ng-model="item.isSafeToComplete" ng-click="toggleAllToDelete(items)" /><p>select all</p> -->
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap">
-      <button class="controlBtn selectAll" ng-click="selectForDelete(items)" ng-hide="allSelected" ng-init="!allSelected">
+      <button class="controlBtn selectAll" ng-click="selectAllForDelete(items)" ng-show="!allSelected && !selectionInversion" ng-init="allSelected">
         <p>select all</p>
       </button>
-      <button class="controlBtn clearAll" ng-click="invertSelectForDelete(items)" ng-hide="!allSelected">
+      <button class="controlBtn clearAll" ng-click="undoAllSelectForDelete(items)" ng-show="allSelected && !selectionInversion">
         <p>clear selected</p>
       </button>
-      <button class="controlBtn clearAll" ng-click="undoSelectForDelete(items)" ng-hide="!allSelected">
-        <p>clear selected</p>
+      <button class="controlBtn invertSelection" ng-click="invertSelectForDelete(items)" ng-show="selectionInversion">
+        <p>invert selected</p>
       </button>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-wrap btn-wrap">
@@ -96,8 +96,9 @@
     <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
         <div class="completedBox">
-          <input type="checkbox" id="cb" ng-model="item.isSafeToComplete" ng-change="items.$save(item)"/>
+          <input type="checkbox" id="cb" ng-model="item.isSafeToComplete" ng-change="toggleInvertAndSave(item)"/>
         </div>
+        <!-- ng-change="items.$save(item)" -->
 <!--PRIORITY-->
         <div class="priorityCell" ng-class="{'redCell': (item.isPastDue && !item.isSafeToComplete), yellowCell: item.isSafeToComplete}">
           <p>{{$index + 1}}</p>
