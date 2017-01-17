@@ -1,28 +1,45 @@
 listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
   function($firebaseArray, FirebaseRef, UserCrud) {
 
-    // var config = {
-    //   apiKey: "AIzaSyDJSMDWkPVq7PGxvfB8XRMWlfVNOfmQj9I",
-    //   authDomain: "listo-1f3db.firebaseapp.com",
-    //   databaseURL: "https://listo-1f3db.firebaseio.com",
-    //   storageBucket: "listo-1f3db.appspot.com",
-    //   messagingSenderId: "1095679246609"
-    // };
-    //
-    // firebase.initializeApp(config);
-    //
-    // var ref = firebase.database().ref().child("items");
-
-
 // holds data as array of objects.  Each object is one item.
     var itemsRef = FirebaseRef.getItemsRef();
 
     var items = FirebaseRef.getItems();
 
+    var itemsDataRef = FirebaseRef.getItemsDataRef();
+
+    var itemsData = FirebaseRef.getItemsData();
+
+
 // Public variables below
     var now = Date.now();
     var week = 604800000;
+
+
 // Public functions below.
+    var updateItemsData = function(prop1, prop2, prop3, value1, value2, value3) {
+
+      if (itemsData[prop1] === undefined) {
+        itemsData[prop1] = value1;
+      } else {
+        itemsData[prop1] = itemsData[prop1] + value1;
+      }
+
+      if (itemsData[prop2] === undefined) {
+        itemsData[prop2] = value2;
+      } else {
+        itemsData[prop2] = itemsData[prop2] + value2;
+      }
+
+      if (itemsData[prop3] === undefined) {
+        itemsData[prop3] = value3;
+      } else {
+        itemsData[prop3] = itemsData[prop3] + value3;
+      }
+
+
+      itemsData.$save();
+    };
 
 // This function below returns 'urgencyTxt', which announces the urgency status of an item in the DOM
     var createUrgencyTxt = function(urgency) {
@@ -175,6 +192,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
         // the below function lists the properties inside the item being created
+
+        updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
+
         items.$add({
           name: itemName,
           dueDate: dueDate.getTime(),

@@ -93,7 +93,7 @@
     <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
         <div class="completedBox">
-          <input type="checkbox" id="cb" ng-model="makeYellow" ng-click="toggleItemToDelete(item)" ng-change="isAllSelected"/>
+          <input type="checkbox" id="cb" ng-model="items.isSafeToComplete" ng-click="toggleItemToDelete(item)" ng-change="items.$save(item)"/>
           <!-- <label for="cb"></label> -->
         </div>
 <!--PRIORITY-->
