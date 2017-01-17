@@ -4,13 +4,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
     $scope.items = ItemCrud.getAllItems();
-    // $scope.incompleteItems = ItemCrud.getIncompleteItems();
+    $scope.itemsData = ItemCrud.getItemsData();
 
     var items = $scope.items;
-
-    $scope.itemTally = function(items) {
-      ItemCrud.checkItemArrayForCompletionStatus(items);
-    };
 
     var refreshTime = function() {
       time = Date.now();
@@ -171,10 +167,16 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
           ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
+
+
           if (item.isComplete) {
             ItemCrud.updateCompletion(item);
             ItemCrud.toggleItemToDelete(item);
-            console.log("toggleItemToDelete fired");
+          } else {
+            var hourDiff = newHours - oldItem.eHour;
+            var minuteDiff = newMinutes - oldItem.eMinute;
+
+            ItemCrud.updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
           }
 
 
@@ -184,12 +186,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
         };
     // End Custom Modal-------------------
-
-    // End Custom Modal-------------------
-
-    // Begin Completed----------------------------------------------
-
-    // $scope.isCompleted = false;
 
 // Begin CRUD Functions
 
@@ -216,34 +212,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     //   }
     // };
 
-    // $scope.selectionInversion = function() {
-    //   ItemCrud.checkIfAnySafe();
-    // };
-
     $scope.toggleInvertAndSave = function(item) {
 
       if (!item.isSafeToComplete) {
         $scope.selectionInversion = false;
-        console.log("selection IS inverted");
+        console.log("selection IS NOT ready to be inverted");
       } else {
         $scope.selectionInversion = true;
-        console.log("selection IS NOT inverted");
+        console.log("selection IS ready to be inverted");
       }
       items.$save(item);
     };
-
-    // $scope.toggleItemToDelete = function(item) {
-    //
-    //   ItemCrud.toggleItemToDelete(item);
-    //
-    //   if (!item.isSafeToComplete) {
-    //     $scope.selectionInversion = false;
-    //     console.log("selection IS inverted");
-    //   } else {
-    //     $scope.selectionInversion = true;
-    //     console.log("selection IS NOT inverted");
-    //   }
-    // };
 
     $scope.selectAllForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);
@@ -272,7 +251,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       $scope.UserCtrlRefreshTalliesAndData();
     };
 
-
+    $scope.itemTally = function(items) {
+      ItemCrud.checkItemArrayForCompletionStatus(items);
+    };
 
 // End CRUD Functions
 

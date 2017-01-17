@@ -7,7 +7,7 @@
   <div class="clock-row row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column1">
       <div class="clock">
-        <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
+        <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}}, </b><b> {{time | date: 'shortTime'}}</b></p>
       </div>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column2">
@@ -65,9 +65,9 @@
 
 <!--begin ItemDisplay-->
 <div class="container-fluid main-body">
-<!--select all / clear selected / delete selected-->
+<!--begin select all / clear selected / delete selected-->
   <div class="row formControls">
-    <!-- <input type="checkbox" ng-model="item.isSafeToComplete" ng-click="toggleAllToDelete(items)" /><p>select all</p> -->
+
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap">
       <button class="controlBtn selectAll" ng-click="selectAllForDelete(items)" ng-show="!allSelected && !selectionInversion" ng-init="allSelected">
         <p>select all</p>
@@ -81,15 +81,15 @@
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-wrap btn-wrap">
       <button class="controlBtn deleteSelected" ng-click="deleteSelected()">
-        <p>delete selected</p>
+        <p>archive selected</p>
       </button>
     </div>
   </div>
-<!--select all / clear selected / delete selected-->
+<!--end select all / clear selected / delete selected-->
   <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
 
-  <p class="noItemAnnounce" ng-if="itemsData.itemLeftCount == 0">There are no to do items at this time</p>
-  <!-- <div class="row itemDisplay" ng-repeat="item in incompleteItems | orderBy: '-rank'" ng-hide="item.isComplete"> -->
+    <p class="noItemAnnounce" ng-if="itemsData.itemLeftCount == 0">There are no to do items at this time</p>
+
     <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->
       <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">

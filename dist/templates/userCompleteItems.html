@@ -1,71 +1,67 @@
 <section ng-controller="UserCtrl" class="user">
   <div ng-include="'/templates/navbar.html'"></div>
 <body>
-  <div class="list-group">
-    <!--begin Clock-->
-    <div class="clock-container-fluid">
-      <div class="clock-row row">
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column1">
-          <div class="clock">
-            <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
-          </div>
+<div class="list-group">
+<!--begin Clock-->
+  <div class="clock-container-fluid">
+    <div class="clock-row row">
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column1">
+        <div class="clock">
+          <p><b>{{time | date: 'EEEE'}}, </b><b>{{time | date: 'MMMM'}} {{time | date: 'dd'}}, </b><b>{{time | date: 'yyyy'}} </b><b>at {{time | date: 'shortTime'}} </b></p>
         </div>
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column2">
-          <div class= "page-name">
-            <b><p>archive</p></b>
-          </div>
+      </div>
+      <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 column2">
+        <div class= "page-name">
+          <b><p>archive</p></b>
         </div>
       </div>
     </div>
-    <!--end Clock-->
-    <div class="container-fluid main-body">
+  </div>
+<!--end Clock-->
+<!--begin ItemDisplay-->
+<div class="container-fluid main-body">
+  <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="item.isComplete" ng-hide="!item.isComplete" ng-mouseleave="hover = false">
+  <p class="noItemAnnounce" ng-if="itemTally.comCount == 0">There are no archived items at this time</p>
 
-
-<!--ItemDisplay-->
-      <!--The first ng-repeat alternative is commented out because it is the more robust, if limited, one, it might be reinstated-->
-      <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="item.isComplete" ng-hide="!item.isComplete" ng-mouseleave="hover = false">
-      <p class="noItemAnnounce" ng-if="itemTally.comCount == 0">There are no archived items at this time</p>
-
-      <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-rank'" ng-hide="!item.isComplete"> -->
-        <div class="priorityCheckboxImportanceNameDate">
+  <!-- <div class="row itemDisplay" ng-repeat="item in completeItems | orderBy: '-rank'" ng-hide="!item.isComplete"> -->
+    <div class="priorityCheckboxImportanceNameDate">
 <!--Just PRIORITY-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
+      <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 priorityAndCheckbox">
 <!--PRIORITY-->
-            <div class="lonePriorityCell yellowCell">
-              <p>{{$index + 1}}</p>
-            </div>
-          </div>
-<!--IMPORTANCE-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.isComplete}">
-            <!-- {{item.importance}} -->
-            <p ng-bind-html="item.importance"></p>
-          </div>
-<!--NAME-->
-          <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.isComplete}">
-            <p>{{item.name}}</P>
-          </div>
-<!--DATE-->
-          <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'yellowText': item.isComplete}">
-          {{item.dueDate | date: 'MMM'}} {{item.dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.dueDate)">{{item.dueDate | date: 'yyyy'}}</span>  {{item.dueDate | date: 'shortTime'}}
-          </div>
+        <div class="lonePriorityCell yellowCell">
+          <p>{{$index + 1}}</p>
         </div>
+      </div>
+<!--IMPORTANCE-->
+      <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 importanceCell" ng-class="{'yellowText': item.isComplete}">
+        <!-- {{item.importance}} -->
+        <p ng-bind-html="item.importance"></p>
+      </div>
+<!--NAME-->
+      <div class="col-lg-5 col-md-5 col-sm-5 col-sx-5 nameCell" ng-class="{'yellowText': item.isComplete}">
+        <p>{{item.name}}</P>
+      </div>
+<!--DATE-->
+      <div class="col-lg-1 col-md-1 col-sm-1 col-sx-1 dateCell" ng-class="{'yellowText': item.isComplete}">
+      {{item.dueDate | date: 'MMM'}} {{item.dueDate | date: 'dd'}} <span ng-hide="isCurrentOrPreviousYear(item.dueDate)">{{item.dueDate | date: 'yyyy'}}</span>  {{item.dueDate | date: 'shortTime'}}
+      </div>
+    </div>
 
 <!-- begin INFO TOOLTIP -->
-      <div ng-if="hover" class="pacoover">
-        <div ng-include="'/templates/pacooverTooltip.html'"></div>
-      </div>
+    <div ng-if="hover" class="pacoover">
+      <div ng-include="'/templates/pacooverTooltip.html'"></div>
+    </div>
 <!-- end INFO TOOLTIP -->
 
 <!--HOVERINFO + EDIT + DELETE-->
-        <!-- <div class="col-lg-1 col-sm-1 col-xs-4 editDeleteBox"> -->
-        <div class="InfoEditDeleteCell">
-          <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'yellowText': item.isComplete}"></i></div>
-          <a href class="editBtn" ng-class="{'yellowCell': item.isComplete}" ng-model="item" ng-show="item.isComplete" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
-        </div>
-      </div> <!--end item Display and ng-repeat-->
-    </div> <!--container-fluid main-body end-->
+    <div class="InfoEditDeleteCell">
+      <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'yellowText': item.isComplete}"></i></div>
+      <a href class="editBtn" ng-class="{'yellowCell': item.isComplete}" ng-model="item" ng-show="item.isComplete" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
+    </div>
+  </div> <!--end item Display and ng-repeat-->
+</div> <!--container-fluid main-body end-->
 <!--end ITEM DISPLAY-->
-  <div ng-include="'/templates/graphs.html'"></div>
+<div ng-include="'/templates/graphs.html'"></div>
 
 </div>
 </body>

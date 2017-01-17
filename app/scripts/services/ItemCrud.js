@@ -242,9 +242,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           console.log("items.$save called");
         });
       },
-// called by UserCtrl in order to populate items in DOM via $scope
+// called by UserCtrl in order to populate items and itemsData in DOM via $scope
       getAllItems: function() {
         return items;
+      },
+
+      getItemsData: function() {
+        return itemsData;
       },
 
 // The function below is the actual deletion process for items.  The user has the power to only mark items as complete.  Complete or Past Due (i.e. incomplete but not marked as complete after the due date) items are rescuable and able to be set as incomplete for up to a week.  After one week, all Complete and Past Due items are deleted when this function is called by UserCtrl function 'refreshTalliesAndData', which is called when (1) 'userincompleteItems.html' is initialized, and when either (2) '$scope.updateItems', or (3) '$scope.addItem', or (4) '$scope.updateCompletion' are called.
@@ -263,6 +267,15 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
             // itemToDelete = null;
 
+            var hourDiff = items[i].eHour * -1;
+            var minuteDiff = items[i].eMinute * -1;
+
+            updateItemsData("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+
+            if (items[i].isPastDue) {
+              updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+            }
+
             items.$remove(itemToDelete).then(function() {
                 console.log("item, which is now " + itemToDelete + ", has been removed");
               });
@@ -273,21 +286,26 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       },
 // The function below updates items that are past due (i.e. incomplete but not marked as complete after the due date) with pastDue = true.  It also tallies these items.  It is called by UserCtrl function '$scope.refreshTalliesAndData'
       updateAllItemsPastDue: function() {
-        var itemCount = 0;
         var totalItems = items.length;
 
         for (var i = 0; i < totalItems; i++) {
-          if (items[i].dueDate < now) {
-            items[i].isPastDue = true;
-            items.$save(items[i]);
-            itemCount++;
-          } else {
-            items[i].isPastDue = false;
-            items.$save(items[i]);
-            itemCount--;
+          if (!items[i].isComplete) {
+            if (items[i].dueDate < now && !items[i].isPastDue) {
+              items[i].isPastDue = true;
+              items.$save(items[i]);
+
+              updateItemsData("itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
+            } else if (items[i].dueDate > now && !items[i].isPastDue) {
+              items[i].isPastDue = false;
+              items.$save(items[i]);
+
+              var hourDiff = items[i].eHour * -1;
+              var minuteDiff = items[i].eMinute * -1;
+
+              updateItemsData("itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
+            }
           }
         }
-        return itemCount;
       },
 
       toggleItemToDelete: function(item) {
@@ -318,36 +336,36 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
       updateCompletion: function(item) {
-        var itemToBeUpdated = items.$getRecord(item.$id);
+        var item = items.$getRecord(item.$id);
 
-        if (!itemToBeUpdated.isComplete) {
-          itemToBeUpdated.isComplete = true;
-          itemToBeUpdated.completed_at = firebase.database.ServerValue.TIMESTAMP;
-        } else if (itemToBeUpdated.isComplete) {
-          itemToBeUpdated.isComplete = false;
-          itemToBeUpdated.completed_at = 0;
-        }
-        items.$save(itemToBeUpdated);
-      },
+        if (!item.isComplete) {
+          item.isComplete = true;
+          item.completed_at = firebase.database.ServerValue.TIMESTAMP;
 
-      checkItemArrayForCompletionStatus: function(items) {
-        var completeItemCount = 0;
-        var incompleteItemCount = 0;
+          var hourDiff = item.eHour * -1;
+          var minuteDiff = item.eMinute * -1;
 
-        for (var i = 0; i < items.length; i++) {
-          if (item.isComplete) {
-              completeItemCount++;
-          } else {
-              incompleteItemCount++;
+          updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
+          updateItemsData("itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
+
+          if (item.isPastDue) {
+            updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
+          }
+        } else if (item.isComplete) {
+          item.isComplete = false;
+          item.completed_at = 0;
+
+          var hourDiff = item.eHour * -1;
+          var minuteDiff = item.eMinute * -1;
+
+          updateItemsData("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+          updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
+
+          if (item.isPastDue) {
+            updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", hourDiff, minuteDiff);
           }
         }
-
-        console.log("itemTally called");
-
-        return {
-          comCount: completeItemCount,
-          incomCount: incompleteItemCount
-        };
+        items.$save(item);
       }
 
     }; // end of Return
