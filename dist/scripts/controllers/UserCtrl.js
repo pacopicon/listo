@@ -152,7 +152,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
         modal.close.then(function(newItemProps) {
 
           console.log("newItemProps: " + newItemProps);
-          // oldItem seems to not be needed since functions below utilize item successfully.  However, I don't understand how yet, keeping it here until I do.
+          // oldItem (= item) not needed since functions below utilize item successfully.  However, I don't understand how yet, keeping it here until I do.
           oldItem = $scope.oldItem;
           newName = newItemProps.newName;
           newDueDate = newItemProps.newDueDate;
@@ -170,13 +170,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
 
           if (item.isComplete) {
+            // updateCompletion also updates ItemsData
             ItemCrud.updateCompletion(item);
             ItemCrud.toggleItemToDelete(item);
           } else {
-            var hourDiff = newHours - oldItem.eHour;
-            var minuteDiff = newMinutes - oldItem.eMinute;
+            // incomplete item that is updated updates its new est hour and minute to itemsData.
+            var hourDiff = newHours - item.eHour;
+            var minuteDiff = newMinutes - item.eMinute;
 
             ItemCrud.updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+            // alternative updateItemsData code:
+            // var propArray = ["hoursLeft", "minutesLeft"];
+            // var valArray = [hourDiff, minuteDiff];
+            // ItemCrud.updateItemsData(propArray, valArray);
           }
 
 

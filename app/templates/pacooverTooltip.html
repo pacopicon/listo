@@ -2,7 +2,7 @@
   <p>item safe to complete?: {{item.isSafeToComplete}}</p>
   <p>item rank: {{item.rank}}</p>
   <p><span ng-if="item.isUrgent">item status: urgent </span><span ng-if="!item.isUrgent">item status: not urgent </span></p>
-  <p>time to finish: {{item.eHour}} hrs, {{item.eHour}} mins</p>
+  <p>time to finish: {{item.eHour}} hrs, {{item.eMinute}} mins</p>
   <p>item created on {{item.created_at | date: 'M/d/yy h:mm a'}}</p>
   <span ng-if="item.completed_at > 0"><p>item completed on {{item.completed_at | date: 'M/d/yy h:mm a'}}</p></span>
   <p>

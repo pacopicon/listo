@@ -28,30 +28,29 @@
           <input class="form-control" ng-model="newItemName" placeholder="enter item name" />
         </div>
 <!--date-->
-        <!-- <form name="timepickerForm" class="form-inline" role="form"> -->
+        <!-- available animations:
+        am-fade-and-scale, am-fade-and-slide-bottom/top/left/right,
+        am-slide-bottom/top/left/right
+        am-fade-->
         <div class="col-lg-2 col-md-2 col-sm-2 col-xs-12 date">
-          <input type="text" size="1" class="btn-date form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-flip-x" placeholder="enter <i class='fa fa-calendar'></i>" bs-datepicker>
+          <input type="text" size="1" class="btn-date form-control" ng-model="newDueDate" data-date-format="longDate" data-autoclose="1" data-animation="am-fade-and-scale" placeholder="enter <i class='fa fa-calendar'></i>" bs-datepicker>
         </div>
         <div class="col-lg-1 col-md-1 col-sm-1 col-xs-12 time">
-          <input type="text" size="1" class="btn-time form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="3" data-animation="am-flip-x" placeholder="Time" bs-timepicker>
+          <input type="text" size="1" class="btn-time form-control" ng-model="newDueDate" data-time-format="h:mm a" data-autoclose="3" data-animation="am-fade-and-scale" placeholder="Time" data-arrow-behavior="picker" data-length="1" data-minute-step="15" bs-timepicker>
         </div>
-        <!-- </form> -->
-          <!-- <small>Enter <i class="fa fa-calendar"></i> and <i class="fa fa-clock-o"></i> :</small> -->
 <!--importance-->
         <div class="col-lg-1 col-md-1 col-sm-2 col-xs-12 importance formFormat">
           <a href class="tip" data-animation="am-flip-x" bs-tooltip="importanceTip">
-            <button type="button" class="btn-importance btn btn-default" ng-model="iconwrap.selectedIcon" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="icon.label as icon.label for icon in icons" bs-select>Action<span class="caret"></span>
+            <button type="button" class="btn-importance btn btn-default" ng-model="iconwrap.selectedIcon" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" placeholder="enter <i class='fa fa-star'>" bs-options="icon.label as icon.label for icon in icons" bs-select>Action<span class="caret"></span>
           </button></a>
         </div>
 <!--est. time-->
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 hour-and-minute">
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 hour">
-            <!-- <a href class="tip" data-animation="am-flip-x" bs-tooltip="dateTip"><button type="button" class="btn-hour btn btn-default" ng-model="hourwrap.selectedHour" data-html="1" data-animation="am-flip-x" data-toggle="true" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-options="hour.time as hour.time for hour in hours" bs-select><span class="caret"></span></button></a> -->
-            <a href class="tip" data-animation="am-flip-x" bs-tooltip="dateTip"><button type="button" class="btn-hour btn btn-default" ng-model="hourwrap.selectedHour" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="hour as hour for hour in hours" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-select><span class="caret"></span></button></a>
+            <a href class="tip" data-animation="am-flip-x" bs-tooltip="dateTip"><button type="button" class="btn-hour btn btn-default" ng-model="hourwrap.selectedHour" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" bs-options="hour as hour for hour in hours" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-select><span class="caret"></span></button></a>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 minute">
-            <!-- <a href class="tip" data-animation="am-flip-x" bs-tooltip="timeTip"><button type="button" class="btn-minute btn btn-default" ng-model="minutewrap.selectedMinute" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="minute.time as minute.time for minute in minutes" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span></button></a> -->
-            <a href class="tip" data-animation="am-flip-x" bs-tooltip="timeTip"><button type="button" class="btn-minute btn btn-default" ng-model="minutewrap.selectedMinute" data-html="1" data-animation="am-flip-x" data-toggle="true" bs-options="minute as minute for minute in minutes" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span></button></a>
+            <a href class="tip" data-animation="am-flip-x" bs-tooltip="timeTip"><button type="button" class="btn-minute btn btn-default" ng-model="minutewrap.selectedMinute" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" bs-options="minute as minute for minute in minutes" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span></button></a>
           </div>
         </div>
 <!--Add Button-->

@@ -17,6 +17,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 
 // Public functions below.
+
+// This function adds properties to the firebaseObject ItemsData, which collects data points from the items array which are reflected in the Graphs.
     var updateItemsData = function(prop1, prop2, prop3, value1, value2, value3) {
 
       if (itemsData[prop1] === undefined) {
@@ -40,6 +42,19 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       itemsData.$save();
     };
+
+
+// previous implementation: (the code is solid, but the database is being finicky)
+    // var updateItemsData = function(propArray, valArray) {
+    //   for (var i = 0; i < propArray.length; i++) {
+    //     if (itemsData[propArray[i]] === undefined) {
+    //       itemsData[propArray[i]] = valArray[i];
+    //     } else {
+    //       itemsData[propArray[i]] += valArray[i];
+    //     }
+    //   }
+    //   itemsData.$save();
+    // };
 
 // This function below returns 'urgencyTxt', which announces the urgency status of an item in the DOM
     var createUrgencyTxt = function(urgency) {
@@ -191,9 +206,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var urgency = null;
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
-        // the below function lists the properties inside the item being created
 
         updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
+
+        // alternative updateItems code:
+        // var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+        // var valArray = [1, eHour, eMinute];
+        // updateItemsData(propArray, valArray);
 
         items.$add({
           name: itemName,
@@ -267,13 +286,27 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
             // itemToDelete = null;
 
+
+            // erasing item, so subtracting its properties from itemWorkedCount, hoursWorked, minutesWorked
+
             var hourDiff = items[i].eHour * -1;
             var minuteDiff = items[i].eMinute * -1;
 
             updateItemsData("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
 
+            // alternative updateItemsData code:
+            // var propArray = ["itemWorkedCount", "hoursWorked", "minutesWorked"];
+            // var valArray = [-1, hourDiff, minuteDiff];
+            //
+            // updateItemsData(propArray, valArray);
+
             if (items[i].isPastDue) {
+              // if item was past due, then erasing it erases its dueComplete itemsData props
               updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+
+              // alternative updateItemsData code:
+              // var propArray = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
+              // updateItemsData(propArray, valArray);
             }
 
             items.$remove(itemToDelete).then(function() {
@@ -294,15 +327,27 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               items[i].isPastDue = true;
               items.$save(items[i]);
 
+              // item becomes overDue, its itemsData props signal this change
               updateItemsData("itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
+
+              // alternative updateItemsData code:
+              // var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue"];
+              // var valArray = [1, items[i].eHour, items[i].eMinute];
+              //
+              // updateItemsData(propArray, valArray);
+
             } else if (items[i].dueDate > now && !items[i].isPastDue) {
               items[i].isPastDue = false;
               items.$save(items[i]);
 
+              // item becomes NOT overDue, its itemsData props signal this change
               var hourDiff = items[i].eHour * -1;
               var minuteDiff = items[i].eMinute * -1;
-
               updateItemsData("itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
+
+              // alternative updateItemsData code:
+              // var valArray = [-1, hourDiff, minuteDiff];
+              // updateItemsData(propArray, valArray);
             }
           }
         }
@@ -342,27 +387,52 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           item.isComplete = true;
           item.completed_at = firebase.database.ServerValue.TIMESTAMP;
 
+          // deleting item, changing its itemsData props
           var hourDiff = item.eHour * -1;
           var minuteDiff = item.eMinute * -1;
 
           updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
           updateItemsData("itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
 
+          // alternative updateItemsData code:
+          // var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft", "itemWorkedCount", "hoursWorked", "minutesWorked"];
+          // var valArray = [-1, hourDiff, minuteDiff, 1, item.eHour, item.eMinute];
+          // updateItemsData(propArray, valArray);
+
           if (item.isPastDue) {
             updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
+          // deleting item that was pastDue, changing its itemsData props
+
+          // alternative updateItemsData code:
+          // var propArray = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
+          // var valArray = [1, item.eHour, item.eMinute];
+          // updateItemsData(propArray, valArray);
           }
         } else if (item.isComplete) {
           item.isComplete = false;
           item.completed_at = 0;
 
+          // undeleting item, changing its itemsData props
           var hourDiff = item.eHour * -1;
           var minuteDiff = item.eMinute * -1;
 
           updateItemsData("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
           updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
 
+          // alternative updateItemsData code:
+          // var propArray = ["itemWorkedCount", "hoursWorked", "minutesWorked", "itemLeftCount", "hoursLeft", "minutesLeft"];
+          // var valArray = [-1, hourDiff, minuteDiff, 1, item.eHour, item.eMinute];
+          // updateItemsData(propArray, valArray);
+
+
           if (item.isPastDue) {
-            updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", hourDiff, minuteDiff);
+
+            updateItemsData("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+
+            // alternative updateItemsData code:
+            // var propArray = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
+            // var valArray = [-1, hourDiff, minuteDiff];
+            // updateItemsData(propArray, valArray);
           }
         }
         items.$save(item);
