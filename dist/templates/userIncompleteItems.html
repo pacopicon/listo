@@ -84,10 +84,11 @@
       </button>
     </div>
   </div>
+  <p class="noItemAnnounce" ng-show="itemsData.itemLeftCount === 0">There are no to do items at this time</p>
 <!--end select all / clear selected / delete selected-->
   <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
 
-    <p class="noItemAnnounce" ng-if="itemsData.itemLeftCount == 0">There are no to do items at this time</p>
+
 
     <div class="priorityCheckboxImportanceNameDate">
 <!--PRIORITY & CHECKBOX-->

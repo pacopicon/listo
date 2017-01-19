@@ -298,6 +298,7 @@ section {
 .noItemAnnounce {
   text-align: center;
   padding-top: 0.6em;
+  color: #3f4e62;
 }
 
 .itemDisplay {
@@ -327,6 +328,7 @@ section {
   /*border: 0.1px solid #3f4e62;*/
   /*border: 5px solid white;*/
   background-color: black;
+  opacity: 0.8;
 }
 
 .pacoover p {

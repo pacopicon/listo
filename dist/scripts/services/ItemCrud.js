@@ -43,9 +43,27 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       itemsData.$save();
     };
 
+    // var initiateItemsData = function(itemsData) {
+    //   itemsData = {
+    //     itemWorkedCount: 0,
+    //     itemLeftCount: 0,
+    //     itemOverdueCount: 0,
+    //     itemDueCompleteCount: 0,
+    //     hoursWorked: 0,
+    //     minutesWorked: 0,
+    //     hoursLeft: 0,
+    //     minutesLeft: 0,
+    //     hoursOverdue: 0,
+    //     minutesOverdue: 0,
+    //     hoursDueComplete: 0,
+    //     minutesDueComplete: 0
+    //   };
+    //   itemsData.$save();
+    // };
+
 
 // previous implementation: (the code is solid, but the database is being finicky)
-    // var updateItemsData = function(propArray, valArray) {
+    // : 0,updateItemsData = function(propArray, valArray) {
     //   for (var i = 0; i < propArray.length; i++) {
     //     if (itemsData[propArray[i]] === undefined) {
     //       itemsData[propArray[i]] = valArray[i];
@@ -134,6 +152,11 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
+
+      updateItemsData: function(prop1, prop2, prop3, value1, value2, value3) {
+        console.log("updateItemsData called from within ItemCrud return");
+        updateItemsData(prop1, prop2, prop3, value1, value2, value3);
+      },
       // handing ref over to AuthCtrl.js for User creation and authentication.
       getRef: function() {
         return ref;
@@ -206,6 +229,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var urgency = null;
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
+
+        console.log("type of eHour is: " + typeof eHour);
 
         updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
 
@@ -336,7 +361,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               //
               // updateItemsData(propArray, valArray);
 
-            } else if (items[i].dueDate > now && !items[i].isPastDue) {
+            } else if (items[i].dueDate > now && items[i].isPastDue) {
               items[i].isPastDue = false;
               items.$save(items[i]);
 

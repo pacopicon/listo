@@ -3,6 +3,8 @@ listo.factory("graphCruncher", ["ItemCrud",
 
     var items = ItemCrud.getAllItems();
 
+    var itemsData = ItemCrud.getItemsData();
+
 // Public variables below
     var now = Date.now();
     var week = 604800000;

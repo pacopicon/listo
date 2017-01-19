@@ -13,7 +13,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       $scope.time = time;
 
       for (var i = 0; i < items.length; i++) {
-        if (items[i].dueDate < time) {
+        if (!items[i].isPastDue && items[i].dueDate < time) {
+          ItemCrud.updateAllItemsPastDue();
+        } else if (items[i].isPastDue && items[i].dueDate > time) {
           ItemCrud.updateAllItemsPastDue();
         }
       }
@@ -61,39 +63,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 // Begin Estimate
 
     $scope.hourwrap = {};
-    // $scope.hours = [
-    //   {time: 0},
-    //   {time: 1},
-    //   {time: 2},
-    //   {time: 3},
-    //   {time: 4},
-    //   {time: 5},
-    //   {time: 6},
-    //   {time: 7},
-    //   {time: 8},
-    //   {time: 9},
-    //   {time: 10},
-    //   {time: 11},
-    //   {time: 12}
-    // ];
 
     $scope.hours = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
 
     $scope.minutewrap = {};
-    // $scope.minutes = [
-    //   {time: 0},
-    //   {time: 5},
-    //   {time: 10},
-    //   {time: 15},
-    //   {time: 20},
-    //   {time: 25},
-    //   {time: 30},
-    //   {time: 35},
-    //   {time: 40},
-    //   {time: 45},
-    //   {time: 50},
-    //   {time: 55}
-    // ];
 
     $scope.minutes = [0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
 
@@ -135,6 +108,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
+      $scope.oldItemName = item.name;
+      $scope.oldItemHour = item.eHour;
+      $scope.oldItemMinute = item.eMinute;
+      $scope.oldItemIsComplete = item.isComplete;
       var t = new Date();
       console.log("step 1 - old name: " + $scope.oldItem.name + ", old date: " + new Date($scope.oldItem.dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
       // UserCtrl.js showComplex: item $id: -KUnjnUG90g4Ms_pkbC5 and name: short and item date 1478707118727
@@ -153,7 +130,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
           console.log("newItemProps: " + newItemProps);
           // oldItem (= item) not needed since functions below utilize item successfully.  However, I don't understand how yet, keeping it here until I do.
-          oldItem = $scope.oldItem;
           newName = newItemProps.newName;
           newDueDate = newItemProps.newDueDate;
           newImportance = newItemProps.newImportance;
@@ -162,21 +138,20 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           newMinutes = newItemProps.newMinutes;
 
           var t = new Date();
-          console.log("step 4 - UserCtrl close: old name: " + oldItem.name + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+          console.log("step 4 - UserCtrl close: old name: " + $scope.oldItemName + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
+          ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
-          ItemCrud.updateItem(item, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
-
-
-
-          if (item.isComplete) {
+          if ($scope.oldItemIsComplete) {
             // updateCompletion also updates ItemsData
-            ItemCrud.updateCompletion(item);
-            ItemCrud.toggleItemToDelete(item);
-          } else {
+            ItemCrud.updateCompletion($scope.oldItem);
+            ItemCrud.toggleItemToDelete($scope.oldItem);
+          } else if (!$scope.oldItemIsComplete) {
             // incomplete item that is updated updates its new est hour and minute to itemsData.
-            var hourDiff = newHours - item.eHour;
-            var minuteDiff = newMinutes - item.eMinute;
+            var hourDiff = newHours - $scope.oldItemHour;
+            var minuteDiff = newMinutes - $scope.oldItemMinute;
+
+            console.log("newHours: " + newHours + ", oldItem.eHour: " + $scope.oldItemHour);
 
             ItemCrud.updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
             // alternative updateItemsData code:
@@ -219,12 +194,25 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     // };
 
     $scope.toggleInvertAndSave = function(item) {
+      var itemCount = 0;
 
-      if (!item.isSafeToComplete) {
-        $scope.selectionInversion = false;
-        console.log("selection IS NOT ready to be inverted");
-      } else {
+      for (i = 0; i < items.length; i++) {
+        if (items[i]) {
+          itemCount++;
+        }
+      }
+
+      if (!item.isSafeToComplete && itemCount < 2) {
+        $scope.allSelected = false;
+        console.log("only one selection, so all are (it is) to be cleared");
+      } else if (!item.isSafeToComplete && itemCount > 1) {
         $scope.selectionInversion = true;
+        console.log("selection IS NOT ready to be inverted");
+      } else if (item.isSafeToComplete && itemCount < 2 ) {
+        $scope.allSelected = true;
+        console.log("only one selection, so all are selected");
+      } else if (item.isSafeToComplete && itemCount > 1 ) {
+        $scope.selectionInversion = false;
         console.log("selection IS ready to be inverted");
       }
       items.$save(item);
