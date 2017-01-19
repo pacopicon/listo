@@ -21,6 +21,18 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // This function adds properties to the firebaseObject ItemsData, which collects data points from the items array which are reflected in the Graphs.
     var updateItemsData = function(prop1, prop2, prop3, value1, value2, value3) {
 
+      if (itemsData.beginDay === undefined) {
+        var beginDay = new Date(year, month, 1, 0, 0, 0, 0);
+        var beginDayNum = beginDay.getTime();
+        var endDay = new Date(year, month, 1, 23, 59, 59, 999);
+        var endDayNum = endDay.getTime();
+      } else {
+        firebase.database.ServerValue.TIMESTAMP
+      }
+
+      // NEED TO THINK THROUGH SWITCHING ITEMSDATA FROM OBJECT TO ARRAY, THE CREATION, UPDATE, COMPLETION AND DELETION OF EVERY ITEM SHOULD TRIGGER A DECISION: DOES THIS ITEM LOG ITS DATA TO A PREVIOUSLY MADE ITEMSDATA ARRAY ELEMENT PEGGED TO A PARTICULAR DAY, OR IS THIS ITEM UPDATE OCCURRING ON A NEW DAY AND THUS NEEDS TO CREATE A NEW ITEMSDATA ARRAY ELEMENT PEGGED TO A NEW DAY?
+
+
       if (itemsData[prop1] === undefined) {
         itemsData[prop1] = value1;
       } else {
@@ -39,8 +51,28 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         itemsData[prop3] = itemsData[prop3] + value3;
       }
 
+      itemsData.$add({
+        beginDay: beginDayNum,
+        endDay: endDayNum,
+        itemLeftCount: 0,
+        itemWorkedCount: 0,
+        itemOverdueCount: 0,
+        itemDueCompleteCount: 0,
+        hoursLeft: 0,
+        minutesLeft: 0,
+        hoursWorked: 0,
+        minutesWorked: 0,
+        hoursOverdue: 0,
+        minutesOverdue: 0,
+        hoursDueComplete: 0,
+        minutesDueComplete: 0,
+        totalItems:
+        }
 
-      itemsData.$save();
+
+      });
+
+
     };
 
     // var initiateItemsData = function(itemsData) {

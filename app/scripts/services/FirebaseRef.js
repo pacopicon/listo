@@ -13,10 +13,11 @@ listo.factory("FirebaseRef", ["$firebaseArray", "$firebaseObject",
     firebase.initializeApp(config);
 
     var itemsRef = firebase.database().ref().child("items");
-    var itemsDataRef = firebase.database().ref("itemsData");
+    var itemsDataRef = firebase.database().ref().child("itemsData");
+    // var itemsDataRef = firebase.database().ref("itemsData");
 
     var items = $firebaseArray(itemsRef);
-    var itemsData = $firebaseObject(itemsDataRef);
+    var itemsData = $firebaseArray(itemsDataRef);
 
     return {
       getItems: function() {
