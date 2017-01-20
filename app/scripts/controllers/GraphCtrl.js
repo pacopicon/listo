@@ -5,7 +5,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     //   $scope.completionData();
     // });
 
-    $scope.itemsData = ItemCrud.getItemsData();
+    $scope.dataItems = ItemCrud.getDataItems();
 
     $scope.chartTip = {
       "title": "click on me to refresh the charts",

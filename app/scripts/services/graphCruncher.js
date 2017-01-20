@@ -3,7 +3,7 @@ listo.factory("graphCruncher", ["ItemCrud",
 
     var items = ItemCrud.getAllItems();
 
-    var itemsData = ItemCrud.getItemsData();
+    var dataItems = ItemCrud.getDataItems();
 
 // Public variables below
     var now = Date.now();

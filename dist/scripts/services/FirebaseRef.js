@@ -13,11 +13,11 @@ listo.factory("FirebaseRef", ["$firebaseArray", "$firebaseObject",
     firebase.initializeApp(config);
 
     var itemsRef = firebase.database().ref().child("items");
-    var itemsDataRef = firebase.database().ref().child("itemsData");
-    // var itemsDataRef = firebase.database().ref("itemsData");
+    var dataItemsRef = firebase.database().ref().child("dataItems");
+    // var dataItemsRef = firebase.database().ref("dataItems");
 
     var items = $firebaseArray(itemsRef);
-    var itemsData = $firebaseArray(itemsDataRef);
+    var dataItems = $firebaseArray(dataItemsRef);
 
     return {
       getItems: function() {
@@ -28,12 +28,12 @@ listo.factory("FirebaseRef", ["$firebaseArray", "$firebaseObject",
         return itemsRef;
       },
 
-      getItemsData: function() {
-        return itemsData;
+      getDataItems: function() {
+        return dataItems;
       },
 
-      getItemsDataRef: function() {
-        return itemsDataRef;
+      getDataItemsRef: function() {
+        return dataItemsRef;
       }
     };
 

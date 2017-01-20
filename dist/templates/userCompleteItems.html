@@ -20,7 +20,7 @@
 <!--end Clock-->
 <!--begin ItemDisplay-->
 <div class="container-fluid main-body">
-  <p class="noItemAnnounce" ng-show="itemsData.itemWorkedCount === 0">There are no archived items at this time</p>
+  <p class="noItemAnnounce" ng-show="dataItems.itemWorkedCount === 0">There are no archived items at this time</p>
   <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="item.isComplete" ng-hide="!item.isComplete" ng-mouseleave="hover = false">
   <p class="noItemAnnounce" ng-if="itemTally.comCount == 0">There are no archived items at this time</p>
 

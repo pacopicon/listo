@@ -4,7 +4,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
     $scope.items = ItemCrud.getAllItems();
-    $scope.itemsData = ItemCrud.getItemsData();
+    $scope.dataItems = ItemCrud.getDataItems();
 
     var items = $scope.items;
 
@@ -143,21 +143,21 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
           if ($scope.oldItemIsComplete) {
-            // updateCompletion also updates ItemsData
+            // updateCompletion also updates dataItems
             ItemCrud.updateCompletion($scope.oldItem);
             ItemCrud.toggleItemToDelete($scope.oldItem);
           } else if (!$scope.oldItemIsComplete) {
-            // incomplete item that is updated updates its new est hour and minute to itemsData.
+            // incomplete item that is updated updates its new est hour and minute to dataItems.
             var hourDiff = newHours - $scope.oldItemHour;
             var minuteDiff = newMinutes - $scope.oldItemMinute;
 
             console.log("newHours: " + newHours + ", oldItem.eHour: " + $scope.oldItemHour);
 
-            ItemCrud.updateItemsData("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
-            // alternative updateItemsData code:
+            ItemCrud.updatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+            // alternative updatedataItems code:
             // var propArray = ["hoursLeft", "minutesLeft"];
             // var valArray = [hourDiff, minuteDiff];
-            // ItemCrud.updateItemsData(propArray, valArray);
+            // ItemCrud.updatedataItems(propArray, valArray);
           }
 
 
