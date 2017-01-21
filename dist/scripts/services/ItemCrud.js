@@ -15,78 +15,86 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var now = Date.now();
     var week = 604800000;
 
+    var dayObj = new Date();
+    var year = dayObj.getFullYear();
+    var month = dayObj.getMonth();
+    var beginDay = new Date(year, month, 1, 0, 0, 0, 0);
+    var beginDayNum = beginDay.getTime();
+    var endDay = new Date(year, month, 1, 23, 59, 59, 999);
+    var endDayNum = endDay.getTime();
+
+    var lastdataItemsEntry = dataItems[dataItems.length - 1];
 
 // Public functions below.
 
-// This function adds properties to the firebaseObject dataItems, which collects data points from the items array which are reflected in the Graphs. // THE CREATION, UPDATE, COMPLETION AND DELETION OF EVERY ITEM SHOULD TRIGGER A DECISION: DOES THIS ITEM LOG ITS DATA TO A PREVIOUSLY MADE dataItems ARRAY ELEMENT PEGGED TO A PARTICULAR DAY, OR IS THIS ITEM UPDATE OCCURRING ON A NEW DAY AND THUS NEEDS TO CREATE A NEW dataItems ARRAY ELEMENT PEGGED TO A NEW DAY?
+
+// 'createNewdataItems' is called by the function below the function below this one. It creates new data for items.
+    var createNewDataItems = function(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3) {
+
+      var matchProp = function(propName) {
+
+        console.log("propName = " + propName + ", prop1 = " + prop1);
+        if (propName === prop1) {
+          return value1;
+        } else if (propName === prop2) {
+          return value2;
+        } else if (propName === prop3) {
+          return value3;
+        } else {
+          return 0;
+        }
+      };
+
+      var itemLeftCount = matchProp("itemLeftCount");
+      var itemWorkedCount = matchProp("itemWorkedCount");
+      var itemOverdueCount = matchProp("itemOverdueCount");
+      var itemDueCompleteCount = matchProp("itemDueCompleteCount");
+
+      dataItems.$add({
+        beginDay: beginDayNum,
+        endDay: endDayNum,
+        itemLeftCount: itemLeftCount,
+        itemWorkedCount: itemWorkedCount,
+        itemOverdueCount: itemOverdueCount,
+        itemDueCompleteCount: itemDueCompleteCount,
+        hoursLeft: matchProp("hoursLeft"),
+        minutesLeft: matchProp("minutesLeft"),
+        hoursWorked: matchProp("hoursWorked"),
+        minutesWorked: matchProp("minutesWorked"),
+        hoursOverdue: matchProp("hoursOverdue"),
+        minutesOverdue: matchProp("minutesOverdue"),
+        hoursDueComplete: matchProp("hoursDueComplete"),
+        minutesDueComplete: matchProp("minutesDueComplete"),
+        totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
+      });
+    };
+
+// 'updateDataItems' is called by the function below it.  it updates an existing dataItem array.
+
+    var updateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
+
+      if (!(lastdataItemsEntry === undefined) && lastdataItemsEntry.endDay > beginDayNum) {
+        lastdataItemsEntry[prop1] = value1;
+        lastdataItemsEntry[prop2] = value2;
+        lastdataItemsEntry[prop3] = value3;
+
+        dataItems.$save(lastdataItemsEntry).then(function(lastdataItemsEntry) {
+          console.log("saved " + lastdataItemsEntry[prop1] + "as " + value1 + ", " + lastdataItemsEntry[prop2] + "as " + value2 + "and, " + lastdataItemsEntry[prop3] + "as " + value3);
+        });
+      }
+    };
+
+// if dataItems array is created for a specific day, 'addOrUpdatedataItems' updates it, otherwise it creates a new one.
     var addOrUpdatedataItems = function(prop1, prop2, prop3, value1, value2, value3) {
 
-      var createNewdataItems = function(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3) {
-
-        var matchProp = function(propName) {
-          if (prop1 == propName) {
-            return value1;
-          } else if (prop2 == propName) {
-            return value2;
-          } else if (prop3 == propName) {
-            return value3;
-          } else {
-            return 0;
-          }
-        };
-
-        var itemLeftCount = matchProp(itemLeftCount);
-        var itemWorkedCount = matchProp(itemWorkedCount);
-        var itemOverdueCount = matchProp(itemOverdueCount);
-        var itemDueCompleteCount = matchProp(itemDueCompleteCount);
-
-        dataItems.$add({
-          beginDay: beginDayNum,
-          endDay: endDayNum,
-          itemLeftCount: itemLeftCount,
-          itemWorkedCount: itemWorkedCount,
-          itemOverdueCount: itemOverdueCount,
-          itemDueCompleteCount: itemDueCompleteCount,
-          hoursLeft: matchProp(hoursLeft),
-          minutesLeft: matchProp(minutesLeft),
-          hoursWorked: matchProp(hoursWorked),
-          minutesWorked: matchProp(minutesWorked),
-          hoursOverdue: matchProp(hoursOverdue),
-          minutesOverdue: matchProp(minutesOverdue),
-          hoursDueComplete: matchProp(hoursDueComplete),
-          minutesDueComplete: matchProp(minutesDueComplete),
-          totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
-        });
-      };
-      var dayObj = new Date();
-      var year = dayObj.getFullYear();
-      var month = dayObj.getMonth();
-      var beginDay = new Date(year, month, 1, 0, 0, 0, 0);
-      var beginDayNum = beginDay.getTime();
-      var endDay = new Date(year, month, 1, 23, 59, 59, 999);
-      var endDayNum = endDay.getTime();
-
-      if (dataItems != undefined) {
-        var lastdataItemsEntry = dataItems[dataItems.length - 1];
-
-        if (lastdataItemsEntry.endDay > beginDayNum) {
-          lastdataItemsEntry[prop1] = value1;
-          lastdataItemsEntry[prop2] = value2;
-          lastdataItemsEntry[prop3] = value3;
-
-
-          dataItems.$save(lastdataItemsEntry).then(function(lastdataItemsEntry) {
-            console.log("saved " + lastdataItemsEntry[prop1] + "as " + value1 + ", " + lastdataItemsEntry[prop2] + "as " + value2 + "and, " + lastdataItemsEntry[prop3] + "as " + value3);
-          });
-        } else if (lastdataItemsEntry.endDay < beginDayNum) {
-          createNewdataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3); {
-        }
-      } else if (dataItems === undefined) {
+      if (lastdataItemsEntry === undefined) {
+        createNewDataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3);
+      } else if (!(lastdataItemsEntry === undefined)){
+        updateDataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3);
+      } else if (!(lastdataItemsEntry === undefined) && lastdataItemsEntry.endDay < beginDayNum) {
         createNewdataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3);
       }
-
-    }
-  };
+    };
 
 
 // This function below returns 'urgencyTxt', which announces the urgency status of an item in the DOM
