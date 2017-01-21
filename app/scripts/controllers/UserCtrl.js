@@ -153,11 +153,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
             console.log("newHours: " + newHours + ", oldItem.eHour: " + $scope.oldItemHour);
 
-            ItemCrud.updatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
-            // alternative updatedataItems code:
+            ItemCrud.addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+            // alternative addOrUpdatedataItems code:
             // var propArray = ["hoursLeft", "minutesLeft"];
             // var valArray = [hourDiff, minuteDiff];
-            // ItemCrud.updatedataItems(propArray, valArray);
+            // ItemCrud.addOrUpdatedataItems(propArray, valArray);
           }
 
 
