@@ -51,18 +51,6 @@ listo.controller('ModalController', [
 
     //  Manually hide the modal.
     $element.modal('hide');
-
-    // var oldItemProps = {
-    //   newName: item.name,
-    //   newDueDate: new Date(item.dueDate),
-    //   newImportance: item.importance,
-    //   newUrgent: item.isUrgent,
-    //   newHours: item.eHour,
-    //   newMinutes: item.eMinute
-    // };
-
-    //  Now call close, returning control to the caller.
-    // close(oldItemProps, 500); // close, but give 500ms for bootstrap to animate
   };
 
 }]);

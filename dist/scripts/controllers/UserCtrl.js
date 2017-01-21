@@ -128,8 +128,6 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
         // This instance of "close" receives the new updated item properties from the Modal controller
         modal.close.then(function(newItemProps) {
 
-          console.log("newItemProps: " + newItemProps);
-          // oldItem (= item) not needed since functions below utilize item successfully.  However, I don't understand how yet, keeping it here until I do.
           newName = newItemProps.newName;
           newDueDate = newItemProps.newDueDate;
           newImportance = newItemProps.newImportance;
@@ -151,15 +149,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
             var hourDiff = newHours - $scope.oldItemHour;
             var minuteDiff = newMinutes - $scope.oldItemMinute;
 
-            console.log("newHours: " + newHours + ", oldItem.eHour: " + $scope.oldItemHour);
-
             ItemCrud.addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
-            // alternative addOrUpdatedataItems code:
-            // var propArray = ["hoursLeft", "minutesLeft"];
-            // var valArray = [hourDiff, minuteDiff];
-            // ItemCrud.addOrUpdatedataItems(propArray, valArray);
           }
-
 
           $scope.UserCtrlRefreshTalliesAndData();
         });
@@ -174,24 +165,22 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
 
     $scope.UserCtrlRefreshTalliesAndData = function() {
-      // $scope.$broadcast("refreshData", {});
       ItemCrud.processOldCompleteItems();
-      ItemCrud.updateAllItemsPastDue();
+      // ItemCrud.updateAllItemsPastDue();
     };
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-
-      if ($scope.UserCtrlRefreshTalliesAndData()) {
-        console.log("UserCtrlRefreshTalliesAndData was called");
-      }
+      $scope.UserCtrlRefreshTalliesAndData();
     };
 
-    // var refreshData = function() {
-    //   if ($scope.addItem()) {
-    //     $scope.UserCtrlRefreshTalliesAndData();
-    //   }
-    // };
+    $scope.addTestItem = function() {
+      var day = new Date();
+      var dueDate = day.setDate(14);
+      var dueDateObj = new Date(dueDate);
+      ItemCrud.addItem("test", dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
+      $scope.UserCtrlRefreshTalliesAndData();
+    };
 
     $scope.toggleInvertAndSave = function(item) {
       var itemCount = 0;

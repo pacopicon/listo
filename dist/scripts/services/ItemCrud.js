@@ -18,22 +18,37 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var dayObj = new Date();
     var year = dayObj.getFullYear();
     var month = dayObj.getMonth();
-    var beginDay = new Date(year, month, 1, 0, 0, 0, 0);
-    var beginDayNum = beginDay.getTime();
-    var endDay = new Date(year, month, 1, 23, 59, 59, 999);
-    var endDayNum = endDay.getTime();
-
-    var lastdataItemsEntry = dataItems[dataItems.length - 1];
+    var date = dayObj.getDate();
+    var firstMomentObj = new Date(year, month, date, 0, 0, 0, 0);
+    var firstMomentNum = firstMomentObj.getTime();
+    var firstMomentString = firstMomentObj.toString();
+    var lastMomentObj = new Date(year, month, date, 23, 59, 59, 999);
+    var lastMomentNum = lastMomentObj.getTime();
+    var lastMomentString = lastMomentObj.toString();
 
 // Public functions below.
 
+// checks if there is at least one item in the array.  If there is, it retrieves its endDay property.  If there is not, then it returns undefined.
+    var lastEndDay = function() {
+      if (typeof dataItems == "undefined") {
+        return undefined;
+      } else if (!(typeof dataItems.$getRecord(dataItems[dataItems.length - 1].$id) == "undefined")) {
+        // var lastDataItemsEntry = dataItems.$keyAt(dataItems[dataItems.length - 1]);
+        var lastDataItemsEntry = dataItems.$getRecord(dataItems[dataItems.length - 1].$id);
+        console.log("within setter function, lastDataItemsEntry = " + lastDataItemsEntry);
+        if (typeof lastDataItemsEntry.endDay == "undefined") {
+          return undefined;
+        } else {
+          return lastDataItemsEntry.endDay;
+        }
+      }
+    };
 
 // 'createNewdataItems' is called by the function below the function below this one. It creates new data for items.
-    var createNewDataItems = function(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3) {
+    var createNewDataItems = function(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3) {
 
       var matchProp = function(propName) {
 
-        console.log("propName = " + propName + ", prop1 = " + prop1);
         if (propName === prop1) {
           return value1;
         } else if (propName === prop2) {
@@ -51,8 +66,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       var itemDueCompleteCount = matchProp("itemDueCompleteCount");
 
       dataItems.$add({
-        beginDay: beginDayNum,
-        endDay: endDayNum,
+        a_start: firstMomentString,
+        aa_end: lastMomentString,
+        beginDay: firstMomentNum,
+        endDay: lastMomentNum,
         itemLeftCount: itemLeftCount,
         itemWorkedCount: itemWorkedCount,
         itemOverdueCount: itemOverdueCount,
@@ -73,26 +90,30 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     var updateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
 
-      if (!(lastdataItemsEntry === undefined) && lastdataItemsEntry.endDay > beginDayNum) {
-        lastdataItemsEntry[prop1] = value1;
-        lastdataItemsEntry[prop2] = value2;
-        lastdataItemsEntry[prop3] = value3;
+      lastDataItemsEntry[prop1] = value1;
+      lastDataItemsEntry[prop2] = value2;
+      lastDataItemsEntry[prop3] = value3;
 
-        dataItems.$save(lastdataItemsEntry).then(function(lastdataItemsEntry) {
-          console.log("saved " + lastdataItemsEntry[prop1] + "as " + value1 + ", " + lastdataItemsEntry[prop2] + "as " + value2 + "and, " + lastdataItemsEntry[prop3] + "as " + value3);
-        });
-      }
+      dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
+        console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
+      });
+
     };
 
 // if dataItems array is created for a specific day, 'addOrUpdatedataItems' updates it, otherwise it creates a new one.
     var addOrUpdatedataItems = function(prop1, prop2, prop3, value1, value2, value3) {
 
-      if (lastdataItemsEntry === undefined) {
-        createNewDataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3);
-      } else if (!(lastdataItemsEntry === undefined)){
-        updateDataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3);
-      } else if (!(lastdataItemsEntry === undefined) && lastdataItemsEntry.endDay < beginDayNum) {
-        createNewdataItems(beginDayNum, endDayNum, prop1, prop2, prop3, value1, value2, value3);
+      if (lastEndDay() == undefined || lastEndDay() <= firstMomentNum) {
+        createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+        console.log("dataItems = " + typeof dataItems);
+        console.log("within addOrUpdate function, lastDataItemsEntry = " + typeof lastDataItemsEntry);
+        // console.log("lastDataItemsEntry.endDay" + typeof lastDataItemsEntry.endDay);
+        // console.log("dataItems = " + dataItems);
+        // console.log("lastDataItemsEntry" + lastDataItemsEntry);
+        // console.log("lastDataItemsEntry.endDay" + lastDataItemsEntry.endDay);
+        // console.log("lastEndDay() = " + lastEndDay());
+      } else if (!(lastEndDay() == undefined) && lastEndDay() > firstMomentNum) {
+        updateDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
       }
     };
 
@@ -177,7 +198,6 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     return {
 
       addOrUpdatedataItems: function(prop1, prop2, prop3, value1, value2, value3) {
-        console.log("addOrUpdatedataItems called from within ItemCrud return");
         addOrUpdatedataItems(prop1, prop2, prop3, value1, value2, value3);
       },
       // handing ref over to AuthCtrl.js for User creation and authentication.
@@ -247,15 +267,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // This function is called by the submit button in userincompleteItems.html when user creates an item in the form
       addItem: function(itemName, dueDate, importance, eHour, eMinute) {
         // empty the below variables in order to contextualize the 'prioritize' call for the 'addItem' function
-        console.log("importance = " + importance)
         var item = null;
         var urgency = null;
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
 
-        console.log("type of eHour is: " + typeof eHour);
-
-        addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
+        // addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
 
         // alternative updateItems code:
         // var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft"];
@@ -279,6 +296,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var id = itemsRef.key;
           console.log("added item with id " + id);
           items.$indexFor(id);
+          // var item = items.$getRecord(item.$id);
+          // console.log("added item with name " + item.name);
         });
       }, // end of AddItem
 // This function is called by UserCtrl '$scope.showComplex' function, which is in turn called by 'userincompleteItems.html' when the user clicks on the 'edit' button for a given item.  The $scope.showComplex' function creates a modal that offers update options to the user.  Clicking close on the modal resolves '$scope.updateItem' which calls 'updateItem' below
