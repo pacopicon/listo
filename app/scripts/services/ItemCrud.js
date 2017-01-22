@@ -3,13 +3,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // holds data as array of objects.  Each object is one item.
     var itemsRef = FirebaseRef.getItemsRef();
-
     var items = FirebaseRef.getItems();
-
     var dataItemsRef = FirebaseRef.getDataItemsRef();
-
     var dataItems = FirebaseRef.getDataItems();
-
 
 // Public variables below
     var now = Date.now();
@@ -26,25 +22,124 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var lastMomentNum = lastMomentObj.getTime();
     var lastMomentString = lastMomentObj.toString();
 
+    // var lastDataItemsEntry = dataItems.$loaded(function(dataItems) {
+    //   return dataItems[dataItems.length - 1];
+    // });
+
 // Public functions below.
 
-// checks if there is at least one item in the array.  If there is, it retrieves its endDay property.  If there is not, then it returns undefined.
-    var lastEndDay = function() {
-      if (typeof dataItems == "undefined") {
-        return undefined;
-      } else if (!(typeof dataItems.$getRecord(dataItems[dataItems.length - 1].$id) == "undefined")) {
-        // var lastDataItemsEntry = dataItems.$keyAt(dataItems[dataItems.length - 1]);
-        var lastDataItemsEntry = dataItems.$getRecord(dataItems[dataItems.length - 1].$id);
-        console.log("within setter function, lastDataItemsEntry = " + lastDataItemsEntry);
-        if (typeof lastDataItemsEntry.endDay == "undefined") {
-          return undefined;
-        } else {
-          return lastDataItemsEntry.endDay;
-        }
+// 'createNewdataItems' is called by the function below the function below this one. It creates new data for items.
+
+
+// 'updateDataItems' is called by the function below it.  it updates an existing dataItem array.
+
+    // var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
+    //
+    //   lastDataItemsEntry[prop1] = value1;
+    //   lastDataItemsEntry[prop2] = value2;
+    //   lastDataItemsEntry[prop3] = value3;
+    //
+    //   dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
+    //     console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
+    //   });
+    //
+    // };
+
+// if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
+    // var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
+    //
+    //   var lastDataItemsEntry = dataItems.$loaded(function(dataItems) {
+    //     var id = dataItems[dataItems.length - 1].$id;
+    //     var lastDataItemsEntry = dataItems.$getRecord(id);
+    //   });
+    //
+    //   console.log("last item in items array is called: " + items[items.length-1].name);
+    //   console.log("within addOrUpdate function, lastDataItemsEntry.endDay = " + lastDataItemsEntry.endDay);
+    //   console.log("within addOrUpdate function, typeof lastDataItemsEntry = " + typeof lastDataItemsEntry);
+    //   console.log("is lastDataItemsEntry.endDay greather than firstMomentNum? " + lastDataItemsEntry.endDay > firstMomentNum);
+    //
+    //   // if (dataItems == null) {
+    //   if (lastDataItemsEntry === undefined) {
+    //     createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+    //
+    //     // console.log("lastDataItemsEntry.endDay" + typeof lastDataItemsEntry.endDay);
+    //     // console.log("dataItems = " + dataItems);
+    //     // console.log("lastDataItemsEntry" + lastDataItemsEntry);
+    //     // console.log("lastDataItemsEntry.endDay" + lastDataItemsEntry.endDay);
+    //     // console.log("lastEndDay() = " + lastEndDay());
+    //   } else {
+    //     // if (dataItems == null) {
+    //     //   dataItems[dataItems.length - 1] = null;
+    //     // }
+    //     // var id = dataItems[dataItems.length - 1].$id || null;
+    //     // var lastDataItemsEntry = dataItems.$getRecord(id) || null;
+    //
+    //     // var lastDataItemsEntry = dataItems.$keyAt(dataItems[dataItems.length - 1]) || null;
+    //
+    //     // var lastEndDay = lastDataItemsEntry.endDay || null;
+    //     // console.log("lastEndDay: " + lastEndDay);
+    //
+    //     // if (lastEndDay > firstMomentNum) {
+    //     if (!(lastDataItemsEntry === undefined) && lastDataItemsEntry.endDay >= firstMomentNum) {
+    //
+    //       // updateDataItems(lastEndDay, prop1, prop2, prop3, value1, value2, value3);
+    //       updateDataItems(lastDataItemsEntry.endDay, prop1, prop2, prop3, value1, value2, value3);
+    //     // } else if (lastDataItemsEntry.endDay <= firstMomentNum) {
+    //     } else if (!(lastDataItemsEntry === undefined) && lastDataItemsEntry.endDay < firstMomentNum) {
+    //       createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+    //     }
+    //   }
+    // };
+
+    var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
+
+      console.log("addOrUpdateDataItems called");
+
+      var id = dataItems[dataItems.length - 1].$id;
+      var lastDataItemsEntry = dataItems.$getRecord(id);
+      var lastEndDay = lastDataItemsEntry.endDay;
+
+      console.log("saved " + lastDataItemsEntry[prop1] + " as " + value1 + ", " + lastDataItemsEntry[prop2] + " as " + value2 + " and, " + lastDataItemsEntry[prop3] + " as " + value3);
+
+      console.log("within addOrUpdateDataItems function, id: " + id + ", lastDataItemsEntry: " + lastDataItemsEntry + ", lastDataItemsEntry.endDay = " + lastDataItemsEntry.endDay);
+
+      console.log("lastEndDay: " + lastEndDay + ", firstMomentNum: " + firstMomentNum);
+
+      console.log("is lastDataItemsEntry.endDay greather than firstMomentNum? " + lastEndDay >= firstMomentNum);
+
+      if (lastEndDay >= firstMomentNum) {
+        console.log("lastEndDay is >= to firstMomentNum");
+        updateDataItems(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3);
+      } else if (lastEndDay < firstMomentNum) {
+        createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
       }
+
     };
 
-// 'createNewdataItems' is called by the function below the function below this one. It creates new data for items.
+    // var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
+    var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
+
+      console.log("updateDataItems called");
+      console.log("is lastDataItemsEntry defined? " + typeof lastDataItemsEntry);
+
+      if (!(typeof lastDataItemsEntry === "undefined") && !(typeof id === "undefined")) {
+        console.log("within updateDataItems function, id: " + id + ", lastDataItemsEntry: " + lastDataItemsEntry + ", lastDataItemsEntry.endDay = " + lastDataItemsEntry.endDay);
+      }
+
+      if (!(typeof lastDataItemsEntry === "undefined")) {
+        lastDataItemsEntry[prop1] += value1;
+        lastDataItemsEntry[prop2] += value2;
+        lastDataItemsEntry[prop3] += value3;
+
+        dataItems.$save(lastDataItemsEntry);
+        // dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
+        //   console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
+        // });
+
+      }
+
+    };
+
     var createNewDataItems = function(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3) {
 
       var matchProp = function(propName) {
@@ -86,35 +181,44 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       });
     };
 
-// 'updateDataItems' is called by the function below it.  it updates an existing dataItem array.
+    var initiateDataItems = function() {
 
-    var updateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
+      // if (typeof dataItems == "undefined") {
+        var itemLeftCount = 0;
+        var itemWorkedCount = 0;
+        var itemOverdueCount = 0;
+        var itemDueCompleteCount = 0;
+        var hoursLeft = 0;
+        var minutesLeft = 0;
+        var hoursWorked = 0;
+        var minutesWorked = 0;
+        var hoursOverdue = 0;
+        var minutesOverdue = 0;
+        var hoursDueComplete = 0;
+        var minutesDueComplete = 0;
 
-      lastDataItemsEntry[prop1] = value1;
-      lastDataItemsEntry[prop2] = value2;
-      lastDataItemsEntry[prop3] = value3;
-
-      dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
-        console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
-      });
-
-    };
-
-// if dataItems array is created for a specific day, 'addOrUpdatedataItems' updates it, otherwise it creates a new one.
-    var addOrUpdatedataItems = function(prop1, prop2, prop3, value1, value2, value3) {
-
-      if (lastEndDay() == undefined || lastEndDay() <= firstMomentNum) {
-        createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
-        console.log("dataItems = " + typeof dataItems);
-        console.log("within addOrUpdate function, lastDataItemsEntry = " + typeof lastDataItemsEntry);
-        // console.log("lastDataItemsEntry.endDay" + typeof lastDataItemsEntry.endDay);
-        // console.log("dataItems = " + dataItems);
-        // console.log("lastDataItemsEntry" + lastDataItemsEntry);
-        // console.log("lastDataItemsEntry.endDay" + lastDataItemsEntry.endDay);
-        // console.log("lastEndDay() = " + lastEndDay());
-      } else if (!(lastEndDay() == undefined) && lastEndDay() > firstMomentNum) {
-        updateDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
-      }
+        dataItems.$add({
+          a_start: firstMomentString,
+          aa_end: lastMomentString,
+          beginDay: firstMomentNum,
+          endDay: lastMomentNum,
+          itemLeftCount: itemLeftCount,
+          itemWorkedCount: itemWorkedCount,
+          itemOverdueCount: itemOverdueCount,
+          itemDueCompleteCount: itemDueCompleteCount,
+          hoursLeft: hoursLeft,
+          minutesLeft: minutesLeft,
+          hoursWorked: hoursWorked,
+          minutesWorked: minutesWorked,
+          hoursOverdue: hoursOverdue,
+          minutesOverdue: minutesOverdue,
+          hoursDueComplete: hoursDueComplete,
+          minutesDueComplete: minutesDueComplete,
+          totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
+        });
+      // } else {
+      //   console.log("dataItems is defined, no need to initiate dataItems");
+      // }
     };
 
 
@@ -197,8 +301,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
 
-      addOrUpdatedataItems: function(prop1, prop2, prop3, value1, value2, value3) {
-        addOrUpdatedataItems(prop1, prop2, prop3, value1, value2, value3);
+      initiateDataItems: function() {
+        initiateDataItems();
+      },
+
+      addOrUpdateDataItems: function(prop1, prop2, prop3, value1, value2, value3) {
+        addOrUpdateDataItems(prop1, prop2, prop3, value1, value2, value3);
       },
       // handing ref over to AuthCtrl.js for User creation and authentication.
       getItemsRef: function() {
@@ -272,12 +380,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
 
-        // addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
-
-        // alternative updateItems code:
-        // var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft"];
-        // var valArray = [1, eHour, eMinute];
-        // addOrUpdatedataItems(propArray, valArray);
+        addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
 
         items.$add({
           name: itemName,
@@ -296,8 +399,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var id = itemsRef.key;
           console.log("added item with id " + id);
           items.$indexFor(id);
-          // var item = items.$getRecord(item.$id);
-          // console.log("added item with name " + item.name);
+
         });
       }, // end of AddItem
 // This function is called by UserCtrl '$scope.showComplex' function, which is in turn called by 'userincompleteItems.html' when the user clicks on the 'edit' button for a given item.  The $scope.showComplex' function creates a modal that offers update options to the user.  Clicking close on the modal resolves '$scope.updateItem' which calls 'updateItem' below
@@ -359,21 +461,21 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             var hourDiff = items[i].eHour * -1;
             var minuteDiff = items[i].eMinute * -1;
 
-            addOrUpdatedataItems("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+            addOrUpdateDataItems("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
 
-            // alternative addOrUpdatedataItems code:
+            // alternative addOrUpdateDataItems code:
             // var propArray = ["itemWorkedCount", "hoursWorked", "minutesWorked"];
             // var valArray = [-1, hourDiff, minuteDiff];
             //
-            // addOrUpdatedataItems(propArray, valArray);
+            // addOrUpdateDataItems(propArray, valArray);
 
             if (items[i].isPastDue) {
               // if item was past due, then erasing it erases its dueComplete dataItems props
-              addOrUpdatedataItems("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+              addOrUpdateDataItems("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
 
-              // alternative addOrUpdatedataItems code:
+              // alternative addOrUpdateDataItems code:
               // var propArray = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
-              // addOrUpdatedataItems(propArray, valArray);
+              // addOrUpdateDataItems(propArray, valArray);
             }
 
             items.$remove(itemToDelete).then(function() {
@@ -395,13 +497,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               items.$save(items[i]);
 
               // item becomes overDue, its dataItems props signal this change
-              addOrUpdatedataItems("itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
+              addOrUpdateDataItems("itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
 
-              // alternative addOrUpdatedataItems code:
+              // alternative addOrUpdateDataItems code:
               // var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue"];
               // var valArray = [1, items[i].eHour, items[i].eMinute];
               //
-              // addOrUpdatedataItems(propArray, valArray);
+              // addOrUpdateDataItems(propArray, valArray);
 
             } else if (items[i].dueDate > now && items[i].isPastDue) {
               items[i].isPastDue = false;
@@ -410,11 +512,11 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               // item becomes NOT overDue, its dataItems props signal this change
               var hourDiff = items[i].eHour * -1;
               var minuteDiff = items[i].eMinute * -1;
-              addOrUpdatedataItems("itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
+              addOrUpdateDataItems("itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
 
-              // alternative addOrUpdatedataItems code:
+              // alternative addOrUpdateDataItems code:
               // var valArray = [-1, hourDiff, minuteDiff];
-              // addOrUpdatedataItems(propArray, valArray);
+              // addOrUpdateDataItems(propArray, valArray);
             }
           }
         }
@@ -458,22 +560,22 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var hourDiff = item.eHour * -1;
           var minuteDiff = item.eMinute * -1;
 
-          addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
-          addOrUpdatedataItems("itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
+          addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
+          addOrUpdateDataItems("itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
 
-          // alternative addOrUpdatedataItems code:
+          // alternative addOrUpdateDataItems code:
           // var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft", "itemWorkedCount", "hoursWorked", "minutesWorked"];
           // var valArray = [-1, hourDiff, minuteDiff, 1, item.eHour, item.eMinute];
-          // addOrUpdatedataItems(propArray, valArray);
+          // addOrUpdateDataItems(propArray, valArray);
 
           if (item.isPastDue) {
-            addOrUpdatedataItems("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
+            addOrUpdateDataItems("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
           // deleting item that was pastDue, changing its dataItems props
 
-          // alternative addOrUpdatedataItems code:
+          // alternative addOrUpdateDataItems code:
           // var propArray = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
           // var valArray = [1, item.eHour, item.eMinute];
-          // addOrUpdatedataItems(propArray, valArray);
+          // addOrUpdateDataItems(propArray, valArray);
           }
         } else if (item.isComplete) {
           item.isComplete = false;
@@ -483,23 +585,23 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var hourDiff = item.eHour * -1;
           var minuteDiff = item.eMinute * -1;
 
-          addOrUpdatedataItems("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
-          addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
+          addOrUpdateDataItems("itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+          addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
 
-          // alternative addOrUpdatedataItems code:
+          // alternative addOrUpdateDataItems code:
           // var propArray = ["itemWorkedCount", "hoursWorked", "minutesWorked", "itemLeftCount", "hoursLeft", "minutesLeft"];
           // var valArray = [-1, hourDiff, minuteDiff, 1, item.eHour, item.eMinute];
-          // addOrUpdatedataItems(propArray, valArray);
+          // addOrUpdateDataItems(propArray, valArray);
 
 
           if (item.isPastDue) {
 
-            addOrUpdatedataItems("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+            addOrUpdateDataItems("itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
 
-            // alternative addOrUpdatedataItems code:
+            // alternative addOrUpdateDataItems code:
             // var propArray = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
             // var valArray = [-1, hourDiff, minuteDiff];
-            // addOrUpdatedataItems(propArray, valArray);
+            // addOrUpdateDataItems(propArray, valArray);
           }
         }
         items.$save(item);

@@ -241,14 +241,29 @@ section {
   background-color: white;
 }
 
+.btn-test {
+  border: 2.5px solid #e05d6f;
+  color: #e05d6f;
+}
+
 .btn-add:hover {
   border: 3.5px solid #4c91cd;
+}
+
+.btn-test:hover {
+  border: 3.5px solid #e05d6f;
 }
 
 .btn-add:active {
   background-color: #4c91cd;
   color: white;
 }
+
+.btn-test:active {
+  background-color: #e05d6f;
+  color: white
+}
+
 
 /* end CSS for Form */
 
@@ -518,6 +533,10 @@ input[type="checkbox"]:checked + label:before {
   border: 3.5px solid
   color: #d6f3ff;
   text-decoration: none;
+}
+
+.btn-test:hover {
+  color: #e05d6f;
 }
 
 .deleteBtn {

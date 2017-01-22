@@ -19,8 +19,20 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           ItemCrud.updateAllItemsPastDue();
         }
       }
+
+      var executed = false;
+      $scope.initiateDataItems = function() {
+        if (!executed) {
+          executed = true;
+          ItemCrud.initiateDataItems();
+        }
+      };
       return time;
-    }
+    };
+
+    $scope.addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
+      ItemCrud.addOrUpdateDataItems(prop1, prop2, prop3, value1, value2, value3);
+    };
 
     $interval(refreshTime, 1000);
 
@@ -149,7 +161,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
             var hourDiff = newHours - $scope.oldItemHour;
             var minuteDiff = newMinutes - $scope.oldItemMinute;
 
-            ItemCrud.addOrUpdatedataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+            ItemCrud.addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
           }
 
           $scope.UserCtrlRefreshTalliesAndData();
@@ -169,18 +181,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       // ItemCrud.updateAllItemsPastDue();
     };
 
-    $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-      $scope.UserCtrlRefreshTalliesAndData();
-    };
-
     $scope.addTestItem = function() {
       var day = new Date();
       var dueDate = day.setDate(14);
       var dueDateObj = new Date(dueDate);
-      ItemCrud.addItem("test", dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
-      $scope.UserCtrlRefreshTalliesAndData();
+      var name = "test"
+      ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
+      // $scope.UserCtrlRefreshTalliesAndData();
     };
+
+    // $scope.addItem = function() {
+    //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
+    //   $scope.UserCtrlRefreshTalliesAndData();
+    // };
 
     $scope.toggleInvertAndSave = function(item) {
       var itemCount = 0;
