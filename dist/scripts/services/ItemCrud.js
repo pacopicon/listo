@@ -6,6 +6,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var items = FirebaseRef.getItems();
     var dataItemsRef = FirebaseRef.getDataItemsRef();
     var dataItems = FirebaseRef.getDataItems();
+    var dataWeekAgoRef = FirebaseRef.getDataWeekAgoRef();
+    var dataWeekAgo = FirebaseRef.getDataWeekAgo();
+    var dataNextWeekRef = FirebaseRef.getDataNextWeekRef();
+    var dataNextWeek = FirebaseRef.getDataNextWeek();
 
 // Public variables below
     var now = Date.now();
@@ -114,46 +118,107 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       });
     };
 
-    var initiateDataItems = function() {
+    // var initiateDataItems = function() {
+    //
+    //   // if (typeof dataItems == "undefined") {
+    //     var itemLeftCount = 0;
+    //     var itemWorkedCount = 0;
+    //     var itemOverdueCount = 0;
+    //     var itemDueCompleteCount = 0;
+    //     var hoursLeft = 0;
+    //     var minutesLeft = 0;
+    //     var hoursWorked = 0;
+    //     var minutesWorked = 0;
+    //     var hoursOverdue = 0;
+    //     var minutesOverdue = 0;
+    //     var hoursDueComplete = 0;
+    //     var minutesDueComplete = 0;
+    //
+    //     dataItems.$add({
+    //       a_start: firstMomentString,
+    //       aa_end: lastMomentString,
+    //       beginDay: firstMomentNum,
+    //       endDay: lastMomentNum,
+    //       itemLeftCount: itemLeftCount,
+    //       itemWorkedCount: itemWorkedCount,
+    //       itemOverdueCount: itemOverdueCount,
+    //       itemDueCompleteCount: itemDueCompleteCount,
+    //       hoursLeft: hoursLeft,
+    //       minutesLeft: minutesLeft,
+    //       hoursWorked: hoursWorked,
+    //       minutesWorked: minutesWorked,
+    //       hoursOverdue: hoursOverdue,
+    //       minutesOverdue: minutesOverdue,
+    //       hoursDueComplete: hoursDueComplete,
+    //       minutesDueComplete: minutesDueComplete,
+    //       totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
+    //     });
+    //   // } else {
+    //   //   console.log("dataItems is defined, no need to initiate dataItems");
+    //   // }
+    // };
 
-      // if (typeof dataItems == "undefined") {
-        var itemLeftCount = 0;
-        var itemWorkedCount = 0;
-        var itemOverdueCount = 0;
-        var itemDueCompleteCount = 0;
-        var hoursLeft = 0;
-        var minutesLeft = 0;
-        var hoursWorked = 0;
-        var minutesWorked = 0;
-        var hoursOverdue = 0;
-        var minutesOverdue = 0;
-        var hoursDueComplete = 0;
-        var minutesDueComplete = 0;
+    var updateWeeklyData = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
 
-        dataItems.$add({
-          a_start: firstMomentString,
-          aa_end: lastMomentString,
-          beginDay: firstMomentNum,
-          endDay: lastMomentNum,
-          itemLeftCount: itemLeftCount,
-          itemWorkedCount: itemWorkedCount,
-          itemOverdueCount: itemOverdueCount,
-          itemDueCompleteCount: itemDueCompleteCount,
-          hoursLeft: hoursLeft,
-          minutesLeft: minutesLeft,
-          hoursWorked: hoursWorked,
-          minutesWorked: minutesWorked,
-          hoursOverdue: hoursOverdue,
-          minutesOverdue: minutesOverdue,
-          hoursDueComplete: hoursDueComplete,
-          minutesDueComplete: minutesDueComplete,
-          totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
-        });
-      // } else {
-      //   console.log("dataItems is defined, no need to initiate dataItems");
-      // }
+      var now = new Date();
+      var year = now.getFullYear();
+      var month = now.getMonth();
+      var dateToday = now.getDate();
+      var weekAgoDate = dateToday - 7;
+
+      var minuteBeforeNow = function() {
+        var minuteNow = now.getMinutes();
+        var minuteBeforeNow = minuteNow - 1;
+        if (minuteBeforeNow == 59) {
+          var hourNow = now.getHours();
+          var hourBeforeNow = hourNow - 1;
+          return now.setHours(hourBeforeNow);
+        } else {
+          return now.setMinutes(minuteBeforeNow);
+        }
+
+      }
+
+      var nextWeekDate = dateToday + 7;
+
+      // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+        // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+          // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+            // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+              // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+                // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+                  // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
+
+      var firstMomentObj = new Date(year, month, date, 0, 0, 0, 0);
+      var firstMomentNum = firstMomentObj.getTime();
+      var firstMomentString = firstMomentObj.toString();
+      var lastMomentObj = new Date(year, month, date, 23, 59, 59, 999);
+      var lastMomentNum = lastMomentObj.getTime();
+      var lastMomentString = lastMomentObj.toString();
+
+
+      if (itemDueDate >= beginWeek && itemDueDate < endWeek)
+
+      if (whichWeek[prop1] === undefined) {
+        whichWeek[prop1] = value1;
+      } else {
+        whichWeek[prop1] = whichWeek[prop1] + value1;
+      }
+
+      if (whichWeek[prop2] === undefined) {
+        whichWeek[prop2] = value2;
+      } else {
+        whichWeek[prop2] = whichWeek[prop2] + value2;
+      }
+
+      if (whichWeek[prop3] === undefined) {
+        whichWeek[prop3] = value3;
+      } else {
+        whichWeek[prop3] = whichWeek[prop3] + value3;
+      }
+
+      whichWeek.$save();
     };
-
 
 // This function below returns 'urgencyTxt', which announces the urgency status of an item in the DOM
     var createUrgencyTxt = function(urgency) {
