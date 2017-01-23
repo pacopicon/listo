@@ -27,11 +27,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
     var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
 
-      console.log("BEFORE ALL SETTERS: typeof dataItems is " + typeof dataItems + ", dataItems[dataItems.length - 1] is " + typeof  dataItems[dataItems.length - 1] + ", typeof lastEndDay is " + typeof dataItems[dataItems.length - 1].$id);
+      // console.log("BEFORE ALL SETTERS: typeof dataItems is " + typeof dataItems + ", dataItems[dataItems.length - 1] is " + typeof  dataItems[dataItems.length - 1] + ", typeof lastEndDay is " + typeof dataItems[dataItems.length - 1].$id);
 
-      if ((typeof dataItems === "undefined") && (typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
-
-      // if ((typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
+      if ((typeof dataItems === "undefined") && (typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastInArray === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
 
         console.log("this condition was met");
         var lastInArray = dataItems[dataItems.length - 1];
