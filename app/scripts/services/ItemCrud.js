@@ -25,82 +25,38 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // Public functions below.
 
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
-
-
-
-
-    // var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
-    //
-    //   console.log("before setters: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
-    //
-    //   if ((typeof dataItems === "undefined")) {
-    //     var lastInArray = dataItems[dataItems.length - 1] || null;
-    //     var id = lastInArray.$id || null;
-    //   }
-    //
-    //   // if ((typeof dataItems === "undefined") && (typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
-    //
-    //   // if ((typeof dataItems === "undefined")) {
-    //     // var id = dataItems[dataItems.length - 1].$id;
-    //   // }
-    //
-    //   console.log("after lastInArray setter: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
-    //
-    //   // if ((typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
-    //
-    //   if ((typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
-    //     // var id = lastInArray.$id;
-    //     // var id = dataItems[dataItems.length - 1].$id;
-    //     var lastDataItemsEntry = dataItems.$getRecord(id) || 0;
-    //     var lastEndDay = lastDataItemsEntry.endDay;
-    //
-    //     console.log("after lastDataItemsEntry and lastEndDay setters: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
-    //   }
-    //
-    //   if (!(typeof dataItems === "undefined") && !(typeof dataItems[dataItems.length - 1] === "undefined") && !(typeof id === "undefined") && !(typeof lastDataItemsEntry === "undefined")) {
-    //
-    //     if (lastEndDay >= firstMomentNum) {
-    //       updateDataItems(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3);
-    //       console.log("SINCE lastEndDay is >= than firstMomentNum, updateDataItems was called");
-    //     } else if (lastEndDay < firstMomentNum) {
-    //       createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
-    //       console.log("SINCE lastEndDay is < than firstMomentNum, createNewDataItems was called");
-    //     }
-    //   } else {
-    //     createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
-    //     console.log("SINCE lastDataItemsEntry is undefined,  createNewDataItems was called to create new dataItem")
-    //   }
-    //
-    // };
-
-
-
-
     var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
 
-      console.log("addOrUpdateDataItems called");
+      console.log("BEFORE ALL SETTERS: typeof dataItems is " + typeof dataItems + ", dataItems[dataItems.length - 1] is " + typeof  dataItems[dataItems.length - 1] + ", typeof lastEndDay is " + typeof dataItems[dataItems.length - 1].$id);
 
-      var id = dataItems[dataItems.length - 1].$id;
-      var lastDataItemsEntry = dataItems.$getRecord(id);
-      var lastEndDay = lastDataItemsEntry.endDay;
+      if ((typeof dataItems === "undefined") && (typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
 
-      console.log("saved " + lastDataItemsEntry[prop1] + " as " + value1 + ", " + lastDataItemsEntry[prop2] + " as " + value2 + " and, " + lastDataItemsEntry[prop3] + " as " + value3);
+      // if ((typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
 
-      console.log("within addOrUpdateDataItems function, id: " + id + ", lastDataItemsEntry: " + lastDataItemsEntry + ", lastDataItemsEntry.endDay = " + lastDataItemsEntry.endDay);
+        console.log("this condition was met");
+        var lastInArray = dataItems[dataItems.length - 1];
+        var id = lastInArray.$id;
+        var lastDataItemsEntry = dataItems.$getRecord(id);
+        var lastEndDay = lastDataItemsEntry.endDay;
 
-      console.log("lastEndDay: " + lastEndDay + ", firstMomentNum: " + firstMomentNum);
+        console.log("AFTER ALL SETTERS: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
+      }
 
-      console.log("is lastDataItemsEntry.endDay greather than firstMomentNum? " + lastEndDay >= firstMomentNum);
+      if (!(typeof dataItems === "undefined") && !(typeof dataItems[dataItems.length - 1] === "undefined") && !(typeof id === "undefined") && !(typeof lastDataItemsEntry === "undefined")) {
 
-      if (lastEndDay >= firstMomentNum) {
-        console.log("lastEndDay is >= to firstMomentNum");
-        updateDataItems(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3);
-      } else if (lastEndDay < firstMomentNum) {
+        if (lastEndDay >= firstMomentNum) {
+          updateDataItems(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3);
+          console.log("SINCE lastEndDay is >= than firstMomentNum, updateDataItems was called");
+        } else if (lastEndDay < firstMomentNum) {
+          createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+          console.log("SINCE lastEndDay is < than firstMomentNum, createNewDataItems was called");
+        }
+      } else {
         createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+        console.log("SINCE lastDataItemsEntry is undefined,  createNewDataItems was called to create new dataItem")
       }
 
     };
-
 
 
     var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
