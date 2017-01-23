@@ -22,74 +22,59 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var lastMomentNum = lastMomentObj.getTime();
     var lastMomentString = lastMomentObj.toString();
 
-    // var lastDataItemsEntry = dataItems.$loaded(function(dataItems) {
-    //   return dataItems[dataItems.length - 1];
-    // });
-
 // Public functions below.
 
-// 'createNewdataItems' is called by the function below the function below this one. It creates new data for items.
-
-
-// 'updateDataItems' is called by the function below it.  it updates an existing dataItem array.
-
-    // var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
-    //
-    //   lastDataItemsEntry[prop1] = value1;
-    //   lastDataItemsEntry[prop2] = value2;
-    //   lastDataItemsEntry[prop3] = value3;
-    //
-    //   dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
-    //     console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
-    //   });
-    //
-    // };
-
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
+
+
+
+
     // var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
     //
-    //   var lastDataItemsEntry = dataItems.$loaded(function(dataItems) {
-    //     var id = dataItems[dataItems.length - 1].$id;
-    //     var lastDataItemsEntry = dataItems.$getRecord(id);
-    //   });
+    //   console.log("before setters: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
     //
-    //   console.log("last item in items array is called: " + items[items.length-1].name);
-    //   console.log("within addOrUpdate function, lastDataItemsEntry.endDay = " + lastDataItemsEntry.endDay);
-    //   console.log("within addOrUpdate function, typeof lastDataItemsEntry = " + typeof lastDataItemsEntry);
-    //   console.log("is lastDataItemsEntry.endDay greather than firstMomentNum? " + lastDataItemsEntry.endDay > firstMomentNum);
-    //
-    //   // if (dataItems == null) {
-    //   if (lastDataItemsEntry === undefined) {
-    //     createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
-    //
-    //     // console.log("lastDataItemsEntry.endDay" + typeof lastDataItemsEntry.endDay);
-    //     // console.log("dataItems = " + dataItems);
-    //     // console.log("lastDataItemsEntry" + lastDataItemsEntry);
-    //     // console.log("lastDataItemsEntry.endDay" + lastDataItemsEntry.endDay);
-    //     // console.log("lastEndDay() = " + lastEndDay());
-    //   } else {
-    //     // if (dataItems == null) {
-    //     //   dataItems[dataItems.length - 1] = null;
-    //     // }
-    //     // var id = dataItems[dataItems.length - 1].$id || null;
-    //     // var lastDataItemsEntry = dataItems.$getRecord(id) || null;
-    //
-    //     // var lastDataItemsEntry = dataItems.$keyAt(dataItems[dataItems.length - 1]) || null;
-    //
-    //     // var lastEndDay = lastDataItemsEntry.endDay || null;
-    //     // console.log("lastEndDay: " + lastEndDay);
-    //
-    //     // if (lastEndDay > firstMomentNum) {
-    //     if (!(lastDataItemsEntry === undefined) && lastDataItemsEntry.endDay >= firstMomentNum) {
-    //
-    //       // updateDataItems(lastEndDay, prop1, prop2, prop3, value1, value2, value3);
-    //       updateDataItems(lastDataItemsEntry.endDay, prop1, prop2, prop3, value1, value2, value3);
-    //     // } else if (lastDataItemsEntry.endDay <= firstMomentNum) {
-    //     } else if (!(lastDataItemsEntry === undefined) && lastDataItemsEntry.endDay < firstMomentNum) {
-    //       createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
-    //     }
+    //   if ((typeof dataItems === "undefined")) {
+    //     var lastInArray = dataItems[dataItems.length - 1] || null;
+    //     var id = lastInArray.$id || null;
     //   }
+    //
+    //   // if ((typeof dataItems === "undefined") && (typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
+    //
+    //   // if ((typeof dataItems === "undefined")) {
+    //     // var id = dataItems[dataItems.length - 1].$id;
+    //   // }
+    //
+    //   console.log("after lastInArray setter: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
+    //
+    //   // if ((typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
+    //
+    //   if ((typeof id === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
+    //     // var id = lastInArray.$id;
+    //     // var id = dataItems[dataItems.length - 1].$id;
+    //     var lastDataItemsEntry = dataItems.$getRecord(id) || 0;
+    //     var lastEndDay = lastDataItemsEntry.endDay;
+    //
+    //     console.log("after lastDataItemsEntry and lastEndDay setters: typeof dataItems is " + typeof dataItems + ", typeof lastDataItemsEntry is " + typeof lastDataItemsEntry + ", typeof lastEndDay is " + typeof lastEndDay);
+    //   }
+    //
+    //   if (!(typeof dataItems === "undefined") && !(typeof dataItems[dataItems.length - 1] === "undefined") && !(typeof id === "undefined") && !(typeof lastDataItemsEntry === "undefined")) {
+    //
+    //     if (lastEndDay >= firstMomentNum) {
+    //       updateDataItems(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3);
+    //       console.log("SINCE lastEndDay is >= than firstMomentNum, updateDataItems was called");
+    //     } else if (lastEndDay < firstMomentNum) {
+    //       createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+    //       console.log("SINCE lastEndDay is < than firstMomentNum, createNewDataItems was called");
+    //     }
+    //   } else {
+    //     createNewDataItems(firstMomentNum, lastMomentNum, prop1, prop2, prop3, value1, value2, value3);
+    //     console.log("SINCE lastDataItemsEntry is undefined,  createNewDataItems was called to create new dataItem")
+    //   }
+    //
     // };
+
+
+
 
     var addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
 
@@ -116,7 +101,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     };
 
-    // var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
+
+
     var updateDataItems = function(lastDataItemsEntry, prop1, prop2, prop3, value1, value2, value3) {
 
       console.log("updateDataItems called");
@@ -131,10 +117,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         lastDataItemsEntry[prop2] += value2;
         lastDataItemsEntry[prop3] += value3;
 
-        dataItems.$save(lastDataItemsEntry);
-        // dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
-        //   console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
-        // });
+        // dataItems.$save(lastDataItemsEntry);
+        dataItems.$save(lastDataItemsEntry).then(function(lastDataItemsEntry) {
+          console.log("saved " + lastDataItemsEntry[prop1] + "as " + value1 + ", " + lastDataItemsEntry[prop2] + "as " + value2 + "and, " + lastDataItemsEntry[prop3] + "as " + value3);
+        });
 
       }
 
