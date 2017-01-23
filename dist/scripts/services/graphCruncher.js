@@ -5,6 +5,12 @@ listo.factory("graphCruncher", ["ItemCrud",
 
     var dataItems = ItemCrud.getDataItems();
 
+    if (!(typeof dataItems[dataItems.length - 1] === "undefined")) {
+      var lastInArray = dataItems[dataItems.length - 1];
+      var id = lastInArray.$id;
+      var lastDataItemsEntry = dataItems.$getRecord(id);
+    }
+
 // Public variables below
     var now = Date.now();
     var week = 604800000;
@@ -28,30 +34,16 @@ listo.factory("graphCruncher", ["ItemCrud",
     return {
 // function below sorts and tallies data for items marked as complete, not complete, overdue and not overdue.  It is called by UserCtrl function '$scope.completionData' when this latter is called when (1) userincompleteItems.html is initialized and (2) when '$scope.markAsComplete', (3) '$scope.markAsIncomplete', (4) '$scope.updateItem', and (5) '$scope.addItem' are called.
 
-      sortAndTally: function (option) {
-        var itemWorkedCount = 0;
-        var itemLeftCount = 0;
-        var itemOverdueCount = 0;
-        var itemDueCompleteCount = 0;
-        var hoursWorked = 0;
-        var minutesWorked = 0;
-        var hoursLeft = 0;
-        var minutesLeft = 0;
-        var hoursOverdue = 0;
-        var minutesOverdue = 0;
-        var hoursDueComplete = 0;
-        var minutesDueComplete = 0;
-        var totalItems = items.length;
-
+      sortAndTally: function (option, lastDataItemsEntry) {
 
         for (var i = 0; i < totalItems; i++) {
           // if option = true, then the function only picks out items from the last 7 days.  if option = false, it will pick all items.
           if (option == "lastSeven") {
-            var weekBoolean = (items[i].dueDate >= now - week) && (items[i].dueDate <= now);
+            
           } else if (option == "nextSeven"){
-            var weekBoolean = (items[i].dueDate <= now + week) && (items[i].dueDate >= now);
+
           } else {
-            var weekBoolean = true;
+
           }
 
           if (weekBoolean && items[i].isComplete && !items[i].isPastDue) {
