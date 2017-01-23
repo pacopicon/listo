@@ -31,6 +31,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       if ((typeof dataItems === "undefined") && (typeof dataItems[dataItems.length - 1] === "undefined") && (typeof id === "undefined") && (typeof lastInArray === "undefined") && (typeof lastDataItemsEntry === "undefined")) {
 
+        // This condition can only be met when the above variables != undefined
+        // But, if the above variables != undefined, the below variables are undefined and throw an exception.
         console.log("this condition was met");
         var lastInArray = dataItems[dataItems.length - 1];
         var id = lastInArray.$id;
