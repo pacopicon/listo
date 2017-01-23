@@ -8,9 +8,23 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     var items = $scope.items;
 
+    $scope.initiateDataItems = function() {
+
+      if (!$scope.dataItems[0]) {
+
+        ItemCrud.initiateDataItems();
+        console.log("SINCE $scope.dataItems.a_start === undefined, initiateDataItems called");
+      }
+    };
+
+    $scope.initiateDataItemsWorkAround = function() {
+      ItemCrud.initiateDataItems();
+    };
+
     var refreshTime = function() {
       time = Date.now();
       $scope.time = time;
+
 
       for (var i = 0; i < items.length; i++) {
         if (!items[i].isPastDue && items[i].dueDate < time) {
@@ -19,14 +33,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           ItemCrud.updateAllItemsPastDue();
         }
       }
-
-      var executed = false;
-      $scope.initiateDataItems = function() {
-        if (!executed) {
-          executed = true;
-          ItemCrud.initiateDataItems();
-        }
-      };
+      $scope.initiateDataItems();
       return time;
     };
 
