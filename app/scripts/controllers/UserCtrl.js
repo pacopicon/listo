@@ -33,12 +33,12 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           ItemCrud.updateAllItemsPastDue();
         }
       }
-      $scope.initiateDataItems();
+      // $scope.initiateDataItems();
       return time;
     };
 
-    $scope.addOrUpdateDataItems = function(prop1, prop2, prop3, value1, value2, value3) {
-      ItemCrud.addOrUpdateDataItems(prop1, prop2, prop3, value1, value2, value3);
+    $scope.addOrUpdateDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
+      ItemCrud.addOrUpdateDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
     };
 
     $interval(refreshTime, 1000);
@@ -128,6 +128,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     $scope.showComplex = function(item) {
       $scope.oldItem = item;
       $scope.oldItemName = item.name;
+      $scope.oldItemDueDate = item.dueDate;
       $scope.oldItemHour = item.eHour;
       $scope.oldItemMinute = item.eMinute;
       $scope.oldItemIsComplete = item.isComplete;
@@ -160,15 +161,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
           if ($scope.oldItemIsComplete) {
+            // e.g. if Modal is executed from Archive with item as complete
             // updateCompletion also updates dataItems
             ItemCrud.updateCompletion($scope.oldItem);
             ItemCrud.toggleItemToDelete($scope.oldItem);
           } else if (!$scope.oldItemIsComplete) {
+            // e.g. if Modal is executed with item as incomplete from To Do
             // incomplete item that is updated updates its new est hour and minute to dataItems.
             var hourDiff = newHours - $scope.oldItemHour;
             var minuteDiff = newMinutes - $scope.oldItemMinute;
+            var dueDate = $scope.oldItemDueDate;
 
-            ItemCrud.addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+            ItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
           }
 
           $scope.UserCtrlRefreshTalliesAndData();
