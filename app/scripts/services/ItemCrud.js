@@ -161,23 +161,65 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var updateWeeklyData = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
 
       var now = new Date();
+      var minuteNow = now.getMinutes();
+      var hourNow = now.getHours();
       var year = now.getFullYear();
       var month = now.getMonth();
       var dateToday = now.getDate();
-      var weekAgoDate = dateToday - 7;
 
       var minuteBeforeNow = function() {
-        var minuteNow = now.getMinutes();
         var minuteBeforeNow = minuteNow - 1;
         if (minuteBeforeNow == 59) {
-          var hourNow = now.getHours();
           var hourBeforeNow = hourNow - 1;
-          return now.setHours(hourBeforeNow);
+          var minuteBeforeNow = now.setHours(hourBeforeNow);
+          return {
+            num: minuteBeforeNow,
+            obj: new Date(minuteBeforeNow);
+          };
         } else {
-          return now.setMinutes(minuteBeforeNow);
+          var minuteBeforeNow = now.setMinutes(minuteBeforeNow);
+          return {
+            num: minuteBeforeNow,
+            obj: new Date(minuteBeforeNowNum);
+          };
+
         }
 
-      }
+      };
+
+      var minuteFromNow - function() {
+        var minuteAfterNow = minuteNow + 1;
+        if (minuteAfterNow == 0) {
+          var hourAfterNow = hourNow + 1;
+          var minuteAfterNow = now.setHours(hourAfterNow);
+          return {
+            num: minuteAfterNow,
+            obj: new Date(minuteAfterNow);
+          };
+        } else {
+          var minuteAfterNow = now.setMinutes(minuteAfterNow);
+          return {
+            num: minuteAfterNow,
+            obj: new Date(minuteAfterNowNum);
+          };
+        }
+      };
+
+
+      var weekAgoDate = dateToday - 7;
+      var firstMomentPastWeekObj = new Date(year, month, weekAgoDate, 0, 0, 0, 0);
+      var firstMomentPastWeekNum = firstMomentWeekAgoObj.getTime();
+      var lastMomentPastWeekObj = minuteBeforeNow().obj;
+      var lastMomentPastWeekNum = minuteBeforeNow().num;
+
+      var dateWeekFromNow = dateToday + 7;
+      var firstMomentNextWeekObj = minuteAfterNow().obj;
+      var firstMomentNextWeekNum = minuteAfterNow().num;
+      var lastMomentNextWeekObj = new Date(year, month, dateWeekFromNow, 23, 59, 59, 999);
+
+
+
+
 
       var nextWeekDate = dateToday + 7;
 
