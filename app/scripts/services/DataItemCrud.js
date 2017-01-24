@@ -13,10 +13,119 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
 
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
 
-    var updateDataItems = function(selectedDataItem, prop1, prop2, prop3, value1, value2, value3) {
+    var updateItemsData = function(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3) {
+
+      whichWeek["a_start"] = a_start;
+      whichWeek["aa_end"] = aa_end;
+      whichWeek["beginWeek"] = beginWeek;
+      whichWeek["endWeek"] = endWeek;
+
+      if (whichWeek[prop1] === undefined) {
+        whichWeek[prop1] = value1;
+      } else {
+        whichWeek[prop1] = whichWeek[prop1] + value1;
+      }
+
+      if (whichWeek[prop2] === undefined) {
+        whichWeek[prop2] = value2;
+      } else {
+        whichWeek[prop2] = whichWeek[prop2] + value2;
+      }
+
+      if (whichWeek[prop3] === undefined) {
+        whichWeek[prop3] = value3;
+      } else {
+        whichWeek[prop3] = whichWeek[prop3] + value3;
+      }
+
+      whichWeek.$save();
+    };
+
+    var sortDataIntoWeek = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
+
+      var now = new Date();
+      var minuteNow = now.getMinutes();
+      var hourNow = now.getHours();
+      var year = now.getFullYear();
+      var month = now.getMonth();
+      var dateToday = now.getDate();
+
+      var minuteBeforeNow = function() {
+        var minuteBeforeNow = minuteNow - 1;
+        if (minuteBeforeNow == 59) {
+          var hourBeforeNow = hourNow - 1;
+          var minuteBeforeNow = now.setHours(hourBeforeNow);
+          return {
+            num: minuteBeforeNow,
+            obj: new Date(minuteBeforeNow);
+          };
+        } else {
+          var minuteBeforeNow = now.setMinutes(minuteBeforeNow);
+          return {
+            num: minuteBeforeNow,
+            obj: new Date(minuteBeforeNowNum);
+          };
+        }
+      };
+
+      var minuteFromNow - function() {
+        var minuteAfterNow = minuteNow + 1;
+        if (minuteAfterNow == 0) {
+          var hourAfterNow = hourNow + 1;
+          var minuteAfterNow = now.setHours(hourAfterNow);
+          return {
+            num: minuteAfterNow,
+            obj: new Date(minuteAfterNow);
+          };
+        } else {
+          var minuteAfterNow = now.setMinutes(minuteAfterNow);
+          return {
+            num: minuteAfterNow,
+            obj: new Date(minuteAfterNowNum);
+          };
+        }
+      };
+
+      var weekAgoDate = dateToday - 7;
+      var firstMomentPastWeekObj = new Date(year, month, weekAgoDate, 0, 0, 0, 0);
+      var firstMomentPastWeekString = firstMomentPastWeekObj.toString();
+      var firstMomentPastWeekNum = firstMomentWeekAgoObj.getTime();
+      var lastMomentPastWeekObj = minuteBeforeNow().obj;
+      var lastMomentPastWeekString = lastMomentPastWeekObj.toString();
+      var lastMomentPastWeekNum = minuteBeforeNow().num;
+
+      var dateWeekFromNow = dateToday + 7;
+      var firstMomentNextWeekObj = minuteAfterNow().obj;
+      var firstMomentNextWeekString = firstMomentNextWeekObj.toString();
+      var firstMomentNextWeekNum = minuteAfterNow().num;
+      var lastMomentNextWeekObj = new Date(year, month, dateWeekFromNow, 23, 59, 59, 999);
+      var lastMomentNextWeekString = lastMomentNextWeekObj.toString();
+      var lastMomentNextWeekNum = lastMomentNextWeekObj.getTime();
+
+      if (itemDueDate >= firstMomentPastWeekNum && itemDueDate < lastMomentPastWeekNum) {
+        var whichWeek = dataWeekAgo;
+        var a_start = firstMomentPastWeekString;
+        var aa_end = lastMomentPastWeekString;
+        var beginWeek = firstMomentPastWeekNum;
+        var endWeek = lastMomentPastWeekNum;
+      } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentPastWeekNum) {
+        var whichWeek = dataNextWeek;
+        var a_start = firstMomentNextWeekString;
+        var aa_end = lastMomentNextWeekString;
+        var beginWeek = firstMomentNextWeekNum;
+        var endWeek = lastMomentNextWeekNum;
+      }
+
+      updateDataItems(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3);
+
+    }; // end sortDataIntoWeek
+
+    var updateDataItems = function(itemDueDate, selectedDataItem, prop1, prop2, prop3, value1, value2, value3) {
 
       console.log("updateDataItems called");
       console.log("is selectedDataItem defined? " + typeof selectedDataItem);
+
+      sortDataIntoWeek(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
 
       if (!(typeof selectedDataItem === "undefined")) {
         selectedDataItem[prop1] += value1;
@@ -36,6 +145,8 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
     var createNewDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
 
       console.log("createNewDataItems: created new dataItem with dueDate " + itemDueDate + ", and " + prop1 + " as " + value1 + ", " + prop2 + " as " + value2 + " and, " + prop3 + " as " + value3);
+
+      sortDataIntoWeek(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
 
       var matchProp = function(propName) {
 
@@ -86,106 +197,6 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
       });
     };
 
-    var sortDataIntoWeek = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
-
-      var now = new Date();
-      var minuteNow = now.getMinutes();
-      var hourNow = now.getHours();
-      var year = now.getFullYear();
-      var month = now.getMonth();
-      var dateToday = now.getDate();
-
-      var minuteBeforeNow = function() {
-        var minuteBeforeNow = minuteNow - 1;
-        if (minuteBeforeNow == 59) {
-          var hourBeforeNow = hourNow - 1;
-          var minuteBeforeNow = now.setHours(hourBeforeNow);
-          return {
-            num: minuteBeforeNow,
-            obj: new Date(minuteBeforeNow);
-          };
-        } else {
-          var minuteBeforeNow = now.setMinutes(minuteBeforeNow);
-          return {
-            num: minuteBeforeNow,
-            obj: new Date(minuteBeforeNowNum);
-          };
-
-        }
-
-      };
-
-      var minuteFromNow - function() {
-        var minuteAfterNow = minuteNow + 1;
-        if (minuteAfterNow == 0) {
-          var hourAfterNow = hourNow + 1;
-          var minuteAfterNow = now.setHours(hourAfterNow);
-          return {
-            num: minuteAfterNow,
-            obj: new Date(minuteAfterNow);
-          };
-        } else {
-          var minuteAfterNow = now.setMinutes(minuteAfterNow);
-          return {
-            num: minuteAfterNow,
-            obj: new Date(minuteAfterNowNum);
-          };
-        }
-      };
-
-
-      var weekAgoDate = dateToday - 7;
-      var firstMomentPastWeekObj = new Date(year, month, weekAgoDate, 0, 0, 0, 0);
-      var firstMomentPastWeekString = firstMomentPastWeekObj.toString();
-      var firstMomentPastWeekNum = firstMomentWeekAgoObj.getTime();
-      var lastMomentPastWeekObj = minuteBeforeNow().obj;
-      var lastMomentPastWeekString = lastMomentPastWeekObj.toString();
-      var lastMomentPastWeekNum = minuteBeforeNow().num;
-
-      var dateWeekFromNow = dateToday + 7;
-      var firstMomentNextWeekObj = minuteAfterNow().obj;
-      var firstMomentNextWeekString = firstMomentNextWeekObj.toString();
-      var firstMomentNextWeekNum = minuteAfterNow().num;
-      var lastMomentNextWeekObj = new Date(year, month, dateWeekFromNow, 23, 59, 59, 999);
-      var lastMomentNextWeekString = lastMomentNextWeekObj.toString();
-      var lastMomentNextWeekNum = lastMomentNextWeekObj.getTime();
-
-
-      if (itemDueDate >= firstMomentPastWeekNum && itemDueDate < lastMomentPastWeekNum) {
-
-        var whichWeek = dataWeekAgo;
-
-      } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentPastWeekNum) {
-
-        var whichWeek = dataNextWeek;
-
-
-      }
-
-      var updateWeeklyData = function(prop1, prop2, prop3, value1, value2, value3) {
-
-      if (whichWeek[prop1] === undefined) {
-        whichWeek[prop1] = value1;
-      } else {
-        whichWeek[prop1] = whichWeek[prop1] + value1;
-      }
-
-      if (whichWeek[prop2] === undefined) {
-        whichWeek[prop2] = value2;
-      } else {
-        whichWeek[prop2] = whichWeek[prop2] + value2;
-      }
-
-      if (whichWeek[prop3] === undefined) {
-        whichWeek[prop3] = value3;
-      } else {
-        whichWeek[prop3] = whichWeek[prop3] + value3;
-      }
-
-      whichWeek.$save();
-    };
-
-
     return {
 
       addOrUpdateDataItems: function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
@@ -199,7 +210,7 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
             var beginDay = dataItems[i].beginDay;
 
             if (itemDueDate >= beginDay && itemDueDate < endDay) {
-              updateDataItems(dataItems[i], prop1, prop2, prop3, value1, value2, value3);
+              updateDataItems(itemDueDate, dataItems[i], prop1, prop2, prop3, value1, value2, value3);
               console.log("SINCE itemDueDate is both >= beginDay AND < endDay, updateDataItems was called");
             } else {
               createNewDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
