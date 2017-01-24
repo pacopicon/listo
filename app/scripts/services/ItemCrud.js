@@ -1,15 +1,9 @@
-listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
-  function($firebaseArray, FirebaseRef, UserCrud) {
+listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud", "DataItemCrud",
+  function($firebaseArray, FirebaseRef, UserCrud, DataItemCrud) {
 
 // holds data as array of objects.  Each object is one item.
     var itemsRef = FirebaseRef.getItemsRef();
     var items = FirebaseRef.getItems();
-    var dataItemsRef = FirebaseRef.getDataItemsRef();
-    var dataItems = FirebaseRef.getDataItems();
-    var dataWeekAgoRef = FirebaseRef.getDataWeekAgoRef();
-    var dataWeekAgo = FirebaseRef.getDataWeekAgo();
-    var dataNextWeekRef = FirebaseRef.getDataNextWeekRef();
-    var dataNextWeek = FirebaseRef.getDataNextWeek();
 
 // Public variables below
     var now = Date.now();
@@ -17,250 +11,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // Public functions below.
 
-// if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
-    var addOrUpdateDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
 
-      console.log("addOrUpdateDataItems: logged new dataItem with dueDate " + itemDueDate + ", and " + prop1 + " as " + value1 + ", " + prop2 + " as " + value2 + " and, " + prop3 + " as " + value3);
-
-      if (!(typeof dataItems[0] === "undefined")) {
-        for (i = 0; i < dataItems.length; i++) {
-
-          var endDay = dataItems[i].endDay;
-          var beginDay = dataItems[i].beginDay;
-
-          if (itemDueDate >= beginDay && itemDueDate < endDay) {
-            updateDataItems(dataItems[i], prop1, prop2, prop3, value1, value2, value3);
-            console.log("SINCE itemDueDate is both >= beginDay AND < endDay, updateDataItems was called");
-          } else {
-            createNewDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
-            console.log("SINCE itemDueDate is neither >= beginDay NOR < endDay, createNewDataItems was called");
-          }
-
-        }
-      } else {
-        createNewDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
-        console.log("SINCE dataItems[0] is undefined,  createNewDataItems was called to create new dataItem")
-      }
-
-    };
-
-
-    var updateDataItems = function(selectedDataItem, prop1, prop2, prop3, value1, value2, value3) {
-
-      console.log("updateDataItems called");
-      console.log("is selectedDataItem defined? " + typeof selectedDataItem);
-
-      if (!(typeof selectedDataItem === "undefined")) {
-        selectedDataItem[prop1] += value1;
-        selectedDataItem[prop2] += value2;
-        selectedDataItem[prop3] += value3;
-
-        // dataItems.$save(selectedDataItem);
-        dataItems.$save(selectedDataItem).then(function(selectedDataItem) {
-          console.log("prop1 = " + prop1 + ", prop2 = " + prop2 + ", prop3 = " + prop3);
-          console.log("saved " + selectedDataItem[prop1] + " as " + value1 + ", " + selectedDataItem[prop2] + " as " + value2 + " and, " + selectedDataItem[prop3] + " as " + value3);
-        });
-
-      }
-
-    };
-
-    var createNewDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
-
-      console.log("createNewDataItems: created new dataItem with dueDate " + itemDueDate + ", and " + prop1 + " as " + value1 + ", " + prop2 + " as " + value2 + " and, " + prop3 + " as " + value3);
-
-      var matchProp = function(propName) {
-
-        if (propName === prop1) {
-          return value1;
-        } else if (propName === prop2) {
-          return value2;
-        } else if (propName === prop3) {
-          return value3;
-        } else {
-          return 0;
-        }
-      };
-
-      var year = itemDueDate.getFullYear();
-      var month = itemDueDate.getMonth();
-      var date = itemDueDate.getDate();
-      var firstMomentObj = new Date(year, month, date, 0, 0, 0, 0);
-      var firstMomentNum = firstMomentObj.getTime();
-      var firstMomentString = firstMomentObj.toString();
-      var lastMomentObj = new Date(year, month, date, 23, 59, 59, 999);
-      var lastMomentNum = lastMomentObj.getTime();
-      var lastMomentString = lastMomentObj.toString();
-
-      var itemLeftCount = matchProp("itemLeftCount");
-      var itemWorkedCount = matchProp("itemWorkedCount");
-      var itemOverdueCount = matchProp("itemOverdueCount");
-      var itemDueCompleteCount = matchProp("itemDueCompleteCount");
-
-      dataItems.$add({
-        a_start: firstMomentString,
-        aa_end: lastMomentString,
-        beginDay: firstMomentNum,
-        endDay: lastMomentNum,
-        itemLeftCount: itemLeftCount,
-        itemWorkedCount: itemWorkedCount,
-        itemOverdueCount: itemOverdueCount,
-        itemDueCompleteCount: itemDueCompleteCount,
-        hoursLeft: matchProp("hoursLeft"),
-        minutesLeft: matchProp("minutesLeft"),
-        hoursWorked: matchProp("hoursWorked"),
-        minutesWorked: matchProp("minutesWorked"),
-        hoursOverdue: matchProp("hoursOverdue"),
-        minutesOverdue: matchProp("minutesOverdue"),
-        hoursDueComplete: matchProp("hoursDueComplete"),
-        minutesDueComplete: matchProp("minutesDueComplete"),
-        totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
-      });
-    };
-
-    // var initiateDataItems = function() {
-    //
-    //   // if (typeof dataItems == "undefined") {
-    //     var itemLeftCount = 0;
-    //     var itemWorkedCount = 0;
-    //     var itemOverdueCount = 0;
-    //     var itemDueCompleteCount = 0;
-    //     var hoursLeft = 0;
-    //     var minutesLeft = 0;
-    //     var hoursWorked = 0;
-    //     var minutesWorked = 0;
-    //     var hoursOverdue = 0;
-    //     var minutesOverdue = 0;
-    //     var hoursDueComplete = 0;
-    //     var minutesDueComplete = 0;
-    //
-    //     dataItems.$add({
-    //       a_start: firstMomentString,
-    //       aa_end: lastMomentString,
-    //       beginDay: firstMomentNum,
-    //       endDay: lastMomentNum,
-    //       itemLeftCount: itemLeftCount,
-    //       itemWorkedCount: itemWorkedCount,
-    //       itemOverdueCount: itemOverdueCount,
-    //       itemDueCompleteCount: itemDueCompleteCount,
-    //       hoursLeft: hoursLeft,
-    //       minutesLeft: minutesLeft,
-    //       hoursWorked: hoursWorked,
-    //       minutesWorked: minutesWorked,
-    //       hoursOverdue: hoursOverdue,
-    //       minutesOverdue: minutesOverdue,
-    //       hoursDueComplete: hoursDueComplete,
-    //       minutesDueComplete: minutesDueComplete,
-    //       totalItems: itemLeftCount + itemWorkedCount + itemOverdueCount + itemDueCompleteCount
-    //     });
-    //   // } else {
-    //   //   console.log("dataItems is defined, no need to initiate dataItems");
-    //   // }
-    // };
-
-    var updateWeeklyData = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
-
-      var now = new Date();
-      var minuteNow = now.getMinutes();
-      var hourNow = now.getHours();
-      var year = now.getFullYear();
-      var month = now.getMonth();
-      var dateToday = now.getDate();
-
-      var minuteBeforeNow = function() {
-        var minuteBeforeNow = minuteNow - 1;
-        if (minuteBeforeNow == 59) {
-          var hourBeforeNow = hourNow - 1;
-          var minuteBeforeNow = now.setHours(hourBeforeNow);
-          return {
-            num: minuteBeforeNow,
-            obj: new Date(minuteBeforeNow);
-          };
-        } else {
-          var minuteBeforeNow = now.setMinutes(minuteBeforeNow);
-          return {
-            num: minuteBeforeNow,
-            obj: new Date(minuteBeforeNowNum);
-          };
-
-        }
-
-      };
-
-      var minuteFromNow - function() {
-        var minuteAfterNow = minuteNow + 1;
-        if (minuteAfterNow == 0) {
-          var hourAfterNow = hourNow + 1;
-          var minuteAfterNow = now.setHours(hourAfterNow);
-          return {
-            num: minuteAfterNow,
-            obj: new Date(minuteAfterNow);
-          };
-        } else {
-          var minuteAfterNow = now.setMinutes(minuteAfterNow);
-          return {
-            num: minuteAfterNow,
-            obj: new Date(minuteAfterNowNum);
-          };
-        }
-      };
-
-
-      var weekAgoDate = dateToday - 7;
-      var firstMomentPastWeekObj = new Date(year, month, weekAgoDate, 0, 0, 0, 0);
-      var firstMomentPastWeekNum = firstMomentWeekAgoObj.getTime();
-      var lastMomentPastWeekObj = minuteBeforeNow().obj;
-      var lastMomentPastWeekNum = minuteBeforeNow().num;
-
-      var dateWeekFromNow = dateToday + 7;
-      var firstMomentNextWeekObj = minuteAfterNow().obj;
-      var firstMomentNextWeekNum = minuteAfterNow().num;
-      var lastMomentNextWeekObj = new Date(year, month, dateWeekFromNow, 23, 59, 59, 999);
-
-
-
-
-
-      var nextWeekDate = dateToday + 7;
-
-      // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-        // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-          // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-            // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-              // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-                // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-                  // need to come up with beginWeek moment and endWeek moment for boeth nextWeekData and weekAgoData
-
-      var firstMomentObj = new Date(year, month, date, 0, 0, 0, 0);
-      var firstMomentNum = firstMomentObj.getTime();
-      var firstMomentString = firstMomentObj.toString();
-      var lastMomentObj = new Date(year, month, date, 23, 59, 59, 999);
-      var lastMomentNum = lastMomentObj.getTime();
-      var lastMomentString = lastMomentObj.toString();
-
-
-      if (itemDueDate >= beginWeek && itemDueDate < endWeek)
-
-      if (whichWeek[prop1] === undefined) {
-        whichWeek[prop1] = value1;
-      } else {
-        whichWeek[prop1] = whichWeek[prop1] + value1;
-      }
-
-      if (whichWeek[prop2] === undefined) {
-        whichWeek[prop2] = value2;
-      } else {
-        whichWeek[prop2] = whichWeek[prop2] + value2;
-      }
-
-      if (whichWeek[prop3] === undefined) {
-        whichWeek[prop3] = value3;
-      } else {
-        whichWeek[prop3] = whichWeek[prop3] + value3;
-      }
-
-      whichWeek.$save();
-    };
 
 // This function below returns 'urgencyTxt', which announces the urgency status of an item in the DOM
     var createUrgencyTxt = function(urgency) {
@@ -340,14 +91,6 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
-
-      initiateDataItems: function() {
-        initiateDataItems();
-      },
-
-      addOrUpdateDataItems: function(dueDate, prop1, prop2, prop3, value1, value2, value3) {
-        addOrUpdateDataItems(dueDate, prop1, prop2, prop3, value1, value2, value3);
-      },
       // handing ref over to AuthCtrl.js for User creation and authentication.
       getItemsRef: function() {
         return itemsRef;
@@ -423,7 +166,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
 
-        addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
+        DataItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
 
         items.$add({
           name: itemName,
@@ -500,10 +243,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             var hourDiff = items[i].eHour * -1;
             var minuteDiff = items[i].eMinute * -1;
 
-            addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+            DataItemCrud.addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
 
             if (items[i].isPastDue) {
-              addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+              DataItemCrud.addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
             }
 
             items.$remove(itemToDelete).then(function() {
@@ -529,7 +272,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
               // item becomes overDue, its dataItems props signal this change
 
-              addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
+              DataItemCrud.addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
 
             } else if (items[i].dueDate > now && items[i].isPastDue) {
               items[i].isPastDue = false;
@@ -538,7 +281,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               // item becomes NOT overDue, its dataItems props signal this change
               var hourDiff = items[i].eHour * -1;
               var minuteDiff = items[i].eMinute * -1;
-              addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
+              DataItemCrud.addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
             }
           }
         }
@@ -583,12 +326,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var hourDiff = item.eHour * -1;
           var minuteDiff = item.eMinute * -1;
 
-          addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
-          addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
+          DataItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
+          DataItemCrud.addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
 
           if (item.isPastDue) {
           // deleting item that was pastDue, changing its dataItems props
-            addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
+            DataItemCrud.addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
           }
         } else if (item.isComplete) {
           item.isComplete = false;
@@ -598,12 +341,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var hourDiff = item.eHour * -1;
           var minuteDiff = item.eMinute * -1;
 
-          addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
-          addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
+          DataItemCrud.addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+          DataItemCrud.addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
 
           if (item.isPastDue) {
 
-            addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+            DataItemCrud.addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
           }
         }
         items.$save(item);
