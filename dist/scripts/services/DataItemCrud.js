@@ -1,5 +1,5 @@
-listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
-  function($firebaseArray, FirebaseRef) {
+listo.factory("DataItemCrud", ["FirebaseRef", "$firebaseArray", "$firebaseObject",
+  function(FirebaseRef, firebaseArray, firebaseObject) {
 
 // Public variables below
     var dataItemsRef = FirebaseRef.getDataItemsRef();
@@ -13,7 +13,7 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
 
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
 
-    var updateItemsData = function(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3) {
+    var updateWeeklyData = function(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3) {
 
       whichWeek["a_start"] = a_start;
       whichWeek["aa_end"] = aa_end;
@@ -23,19 +23,19 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
       if (whichWeek[prop1] === undefined) {
         whichWeek[prop1] = value1;
       } else {
-        whichWeek[prop1] = whichWeek[prop1] + value1;
+        whichWeek[prop1] += value1;
       }
 
       if (whichWeek[prop2] === undefined) {
         whichWeek[prop2] = value2;
       } else {
-        whichWeek[prop2] = whichWeek[prop2] + value2;
+        whichWeek[prop2] += value2;
       }
 
       if (whichWeek[prop3] === undefined) {
         whichWeek[prop3] = value3;
       } else {
-        whichWeek[prop3] = whichWeek[prop3] + value3;
+        whichWeek[prop3] += value3;
       }
 
       whichWeek.$save();
@@ -116,7 +116,7 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
         var endWeek = lastMomentNextWeekNum;
       }
 
-      updateDataItems(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3);
+      updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3);
 
     }; // end sortDataIntoWeek
 
@@ -227,5 +227,5 @@ listo.factory("DataItemCrud", ["$firebaseArray", "FirebaseRef",
 
     }; // end of Return
 
-  } // end of ItemCrud function
+  } // end of DataItemCrud function
 ]); // end of factory initialization
