@@ -1,5 +1,5 @@
-listo.controller('UserCtrl', ["$scope", "ItemCrud", "DataItemCrud", "UserCrud", "graphCruncher", "dateCruncher", "modalService", "$rootScope", "$interval", "$log", "$http", "$locale", "$location", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
-  function($scope, ItemCrud, DataItemCrud, UserCrud, graphCruncher, dateCruncher, modalService, $rootScope, $interval, $log, $http, $locale, $location, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
+listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher", "dateCruncher", "modalService", "$rootScope", "$interval", "$log", "$http", "$locale", "$location", "$templateCache", '$timeout', "$q", "$sce", "$tooltip", "$popover", "$firebaseAuth",
+  function($scope, ItemCrud, UserCrud, graphCruncher, dateCruncher, modalService, $rootScope, $interval, $log, $http, $locale, $location, $templateCache, $timeout, $q, $sce, $tooltip, $popover, $firebaseAuth) {
 
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
@@ -24,7 +24,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "DataItemCrud", "UserCrud", 
     };
 
     $scope.addOrUpdateDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
-      DataItemCrud.addOrUpdateDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
+      ItemCrud.addOrUpdateDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
     };
 
     $interval(refreshTime, 1000);
@@ -158,7 +158,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "DataItemCrud", "UserCrud", 
             var minuteDiff = newMinutes - $scope.oldItemMinute;
             var dueDate = $scope.oldItemDueDate;
 
-            DataItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+            ItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
           }
 
           $scope.UserCtrlRefreshTalliesAndData();
@@ -178,19 +178,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "DataItemCrud", "UserCrud", 
       // ItemCrud.updateAllItemsPastDue();
     };
 
-    // $scope.addTestItem = function() {
-    //   var day = new Date();
-    //   var dueDate = day.setDate(14);
-    //   var dueDateObj = new Date(dueDate);
-    //   var name = "test"
-    //   ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
-    //   // $scope.UserCtrlRefreshTalliesAndData();
-    // };
-
-    $scope.addItem = function() {
-      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-      $scope.UserCtrlRefreshTalliesAndData();
+    $scope.addTestItem = function() {
+      var day = new Date();
+      var dueDate = day.setDate(20);
+      var dueDateObj = new Date(dueDate);
+      var name = "test"
+      ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
+      // $scope.UserCtrlRefreshTalliesAndData();
     };
+
+    // $scope.addItem = function() {
+    //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
+    //   $scope.UserCtrlRefreshTalliesAndData();
+    // };
 
     $scope.toggleInvertAndSave = function(item) {
       var itemCount = 0;
