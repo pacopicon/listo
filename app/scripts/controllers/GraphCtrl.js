@@ -223,14 +223,14 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     //     ]
     //   }
     // };
-    // 
+    //
     // };// end of completionData()
 
 // The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
 
     $scope.GraphCtrlRefreshTalliesAndData = function() {
     // $scope.completionData();
-    ItemCrud.updateAllItemsPastDue();
+
   };
 
 // How to call a function from controller 1 in controller 2, got this from Stackoverflow:

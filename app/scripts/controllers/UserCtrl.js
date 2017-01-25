@@ -12,14 +12,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       time = Date.now();
       $scope.time = time;
 
+      ItemCrud.updateAllItemsPastDue();
 
-      for (var i = 0; i < items.length; i++) {
-        if (!items[i].isPastDue && items[i].dueDate < time) {
-          ItemCrud.updateAllItemsPastDue();
-        } else if (items[i].isPastDue && items[i].dueDate > time) {
-          ItemCrud.updateAllItemsPastDue();
-        }
-      }
       return time;
     };
 
@@ -117,7 +111,10 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       $scope.oldItemDueDate = item.dueDate;
       $scope.oldItemHour = item.eHour;
       $scope.oldItemMinute = item.eMinute;
+      $scope.oldItemisSafeToComplete = item.isSafeToComplete;
       $scope.oldItemIsComplete = item.isComplete;
+      $scope.oldItemIsOverdue = item.isPastDue;
+      $scope.oldItemCompleted_at = item.completed_at;
       var t = new Date();
       console.log("step 1 - old name: " + $scope.oldItem.name + ", old date: " + new Date($scope.oldItem.dueDate) + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
       // UserCtrl.js showComplex: item $id: -KUnjnUG90g4Ms_pkbC5 and name: short and item date 1478707118727
@@ -144,28 +141,48 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
           var t = new Date();
           console.log("step 4 - UserCtrl close: old name: " + $scope.oldItemName + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
 
-          ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
+          var hourDiff = newHours - $scope.oldItemHour;
+          var minuteDiff = newMinutes - $scope.oldItemMinute;
+          var dueDate = $scope.oldItemDueDate;
+          var hourNeg = $scope.oldItemHour * -1;
+          var minuteNeg = $scope.oldItemMinute * -1;
 
           if ($scope.oldItemIsComplete) {
+            ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes, false, 0, false);
+            // $scope.oldItemIsComplete = false;
+            // $scope.oldItemCompleted_at = 0;
+            // ItemCrud.toggleItemToDelete($scope.oldItem);
+
+            ItemCrud.addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
+
+            if (hourDiff != 0 || minuteDiff != 0) {
+              ItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, hourDiff, minuteDiff);
+
+              if ($scope.oldItemIsOverdue) {
+                ItemCrud.addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 0, hourDiff, minuteDiff);
+              }
+            } else if (hourDiff == 0 && minuteDiff == 0) {
+              ItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, $scope.oldItemHour, $scope.oldItemMinute);
+            }
             // e.g. if Modal is executed from Archive with item as complete
             // updateCompletion also updates dataItems
-            ItemCrud.updateCompletion($scope.oldItem);
-            ItemCrud.toggleItemToDelete($scope.oldItem);
           } else if (!$scope.oldItemIsComplete) {
             // e.g. if Modal is executed with item as incomplete from To Do
             // incomplete item that is updated updates its new est hour and minute to dataItems.
-            var hourDiff = newHours - $scope.oldItemHour;
-            var minuteDiff = newMinutes - $scope.oldItemMinute;
-            var dueDate = $scope.oldItemDueDate;
+
+            ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes, $scope.oldItemIsComplete, $scope.oldItemCompleted_at, $scope.oldItemisSafeToComplete);
 
             ItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 0, hourDiff, minuteDiff);
+
+            if ($scope.oldItemIsOverdue) {
+              ItemCrud.addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursOverdue", "minutesOverdue", 0, hourDiff, minuteDiff);
+            }
           }
 
           $scope.UserCtrlRefreshTalliesAndData();
         });
       });
-
-        };
+    };
     // End Custom Modal-------------------
 
 // Begin CRUD Functions

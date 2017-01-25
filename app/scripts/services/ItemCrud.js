@@ -214,6 +214,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       console.log("addOrUpdateDataItems: logged new dataItem with dueDate " + itemDueDate + ", and " + prop1 + " as " + value1 + ", " + prop2 + " as " + value2 + " and, " + prop3 + " as " + value3);
 
       if (!(typeof dataItems[0] === "undefined")) {
+        console.log()
         for (i = 0; i < dataItems.length; i++) {
 
           var endDay = dataItems[i].endDay;
@@ -430,7 +431,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         });
       }, // end of AddItem
 // This function is called by UserCtrl '$scope.showComplex' function, which is in turn called by 'userincompleteItems.html' when the user clicks on the 'edit' button for a given item.  The $scope.showComplex' function creates a modal that offers update options to the user.  Clicking close on the modal resolves '$scope.updateItem' which calls 'updateItem' below
-      updateItem: function(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes) {
+      updateItem: function(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes, completion, completed_at, isSafeToComplete) {
 
         if (typeof newDueDate == "object") {
           var newDueDate = newDueDate.getTime();
@@ -451,6 +452,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         oldItem.isUrgent = updatedItemProperties.urgency;
         oldItem.eHour = newHours;
         oldItem.eMinute = newMinutes;
+        oldItem.isComplete = completion;
+        oldItem.completed_at = completed_at;
+        oldItem.isSafeToComplete = isSafeToComplete;
         oldItem.rank = updatedItemProperties.rank;
 
         items.$save(oldItem).then(function(itemsRef) {
@@ -481,13 +485,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
             console.log("item named " + itemToDelete.name + " with date: " + date.toString() + ", is about to be removed");
 
-            var hourDiff = items[i].eHour * -1;
-            var minuteDiff = items[i].eMinute * -1;
+            var hourNeg = items[i].eHour * -1;
+            var minuteNeg = items[i].eMinute * -1;
 
-            addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+            addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
 
             if (items[i].isPastDue) {
-              addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+              addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourNeg, minuteNeg);
             }
 
             items.$remove(itemToDelete).then(function() {
@@ -520,9 +524,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               items.$save(items[i]);
 
               // item becomes NOT overDue, its dataItems props signal this change
-              var hourDiff = items[i].eHour * -1;
-              var minuteDiff = items[i].eMinute * -1;
-              addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourDiff, minuteDiff);
+              var hourNeg = items[i].eHour * -1;
+              var minuteNeg = items[i].eMinute * -1;
+              addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
             }
           }
         }
@@ -556,18 +560,21 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
       updateCompletion: function(item) {
+        // Remember: The IF condition below can only be executed by the deleteBtn in userincompleteItems.html, which effectively delets the item from to do and relegates it to the archive.
+        // The ELSE IF condition can be executed by BOTH the un-delete button in archive and the Modal when this latter is executed from archive.
         var item = items.$getRecord(item.$id);
         var dueDate = item.dueDate;
+
+        var hourNeg = item.eHour * -1;
+        var minuteNeg = item.eMinute * -1;
 
         if (!item.isComplete) {
           item.isComplete = true;
           item.completed_at = firebase.database.ServerValue.TIMESTAMP;
 
           // deleting item, changing its dataItems props
-          var hourDiff = item.eHour * -1;
-          var minuteDiff = item.eMinute * -1;
 
-          addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourDiff, minuteDiff);
+          addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourNeg, minuteNeg);
           addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
 
           if (item.isPastDue) {
@@ -579,15 +586,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           item.completed_at = 0;
 
           // undeleting item, changing its dataItems props
-          var hourDiff = item.eHour * -1;
-          var minuteDiff = item.eMinute * -1;
-
-          addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourDiff, minuteDiff);
+          addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
           addOrUpdateDataItems("itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
 
           if (item.isPastDue) {
 
-            addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourDiff, minuteDiff);
+            addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourNeg, minuteNeg);
           }
         }
         items.$save(item);
