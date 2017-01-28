@@ -1,11 +1,15 @@
 listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
   function($firebaseArray, FirebaseRef, UserCrud, DataCrud) {
 
-// holds data as array of objects.  Each object is one item.
+// Public variables below
+    // holds data as array of objects.  Each object is one item.
     var itemsRef = FirebaseRef.getItemsRef();
     var items = FirebaseRef.getItems();
 
 
+    var now = new Date();
+    var nowNum = now.getTime();
+    var week = 604800000;
 
 /////// DataCrud variables and functions (note: I cannot relegate it to its own service because I get a recurring $injector:unpr Unknown Provider error despite the fact that DataCrud is injected into ItemCrud and UserCtrl and its file has been scripted into index.html)
 
@@ -53,7 +57,6 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     var sortDataIntoWeek = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
 
-      var now = new Date();
       var minuteNow = now.getMinutes();
       var hourNow = now.getHours();
       var year = now.getFullYear();
@@ -112,31 +115,35 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       var lastMomentNextWeekString = lastMomentNextWeekObj.toString();
       var lastMomentNextWeekNum = lastMomentNextWeekObj.getTime();
 
-      if (itemDueDate >= firstMomentPastWeekNum && itemDueDate < lastMomentPastWeekNum) {
-        var whichWeek = dataWeekAgo;
-        var a_start = firstMomentPastWeekString;
-        var aa_end = lastMomentPastWeekString;
-        var beginWeek = firstMomentPastWeekNum;
-        var endWeek = lastMomentPastWeekNum;
-      } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentNextWeekNum) {
-        var whichWeek = dataNextWeek;
-        var a_start = firstMomentNextWeekString;
-        var aa_end = lastMomentNextWeekString;
-        var beginWeek = firstMomentNextWeekNum;
-        var endWeek = lastMomentNextWeekNum;
-      } else if (itemDueDate > lastMomentNextWeekNum) {
+      if (itemDueDate > lastMomentNextWeekNum) {
         return console.log("ITEM DATE is too far into the future");
       } else if (itemDueDate < firstMomentPastWeekNum) {
         return console.log("ITEM DATE is too far into the past");
+      } else {
+        if (itemDueDate >= firstMomentPastWeekNum && itemDueDate < lastMomentPastWeekNum) {
+          var whichWeek = dataWeekAgo;
+          var a_start = firstMomentPastWeekString;
+          var aa_end = lastMomentPastWeekString;
+          var beginWeek = firstMomentPastWeekNum;
+          var endWeek = lastMomentPastWeekNum;
+        } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentNextWeekNum) {
+          var whichWeek = dataNextWeek;
+          var a_start = firstMomentNextWeekString;
+          var aa_end = lastMomentNextWeekString;
+          var beginWeek = firstMomentNextWeekNum;
+          var endWeek = lastMomentNextWeekNum;
+        }
+        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3);
       }
-
-      updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3);
-
     }; // end sortDataIntoWeek
 
     var updateDataItems = function(itemDueDate, selectedDataItem, prop1, prop2, prop3, value1, value2, value3) {
 
       sortDataIntoWeek(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
+
+      // console.log("typeof selectedDataItem is: " + typeof selectedDataItem);
+
+      console.log(owner + " called at " + nowNum + ", dataItems[i] with ID of " + selectedDataItem.$id + " was found");
 
       if (!(typeof selectedDataItem === "undefined")) {
         selectedDataItem[prop1] += value1;
@@ -205,7 +212,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       });
     };
 
-    addOrUpdateDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
+    addOrUpdateDataItems = function(owner, itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
 
       if (!(typeof dataItems[0] === "undefined")) {
 
@@ -214,8 +221,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var endDay = dataItems[i].endDay;
           var beginDay = dataItems[i].beginDay;
 
-          if (itemDueDate >= beginDay && itemDueDate < endDay) {
-            updateDataItems(itemDueDate, dataItems[i], prop1, prop2, prop3, value1, value2, value3);
+          if (itemDueDate >= beginDay && itemDueDate <= endDay) {
+            updateDataItems(owner, itemDueDate, dataItems[i], prop1, prop2, prop3, value1, value2, value3);
           } else {
             createNewDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
           }
@@ -226,14 +233,6 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       }
 
     }; // end addOrUpdateDataItems
-
-
-
-////////
-
-// Public variables below
-    var now = Date.now();
-    var week = 604800000;
 
 // Public functions below.
 
@@ -318,8 +317,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
       // handing addOrUpdateDataItems over to UserCtrl.js for data creation and updating
-      addOrUpdateDataItems: function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
-        addOrUpdateDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
+      addOrUpdateDataItems: function(owner, itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
+        addOrUpdateDataItems(owner, itemDueDate, prop1, prop2, prop3, value1, value2, value3);
       },
       // handing ref over to AuthCtrl.js for User creation and authentication.
       getItemsRef: function() {
@@ -397,8 +396,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var dueDate = dueDate.getTime();
 
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
+        var owner = "addItem";
 
-        addOrUpdateDataItems(dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
+        addOrUpdateDataItems(owner, dueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, eHour, eMinute);
 
         items.$add({
           name: itemName,
@@ -433,6 +433,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var hourNeg = oldItem.eHour * -1;
         var minuteNeg = oldItem.eMinute * -1;
 
+        var owner = "updateItem";
+
         if (oldItem.isComplete) {
 
           updateCompletion(oldItem, newDueDate);
@@ -441,17 +443,17 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           /// The addOrUpdateDataItems functions below always create new dataItems, they never fill
 
-          addOrUpdateDataItems(oldDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourNeg, minuteNeg);
+          addOrUpdateDataItems(owner, oldDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourNeg, minuteNeg);
           console.log("1 - oldDueDate, negating item, hours and minutes left");
 
-          addOrUpdateDataItems(newDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, newHours, newMinutes);
+          addOrUpdateDataItems(owner, newDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, newHours, newMinutes);
           console.log("2 - newDueDate, adding item, hours and minutes left");
 
           if (oldItem.isPastDue) {
-            addOrUpdateDataItems(oldDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
+            addOrUpdateDataItems(owner, oldDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
             console.log("3 - oldDueDate, negating item, hours and minutes overdue");
 
-            addOrUpdateDataItems(newDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, newHours, newMinutes);
+            addOrUpdateDataItems(owner, newDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, newHours, newMinutes);
             console.log("4 - newDueDate, adding item, hours and minutes overdue");
           }
         }
@@ -495,16 +497,17 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // 'date' is part of the console.log
             var date = new Date(itemToDelete.dueDate);
             var dueDate = itemToDelete.dueDate;
+            var owner = "processOldCompleteItems";
 
             console.log("item named " + itemToDelete.name + " with date: " + date.toString() + ", is about to be removed");
 
             var hourNeg = items[i].eHour * -1;
             var minuteNeg = items[i].eMinute * -1;
 
-            addOrUpdateDataItems(dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
+            addOrUpdateDataItems(owner, dueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
 
             if (items[i].isPastDue) {
-              addOrUpdateDataItems(dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourNeg, minuteNeg);
+              addOrUpdateDataItems(owner, dueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", -1, hourNeg, minuteNeg);
             }
 
             items.$remove(itemToDelete).then(function() {
@@ -518,6 +521,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // The function below updates items that are past due (i.e. incomplete but not marked as complete after the due date) with pastDue = true.  It also tallies these items.  It is called by UserCtrl function '$scope.refreshTalliesAndData'
       updateAllItemsPastDue: function() {
         var totalItems = items.length;
+        var owner = "updateAllItemsPastDue";
 
         for (var i = 0; i < totalItems; i++) {
 
@@ -530,7 +534,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
               // item becomes overDue, its dataItems props signal this change
 
-              addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
+
+              addOrUpdateDataItems(owner, dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", 1, items[i].eHour, items[i].eMinute);
 
             } else if (items[i].dueDate > now && items[i].isPastDue) {
               items[i].isPastDue = false;
@@ -539,7 +544,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               // item becomes NOT overDue, its dataItems props signal this change
               var hourNeg = items[i].eHour * -1;
               var minuteNeg = items[i].eMinute * -1;
-              addOrUpdateDataItems(dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
+              addOrUpdateDataItems(owner, dueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
             }
           }
         }
@@ -577,6 +582,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         var hourNeg = item.eHour * -1;
         var minuteNeg = item.eMinute * -1;
+        var owner = "updateCompletion";
 
         if (!item.isComplete) {
           item.isComplete = true;
@@ -584,28 +590,28 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           // deleting item, changing its dataItems props
 
-          addOrUpdateDataItems(oldDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourNeg, minuteNeg);
-          addOrUpdateDataItems(oldDueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
+          addOrUpdateDataItems(owner, oldDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", -1, hourNeg, minuteNeg);
+          addOrUpdateDataItems(owner, oldDueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", 1, item.eHour, item.eMinute);
 
           if (item.isPastDue) {
           // deleting item that was pastDue, changing its dataItems props
-            addOrUpdateDataItems(oldDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
+            addOrUpdateDataItems(owner, oldDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
 
-            addOrUpdateDataItems(oldDueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
+            addOrUpdateDataItems(owner, oldDueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
           }
         } else {
           item.isComplete = false;
           item.completed_at = 0;
           item.isSafeToComplete = false;
           // undeleting item, changing its dataItems props
-          addOrUpdateDataItems(oldDueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
+          addOrUpdateDataItems(owner, oldDueDate, "itemWorkedCount", "hoursWorked", "minutesWorked", -1, hourNeg, minuteNeg);
           addOrUpdateDataItems(newDueDate, "itemLeftCount", "hoursLeft", "minutesLeft", 1, item.eHour, item.eMinute);
 
           if (item.isPastDue) {
 
-            addOrUpdateDataItems(oldDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
+            addOrUpdateDataItems(owner, oldDueDate, "itemOverdueCount", "hoursOverdue", "minutesOverdue", -1, hourNeg, minuteNeg);
 
-            addOrUpdateDataItems(newDueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
+            addOrUpdateDataItems(owner, newDueDate, "itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete", 1, item.eHour, item.eMinute);
           }
         }
         items.$save(item);
