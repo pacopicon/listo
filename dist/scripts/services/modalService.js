@@ -76,8 +76,8 @@ listo.factory('modalService', ['$animate', '$document', '$compile', '$controller
           var inputs = {
             $scope: modalScope,
             close: function(newItemProps, delay) {
-              var t = new Date();
-              console.log("step 2, i.e. is called by step 3 but resolves before sept 3 resolves - service close:  new name: " + newItemProps.newName + " and new date " + newItemProps.newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+              // var t = new Date();
+              // console.log("step 2, i.e. is called by step 3 but resolves before sept 3 resolves - service close:  new name: " + newItemProps.newName + " and new date " + newItemProps.newDueDate + ". Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
               if (delay === undefined || delay === null) delay = 0;
               $timeout(function() {
 

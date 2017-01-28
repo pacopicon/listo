@@ -41,8 +41,8 @@ listo.controller('ModalController', [
     };
 
  	  close(newItemProps, 500); // close, but give 500ms for bootstrap to animate
-    var t = new Date();
-    console.log("step 3 - ModalController close: new name: " + newItemProps.newName + ", item date: " + newItemProps.newDueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
+    // var t = new Date();
+    // console.log("step 3 - ModalController close: new name: " + newItemProps.newName + ", item date: " + newItemProps.newDueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
   };
 
   //  This cancel function must use the bootstrap, 'modal' function because
