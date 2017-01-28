@@ -17,8 +17,8 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       return time;
     };
 
-    $scope.addOrUpdateDataItems = function(itemDueDate, prop1, prop2, prop3, value1, value2, value3) {
-      ItemCrud.addOrUpdateDataItems(itemDueDate, prop1, prop2, prop3, value1, value2, value3);
+    $scope.addOrUpdateDataItems = function(itemDueDate, , prop1, prop2, prop3, value1, value2, value3, prop4, prop5, prop6, value4, value5, value6, prop7, prop8, prop9, value7, value8, value9, prop10, prop11, prop12, value10, value11, value12) {
+      ItemCrud.addOrUpdateDataItems(itemDueDate, , prop1, prop2, prop3, value1, value2, value3, prop4, prop5, prop6, value4, value5, value6, prop7, prop8, prop9, value7, value8, value9, prop10, prop11, prop12, value10, value11, value12);
     };
 
     $interval(refreshTime, 1000);
