@@ -6,22 +6,17 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     var itemsRef = FirebaseRef.getItemsRef();
     var items = FirebaseRef.getItems();
 
-
-    var now = new Date();
-    var nowNum = now.getTime();
-    var week = 604800000;
-
-/////// DataCrud variables and functions (note: I cannot relegate it to its own service because I get a recurring $injector:unpr Unknown Provider error despite the fact that DataCrud is injected into ItemCrud and UserCtrl and its file has been scripted into index.html)
-
-
-
-// Public variables below
     var dataItemsRef = FirebaseRef.getDataItemsRef();
     var dataItems = FirebaseRef.getDataItems();
     var dataWeekAgoRef = FirebaseRef.getDataWeekAgoRef();
     var dataWeekAgo = FirebaseRef.getDataWeekAgo();
     var dataNextWeekRef = FirebaseRef.getDataNextWeekRef();
     var dataNextWeek = FirebaseRef.getDataNextWeek();
+
+
+    var now = new Date();
+    var nowNum = now.getTime();
+    var week = 604800000;
 
 // Public functions below.
 
@@ -236,6 +231,28 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     };
 
+    var findMoment = function(itemDueDate) {
+      var dateObj = new Date(itemDueDate);
+      var year = dateObj.getFullYear();
+      var month = dateObj.getMonth();
+      var date = dateObj.getDate();
+      var firstMomentObj = new Date(year, month, date, 0, 0, 0, 0);
+      var firstMomentNum = firstMomentObj.getTime();
+      var firstMomentString = firstMomentObj.toString();
+      var lastMomentObj = new Date(year, month, date, 23, 59, 59, 999);
+      var lastMomentNum = lastMomentObj.getTime();
+      var lastMomentString = lastMomentObj.toString();
+
+      return {
+        firstObj: firstMomentObj,
+        firstString: firstMomentString,
+        firstNum: firstMomentNum,
+        lastObj: lastMomentObj,
+        lastString: lastMomentString,
+        lastNum: lastMomentNum
+      }
+    };
+
     var createNewDataItems = function(itemDueDate, propValueObject) {
 
       sortDataIntoWeek(itemDueDate, propValueObject);
@@ -259,27 +276,16 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         }
       };
 
-      var dateObj = new Date(itemDueDate);
-      var year = dateObj.getFullYear();
-      var month = dateObj.getMonth();
-      var date = dateObj.getDate();
-      var firstMomentObj = new Date(year, month, date, 0, 0, 0, 0);
-      var firstMomentNum = firstMomentObj.getTime();
-      var firstMomentString = firstMomentObj.toString();
-      var lastMomentObj = new Date(year, month, date, 23, 59, 59, 999);
-      var lastMomentNum = lastMomentObj.getTime();
-      var lastMomentString = lastMomentObj.toString();
-
       var itemLeftCount = matchProp("itemLeftCount");
       var itemWorkedCount = matchProp("itemWorkedCount");
       var itemOverdueCount = matchProp("itemOverdueCount");
       var itemDueCompleteCount = matchProp("itemDueCompleteCount");
 
       dataItems.$add({
-        a_start: firstMomentString,
-        aa_end: lastMomentString,
-        beginDay: firstMomentNum,
-        endDay: lastMomentNum,
+        a_start: firstString,
+        aa_end: lastString,
+        beginDay: firstNum,
+        endDay: lastNum,
         itemLeftCount: itemLeftCount,
         itemWorkedCount: itemWorkedCount,
         itemOverdueCount: itemOverdueCount,
@@ -523,8 +529,14 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         var oldDueDate = oldItem.dueDate;
         var oldDueDateObj = new Date(oldDueDate);
+        var hourDiff = newHours - oldItem.eHour;
+        var minuteDiff = newMinutes - oldItem.eMinute;
         var hourNeg = oldItem.eHour * -1;
         var minuteNeg = oldItem.eMinute * -1;
+
+        var oldDueDate = oldItem.dueDate;
+        var beginDay = findMoment(oldDueDate).firstNum;
+        var endDay = findMoment(oldDueDate).lastNum;
 
         var owner = "updateItem";
 
@@ -532,29 +544,72 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           updateCompletion(oldItem, newDueDate);
 
-        } else if (!(oldItem.isPastDue) && !(oldItem.isComplete)) {
+        } else if (!(oldItem.isComplete) && newDueDate >= beginDay && newDueDate <= endDay) {
 
-          var propArray1 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
-          var valArray1 = [-1, hourNeg, minuteNeg];
+          if (!(oldItem.isPastDue) && newDueDate > now) {
 
-          var propArray2 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
-          var valArray2 = [1, newHours, newMinutes];
+            var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray = [0, hourDiff, minuteDiff];
+
+          } else if (!(oldItem.isPastDue) && newDueDate < now) {
+
+            var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray = [1, newHours, newMinutes, 0, hourDiff, minuteDiff];
+
+          } else if (oldItem.isPastDue && newDueDate > now) {
+
+            var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
+            var valArray = [-1, hourNeg, minuteNeg, 0, hourDiff, minuteDiff];
+
+          } else if (oldItem.isPastDue && newDueDate < now) {
+
+            var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray = [0, hourDiff, minuteDiff, 0, hourDiff, minuteDiff];
+
+          }
+
+          addOrUpdateDataItems(owner, oldDueDate, propArray, valArray);
+
+        } else if (!(oldItem.isComplete)) {
+
+          if (!(oldItem.isPastDue) && newDueDate > now) {
+
+            var propArray1 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray1 = [-1, hourNeg, minuteNeg];
+
+            var propArray2 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray2 = [1, newHours, newMinutes];
+
+          } else if (!(oldItem.isPastDue) && newDueDate < now) {
+
+            var propArray1 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray1 = [-1, hourNeg, minuteNeg];
+
+            var propArray2 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray2 = [1, newHours, newMinutes, 1, newHours, newMinutes];
+
+          } else if (oldItem.isPastDue && newDueDate > now) {
+
+            var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
+            var valArray1 = [-1, hourNeg, minuteNeg, -1, hourNeg, minuteNeg];
+
+            var propArray2 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray2 = [1, newHours, newMinutes];
+
+          } else if (oldItem.isPastDue && newDueDate < now) {
+
+            var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
+            var valArray1 = [-1, hourNeg, minuteNeg, -1, hourNeg, minuteNeg];
+
+            var propArray2 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
+            var valArray2 = [1, newHours, newMinutes, 1, newHours, newMinutes];
+
+          }
 
           addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray1);
-
           addOrUpdateDataItems(owner, newDueDate, propArray2, valArray2);
-        } else if (oldItem.isPastDue && !(oldItem.isComplete)) {
 
-          var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
-          var valArray1 = [-1, hourNeg, minuteNeg, -1, hourNeg, minuteNeg];
-
-          var propArray2 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
-          var valArray2 = [1, newHours, newMinutes, 1, newHours, newMinutes];
-
-          addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray1);
-
-          addOrUpdateDataItems(owner, newDueDate, propArray2, valArray2);
-        }
+        } // end of conditional
 
         var updatedItemProperties = prioritize(oldItem, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
@@ -602,10 +657,6 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             var hourNeg = items[i].eHour * -1;
             var minuteNeg = items[i].eMinute * -1;
 
-
-
-
-
             if (!(items[i].isPastDue)) {
 
               var propArray = ["itemWorkedCount", "hoursWorked", "minutesWorked"];
@@ -618,7 +669,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
             }
 
-              addOrUpdateDataItems(owner, dueDate, propArray, valArray);
+            addOrUpdateDataItems(owner, dueDate, propArray, valArray);
 
             items.$remove(itemToDelete).then(function() {
                 console.log("item, which is now " + itemToDelete + ", has been removed");
@@ -713,7 +764,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           addOrUpdateDataItems(owner, oldDueDate, propArray, valArray);
 
-        } else {
+        } else if (item.isComplete) {
           item.isComplete = false;
           item.completed_at = 0;
           item.isSafeToComplete = false;
@@ -722,31 +773,55 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           if (!(item.isPastDue)) {
 
-            if (oldDueDate ) {
+            var beginDay = findMoment(oldDueDate).firstNum;
+            var endDay = findMoment(oldDueDate).lastNum;
 
+            if (newDueDate >= beginDay && newDueDate <= endDay) {
+
+              var propArray = ["itemWorkedCount", "hoursWorked", "minutesWorked", "itemLeftCount", "hoursLeft", "minutesLeft"];
+              var valArray = [-1, hourNeg, minuteNeg, 1, item.eHour, item.eMinute]];
+
+              addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray);
+
+            } else {
               var propArray1 = ["itemWorkedCount", "hoursWorked", "minutesWorked"];
               var valArray1 = [-1, hourNeg, minuteNeg];
 
               var propArray2 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
               var valArray2 = [1, item.eHour, item.eMinute];
 
+              addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray1);
+
+              addOrUpdateDataItems(owner, newDueDate, propArray2, valArray2);
             }
-
-            addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray1);
-
-            addOrUpdateDataItems(owner, newDueDate, propArray2, valArray2);
 
           } else if (item.isPastDue) {
 
-            var propArray1 = ["itemWorkedCount", "hoursWorked", "minutesWorked", "itemLeftCount", "hoursLeft", "minutesLeft", "itemOverdueCount", "hoursOverdue", "minutesOverdue"];
-            var valArray1 = [-1, hourNeg, minuteNeg, 1, item.eHour, item.eMinute, -1, hourNeg, minuteNeg];
+            if (newDueDate >= beginDay && newDueDate <= endDay) {
 
-            var propArray2 = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
-            var valArray2 = [1, item.eHour, item.eMinute];
+              var propArray1 = ["itemWorkedCount", "hoursWorked", "minutesWorked", "itemLeftCount", "hoursLeft", "minutesLeft", "itemOverdueCount", "hoursOverdue", "minutesOverdue"];
+              var valArray1 = [-1, hourNeg, minuteNeg, 1, item.eHour, item.eMinute, -1, hourNeg, minuteNeg];
 
-            addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray1);
+              var propArray2 = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
+              var valArray2 = [1, item.eHour, item.eMinute];
 
-            addOrUpdateDataItems(owner, newDueDate, propArray2, valArray2);
+              addOrUpdateDataItems(owner, oldDueDate, propArray, valArray1);
+
+
+            } else {
+
+              var propArray1 = ["itemWorkedCount", "hoursWorked", "minutesWorked", "itemLeftCount", "hoursLeft", "minutesLeft", "itemOverdueCount", "hoursOverdue", "minutesOverdue"];
+              var valArray1 = [-1, hourNeg, minuteNeg, 1, item.eHour, item.eMinute, -1, hourNeg, minuteNeg];
+
+              var propArray2 = ["itemDueCompleteCount", "hoursDueComplete", "minutesDueComplete"];
+              var valArray2 = [1, item.eHour, item.eMinute];
+
+              addOrUpdateDataItems(owner, oldDueDate, propArray1, valArray1);
+
+              addOrUpdateDataItems(owner, newDueDate, propArray2, valArray2);
+
+            }
+
           }
         }
 
