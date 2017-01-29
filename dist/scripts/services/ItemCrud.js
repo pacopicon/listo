@@ -29,15 +29,34 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       whichWeek["beginWeek"] = beginWeek;
       whichWeek["endWeek"] = endWeek;
 
-      if (!(typeof whichWeek === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
+      var allowSingularFilterDuplicate = function() {
+
+        var dupeCount = 0;
 
         for (i = 0; i < propArray.length; i++) {
-          whichWeek[propArray[i]] = valArray[i];
+          if (whichWeek[propArray[i]] === valArray[i]) {
+            dupeCount++;
+            console.log("dupeCount: " + dupeCount);
+          }
         }
+        if (dupeCount != propArray.length) {
+          for (i = 0; i < propArray.length; i++) {
+            whichWeek[propArray[i]] = valArray[i];
+            whichWeek.$save();
+          }
+        } else {
+          console.log("attempted to log duplicate week Data");
+        }
+      };
 
+      if (!(typeof whichWeek === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
+
+        // for (i = 0; i < propArray.length; i++) {
+        //   whichWeek[propArray[i]] = valArray[i];
+        // }
+        allowSingularFilterDuplicate();
+        console.log("called");
       }
-      c
-      whichWeek.$save();
     };
 
     var findMoment = function(itemDueDate) {
@@ -246,6 +265,30 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       });
     };
 
+    // var addOrUpdateDataItems = function(owner, itemDueDate, propArray, valArray) {
+    //
+    //   if (!(typeof dataItems[0] === "undefined")) {
+    //
+    //     for (i = 0; i < dataItems.length; i++) {
+    //
+    //       var endDay = dataItems[i].endDay;
+    //       var beginDay = dataItems[i].beginDay;
+    //
+    //       if (itemDueDate >= beginDay && itemDueDate <= endDay) {
+    //         updateDataItems(owner, itemDueDate, dataItems[i], propArray, valArray);
+    //       } else {
+    //         console.log("1st create fn called by " + owner);
+    //         createNewDataItems(itemDueDate, propArray, valArray);
+    //       }
+    //
+    //     }
+    //   } else {
+    //     console.log("2nd create fn called by " + owner);
+    //     createNewDataItems(itemDueDate, propArray, valArray);
+    //   }
+    //
+    // };
+
     var addOrUpdateDataItems = function(owner, itemDueDate, propArray, valArray) {
 
       if (!(typeof dataItems[0] === "undefined")) {
@@ -257,16 +300,17 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           if (itemDueDate >= beginDay && itemDueDate <= endDay) {
             updateDataItems(owner, itemDueDate, dataItems[i], propArray, valArray);
-          } else {
+          } else if (typeof dataItems[i] === "undefined") {
+            console.log("1st create fn called by " + owner);
             createNewDataItems(itemDueDate, propArray, valArray);
           }
-
         }
       } else {
+        console.log("2nd create fn called by " + owner);
         createNewDataItems(itemDueDate, propArray, valArray);
       }
 
-    }; // end addOrUpdateDataItems
+    };
 
 // Public functions below.
 
@@ -654,35 +698,41 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       },
 // The function below updates items that are past due (i.e. incomplete but not marked as complete after the due date) with pastDue = true.  It also tallies these items.  It is called by UserCtrl function '$scope.refreshTalliesAndData'
       updateAllItemsPastDue: function() {
-       var totalItems = items.length;
-       var owner = "updateAllItemsPastDue";
+        var totalItems = items.length;
+        var owner = "updateAllItemsPastDue";
 
-       for (var i = 0; i < totalItems; i++) {
+        for (var i = 0; i < totalItems; i++) {
 
-         var dueDate = items[i].dueDate;
+          var dueDate = items[i].dueDate;
 
-         if (!items[i].isComplete) {
+          if (!items[i].isComplete && items.$loaded()) { // items.$loaded() doesn't seem necessary
 
-           var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue"];
+            var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue"];
 
-           if (items[i].dueDate < now && !items[i].isPastDue) {
-             items[i].isPastDue = true;
-             items.$save(items[i]);
+            if ((items[i].dueDate < now) && !(items[i].isPastDue)) {
+              items[i].isPastDue = true;
+              items.$save(items[i]);
 
-             var valArray = [1, items[i].eHour, items[i].eMinute];
+              console.log("Is item with name " + items[i].name + " past due? " + items[i].isPastDue);
 
-           } else if (items[i].dueDate > now && items[i].isPastDue) {
-             items[i].isPastDue = false;
-             items.$save(items[i]);
+              var valArray = [1, items[i].eHour, items[i].eMinute];
 
-             var hourNeg = items[i].eHour * -1;
-             var minuteNeg = items[i].eMinute * -1;
-             var valArray = [-1, hourNeg, minuteNeg];
+            } else if ((items[i].dueDate > now) && (items[i].isPastDue)) {
+              items[i].isPastDue = false;
+              items.$save(items[i]);
 
-           }
-           addOrUpdateDataItems(owner, dueDate, propArray, valArray);
-         }
-       }
+              console.log("Is item with name " + items[i].name + " past due? " + items[i].isPastDue);
+
+              var hourNeg = items[i].eHour * -1;
+              var minuteNeg = items[i].eMinute * -1;
+              var valArray = [-1, hourNeg, minuteNeg];
+
+            }
+            if (items.$loaded()) { // items.$loaded() doesn't seem necessary
+              addOrUpdateDataItems(owner, dueDate, propArray, valArray);
+            }
+          }
+        }
       },
 
       toggleItemToDelete: function(item) {
