@@ -128,7 +128,17 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       var dateObj = new Date (itemDueDate);
       var dayOfMonth = dateObj.getDate();
 
-      if (!(typeof selectedDataItem === "undefined")) {
+      if (!(typeof selectedDataItem === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
+
+        var iterateAndPrint = function(array) {
+          for (i = 0; i < array.length; i++) {
+            console.log("array[" + i + "]: " + array[i]);
+          }
+        };
+
+        iterateAndPrint(propArray);
+        iterateAndPrint(valArray);
+
 
         for (i = 0; i < propArray.length; i++) {
           selectedDataItem[propArray[i]] = valArray[i];
@@ -183,39 +193,37 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       sortDataIntoWeek(itemDueDate, propArray, valArray);
 
-      var matchProp = function(propName) {
-        for (i = 0; i < propArray.length; i++) {
-          if (propName === propArray[i]) {
-            return valArray[i];
+      // if (!(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
+        var matchProp = function(propName) {
+          for (i = 0; i < propArray.length; i++) {
+            if (propName === propArray[i]) {
+              return valArray[i];
+            }
           }
-        }
-      };
-
-      for (i = 0; i < propArray.length; i++) {
-        selectedDataItem[propArray[i]] = valArray[i];
-      }
+        };
+      // }
 
       var itemLeftCount = matchProp("itemLeftCount");
       var itemWorkedCount = matchProp("itemWorkedCount");
 
       dataItems.$add({
-        a_start: firstString,
-        aa_end: lastString,
-        beginDay: firstNum,
-        endDay: lastNum,
-        itemLeftCount: itemLeftCount,
-        itemWorkedCount: itemWorkedCount,
-        itemOverdueCount: matchProp("itemOverdueCount"),
-        itemDueCompleteCount: matchProp("itemDueCompleteCount"),
-        hoursLeft: matchProp("hoursLeft"),
-        minutesLeft: matchProp("minutesLeft"),
-        hoursWorked: matchProp("hoursWorked"),
-        minutesWorked: matchProp("minutesWorked"),
-        hoursOverdue: matchProp("hoursOverdue"),
-        minutesOverdue: matchProp("minutesOverdue"),
-        hoursDueComplete: matchProp("hoursDueComplete"),
-        minutesDueComplete: matchProp("minutesDueComplete"),
-        totalItems: itemLeftCount + itemWorkedCount
+        a_start: findMoment(itemDueDate).firstString,
+        aa_end: findMoment(itemDueDate).lastString,
+        beginDay: findMoment(itemDueDate).firstNum,
+        endDay: findMoment(itemDueDate).lastNum,
+        itemLeftCount: itemLeftCount || 0,
+        itemWorkedCount: itemWorkedCount || 0,
+        itemOverdueCount: matchProp("itemOverdueCount") || 0,
+        itemDueCompleteCount: matchProp("itemDueCompleteCount") || 0,
+        hoursLeft: matchProp("hoursLeft") || 0,
+        minutesLeft: matchProp("minutesLeft") || 0,
+        hoursWorked: matchProp("hoursWorked") || 0,
+        minutesWorked: matchProp("minutesWorked") || 0,
+        hoursOverdue: matchProp("hoursOverdue") || 0,
+        minutesOverdue: matchProp("minutesOverdue") || 0,
+        hoursDueComplete: matchProp("hoursDueComplete") || 0,
+        minutesDueComplete: matchProp("minutesDueComplete") || 0,
+        totalItems: (itemLeftCount + itemWorkedCount)  || 0
       });
     };
 
@@ -405,14 +413,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
         var owner = "addItem";
 
-        var propArray, valArray = {
-          prop1: "itemLeftCount",
-          prop2: "hoursLeft",
-          prop3: "minutesLeft",
-          val1: 1,
-          val2: eHour,
-          val3: eMinute
-        }
+        var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft"];
+        var valArray = [1, eHour, eMinute];
 
         addOrUpdateDataItems(owner, dueDate, propArray, valArray);
 
