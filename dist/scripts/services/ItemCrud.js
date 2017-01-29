@@ -22,89 +22,21 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
 
-    var updateWeeklyData = function(whichWeek, a_start, aa_end, beginWeek, endWeek, propValueObject) {
+    var updateWeeklyData = function(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray) {
 
       whichWeek["a_start"] = a_start;
       whichWeek["aa_end"] = aa_end;
       whichWeek["beginWeek"] = beginWeek;
       whichWeek["endWeek"] = endWeek;
 
-      if (whichWeek[prop1] === undefined) {
-        whichWeek[prop1] = value1;
-      } else {
-        whichWeek[prop1] += value1;
-      }
-
-      if (whichWeek[prop2] === undefined) {
-        whichWeek[prop2] = value2;
-      } else {
-        whichWeek[prop2] += value2;
-      }
-
-      if (whichWeek[prop3] === undefined) {
-        whichWeek[prop3] = value3;
-      } else {
-        whichWeek[prop3] += value3;
-      }
-
-      if (whichWeek[prop4] === undefined) {
-        whichWeek[prop4] = value4;
-      } else {
-        whichWeek[prop4] += value4;
-      }
-
-      if (whichWeek[prop5] === undefined) {
-        whichWeek[prop5] = value5;
-      } else {
-        whichWeek[prop5] += value5;
-      }
-
-      if (whichWeek[prop6] === undefined) {
-        whichWeek[prop6] = value6;
-      } else {
-        whichWeek[prop6] += value6;
-      }
-
-      if (whichWeek[prop7] === undefined) {
-        whichWeek[prop7] = value7;
-      } else {
-        whichWeek[prop7] += value7;
-      }
-
-      if (whichWeek[prop8] === undefined) {
-        whichWeek[prop8] = value8;
-      } else {
-        whichWeek[prop8] += value8;
-      }
-
-      if (whichWeek[prop9] === undefined) {
-        whichWeek[prop9] = value9;
-      } else {
-        whichWeek[prop9] += value9;
-      }
-
-      if (whichWeek[prop10] === undefined) {
-        whichWeek[prop10] = value10;
-      } else {
-        whichWeek[prop10] += value10;
-      }
-
-      if (whichWeek[prop11] === undefined) {
-        whichWeek[prop11] = value11;
-      } else {
-        whichWeek[prop11] += value11;
-      }
-
-      if (whichWeek[prop12] === undefined) {
-        whichWeek[prop12] = value12;
-      } else {
-        whichWeek[prop12] += value12;
+      for (i = 0; i < propArray.length; i++) {
+        whichWeek[propArray[i]] = valArray[i];
       }
 
       whichWeek.$save();
     };
 
-    var sortDataIntoWeek = function(itemDueDate, propValueObject) {
+    var sortDataIntoWeek = function(itemDueDate, propArray, valArray) {
 
       var minuteNow = now.getMinutes();
       var hourNow = now.getHours();
@@ -176,7 +108,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var beginWeek = firstMomentPastWeekNum;
         var endWeek = lastMomentPastWeekNum;
 
-        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, prop1, prop2, prop3, value1, value2, value3, prop4, prop5, prop6, value4, value5, value6);
+        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
       } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentNextWeekNum) {
         console.log("ELSE (dataNextWeek) condition was called");
         var whichWeek = dataNextWeek;
@@ -185,39 +117,33 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var beginWeek = firstMomentNextWeekNum;
         var endWeek = lastMomentNextWeekNum;
 
-        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, propValueObject);
+        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
       }
     }; // end sortDataIntoWeek
 
-    var updateDataItems = function(owner, itemDueDate, selectedDataItem, propValueObject) {
+    var updateDataItems = function(owner, itemDueDate, selectedDataItem, propArray, valArray) {
 
-      sortDataIntoWeek(itemDueDate, propValueObject);
+      sortDataIntoWeek(itemDueDate, propArray, valArray);
 
       var dateObj = new Date (itemDueDate);
       var dayOfMonth = dateObj.getDate();
 
-      // console.log(owner + " called at " + nowNum + ", dataItem with ID of " + selectedDataItem.$id + " was found. Day of month: " + dayOfMonth + ", " + prop1 + ": " + value1 + ", " + prop2 + ": " + value2 + ", " + prop3 + ": " + value3 + ".");
-
       if (!(typeof selectedDataItem === "undefined")) {
-        selectedDataItem[prop1] += value1;
-        selectedDataItem[prop2] += value2;
-        selectedDataItem[prop3] += value3;
 
-        if (!(typeof prop4 === "undefined") && !(typeof prop5 === "undefined") && !(typeof prop6 === "undefined") && !(typeof value4 === "undefined") && !(typeof value5 === "undefined") && !(typeof value6 === "undefined")) {
-          selectedDataItem[prop4] += value4;
-          selectedDataItem[prop5] += value5;
-          selectedDataItem[prop6] += value6;
+        for (i = 0; i < propArray.length; i++) {
+          selectedDataItem[propArray[i]] = valArray[i];
         }
 
-        var ilc = selectedDataItem["itemLeftCount"];
-        var iwc = selectedDataItem["itemWorkedCount"];
-
-        if (typeof ilc === "undefined" ) {
+        if (typeof selectedDataItem["itemLeftCount"] === "undefined") {
           ilc = 0;
+        } else {
+          var ilc = selectedDataItem["itemLeftCount"];
         }
 
-        if (typeof iwc === "undefined" ) {
+        if (typeof selectedDataItem["itemWorkedCount"] === "undefined") {
           iwc = 0;
+        } else {
+          var iwc = selectedDataItem["itemWorkedCount"];
         }
 
         selectedDataItem["totalItems"] = ilc + iwc;
@@ -253,33 +179,24 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       }
     };
 
-    var createNewDataItems = function(itemDueDate, propValueObject) {
+    var createNewDataItems = function(itemDueDate, propArray, valArray) {
 
-      sortDataIntoWeek(itemDueDate, propValueObject);
+      sortDataIntoWeek(itemDueDate, propArray, valArray);
 
       var matchProp = function(propName) {
-
-        if (propName === prop1) {
-          return value1;
-        } else if (propName === prop2) {
-          return value2;
-        } else if (propName === prop3) {
-          return value3;
-        } else if (propName === prop4) {
-          return value4;
-        } else if (propName === prop5) {
-          return value5;
-        } else if (propName === prop6) {
-          return value6;
-        } else {
-          return 0;
+        for (i = 0; i < propArray.length; i++) {
+          if (propName === propArray[i]) {
+            return valArray[i];
+          }
         }
       };
 
+      for (i = 0; i < propArray.length; i++) {
+        selectedDataItem[propArray[i]] = valArray[i];
+      }
+
       var itemLeftCount = matchProp("itemLeftCount");
       var itemWorkedCount = matchProp("itemWorkedCount");
-      var itemOverdueCount = matchProp("itemOverdueCount");
-      var itemDueCompleteCount = matchProp("itemDueCompleteCount");
 
       dataItems.$add({
         a_start: firstString,
@@ -288,8 +205,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         endDay: lastNum,
         itemLeftCount: itemLeftCount,
         itemWorkedCount: itemWorkedCount,
-        itemOverdueCount: itemOverdueCount,
-        itemDueCompleteCount: itemDueCompleteCount,
+        itemOverdueCount: matchProp("itemOverdueCount"),
+        itemDueCompleteCount: matchProp("itemDueCompleteCount"),
         hoursLeft: matchProp("hoursLeft"),
         minutesLeft: matchProp("minutesLeft"),
         hoursWorked: matchProp("hoursWorked"),
@@ -312,14 +229,14 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var beginDay = dataItems[i].beginDay;
 
           if (itemDueDate >= beginDay && itemDueDate <= endDay) {
-            updateDataItems(owner, itemDueDate, dataItems[i], propValueObject);
+            updateDataItems(owner, itemDueDate, dataItems[i], propArray, valArray);
           } else {
-            createNewDataItems(itemDueDate, propValueObject);
+            createNewDataItems(itemDueDate, propArray, valArray);
           }
 
         }
       } else {
-        createNewDataItems(itemDueDate, propValueObject);
+        createNewDataItems(itemDueDate, propArray, valArray);
       }
 
     }; // end addOrUpdateDataItems
@@ -407,8 +324,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
       // handing addOrUpdateDataItems over to UserCtrl.js for data creation and updating
-      addOrUpdateDataItems: function(owner, itemDueDate, propValueObject) {
-        addOrUpdateDataItems(owner, itemDueDate, propValueObject);
+      addOrUpdateDataItems: function(owner, itemDueDate, propArray, valArray) {
+        addOrUpdateDataItems(owner, itemDueDate, propArray, valArray);
       },
       // handing ref over to AuthCtrl.js for User creation and authentication.
       getItemsRef: function() {
@@ -488,7 +405,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var itemProperties = prioritize(item, dueDate, importance, urgency, eHour, eMinute);
         var owner = "addItem";
 
-        var propValueObject = {
+        var propArray, valArray = {
           prop1: "itemLeftCount",
           prop2: "hoursLeft",
           prop3: "minutesLeft",
@@ -497,7 +414,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           val3: eMinute
         }
 
-        addOrUpdateDataItems(owner, dueDate, propValueObject);
+        addOrUpdateDataItems(owner, dueDate, propArray, valArray);
 
         items.$add({
           name: itemName,
