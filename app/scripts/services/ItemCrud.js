@@ -187,38 +187,20 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       if (!(typeof selectedDataItem === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
 
-        // var iterateAndPrint = function(array) {
-        //   for (i = 0; i < array.length; i++) {
-        //     console.log("array[" + i + "]: " + array[i]);
-        //   }
-        // };
-        //
-        // iterateAndPrint(propArray);
-        // iterateAndPrint(valArray);
+        console.log("updateDataItems called by " + owner + ".");
+        var iterateAndPrint = function(array) {
+          for (i = 0; i < array.length; i++) {
+            console.log("array[" + i + "]: " + array[i]);
+          }
+        };
 
-        console.log("updateDataItems called by " + owner + ". ");
+        iterateAndPrint(propArray);
+        iterateAndPrint(valArray);
+
 
         for (i = 0; i < propArray.length; i++) {
           selectedDataItem[propArray[i]] += valArray[i];
-
-        console.log("CONT. values: " + valArray[i]);
         }
-
-        if (typeof selectedDataItem["itemLeftCount"] === "undefined") {
-          ilc = 0;
-        } else {
-          var ilc = selectedDataItem["itemLeftCount"];
-        }
-
-        if (typeof selectedDataItem["itemWorkedCount"] === "undefined") {
-          iwc = 0;
-        } else {
-          var iwc = selectedDataItem["itemWorkedCount"];
-        }
-
-        selectedDataItem["totalItems"] += ilc + iwc;
-
-
 
         // dataItems.$save(selectedDataItem);
         dataItems.$save(selectedDataItem).then(function() {
@@ -245,16 +227,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         }
       };
 
-      var itemLeftCount = matchProp("itemLeftCount") || 0;
-      var itemWorkedCount = matchProp("itemWorkedCount") || 0;
-
       dataItems.$add({
         a_start: findMoment(itemDueDate).firstString,
         aa_end: findMoment(itemDueDate).lastString,
         beginDay: findMoment(itemDueDate).firstNum,
         endDay: findMoment(itemDueDate).lastNum,
-        itemLeftCount: itemLeftCount || 0,
-        itemWorkedCount: itemWorkedCount || 0,
+        itemLeftCount: matchProp("itemLeftCount") || 0,
+        itemWorkedCount: matchProp("itemWorkedCount") || 0,
         itemOverdueCount: matchProp("itemOverdueCount") || 0,
         itemDueCompleteCount: matchProp("itemDueCompleteCount") || 0,
         hoursLeft: matchProp("hoursLeft") || 0,
@@ -264,8 +243,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         hoursOverdue: matchProp("hoursOverdue") || 0,
         minutesOverdue: matchProp("minutesOverdue") || 0,
         hoursDueComplete: matchProp("hoursDueComplete") || 0,
-        minutesDueComplete: matchProp("minutesDueComplete") || 0,
-        totalItems: (itemLeftCount + itemWorkedCount)  || 0
+        minutesDueComplete: matchProp("minutesDueComplete") || 0
       });
     };
 
@@ -619,10 +597,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // var valArray2 = [1, newHours, newMinutes];
 
           } else if (oldItem.isPastDue && newDueDate < now) {
-            // console.log("updateItem: diff date condition 4 was met");
+            console.log("updateItem: diff date condition 4 was met");
 
             var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
-            var valArray1 = [0, 0, 0, 0, 0, 0];
+            var valArray1 = [-1, hourNeg, minuteNeg, -1, hourNeg, minuteNeg];
 
             var propArray2 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray2 = [1, newHours, newMinutes, 1, newHours, newMinutes];
