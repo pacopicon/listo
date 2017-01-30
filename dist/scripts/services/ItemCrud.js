@@ -291,6 +291,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     var addOrUpdateDataItems = function(owner, itemDueDate, propArray, valArray) {
 
+      console.log("addOrUpdateDataItems called by " + owner + " with date: " + itemDueDate);
+
       if (!(typeof dataItems[0] === "undefined")) {
 
         for (i = 0; i < dataItems.length; i++) {
@@ -299,9 +301,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var beginDay = dataItems[i].beginDay;
 
           if (itemDueDate >= beginDay && itemDueDate <= endDay) {
+            console.log("updateDataItems called by " + owner);
+
             updateDataItems(owner, itemDueDate, dataItems[i], propArray, valArray);
-          } else if (typeof dataItems[i] === "undefined") {
-            console.log("1st create fn called by " + owner);
+
+          } else if (itemDueDate < beginDay || itemDueDate > endDay) {
+
+            console.log("1st createNewDataItems called by " + owner);
             createNewDataItems(itemDueDate, propArray, valArray);
           }
         }
@@ -465,7 +471,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 // This function is called by the submit button in userincompleteItems.html when user creates an item in the form
       addItem: function(itemName, dueDate, importance, eHour, eMinute) {
 
-        console.log(itemName + ": begin");
+        // console.log(itemName + ": begin");
 
         // empty the below variables in order to contextualize the 'prioritize' call for the 'addItem' function
         var item = null;
@@ -497,13 +503,14 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           completed_at: 0
         }).then(function(itemsRef) {
           var id = itemsRef.key;
-          console.log(itemName + ": end.  Added item with id " + id);
+          // console.log(itemName + ": end.  Added item with id " + id);
           items.$indexFor(id);
 
         });
       }, // end of AddItem
 // This function is called by UserCtrl '$scope.showComplex' function, which is in turn called by 'userincompleteItems.html' when the user clicks on the 'edit' button for a given item.  The $scope.showComplex' function creates a modal that offers update options to the user.  Clicking close on the modal resolves '$scope.updateItem' which calls 'updateItem' below
       updateItem: function(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes) {
+        console.log("updateItem called");
 
         if (typeof newDueDate == "object") {
           var newDueDate = newDueDate.getTime();
@@ -528,12 +535,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         } else if (!(oldItem.isComplete) && newDueDate >= beginDay && newDueDate <= endDay) { // This condition is met if the user's date update is less than 24 hours different from old date
 
           if (!(oldItem.isPastDue) && newDueDate > now) {
+            console.log("updateItem: same date condition 1 was met");
 
             var propArray = ["itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray = [0, hourDiff, minuteDiff];
 
           } else if (!(oldItem.isPastDue) && newDueDate < now) {
-
+            console.log("updateItem: same date condition 2 was met");
             var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray = [0, hourPastDiff, minutePastDiff, 0, hourDiff, minuteDiff];
 
@@ -543,7 +551,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // var valArray = [1, newHours, newMinutes, 0, hourDiff, minuteDiff];
 
           } else if (oldItem.isPastDue && newDueDate > now) {
-
+            console.log("updateItem: same date condition 3 was met");
             var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
             var valArray = [0, oldItem.eHour, oldItem.eMinute, 0, hourDiff, minuteDiff];
 
@@ -554,7 +562,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 
           } else if (oldItem.isPastDue && newDueDate < now) {
-
+            console.log("updateItem: same date condition 4 was met");
             var propArray = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray = [0, hourDiff, minuteDiff, 0, hourDiff, minuteDiff];
 
@@ -565,7 +573,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         } else if (!(oldItem.isComplete)) { // This condition is met if user's date update is larger than 24 hours
 
           if (!(oldItem.isPastDue) && newDueDate > now) {
-
+            console.log("updateItem: diff date condition 1 was met");
             var propArray1 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray1 = [-1, hourNeg, minuteNeg];
 
@@ -573,6 +581,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             var valArray2 = [1, newHours, newMinutes];
 
           } else if (!(oldItem.isPastDue) && newDueDate < now) {
+            console.log("updateItem: diff date condition 2 was met");
 
             var propArray1 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray1 = [-1, hourNeg, minuteNeg];
@@ -589,6 +598,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // var valArray2 = [1, newHours, newMinutes, 1, newHours, newMinutes];
 
           } else if (oldItem.isPastDue && newDueDate > now) {
+            console.log("updateItem: diff date condition 3 was met");
 
             var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
             var valArray1 = [-1, hourNeg, minuteNeg, -1, hourNeg, minuteNeg];
@@ -605,7 +615,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // var valArray2 = [1, newHours, newMinutes];
 
           } else if (oldItem.isPastDue && newDueDate < now) {
-            console.log("updateItem: this condition was met")
+            console.log("updateItem: diff date condition 4 was met");
 
             var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
             var valArray1 = [0, 0, 0, 0, 0, 0];
@@ -713,22 +723,18 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
               items[i].isPastDue = true;
               items.$save(items[i]);
 
-              console.log("Is item with name " + items[i].name + " past due? " + items[i].isPastDue);
-
               var valArray = [1, items[i].eHour, items[i].eMinute];
+
+              addOrUpdateDataItems(owner, dueDate, propArray, valArray);
 
             } else if ((items[i].dueDate > now) && (items[i].isPastDue)) {
               items[i].isPastDue = false;
               items.$save(items[i]);
 
-              console.log("Is item with name " + items[i].name + " past due? " + items[i].isPastDue);
-
               var hourNeg = items[i].eHour * -1;
               var minuteNeg = items[i].eMinute * -1;
               var valArray = [-1, hourNeg, minuteNeg];
 
-            }
-            if (items.$loaded()) { // items.$loaded() doesn't seem necessary
               addOrUpdateDataItems(owner, dueDate, propArray, valArray);
             }
           }
