@@ -29,33 +29,33 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       whichWeek["beginWeek"] = beginWeek;
       whichWeek["endWeek"] = endWeek;
 
-      var allowSingularFilterDuplicate = function() {
-
-        var dupeCount = 0;
-
-        for (i = 0; i < propArray.length; i++) {
-          if (whichWeek[propArray[i]] === valArray[i]) {
-            dupeCount++;
-            console.log("dupeCount: " + dupeCount);
-          }
-        }
-        if (dupeCount != propArray.length) {
-          for (i = 0; i < propArray.length; i++) {
-            whichWeek[propArray[i]] = valArray[i];
-            whichWeek.$save();
-          }
-        } else {
-          console.log("attempted to log duplicate week Data");
-        }
-      };
+      // var allowSingularFilterDuplicate = function() {
+      //
+      //   var dupeCount = 0;
+      //
+      //   for (i = 0; i < propArray.length; i++) {
+      //     if (whichWeek[propArray[i]] === valArray[i]) {
+      //       dupeCount++;
+      //       console.log("dupeCount: " + dupeCount);
+      //     }
+      //   }
+      //   if (dupeCount != propArray.length) {
+      //     for (i = 0; i < propArray.length; i++) {
+      //       whichWeek[propArray[i]] = valArray[i];
+      //       whichWeek.$save();
+      //     }
+      //   } else {
+      //     console.log("attempted to log duplicate week Data");
+      //   }
+      // };
 
       if (!(typeof whichWeek === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
 
-        // for (i = 0; i < propArray.length; i++) {
-        //   whichWeek[propArray[i]] = valArray[i];
-        // }
-        allowSingularFilterDuplicate();
-        console.log("called");
+        for (i = 0; i < propArray.length; i++) {
+          whichWeek[propArray[i]] = valArray[i];
+        }
+        // allowSingularFilterDuplicate();
+        // console.log("called");
       }
     };
 
@@ -147,7 +147,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var isExecuted = false;
         if (!isExecuted) {
           return isExecuted = true;
-          console.log("ITEM DATE is too far into the future");
+          // console.log("ITEM DATE is too far into the future");
         }
 
       } else if (itemDueDate < firstMomentPastWeekNum) {
@@ -155,10 +155,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var isExecuted = false;
         if (!isExecuted) {
           return isExecuted = true;
-          console.log("ITEM DATE is too far into the past");
+          // console.log("ITEM DATE is too far into the past");
         }
       } else if (itemDueDate >= firstMomentPastWeekNum && itemDueDate < lastMomentPastWeekNum) {
-        console.log("IF (dataWeekAgo) condition was called");
+        // console.log("IF (dataWeekAgo) condition was called");
         var whichWeek = dataWeekAgo;
         var a_start = firstMomentPastWeekString;
         var aa_end = lastMomentPastWeekString;
@@ -167,7 +167,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
       } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentNextWeekNum) {
-        console.log("ELSE (dataNextWeek) condition was called");
+        // console.log("ELSE (dataNextWeek) condition was called");
         var whichWeek = dataNextWeek;
         var a_start = firstMomentNextWeekString;
         var aa_end = lastMomentNextWeekString;
@@ -187,18 +187,21 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       if (!(typeof selectedDataItem === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
 
-        var iterateAndPrint = function(array) {
-          for (i = 0; i < array.length; i++) {
-            console.log("array[" + i + "]: " + array[i]);
-          }
-        };
+        // var iterateAndPrint = function(array) {
+        //   for (i = 0; i < array.length; i++) {
+        //     console.log("array[" + i + "]: " + array[i]);
+        //   }
+        // };
+        //
+        // iterateAndPrint(propArray);
+        // iterateAndPrint(valArray);
 
-        iterateAndPrint(propArray);
-        iterateAndPrint(valArray);
-
+        console.log("updateDataItems called by " + owner + ". ");
 
         for (i = 0; i < propArray.length; i++) {
-          selectedDataItem[propArray[i]] = valArray[i];
+          selectedDataItem[propArray[i]] += valArray[i];
+
+        console.log("CONT. values: " + valArray[i]);
         }
 
         if (typeof selectedDataItem["itemLeftCount"] === "undefined") {
@@ -213,11 +216,12 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var iwc = selectedDataItem["itemWorkedCount"];
         }
 
-        selectedDataItem["totalItems"] = ilc + iwc;
+        selectedDataItem["totalItems"] += ilc + iwc;
+
+
 
         // dataItems.$save(selectedDataItem);
-        dataItems.$save(selectedDataItem).then(function(selectedDataItem) {
-
+        dataItems.$save(selectedDataItem).then(function() {
         });
 
       }
@@ -291,28 +295,28 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     var addOrUpdateDataItems = function(owner, itemDueDate, propArray, valArray) {
 
-      console.log("addOrUpdateDataItems called by " + owner + " with date: " + itemDueDate);
+      // console.log("addOrUpdateDataItems called by " + owner + " with date: " + itemDueDate);
 
       if (!(typeof dataItems[0] === "undefined")) {
 
-        for (i = 0; i < dataItems.length; i++) {
+        for (var i = 0; i < dataItems.length; i++) {
 
           var endDay = dataItems[i].endDay;
           var beginDay = dataItems[i].beginDay;
 
           if (itemDueDate >= beginDay && itemDueDate <= endDay) {
-            console.log("updateDataItems called by " + owner);
+            console.log("updateDataItems WIL BE called by " + owner + ". " + itemDueDate + " is >= than begin day, " + beginDay + ", and <= than endDay, " + endDay);
 
             updateDataItems(owner, itemDueDate, dataItems[i], propArray, valArray);
 
-          } else if (itemDueDate < beginDay || itemDueDate > endDay) {
+          } else if ((i == dataItems.length -1) && ( itemDueDate < beginDay || itemDueDate > endDay)) {
 
-            console.log("1st createNewDataItems called by " + owner);
+            console.log("1st createNewDataItems WILL BE called by " + owner + ". " + itemDueDate + " is < than begin day, " + beginDay + ", OR > than endDay, " + endDay);
             createNewDataItems(itemDueDate, propArray, valArray);
           }
         }
       } else {
-        console.log("2nd create fn called by " + owner);
+        console.log("2nd createNewDataItems called by " + owner);
         createNewDataItems(itemDueDate, propArray, valArray);
       }
 
@@ -510,7 +514,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       }, // end of AddItem
 // This function is called by UserCtrl '$scope.showComplex' function, which is in turn called by 'userincompleteItems.html' when the user clicks on the 'edit' button for a given item.  The $scope.showComplex' function creates a modal that offers update options to the user.  Clicking close on the modal resolves '$scope.updateItem' which calls 'updateItem' below
       updateItem: function(oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes) {
-        console.log("updateItem called");
+        // console.log("updateItem called");
 
         if (typeof newDueDate == "object") {
           var newDueDate = newDueDate.getTime();
@@ -615,7 +619,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             // var valArray2 = [1, newHours, newMinutes];
 
           } else if (oldItem.isPastDue && newDueDate < now) {
-            console.log("updateItem: diff date condition 4 was met");
+            // console.log("updateItem: diff date condition 4 was met");
 
             var propArray1 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount",  "hoursLeft", "minutesLeft"];
             var valArray1 = [0, 0, 0, 0, 0, 0];
