@@ -188,14 +188,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       if (!(typeof selectedDataItem === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
 
         console.log("updateDataItems called by " + owner + ".");
-        var iterateAndPrint = function(array) {
-          for (i = 0; i < array.length; i++) {
-            console.log("array[" + i + "]: " + array[i]);
+        var iterateAndPrint = function(array1, array2) {
+          for (i = 0; i < array1.length; i++) {
+            console.log(array1[i] + ": " + array2[i]);
           }
         };
 
-        iterateAndPrint(propArray);
-        iterateAndPrint(valArray);
+        iterateAndPrint(propArray, valArray);
 
 
         for (i = 0; i < propArray.length; i++) {
@@ -203,11 +202,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         }
 
         // dataItems.$save(selectedDataItem);
-        dataItems.$save(selectedDataItem).then(function() {
+        dataItems.$save(selectedDataItem).then(function(selectedDataItem) {
         });
-
       }
-
     };
 
     var createNewDataItems = function(owner, itemDueDate, propArray, valArray) {
@@ -228,14 +225,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       };
 
       console.log("createNewDataItems called by " + owner + ".");
-      var iterateAndPrint = function(array) {
-        for (i = 0; i < array.length; i++) {
-          console.log("array[" + i + "]: " + array[i]);
+      var iterateAndPrint = function(array1, array2) {
+        for (i = 0; i < array1.length; i++) {
+          console.log(array1[i] + ": " + array2[i]);
         }
       };
 
-      iterateAndPrint(propArray);
-      iterateAndPrint(valArray);
+      iterateAndPrint(propArray, valArray);
 
       dataItems.$add({
         a_start: findMoment(itemDueDate).firstString,
@@ -284,6 +280,15 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       }
 
     };
+
+    // todo: create function that erases empty dataItems
+    // todo: test updating hour and minute
+    // todo: test completion
+    // todo: test pastDue
+    // todo: fix weekly dataItems
+    // todo: feed all working data into charts
+
+
 
 
 
@@ -555,6 +560,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
             var propArray1 = ["itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray1 = [-1, hourNeg, minuteNeg];
 
+
+
             var propArray2 = ["itemOverdueCount", "hoursOverdue", "minutesOverdue", "itemLeftCount", "hoursLeft", "minutesLeft"];
             var valArray2 = [0, hourPastDiff, minutePastDiff, 1, newHours, newMinutes];
 
@@ -632,6 +639,38 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       getDataItems: function() {
         return dataItems;
+      },
+
+      discardEmptyDataItems: function() {
+
+        var isEmpty = function(object) {
+          var valueCounter = 0;
+          for (var property in object) {
+            if (object.hasOwnProperty(property)) {
+              if (!(typeof object[property] === "string") && (!(object[property] > 1000))) {
+                valueCounter += object[property];
+              }
+            }
+          }
+          if (valueCounter > 0) {
+            return false;
+          } else {
+            return true;
+          }
+        };
+
+        var totalDataItems = dataItems.length;
+
+        for (var i = 0; i < totalDataItems; i++) {
+
+          var empty = isEmpty(dataItems[i]);
+
+          if (empty) {
+            dataItems.$remove(dataItems[i]).then(function() {
+              console.log("dataItem, which is now " + dataItems[i] + ", has been removed");
+            });
+          }
+        }
       },
 
 // The function below is the actual deletion process for items.  The user has the power to only mark items as complete.  Complete or Past Due (i.e. incomplete but not marked as complete after the due date) items are rescuable and able to be set as incomplete for up to a week.  After one week, all Complete and Past Due items are deleted when this function is called by UserCtrl function 'refreshTalliesAndData', which is called when (1) 'userincompleteItems.html' is initialized, and when either (2) '$scope.updateItems', or (3) '$scope.addItem', or (4) '$scope.updateCompletion' are called.

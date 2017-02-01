@@ -13,12 +13,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       $scope.time = time;
 
       ItemCrud.updateAllItemsPastDue();
+      ItemCrud.discardEmptyDataItems();
 
       return time;
-    };
-
-    $scope.addOrUpdateDataItems = function(owner, dueDate, propArray, valArray) {
-      ItemCrud.addOrUpdateDataItems(owner, dueDate, propArray, valArray);
     };
 
     $interval(refreshTime, 1000);
