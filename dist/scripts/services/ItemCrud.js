@@ -22,41 +22,79 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
 // if dataItems array is created for a specific day, 'addOrUpdateDataItems' updates it, otherwise it creates a new one.
 
-    var updateWeeklyData = function(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray) {
-
-      whichWeek["a_start"] = a_start;
-      whichWeek["aa_end"] = aa_end;
-      whichWeek["beginWeek"] = beginWeek;
-      whichWeek["endWeek"] = endWeek;
-
-      // var allowSingularFilterDuplicate = function() {
-      //
-      //   var dupeCount = 0;
-      //
-      //   for (i = 0; i < propArray.length; i++) {
-      //     if (whichWeek[propArray[i]] === valArray[i]) {
-      //       dupeCount++;
-      //       console.log("dupeCount: " + dupeCount);
-      //     }
-      //   }
-      //   if (dupeCount != propArray.length) {
-      //     for (i = 0; i < propArray.length; i++) {
-      //       whichWeek[propArray[i]] = valArray[i];
-      //       whichWeek.$save();
-      //     }
-      //   } else {
-      //     console.log("attempted to log duplicate week Data");
-      //   }
-      // };
+    var updateWeeklyData = function(owner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray) {
 
       if (!(typeof whichWeek === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
 
+        var iterateAndPrint = function(array1, array2) {
+          for (i = 0; i < array1.length; i++) {
+            console.log("updateWeeklyData called by " + owner + ": " + array1[i] + ": " + array2[i] + ", this latter is a " + typeof array2[i]);
+          }
+        };
+
+        iterateAndPrint(propArray, valArray);
+
+        whichWeek["a_start"] = a_start;
+        whichWeek["aa_end"] = aa_end;
+        whichWeek["beginWeek"] = beginWeek;
+        whichWeek["endWeek"] = endWeek;
+
         for (i = 0; i < propArray.length; i++) {
-          whichWeek[propArray[i]] = valArray[i];
+          if (typeof valArray[i] === "number") {
+            whichWeek[propArray[i]] += valArray[i];
+          }
         }
-        // allowSingularFilterDuplicate();
-        // console.log("called");
+        whichWeek.$loaded().then(function() {
+          whichWeek.$save(whichWeek).then(function(whichWeek) {
+          });
+        });
       }
+    };
+
+    var createWeeklyData = function(owner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray) {
+
+      var matchProp = function(propName) {
+        if (!(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
+          for (i = 0; i < propArray.length; i++) {
+            if (propName === propArray[i]) {
+              return valArray[i];
+            }
+          }
+        } else {
+          return 0;
+        }
+      };
+
+      var iterateAndPrint = function(array1, array2) {
+        for (i = 0; i < array1.length; i++) {
+          console.log("createWeeklyData called: " + array1[i] + ": " + array2[i]);
+        }
+      };
+
+      iterateAndPrint(propArray, valArray);
+
+      whichWeek.$save({
+        a_start: a_start,
+        aa_end: aa_end,
+        beginWeek: beginWeek,
+        endWeek: endWeek,
+        itemLeftCount: matchProp("itemLeftCount") || 0,
+        itemWorkedCount: matchProp("itemWorkedCount") || 0,
+        itemOverdueCount: matchProp("itemOverdueCount") || 0,
+        itemDueCompleteCount: matchProp("itemDueCompleteCount") || 0,
+        hoursLeft: matchProp("hoursLeft") || 0,
+        minutesLeft: matchProp("minutesLeft") || 0,
+        hoursWorked: matchProp("hoursWorked") || 0,
+        minutesWorked: matchProp("minutesWorked") || 0,
+        hoursOverdue: matchProp("hoursOverdue") || 0,
+        minutesOverdue: matchProp("minutesOverdue") || 0,
+        hoursDueComplete: matchProp("hoursDueComplete") || 0,
+        minutesDueComplete: matchProp("minutesDueComplete") || 0
+      }).then(function() {
+        console.log("weekly object created with start date: " + whichWeek.a_start);
+
+      });
+
     };
 
     var findMoment = function(itemDueDate) {
@@ -81,7 +119,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       }
     };
 
-    var sortDataIntoWeek = function(itemDueDate, propArray, valArray) {
+    var sortDataIntoWeek = function(owner, itemDueDate, propArray, valArray) {
 
       var dateObj = new Date();
       var minuteNow = dateObj.getMinutes();
@@ -143,20 +181,44 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       var lastMomentNextWeekString = lastMomentNextWeekObj.toString();
       var lastMomentNextWeekNum = lastMomentNextWeekObj.getTime();
 
-      if (itemDueDate > lastMomentNextWeekNum) {
+      var newOwner = "nobody just yet";
+      var start = 0;
+      var end = 0;
+
+      var newOwner = function(newOwner, start, stop) {
+          var newOwner = "sortDataIntoWeek between " + start + " and " + stop + " via " + owner;
+
+          return newOwner;
+      };
+
+      var addOrUpdateWeeklyData = function(owner, newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray) {
+
+        if (owner == "createNewDataItems") {
+
+          newOwner(newOwner, start, stop);
+
+          createWeeklyData(newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
+
+          console.log("createWeeklyData called");
+
+        } else if (owner != "createNewDataItems") {
+
+          newOwner(newOwner, start, stop);
+
+          updateWeeklyData(newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
+
+          console.log("updateWeeklyData called");
+        }
+
+      };
+
+      if (itemDueDate < firstMomentPastWeekNum || itemDueDate > lastMomentNextWeekNum) {
         var isExecuted = false;
         if (!isExecuted) {
           return isExecuted = true;
-          // console.log("ITEM DATE is too far into the future");
+          console.log("ITEM DATE is out of bounds, was 'isExecuted' toggled to true?: " + isExecuted);
         }
 
-      } else if (itemDueDate < firstMomentPastWeekNum) {
-
-        var isExecuted = false;
-        if (!isExecuted) {
-          return isExecuted = true;
-          // console.log("ITEM DATE is too far into the past");
-        }
       } else if (itemDueDate >= firstMomentPastWeekNum && itemDueDate < lastMomentPastWeekNum) {
         // console.log("IF (dataWeekAgo) condition was called");
         var whichWeek = dataWeekAgo;
@@ -165,7 +227,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var beginWeek = firstMomentPastWeekNum;
         var endWeek = lastMomentPastWeekNum;
 
-        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
+        newOwner(owner, a_start, aa_end);
+
+        addOrUpdateWeeklyData(owner, newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
+
       } else if (itemDueDate >= firstMomentNextWeekNum && itemDueDate < lastMomentNextWeekNum) {
         // console.log("ELSE (dataNextWeek) condition was called");
         var whichWeek = dataNextWeek;
@@ -174,23 +239,28 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         var beginWeek = firstMomentNextWeekNum;
         var endWeek = lastMomentNextWeekNum;
 
-        updateWeeklyData(whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
+        newOwner(owner, a_start, aa_end);
+
+        addOrUpdateWeeklyData(owner, newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
+
       }
+
     }; // end sortDataIntoWeek
 
     var updateDataItems = function(owner, itemDueDate, selectedDataItem, propArray, valArray) {
 
-      sortDataIntoWeek(itemDueDate, propArray, valArray);
+      var owner = "updateDataItems via " + owner;
+
+      sortDataIntoWeek(owner, itemDueDate, propArray, valArray);
 
       var dateObj = new Date (itemDueDate);
       var dayOfMonth = dateObj.getDate();
 
       if (!(typeof selectedDataItem === "undefined") && !(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
 
-        console.log("updateDataItems called by " + owner + ".");
         var iterateAndPrint = function(array1, array2) {
           for (i = 0; i < array1.length; i++) {
-            console.log(array1[i] + ": " + array2[i]);
+            console.log("updateDataItems called by " + owner + ": " + array1[i] + ": " + array2[i]);
           }
         };
 
@@ -209,8 +279,9 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
     var createNewDataItems = function(owner, itemDueDate, propArray, valArray) {
 
-      sortDataIntoWeek(itemDueDate, propArray, valArray);
+      var newOwner = "createNewDataItems";
 
+      sortDataIntoWeek(newOwner, itemDueDate, propArray, valArray);
 
       var matchProp = function(propName) {
         if (!(typeof propArray === "undefined") && !(typeof valArray === "undefined")) {
@@ -261,6 +332,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
           var endDay = dataItems[i].endDay;
           var beginDay = dataItems[i].beginDay;
+
+          var owner = "addOrUpdateDataItems via + " + owner;
 
           if (itemDueDate >= beginDay && itemDueDate <= endDay) {
             console.log("updateDataItems WIL BE called by " + owner + ". " + itemDueDate + " is >= than begin day, " + beginDay + ", and <= than endDay, " + endDay);
@@ -788,13 +861,13 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var hourPastDiff = 0;
           var minutePastDiff = 0;
           // These are dummy variables and are not to be used.  Their presence here is due to Testing of this function
-          owner = "updateCompletionViaDeleteBtn"
+          var owner = "updateCompletion via DeleteBtn"
         } else {
           var hourDiff = newHours - item.eHour;
           var minuteDiff = newMinutes - item.eMinute;
           var hourPastDiff = newHours - (item.eHour * 2);
           var minutePastDiff = newMinutes - (item.eMinute * 2);
-          owner = "updateCompletionViaUpdateItem"
+          var owner = "updateCompletion via UpdateItem"
         }
 
         var hourNeg = item.eHour * -1;
