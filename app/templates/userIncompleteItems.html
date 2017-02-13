@@ -56,7 +56,7 @@
 <!--Add Button--->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-div">
           <button type="submit" type="button" class="btn-add">Add to-do item</button>
-          <button ng-click="addTestItem()" class="btn-add btn-test">T E S T: add test item</button>
+          <!-- <button ng-click="addTestItem()" class="btn-add btn-test">T E S T: add test item</button> -->
           <!-- <button ng-click="initiateDataItemsWorkAround()" class="btn-add btn-test">T E S T: add dataItem</button> -->
           <!-- <button ng-click="addOrUpdateDataItems('itemLeftCount', 'hoursLeft', 'minutesLeft', 200, 200, 200)" class="btn-add btn-test">T E S T: update existing dataItem</button> -->
         </div>
@@ -70,7 +70,6 @@
 <div class="container-fluid main-body">
 <!--begin select all / clear selected / delete selected-->
   <div class="row formControls">
-
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap">
       <button class="controlBtn selectAll" ng-click="selectAllForDelete(items)" ng-show="!allSelected && !selectionInversion" ng-init="allSelected">
         <p>select all</p>
@@ -88,6 +87,7 @@
       </button>
     </div>
   </div>
+
   <p class="noItemAnnounce" ng-show="dataItems.itemLeftCount === 0">There are no to do items at this time</p>
 <!--end select all / clear selected / delete selected-->
   <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false">
@@ -134,7 +134,7 @@
       <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'redText': (item.isPastDue && !item.isSafeToComplete), yellowText: item.isSafeToComplete}"></i></div>
       <!-- ng-mouseleave="hover = false" -->
       <a href class="editBtn" ng-model="item" ng-hide="item.isSafeToComplete" ng-class="{'redCell': (item.isPastDue && !item.isSafeToComplete), yellowCell: item.isSafeToComplete}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
-      <button class="deleteBtn" ng-click="updateCompletion(item, 0)" ng-show="item.isSafeToComplete" ><p><i class="fa fa-times"></i></p></button>
+      <button class="deleteBtn" ng-model="item" ng-click="updateCompletion('deleteBtn', item, 0, 0, 0)" ng-show="item.isSafeToComplete" ><p><i class="fa fa-times"></i></p></button>
       <!-- <div class="deleteCheckbox">
         <input type="checkbox" id="cb" ng-change="updateCompletion(item, 0)"/>
       </div> -->

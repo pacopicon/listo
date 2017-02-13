@@ -150,19 +150,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       ItemCrud.processOldCompleteItems();
     };
 
-    $scope.addTestItem = function() {
-      var day = new Date();
-      var dueDate = day.setDate(20);
-      var dueDateObj = new Date(dueDate);
-      var name = "test"
-      ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
-      // $scope.UserCtrlRefreshTalliesAndData();
-    };
-
-    // $scope.addItem = function() {
-    //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-    //   $scope.UserCtrlRefreshTalliesAndData();
+    // $scope.addTestItem = function() {
+    //   var day = new Date();
+    //   var dueDate = day.setDate(20);
+    //   var dueDateObj = new Date(dueDate);
+    //   var name = "test"
+    //   ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
+    //   // $scope.UserCtrlRefreshTalliesAndData();
     // };
+
+    $scope.addItem = function() {
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
+      $scope.UserCtrlRefreshTalliesAndData();
+    };
 
     $scope.toggleInvertAndSave = function(item) {
       var itemCount = 0;
@@ -199,15 +199,21 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       ItemCrud.toggleSelectForDelete(items);
     }
 
+
+
     $scope.deleteSelected = function() {
       for (var i = 0; i < items.length; i++)
         if (items[i].isComplete === false && items[i].isSafeToComplete === true) {
-          $scope.updateCompletion(items[i]);
+          var owner = "deleteSelected"
+          var newDueDate = 0;
+          var newhours = 0;
+          var newMinutes = 0;
+          $scope.updateCompletion(owner, items[i], newDueDate, newhours, newMinutes);
         }
     };
 
-    $scope.updateCompletion = function(item) {
-      ItemCrud.updateCompletion(item);
+    $scope.updateCompletion = function(owner, item, newDueDate, newhours, newMinutes) {
+      ItemCrud.updateCompletion(owner, item, newDueDate, newhours, newMinutes);
 
       $scope.UserCtrlRefreshTalliesAndData();
     };

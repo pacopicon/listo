@@ -504,7 +504,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         if (oldItem.isComplete) {
 
-          updateCompletion(oldItem, newDueDate, newhours, newMinutes);
+          updateCompletion(owner, oldItem, newDueDate, newhours, newMinutes);
 
         } else if (!(oldItem.isComplete) && newDueDate >= beginDay && newDueDate <= endDay) { // This condition is met if the user's date update is less than 24 hours different from old date
 
@@ -773,27 +773,36 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       },
 
 // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
-      updateCompletion: function(item, newDueDate, newhours, newMinutes) {
-        // Remember: The IF condition below can only be executed by the deleteBtn in userincompleteItems.html, which effectively delets the item from to do and relegates it to the archive.
-        // The ELSE IF condition can be executed by BOTH the un-delete button in archive and the Modal when this latter is executed from archive.
+      updateCompletion: function(owner, item, newDueDate, newhours, newMinutes) {
+        // Remember: Both IF conditions below can only be executed by the deleteBtn in userincompleteItems.html, which effectively delets the item from to do and relegates it to the archive.
+        // Both The ELSE (below) and the ELSE IF condition (further below) can be executed by BOTH the un-delete button in archive and the Modal when this latter is executed from archive.
+
+        console.log("item: " + item);
+
         var item = items.$getRecord(item.$id);
 
-        if (typeof newDueDate === "undefined") {
-          var newDueDate = 0;
+        if (owner == "deleteBtn") {
+          var newDueDate = newDueDate;
+          var hourDiff = 0;
+          var minuteDiff = 0;
+          var hourPastDiff = 0;
+          var minutePastDiff = 0;
+          // These are dummy variables and are not to be used.  Their presence here is due to Testing of this function
+          owner = "updateCompletionViaDeleteBtn"
+        } else {
+          var hourDiff = newHours - item.eHour;
+          var minuteDiff = newMinutes - item.eMinute;
+          var hourPastDiff = newHours - (item.eHour * 2);
+          var minutePastDiff = newMinutes - (item.eMinute * 2);
+          owner = "updateCompletionViaUpdateItem"
         }
 
-        var hourDiff = newHours - item.eHour;
-        var minuteDiff = newMinutes - item.eMinute;
-        var hourPastDiff = newHours - (item.eHour * 2);
-        var minutePastDiff = newMinutes - (item.eMinute * 2);
         var hourNeg = item.eHour * -1;
         var minuteNeg = item.eMinute * -1;
         var oldDueDate = item.dueDate;
 
         var beginDay = findMoment(oldDueDate).firstNum;
         var endDay = findMoment(oldDueDate).lastNum;
-
-        var owner = "updateCompletion";
 
         if (!item.isComplete) {
           item.isComplete = true;
