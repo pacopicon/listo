@@ -120,7 +120,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
     };
 
     var sortDataIntoWeek = function(owner, itemDueDate, propArray, valArray) {
-
+      console.log("sortDataIntoWeek called");
       var dateObj = new Date();
       var minuteNow = dateObj.getMinutes();
       var hourNow = dateObj.getHours();
