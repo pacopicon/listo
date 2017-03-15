@@ -66,6 +66,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       };
 
       var iterateAndPrint = function(array1, array2) {
+        console.log("whichweek: " + whichWeek);
         for (i = 0; i < array1.length; i++) {
           console.log("createWeeklyData called: " + array1[i] + ": " + array2[i]);
         }
@@ -73,7 +74,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       iterateAndPrint(propArray, valArray);
 
-      whichWeek.$save({
+      whichWeek.$add({
         a_start: a_start,
         aa_end: aa_end,
         beginWeek: beginWeek,
@@ -91,7 +92,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         hoursDueComplete: matchProp("hoursDueComplete") || 0,
         minutesDueComplete: matchProp("minutesDueComplete") || 0
       }).then(function() {
-        console.log("weekly object created with start date: " + whichWeek.a_start);
+        console.log(whichWeek + "created with start date: " + whichWeek.a_start);
 
       });
 
@@ -187,24 +188,19 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
       var newOwner = function(newOwner, start, stop) {
           var newOwner = "sortDataIntoWeek between " + start + " and " + stop + " via " + owner;
-
           return newOwner;
       };
 
       var addOrUpdateWeeklyData = function(owner, newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray) {
 
         if (owner == "createNewDataItems") {
-
           newOwner(newOwner, start, stop);
-
           createWeeklyData(newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
 
           console.log("createWeeklyData called");
 
         } else if (owner != "createNewDataItems") {
-
           newOwner(newOwner, start, stop);
-
           updateWeeklyData(newOwner, whichWeek, a_start, aa_end, beginWeek, endWeek, propArray, valArray);
 
           console.log("updateWeeklyData called");
