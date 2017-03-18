@@ -18,44 +18,25 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     }
 
     var now = new Date();
-    var minuteNow = now.getMinutes();
-    var hourNow = now.getHours();
 
-    var minuteBeforeNow = function() {
-      var minuteBeforeNow = minuteNow - 1;
-      if (minuteBeforeNow == 59) {
-        var hourBeforeNow = hourNow - 1;
-        var minuteBeforeNow = now.setHours(hourBeforeNow);
-        return {
-          num: minuteBeforeNow,
-          obj: new Date(minuteBeforeNow)
-        };
-      } else {
-        var minuteBeforeNow = now.setMinutes(minuteBeforeNow);
-        return {
-          num: minuteBeforeNow,
-          obj: new Date(minuteBeforeNow)
-        };
-      }
-    };
-    var dateToday = now.getDate();
     var year = now.getFullYear();
     var month = now.getMonth();
-    var dateToday = now.getDate();
-
-    var weekAgoDate = dateToday - 7;
+    var nowNum = now.getTime();
+    var weekNum = 604800000;
+    var weekAgoDateNum = nowNum - weekNum;
+    var weekAgoDateObj = new Date(weekAgoDateNum);
+    var weekAgoDate = weekAgoDateObj.getDate();
     var firstMomentPastWeekObj = new Date(year, month, weekAgoDate, 0, 0, 0, 0);
-    var firstMomentPastWeekString = firstMomentPastWeekObj.toString();
     var firstMomentPastWeekNum = firstMomentPastWeekObj.getTime();
-    var lastMomentPastWeekObj = minuteBeforeNow().obj;
-    var lastMomentPastWeekString = lastMomentPastWeekObj.toString();
-    var lastMomentPastWeekNum = minuteBeforeNow().num;
+
+    var lastMomentPastWeekObj = nowNum - 60000; // last moment of last week was a minute ago
+    var lastMomentPastWeekNum = new Date(lastMomentPastWeekObj);
 
     $scope.itemLeftCountLast = function() {
 
       var itemLeftCountLast = 0;
       dataItems.forEach(function(dataItem) {
-        if (dataItem.beginDay >= firstMomentPastWeekNum && data.endDay < lastMomentPastWeekNum) {
+        if (dataItem.beginDay >= firstMomentPastWeekNum && dataItem.endDay < lastMomentPastWeekNum) {
           itemLeftCountLast += dataItem.itemLeftCount;
         }
       });
@@ -208,7 +189,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
     $scope.addTestItem = function() {
       var day = new Date();
-      var dueDate = day.setDate(19);
+      var dueDate = day.setDate(17);
       var dueDateObj = new Date(dueDate);
       var name = "test"
       ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
