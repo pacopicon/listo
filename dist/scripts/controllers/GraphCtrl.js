@@ -13,6 +13,101 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     };
 
     $scope.items = ItemCrud.getAllItems();
+    items = ItemCrud.getAllItems();
+
+    // var dataItems = ItemCrud.getDataItems();
+
+
+    // $scope.itemLeftCount = function() {
+    //
+    //   var itemLeftCount = 0;
+    //   dataItems.forEach(function(dataItem) {
+    //     itemLeftCount += dataItem.itemLeftCount;
+    //   });
+    //   return itemLeftCount;
+    // }
+
+    var now = new Date();
+
+    var year = now.getFullYear();
+    var month = now.getMonth();
+    var nowNum = now.getTime();
+    var weekNum = 604800000;
+    var weekAgoDateNum = nowNum - weekNum;
+    var weekAgoDateObj = new Date(weekAgoDateNum);
+    var weekAgoDate = weekAgoDateObj.getDate();
+    var firstMomentPastWeekObj = new Date(year, month, weekAgoDate, 0, 0, 0, 0);
+    var firstMomentPastWeekNum = firstMomentPastWeekObj.getTime();
+
+    var lastMomentPastWeekObj = nowNum - 60000; // last moment of last week was a minute ago
+    var lastMomentPastWeekNum = new Date(lastMomentPastWeekObj);
+
+    // $scope.itemLeftCountLast = function() {
+    //
+    //   var itemLeftCountLast = 0;
+    //   dataItems.forEach(function(dataItem) {
+    //     if (dataItem.beginDay >= firstMomentPastWeekNum && dataItem.endDay < lastMomentPastWeekNum) {
+    //       itemLeftCountLast += dataItem.itemLeftCount;
+    //     }
+    //   });
+    //   return itemLeftCountLast;
+    // }
+
+    $scope.itemWorkedCountLastSeven = function() {
+
+      var itemCount = 0;
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && !item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+    $scope.itemLeftCountLastSeven = function() {
+
+      var itemCount = 0;
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && !item.isComplete && !item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+    $scope.itemOverdueCountLastSeven = function() {
+      var itemCount = 0;
+
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && !item.isComplete && item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+    $scope.itemDueCompleteCountLastSeven = function() {
+      var itemCount = 0;
+
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+
+
+//
+// [$scope.itemWorkedCountLastSeven, $scope.itemLeftCountLastSeven, $scope.itemOverdueCountLastSeven, $scope.itemDueCompleteCountLastSeven];
+
+
+
+
+
+
+
 
     // $scope.completionData = function() {
     // var sortedTallyLastSeven = graphCruncher.sortAndTally("lastSeven");
@@ -117,27 +212,49 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     // $scope.percentTotalIncompleteNotOverdueLastSeven = sortedTallyLastSeven.percentTotalIncompleteNotOverdue;
     // $scope.percentTotalOverdueNotCompleteLastSeven = sortedTallyLastSeven.percentTotalOverdueNotComplete;
     // $scope.percentTotalOverdueCompleteLastSeven = sortedTallyLastSeven.percentTotalOverdueComplete;
-    //
-    // // Graph labels for lastSeven
-    //
-    // $scope.seriesLastSeven = ['last week'];
-    //
-    // // complete count Vs. incomplete count Vs. overdue count Vs. overdue but done count
-    // $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven, $scope.itemLeftCountLastSeven, $scope.itemOverdueCountLastSeven, $scope.itemDueCompleteCountLastSeven];
-    // $scope.itemLabelsLastSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
-    //
-    // // hours worked, left, overdue, and overdue but complete
-    // $scope.hourDataLastSeven = [$scope.hoursWorkedLastSeven, $scope.hoursLeftLastSeven, $scope.hoursOverdueLastSeven, $scope.hoursDueCompleteLastSeven];
-    // $scope.hourLabelsLastSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
-    //
-    // // Total complete Vs. Total incomplete:
-    // $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountLastSeven, $scope.totalCompleteCountLastSeven];
-    // $scope.itemLabelsCompleteIncompleteTotalLastSeven = ["w", "x", "y", "z", "items yet to complete", "items completed"];
-    //
-    // // items overdue
-    // $scope.itemDataOverdueCompleteDueTotalLastSeven = [$scope.totalOverdueCountLastSeven, $scope.totalOverdueCountLastSeven];
-    // $scope.itemLabelsOverdueCompleteDueTotalLastSeven = ["items overdue", "items not yet due"];
-    //
+
+    // Graph labels for lastSeven
+
+    $scope.seriesLastSeven = ['last week'];
+
+    // complete count Vs. incomplete count Vs. overdue count Vs. overdue but done count
+
+    // $scope.itemWorkedCountLastSeven = itemWorkedCountLastSeven();
+    // $scope.itemLeftCountLastSeven = itemLeftCountLastSeven(); $scope.itemOverdueCountLastSeven = itemOverdueCountLastSeven(); $scope.itemDueCompleteCountLastSeven = itemDueCompleteCountLastSeven();
+
+    // itemsService.get = function() {
+    //   return items;
+    // };
+
+    $scope.$watch(getItems, watcherFunction, true);
+      function getItems() {
+        return ItemCrud.getAllItems();
+    };
+
+    function watcherFunction(newData) {
+      console.log(newData);
+      // do sth if array was changed
+    };
+
+    $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven(), $scope.itemLeftCountLastSeven(), $scope.itemOverdueCountLastSeven(), $scope.itemDueCompleteCountLastSeven()];
+
+    // $scope.itemDataLastSeven =
+    //  [$scope.itemWorkedCountLastSeven(), $scope.itemLeftCountLastSeven(), $scope.itemOverdueCountLastSeven(), $scope.itemDueCompleteCountLastSeven()];
+
+    $scope.itemLabelsLastSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
+
+    // hours worked, left, overdue, and overdue but complete
+    $scope.hourDataLastSeven = [$scope.hoursWorkedLastSeven, $scope.hoursLeftLastSeven, $scope.hoursOverdueLastSeven, $scope.hoursDueCompleteLastSeven];
+    $scope.hourLabelsLastSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
+
+    // Total complete Vs. Total incomplete:
+    $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountLastSeven, $scope.totalCompleteCountLastSeven];
+    $scope.itemLabelsCompleteIncompleteTotalLastSeven = ["w", "x", "y", "z", "items yet to complete", "items completed"];
+
+    // items overdue
+    $scope.itemDataOverdueCompleteDueTotalLastSeven = [$scope.totalOverdueCountLastSeven, $scope.totalOverdueCountLastSeven];
+    $scope.itemLabelsOverdueCompleteDueTotalLastSeven = ["items overdue", "items not yet due"];
+
     // // Data for nextSeven:
     //
     // $scope.itemLeftCountNextSeven = sortedTallyNextSeven.itemLeftCount;
@@ -223,7 +340,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     //     ]
     //   }
     // };
-    //
+
     // };// end of completionData()
 
 // The functions below are called by the different page links and refresh the graphs and remind the application to remove week-old items
