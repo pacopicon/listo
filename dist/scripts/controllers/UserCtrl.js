@@ -58,7 +58,7 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
 
       var itemLeftCountLast = 0;
       items.forEach(function(item) {
-        if (item.created_at >= firstMomentPastWeekNum && item.created_at < lastMomentPastWeekNum) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum) {
           itemLeftCountLast += 1;
         }
       });
