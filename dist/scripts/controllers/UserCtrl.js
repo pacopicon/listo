@@ -17,6 +17,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       return itemLeftCount;
     }
 
+    $scope.itemPastDueCount = function() {
+      var itemPastDueCount = 0;
+
+      items.forEach(function(item) {
+        if (item.isPastDue) {
+          itemPastDueCount += 1;
+        }
+      });
+      return itemPastDueCount;
+    }
+
     var now = new Date();
 
     var year = now.getFullYear();
@@ -38,6 +49,17 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       dataItems.forEach(function(dataItem) {
         if (dataItem.beginDay >= firstMomentPastWeekNum && dataItem.endDay < lastMomentPastWeekNum) {
           itemLeftCountLast += dataItem.itemLeftCount;
+        }
+      });
+      return itemLeftCountLast;
+    }
+
+    $scope.itemLeftCountLast2 = function() {
+
+      var itemLeftCountLast = 0;
+      items.forEach(function(item) {
+        if (item.created_at >= firstMomentPastWeekNum && item.created_at < lastMomentPastWeekNum) {
+          itemLeftCountLast += 1;
         }
       });
       return itemLeftCountLast;
