@@ -4,29 +4,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     // Remember, Firebase only accepts object, array, string, number, boolean, or null (see: https://www.firebase.com/docs/web/api/firebase/set.html)
 
     $scope.items = ItemCrud.getAllItems();
+    items = ItemCrud.getAllItems();
+
     $scope.dataItems = ItemCrud.getDataItems();
     var dataItems = ItemCrud.getDataItems();
 
-
-    $scope.itemLeftCount = function() {
-
-      var itemLeftCount = 0;
-      dataItems.forEach(function(dataItem) {
-        itemLeftCount += dataItem.itemLeftCount;
-      });
-      return itemLeftCount;
-    }
-
-    $scope.itemPastDueCount = function() {
-      var itemPastDueCount = 0;
-
-      items.forEach(function(item) {
-        if (item.isPastDue) {
-          itemPastDueCount += 1;
-        }
-      });
-      return itemPastDueCount;
-    }
 
     var now = new Date();
 
@@ -43,29 +25,75 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
     var lastMomentPastWeekObj = nowNum - 60000; // last moment of last week was a minute ago
     var lastMomentPastWeekNum = new Date(lastMomentPastWeekObj);
 
-    $scope.itemLeftCountLast = function() {
+    $scope.itemWorkedCountLastSeven = function() {
 
-      var itemLeftCountLast = 0;
-      dataItems.forEach(function(dataItem) {
-        if (dataItem.beginDay >= firstMomentPastWeekNum && dataItem.endDay < lastMomentPastWeekNum) {
-          itemLeftCountLast += dataItem.itemLeftCount;
-        }
-      });
-      return itemLeftCountLast;
-    }
-
-    $scope.itemLeftCountLast2 = function() {
-
-      var itemLeftCountLast = 0;
+      var itemCount = 0;
       items.forEach(function(item) {
-        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum) {
-          itemLeftCountLast += 1;
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && !item.isPastDue) {
+          itemCount += 1;
         }
       });
-      return itemLeftCountLast;
-    }
+      return itemCount;
+    };
 
-    var items = $scope.items;
+    $scope.itemLeftCountLastSeven = function() {
+
+      var itemCount = 0;
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && !item.isComplete && !item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+    $scope.itemOverdueCountLastSeven = function() {
+      var itemCount = 0;
+
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && !item.isComplete && item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+    $scope.itemDueCompleteCountLastSeven = function() {
+      var itemCount = 0;
+
+      items.forEach(function(item) {
+        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && item.isPastDue) {
+          itemCount += 1;
+        }
+      });
+      return itemCount;
+    };
+
+    $scope.$watch(getItems, watcherFunction, true);
+      function getItems() {
+        return ItemCrud.getAllItems();
+    };
+
+    function watcherFunction(newData) {
+      console.log(newData);
+      $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven(), $scope.itemLeftCountLastSeven(), $scope.itemOverdueCountLastSeven(), $scope.itemDueCompleteCountLastSeven()];
+    };
+
+    // items.$loaded()
+    //   .then(function() {
+    //       $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven(), $scope.itemLeftCountLastSeven(), $scope.itemOverdueCountLastSeven(), $scope.itemDueCompleteCountLastSeven()];
+    //   })
+    //   .catch(function(error) {
+    //     console.log("Error:", error);
+    //   });
+
+    $scope.itemDataLastSeven = [$scope.itemWorkedCountLastSeven(), $scope.itemLeftCountLastSeven(), $scope.itemOverdueCountLastSeven(), $scope.itemDueCompleteCountLastSeven()];
+
+    // $scope.itemDataLastSeven =
+    //  [1, 2, 3, 4];
+
+    $scope.itemLabelsLastSeven = ["items completed", "items yet to complete", "items overdue", "items completed after deadline"];
+
 
     var refreshTime = function() {
       time = Date.now();
