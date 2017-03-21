@@ -48,63 +48,31 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 
       for (var i = 0; i < items.length; i++) {
         if (timeFrame == "lastSeven") {
-          var weekBoolean = items[i].dueDate >= firstMomentPastWeekNum && items[i].dueDate < lastMomentPastWeekNum;
+          var weekBool = items[i].dueDate >= firstMomentPastWeekNum && items[i].dueDate < lastMomentPastWeekNum;
         } else if (timeFrame == "nextSeven") {
-          var weekBoolean = items[i].dueDate >= nowNum && items[i].dueDate < lastMomentNextWeekNum;
+          var weekBool = items[i].dueDate >= nowNum && items[i].dueDate < lastMomentNextWeekNum;
         } else if (timeFrame == "overall") {
-          var weekBoolean = true;
+          var weekBool = true;
         }
 
         if (completion == "isComplete") {
-          var completion = items[i].isComplete;
+          var completeBool = items[i].isComplete;
         } else if (completion == "isNotComplete") {
-          var completion = !items[i].isComplete;
+          var completeBool = !items[i].isComplete;
         }
 
         if (dueStatus == "isDue") {
-          var dueStatus = items[i].isComplete;
+          var dueBool = items[i].isPastDue;
         } else if (dueStatus == "isNotDue") {
-          var dueStatus = !items[i].isComplete;
+          var dueBool = !items[i].isPastDue;
         }
-
-        if (weekBoolean && completion && dueStatus) {
+        console.log("COUNT --> " + timeFrame + ": " + weekBool + ", " + completeBool + " (" + items[i].isComplete + "), " + dueBool + " (" + items[i].isPastDue + ") ");
+        if (weekBool && completeBool && dueBool) {
           itemCount += 1;
         }
       }
-      return itemCount;
       console.log("ITEMCOUNT: " + itemCount);
-    };
-
-    $scope.count1 = function(timeFrame, completion, dueStatus) {
-      var itemCount = 0;
-
-      items.forEach(function(item) {
-        if (timeFrame == "lastSeven") {
-          var weekBoolean = item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum;
-        } else if (timeFrame == "nextSeven") {
-          var weekBoolean = item.dueDate >= nowNum && item.dueDate < lastMomentNextWeekNum;
-        } else if (timeFrame == "overall") {
-          var weekBoolean = true;
-        }
-
-        if (completion == "isComplete") {
-          var completion = item.isComplete;
-        } else if (completion == "isNotComplete") {
-          var completion = !item.isComplete;
-        }
-
-        if (dueStatus == "isDue") {
-          var dueStatus = item.isComplete;
-        } else if (dueStatus == "isNotDue") {
-          var dueStatus = !item.isComplete;
-        }
-
-        if (weekBoolean && completion && dueStatus) {
-          itemCount += 1;
-        }
-      });
       return itemCount;
-      console.log("ITEMCOUNT: " + itemCount);
     };
 
     $scope.itemsWorkedCountLastSeven = function() {
@@ -115,6 +83,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
           itemCount += 1;
         }
       });
+      // console.log("itemsWorkedCountLastSeven: " + itemCount);
       return itemCount;
     };
 
@@ -126,6 +95,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
           itemCount += 1;
         }
       });
+      // console.log("itemsLeftCountLastSeven: " + itemCount);
       return itemCount;
     };
 
@@ -371,11 +341,12 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     function watcherFunction(newData) {
       console.log(newData);
       // items worked, left, overdue, and overdue but complete
+
       // $scope.itemDataLastSeven = [$scope.itemsWorkedCountLastSeven(), $scope.itemsLeftCountLastSeven(), $scope.itemsOverdueCountLastSeven(), $scope.itemsDueCompleteCountLastSeven()];
 
-      // $scope.itemDataLastSeven = [$scope.count("lastSeven", "isComplete", "isNotDue"), $scope.count("lastSeven", "isNotComplete", "isNotDue"), $scope.count("lastSeven", "isNotComplete", "isDue"), $scope.count("lastSeven", "isComplete", "isDue")];
+      $scope.itemDataLastSeven = [$scope.count("lastSeven", "isComplete", "isNotDue"), $scope.count("lastSeven", "isNotComplete", "isNotDue"), $scope.count("lastSeven", "isNotComplete", "isDue"), $scope.count("lastSeven", "isComplete", "isDue")];
 
-      $scope.itemDataLastSeven = [$scope.count1("lastSeven", "isComplete", "isNotDue"), $scope.count1("lastSeven", "isNotComplete", "isNotDue"), $scope.count1("lastSeven", "isNotComplete", "isDue"), $scope.count1("lastSeven", "isComplete", "isDue")];
+      // $scope.itemDataLastSeven = [$scope.count1("lastSeven", "isComplete", "isNotDue"), $scope.count1("lastSeven", "isNotComplete", "isNotDue"), $scope.count1("lastSeven", "isNotComplete", "isDue"), $scope.count1("lastSeven", "isComplete", "isDue")];
 
       $scope.totalLastSeven();
       $scope.percentage();
@@ -391,7 +362,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
     // hours worked, left, overdue, and overdue but complete
     // $scope.hourDataLastSeven = [$scope.hoursWorkedLastSeven, $scope.hoursLeftLastSeven, $scope.hoursOverdueLastSeven, $scope.hoursDueCompleteLastSeven];
 
-    $scope.hourLabelsLastSeven = ["hours yet to work", "hours worked", "hours overdue", "hours after deadline"];
+    $scope.hourLabelsLastSeven = ["hours worked", "hours yet to work", "hours overdue", "hours after deadline"];
 
 
     // Total complete Vs. Total incomplete:

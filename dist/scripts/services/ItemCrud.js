@@ -229,7 +229,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
 
         var iterateAndPrint = function(array1, array2) {
           for (i = 0; i < array1.length; i++) {
-            console.log("updateDataItems called by " + owner + ": " + array1[i] + ": " + array2[i]);
+            // console.log("updateDataItems called by " + owner + ": " + array1[i] + ": " + array2[i]);
           }
         };
 
@@ -286,10 +286,10 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         }
       };
 
-      console.log("createNewDataItems called by " + owner + ".");
+      // console.log("createNewDataItems called by " + owner + ".");
       var iterateAndPrint = function(array1, array2) {
         for (i = 0; i < array1.length; i++) {
-          console.log(array1[i] + ": " + array2[i]);
+          // console.log(array1[i] + ": " + array2[i]);
         }
       };
 
@@ -327,7 +327,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           var owner = "addOrUpdateDataItems via + " + owner;
 
           if (itemDueDate >= beginDay && itemDueDate <= endDay) {
-            console.log("updateDataItems WIL BE called by " + owner + ". " + itemDueDate + " is >= than begin day, " + beginDay + ", and <= than endDay, " + endDay);
+            // console.log("updateDataItems WIL BE called by " + owner + ". " + itemDueDate + " is >= than begin day, " + beginDay + ", and <= than endDay, " + endDay);
 
             updateDataItems(owner, itemDueDate, dataItems[i], propArray, valArray);
             return;
@@ -339,7 +339,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
           }
         }
       } else {
-        console.log("2nd createNewDataItems called by " + owner);
+        // console.log("2nd createNewDataItems called by " + owner);
         createNewDataItems(owner, itemDueDate, propArray, valArray);
       }
 
