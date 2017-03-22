@@ -14,10 +14,10 @@
           chart-data="itemDataLastSeven" chart-labels="itemLabelsLastSeven">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{itemsWorkedCountLastSeven()}} ({{percentage().worked}}%) </p></div>
-              <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemsLeftCountLastSeven()}}  ({{percentage().left}}%) </p></div>
-              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{itemsOverdueCountLastSeven()}} ({{percentage().due}}%) </p></div>
-              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemsDueCompleteCountLastSeven()}} ({{percentage().dueComp}}%) </p></div>
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{$scope.count("lastSeven").completeNotDue}} ({{percentage().worked}}%) </p></div>
+              <!-- <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemsLeftCountLastSeven()}}  ({{percentage().left}}%) </p></div> -->
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{$scope.count("lastSeven").incompleteDue}} ({{percentage().due}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{$scope.count("lastSeven").completeDue}} ({{percentage().dueComp}}%) </p></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
@@ -25,10 +25,10 @@
           chart-data="hourDataLastSeven" chart-labels="hourLabelsLastSeven" chart-series="seriesLastSeven" chart-options="options">
             </canvas>
             <div class="chart-legend">
-                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorkedLastSeven()}} hrs</p></div>
-                <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeftLastSeven()}} hrs</p></div>
-                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdueLastSeven()}} hrs</p></div>
-                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueCompleteLastSeven()}} hrs</p></div>
+                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{$scope.count("lastSeven").hoursCompleteNotDue}} hrs</p></div>
+                <!-- <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeftLastSeven()}} hrs</p></div> -->
+                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{$scope.count("lastSeven").hoursIncompleteDue}} hrs</p></div>
+                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{$scope.count("lastSeven").hoursCompleteDue}} hrs</p></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
@@ -36,8 +36,8 @@
           chart-data="itemDataCompleteIncompleteTotalLastSeven" chart-labels="itemLabelsCompleteIncompleteTotalLastSeven">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{itemsWorkedCountLastSeven() + itemsDueCompleteCountLastSeven()}} ({{percentage().totalComp}}%) </p></div>
-              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{itemsLeftCountLastSeven() + itemsOverdueCountLastSeven()}}  ({{percentage().totalIncomp}}%) </p></div>
+              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{$scope.count("lastSeven").simplyComplete}} ({{percentage().totalComp}}%) </p></div>
+              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{$scope.count("lastSeven").simplyIncomplete}}  ({{percentage().totalIncomp}}%) </p></div>
             </div>
           </div>
         </div>
