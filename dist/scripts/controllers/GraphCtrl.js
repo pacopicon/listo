@@ -1,5 +1,5 @@
-listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCruncher", "$rootScope", "$interval", "$locale", '$timeout', "$q", "$sce", "$tooltip", "$state",
-  function($scope, ItemCrud, graphCruncher, dateCruncher, $rootScope, $interval, $locale, $timeout, $q, $sce, $tooltip, $state) {
+listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope", "$interval", "$locale", '$timeout', "$q", "$sce", "$tooltip", "$state",
+  function($scope, ItemCrud, dateCruncher, $rootScope, $interval, $locale, $timeout, $q, $sce, $tooltip, $state) {
 
   // PUBLIC VARIABLES
     $scope.dataItems = ItemCrud.getDataItems();
