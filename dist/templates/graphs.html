@@ -1,4 +1,4 @@
-<section ng-controller="GraphCtrl" class="user" ng-init="completionData()">
+<section ng-controller="GraphCtrl" class="user">
 
 
   <!-- <div class="row itemDisplay" ng-repeat="item in items | orderBy: '-rank'" ng-show="!item.isComplete" ng-hide="item.isComplete" ng-mouseleave="hover = false"> -->
@@ -11,33 +11,33 @@
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="itemDataLastSeven" chart-labels="itemLabelsLastSeven">
+          chart-data="itemDataLastSeven" chart-labels="itemLastSevenLabels">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{$scope.count("lastSeven").completeNotDue}} ({{percentage().worked}}%) </p></div>
-              <!-- <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemsLeftCountLastSeven()}}  ({{percentage().left}}%) </p></div> -->
-              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{$scope.count("lastSeven").incompleteDue}} ({{percentage().due}}%) </p></div>
-              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{$scope.count("lastSeven").completeDue}} ({{percentage().dueComp}}%) </p></div>
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{count("lastSeven").completeNotDue}} ({{percentage("lastSeven").worked}}%) </p></div>
+              <!-- <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{count("lastSeven").incompleteNotDue}}  ({{percentage("lastSeven").left}}%) </p></div> -->
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{count("lastSeven").incompleteDue}} ({{percentage("lastSeven").due}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{count("lastSeven").completeDue}} ({{percentage("lastSeven").dueComp}}%) </p></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
             <canvas id="bar" class="chart chart-bar"
-          chart-data="hourDataLastSeven" chart-labels="hourLabelsLastSeven" chart-series="seriesLastSeven" chart-options="options">
+          chart-data="hourDataLastSeven" chart-labels="hourLabels" chart-series="seriesLastSeven" chart-options="options">
             </canvas>
             <div class="chart-legend">
-                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{$scope.count("lastSeven").hoursCompleteNotDue}} hrs</p></div>
-                <!-- <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeftLastSeven()}} hrs</p></div> -->
-                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{$scope.count("lastSeven").hoursIncompleteDue}} hrs</p></div>
-                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{$scope.count("lastSeven").hoursCompleteDue}} hrs</p></div>
+                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{count("lastSeven").hoursCompleteNotDue}} hrs</p></div>
+                <!-- <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{count("lastSeven").hoursIncompleteNotDue}} hrs</p></div> -->
+                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{count("lastSeven").hoursIncompleteDue}} hrs</p></div>
+                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{count("lastSeven").hoursCompleteDue}} hrs</p></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="itemDataCompleteIncompleteTotalLastSeven" chart-labels="itemLabelsCompleteIncompleteTotalLastSeven">
+          chart-data="itemDataCompleteIncompleteTotalLastSeven" chart-labels="itemTotalLabels">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{$scope.count("lastSeven").simplyComplete}} ({{percentage().totalComp}}%) </p></div>
-              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{$scope.count("lastSeven").simplyIncomplete}}  ({{percentage().totalIncomp}}%) </p></div>
+              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{count("lastSeven").simplyComplete}} ({{percentage().totalComp}}%) </p></div>
+              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{count("lastSeven").simplyIncomplete}}  ({{percentage().totalIncomp}}%) </p></div>
             </div>
           </div>
         </div>
@@ -51,33 +51,33 @@
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: the next seven days<div class="btn-chart" ng-click="GraphCtrlRefreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-refresh"></i></a></div></div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="itemDataNextSeven" chart-labels="itemLabelsNextSeven">
+          chart-data="itemDataNextSeven" chart-labels="itemLabels">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{itemWorkedCountNextSeven}} ({{percentItemsCompleteOnTimeNextSeven}}%) </p></div>
-              <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemLeftCountNextSeven}}  ({{percentTotalIncompleteNotOverdueNextSeven}}%) </p></div>
-              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{itemOverdueCountNextSeven}} ({{percentTotalOverdueNotCompleteNextSeven}}%) </p></div>
-              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountNextSeven}} ({{percentTotalOverdueCompleteNextSeven}}%) </p></div>
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{count("nextSeven").completeNotDue}} ({{percentage("nextSeven").worked}}%) </p></div>
+              <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{count("nextSeven").incompleteNotDue}}  ({{percentage("nextSeven").left}}%) </p></div>
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{count("nextSeven").incompleteDue}} ({{percentage("nextSeven").due}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{count("nextSeven").completeDue}} ({{percentage("nextSeven").dueComp}}%) </p></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 barChart">
             <canvas id="bar" class="chart chart-bar"
-          chart-data="hourDataNextSeven" chart-labels="hourLabelsNextSeven" chart-series="seriesNextSeven" chart-options="options">
+          chart-data="hourDataNextSeven" chart-labels="hourLabels" chart-series="seriesNextSeven" chart-options="options">
             </canvas>
-            <!-- <div class="chart-legend">
-                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorked}} hrs, {{minutesWorked}} mins</p></div>
-                <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeft}} hrs, {{minutesLeft}} mins</p></div>
-                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdue}} hrs, {{minutesOverdue}} mins</p></div>
-                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
-            </div> -->
+            <div class="chart-legend">
+              <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{count("nextSeven").hoursCompleteNotDue}} hrs</p></div>
+              <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{count("nextSeven").hoursIncompleteNotDue}} hrs</p></div>
+              <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{count("nextSeven").hoursIncompleteDue}} hrs</p></div>
+              <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{count("nextSeven").hoursCompleteDue}} hrs</p></div>
+            </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="itemDataCompleteIncompleteTotalNextSeven" chart-labels="itemLabelsCompleteIncompleteTotalNextSeven">
+          chart-data="itemDataCompleteIncompleteTotalNextSeven" chart-labels="itemTotalLabels">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{totalCompleteCountNextSeven}} ({{percentTotalCompleteNextSeven}}%) </p></div>
-              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{totalIncompleteCountNextSeven}}  ({{percentTotalIncompleteNextSeven}}%) </p></div>
+              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{count("nextSeven").simplyComplete}} ({{percentage().totalComp}}%) </p></div>
+              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{count("nextSeven").simplyIncomplete}}  ({{percentage().totalIncomp}}%) </p></div>
             </div>
           </div>
         </div>
@@ -91,33 +91,33 @@
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 label">productivity: overall<div class="btn-chart" ng-click="GraphCtrlRefreshTalliesAndData()"><a href class="tip" data-animation="am-flip-x" bs-tooltip="chartTip"><i class="fa fa-refresh"></i></a></div></div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12 pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="itemDataOverall" chart-labels="itemLabelsOverall">
+          chart-data="itemDataOverall" chart-labels="itemLabels">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{itemWorkedCountOverall}} ({{percentItemsCompleteOnTimeOverall}}%) </p></div>
-              <p class="itemsYetToComplete">due and incomplete: </p><div class="statement"><p class="incomNumber">{{itemLeftCountOverall}}  ({{percentTotalIncompleteNotOverdueOverall}}%) </p></div>
-              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{itemOverdueCountOverall}} ({{percentTotalOverdueNotCompleteOverall}}%) </p></div>
-              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{itemDueCompleteCountOverall}} ({{percentTotalOverdueCompleteOverall}}%) </p></div>
+              <p class="itemsCompleted">complete before due: </p><div class="statement"><p class="comNumber">{{count("overall").completeNotDue}} ({{percentage("overall").worked}}%) </p></div>
+              <p class="itemsYetToComplete">not due and incomplete: </p><div class="statement"><p class="incomNumber">{{count("overall").incompleteNotDue}}  ({{percentage("overall").left}}%) </p></div>
+              <p class="itemsOverdue">incomplete and overdue: </p><div class="statement"><p class="overdueNumber">{{count("overall").incompleteDue}} ({{percentage("overall").due}}%) </p></div>
+              <p class="itemsDueComplete">complete after deadline: </p><div class="statement"><p class="dueCompleteNumber">{{count("overall").completeDue}} ({{percentage("overall").dueComp}}%) </p></div>
             </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  barChart">
             <canvas id="bar" class="chart chart-bar"
-          chart-data="hourDataOverall" chart-labels="hourLabelsOverall" chart-series="seriesOverall" chart-options="options">
+          chart-data="hourDataOverall" chart-labels="hourLabels" chart-series="seriesOverall" chart-options="options">
             </canvas>
-            <!-- <div class="chart-legend">
-                <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{hoursWorked}} hrs, {{minutesWorked}} mins</p></div>
-                <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{hoursLeft}} hrs, {{minutesLeft}} mins</p></div>
-                <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{hoursOverdue}} hrs, {{minutesOverdue}} mins</p></div>
-                <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{hoursDueComplete}} hrs, {{minutesDueComplete}} mins</p></div>
-            </div> -->
+            <div class="chart-legend">
+              <p class="timeCompleted">time worked: </p><div class="statement2"><p class="comNumber">{{count("overall").hoursCompleteNotDue}} hrs</p></div>
+              <p class="timeYetToComplete">time yet to work: </p><div class="statement2"><p class="incomNumber">{{count("overall").hoursIncompleteNotDue}} hrs</p></div>
+              <p class="timeOverdue">time overdue: </p><div class="statement2"><p class="overdueNumber">{{count("overall").hoursIncompleteDue}} hrs</p></div>
+              <p class="timeDueComplete">time after deadline: </p><div class="statement2"><p class="dueCompleteNumber">{{count("overall").hoursCompleteDue}} hrs</p></div>
+            </div>
           </div>
           <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12  pieChart">
             <canvas id="doughnut" class="chart chart-doughnut"
-          chart-data="itemDataCompleteIncompleteTotalOverall" chart-labels="itemLabelsCompleteIncompleteTotalOverall">
+          chart-data="itemDataCompleteIncompleteTotalOverall" chart-labels="itemTotalLabels">
             </canvas>
             <div class="chart-legend">
-              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{totalCompleteCountOverall}} ({{percentTotalCompleteOverall}}%) </p></div>
-              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{totalIncompleteCountOverall}}  ({{percentTotalIncompleteOverall}}%) </p></div>
+              <p class="itemsCompleted total">total complete: </p><div class="statement total"><p class="comNumber total">{{count("overall").simplyComplete}} ({{percentage().totalComp}}%) </p></div>
+              <p class="itemsYetToComplete totalPercent">total incomplete: </p><div class="statement totalPercent"><p class="incomNumber totalPercent">{{count("overall").simplyIncomplete}}  ({{percentage().totalIncomp}}%) </p></div>
             </div>
           </div>
           <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 lineChart">

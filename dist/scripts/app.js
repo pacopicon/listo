@@ -97,7 +97,7 @@ listo.config(['ChartJsProvider', function (ChartJsProvider) {
     // '#e05d6f' --> red
     // '#3f4e62'--> black
     ChartJsProvider.setOptions({
-      chartColors: ['#C3C300', '#e05d6f', '#3f4e62','#6FC853', '#8E5EC5', '#AC6D39', '#4c91cd'],
+      chartColors: ['#C3C300', '#6FC853', '#e05d6f', '#3f4e62', '#8E5EC5', '#AC6D39', '#4c91cd'],
       responsive: true
     });
     // Configure all line charts

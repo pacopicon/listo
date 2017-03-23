@@ -150,19 +150,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "graphCruncher",
       ItemCrud.processOldCompleteItems();
     };
 
-    $scope.addTestItem = function() {
-      var day = new Date();
-      var dueDate = day.setDate(17);
-      var dueDateObj = new Date(dueDate);
-      var name = "test"
-      ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
-      // $scope.UserCtrlRefreshTalliesAndData();
-    };
-
-    // $scope.addItem = function() {
-    //   ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-    //   $scope.UserCtrlRefreshTalliesAndData();
+    // $scope.addTestItem = function() {
+    //   var day = new Date();
+    //   var dueDate = day.setDate(17);
+    //   var dueDateObj = new Date(dueDate);
+    //   var name = "test"
+    //   ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
+    //   // $scope.UserCtrlRefreshTalliesAndData();
     // };
+
+    $scope.addItem = function() {
+      ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
+      $scope.UserCtrlRefreshTalliesAndData();
+    };
 
     $scope.toggleInvertAndSave = function(item) {
       var itemCount = 0;

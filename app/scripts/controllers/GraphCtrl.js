@@ -51,9 +51,6 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
           incompleteDue = 0,
           completeDue = 0,
           simplyDue = 0,
-          simplyComplete = 0,
-          simplyIncomplete = 0,
-          total = 0,
 
           hoursCompleteNotDue = 0,
           hoursIncompleteNotDue = 0,
@@ -77,11 +74,9 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
 
         var complete = items[i].isComplete;
         var incomplete = !items[i].isComplete;
-        var anyComplete = true;
 
         var notDue = !items[i].isPastDue;
         var due = items[i].isPastDue;
-        var anyDue = true;
 
         // console.log("COUNT --> " + timeFrame + ": " + weekBool + ", " + completeBool + " (" + items[i].isComplete + "), " + dueBool + " (" + items[i].isPastDue + ") ");
         if (weekBool && complete && notDue) {
@@ -100,23 +95,16 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
           completeDue++;
           minCompleteDue = minCompleteDue + items[i].eMinute;
           hoursCompleteDue = hoursCompleteDue + items[i].eHour;
-        } else if (weekBool && complete && anyDue) {
-          simplyComplete++;
-        } else if (weekBool && incomplete && anyDue) {
-          simplyIncomplete++;
-        } else if (weekBool && anyComplete && anyDue) {
-          total++;
         }
       }
-      // console.log("ITEMCOUNT: " + itemCount);
       return {
         completeNotDue: completeNotDue,
         incompleteNotDue: incompleteNotDue,
         incompleteDue: incompleteDue,
         completeDue: completeDue,
-        simplyComplete: simplyComplete,
-        simplyIncomplete: simplyIncomplete,
-        total: total,
+        simplyComplete: completeNotDue + completeDue,
+        simplyIncomplete: incompleteNotDue + incompleteDue,
+        total: completeNotDue + incompleteNotDue + incompleteDue + completeDue,
 
         hoursCompleteNotDue: hoursCompleteNotDue + Math.floor(minCompleteNotDue/60),
         hoursIncompleteNotDue: hoursIncompleteNotDue + Math.floor(minIncompleteNotDue/60),
@@ -125,95 +113,19 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
       };
     };
 
-    $scope.percentage = function() {
+    $scope.percentage = function(timeFrame) {
+      total = $scope.count(timeFrame).total / 100;
       return {
-        worked: $scope.count("lastSeven").completeNotDue / $scope.count("lastSeven").total * 100,
-        due: $scope.count("lastSeven").incompleteDue / $scope.count("lastSeven").total * 100,
-        dueComp: $scope.count("lastSeven").completeDue / $scope.count("lastSeven").total * 100,
-        totalComp: $scope.count("lastSeven").simplyComplete * 100,
-        totalIncomp: $scope.count("lastSeven").simplyIncomplete * 100
-      }
+        worked: $scope.count(timeFrame).completeNotDue / total,
+        left: $scope.count(timeFrame).incompleteNotDue / total,
+        due: $scope.count(timeFrame).incompleteDue / total,
+        dueComp: $scope.count(timeFrame).completeDue / total,
+        totalComp: $scope.count(timeFrame).simplyComplete / total,
+        totalIncomp: $scope.count(timeFrame).simplyIncomplete / total
+      };
     };
 
     $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("lastSeven").simplyComplete, $scope.count("lastSeven").simplyIncomplete];
-
-    $scope.hoursWorkedLastSeven = function() {
-      var hourCount = 0;
-      var minCount = 0;
-
-      items.forEach(function(item) {
-        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && !item.isPastDue) {
-          hourCount += item.eHour;
-          minCount += item.eMinute;
-        }
-      });
-      hourCount + Math.floor(minCount/60);
-      return hourCount;
-    };
-
-    $scope.totalIncompleteCountLastSeven = function() {
-      return $scope.count("lastSeven", "isNotComplete", "isDue") / $scope.count("lastSeven", "any", "any");
-    }
-
-    $scope.totalCompleteCountLastSeven = function() {
-      return ($scope.count("lastSeven", "isComplete", "isNotDue") + $scope.count("lastSeven", "isComplete", "isDue")) / $scope.count("lastSeven", "any", "any");
-    }
-
-    $scope.hoursWorkedLastSeven = function() {
-      var hourCount = 0;
-      var minCount = 0;
-
-      items.forEach(function(item) {
-        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && !item.isPastDue) {
-          hourCount += item.eHour;
-          minCount += item.eMinute;
-        }
-      });
-      hourCount + Math.floor(minCount/60);
-      return hourCount;
-    };
-
-    $scope.hoursLeftLastSeven = function() {
-      var hourCount = 0;
-      var minCount = 0;
-
-      items.forEach(function(item) {
-        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && !item.isComplete && !item.isPastDue) {
-          hourCount += item.eHour;
-          minCount += item.eMinute;
-        }
-      });
-      hourCount + Math.floor(minCount/60);
-      return hourCount;
-    };
-
-    $scope.hoursOverdueLastSeven = function() {
-      var hourCount = 0;
-      var minCount = 0;
-
-      items.forEach(function(item) {
-        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && !item.isComplete && item.isPastDue) {
-          hourCount += item.eHour;
-          minCount += item.eMinute;
-        }
-      });
-      hourCount + Math.floor(minCount/60);
-      return hourCount;
-    };
-
-    $scope.hoursDueCompleteLastSeven = function() {
-      var hourCount = 0;
-      var minCount = 0;
-
-      items.forEach(function(item) {
-        if (item.dueDate >= firstMomentPastWeekNum && item.dueDate < lastMomentPastWeekNum && item.isComplete && item.isPastDue) {
-          hourCount += item.eHour;
-          minCount += item.eMinute;
-        }
-      });
-      hourCount + Math.floor(minCount/60);
-      return hourCount;
-    };
 
     // Dummy $scope values to hack the color scheme:
 
@@ -231,39 +143,60 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "graphCruncher", "dateCrunc
       console.log(newData);
       // data-seeding functions called here
 
+      // LAST-SEVEN
       // for seeding percentage data in data-display:
-      $scope.percentage();
+      $scope.percentage("lastSeven");
 
-      // lastSeven, chart 1: pie chart
-      $scope.itemDataLastSeven = [$scope.count("lastSeven").completeNotDue, $scope.count("lastSeven").incompleteDue, $scope.count("lastSeven").completeDue];
+      // chart 1: pie chart
+      $scope.itemDataLastSeven = [$scope.count("lastSeven").completeNotDue, 0, $scope.count("lastSeven").incompleteDue, $scope.count("lastSeven").completeDue];
 
-      // lastSeven, chart 2: hour bar chart
-      $scope.hourDataLastSeven = [$scope.count("lastSeven").hoursCompleteNotDue, $scope.count("lastSeven").hoursIncompleteDue, $scope.count("lastSeven").hoursCompleteDue]
+      // chart 2: hour bar chart
+      $scope.hourDataLastSeven = [$scope.count("lastSeven").hoursCompleteNotDue, 0, $scope.count("lastSeven").hoursIncompleteDue, $scope.count("lastSeven").hoursCompleteDue]
 
-      // lastSeven, chart 3: summary pie chart
-
+      // chart 3: summary pie chart
       $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("lastSeven").simplyComplete, $scope.count("lastSeven").simplyIncomplete];
+
+      // NEXT-SEVEN
+      // for seeding percentage data in data-display:
+      $scope.percentage("NextSeven");
+
+      // chart 1: pie chart
+      $scope.itemDataNextSeven = [$scope.count("NextSeven").completeNotDue, $scope.count("NextSeven").incompleteNotDue, $scope.count("NextSeven").incompleteDue, $scope.count("NextSeven").completeDue];
+
+      // chart 2: hour bar chart
+      $scope.hourDataNextSeven = [$scope.count("NextSeven").hoursCompleteNotDue, $scope.count("NextSeven").hoursIncompleteNotDue, $scope.count("NextSeven").hoursIncompleteDue, $scope.count("NextSeven").hoursCompleteDue]
+
+      // chart 3: summary pie chart
+      $scope.itemDataCompleteIncompleteTotalNextSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("NextSeven").simplyComplete, $scope.count("NextSeven").simplyIncomplete];
+
+      // OVERALL
+      // for seeding percentage data in data-display:
+      $scope.percentage("overall");
+
+      // chart 1: pie chart
+      $scope.itemDataOverall = [$scope.count("overall").completeNotDue, $scope.count("overall").incompleteNotDue, $scope.count("overall").incompleteDue, $scope.count("overall").completeDue];
+
+      // chart 2: hour bar chart
+      $scope.hourDataOverall = [$scope.count("overall").hoursCompleteNotDue, $scope.count("overall").hoursIncompleteNotDue, $scope.count("overall").hoursIncompleteDue,  $scope.count("overall").hoursCompleteDue]
+
+      // chart 3: summary pie chart
+      $scope.itemDataCompleteIncompleteTotalOverall = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("overall").simplyComplete, $scope.count("overall").simplyIncomplete];
     };
 
-    $scope.itemLabelsLastSeven = ["items completed", "items overdue", "items completed after deadline"];
+    // Chart Label ONLY for LAST-SEVEN
+
+    $scope.itemLastSevenLabels = ["items completed", "items overdue", "items completed after deadline"];
 
     $scope.seriesLastSeven = ['last week'];
 
-    // hours worked, left, overdue, and overdue but complete
-    // $scope.hourDataLastSeven = [$scope.hoursWorkedLastSeven, $scope.hoursLeftLastSeven, $scope.hoursOverdueLastSeven, $scope.hoursDueCompleteLastSeven];
 
-    $scope.hourLabelsLastSeven = ["hours worked", "hours overdue", "hours after deadline"];
+    // Chart Labels for LAST-SEVEN & NEXT-SEVEN & OVERALL
 
+    $scope.itemLabels = ["items completed", "items not due & incomplete", "items overdue", "items completed after deadline"];
 
-    // Total complete Vs. Total incomplete:
-    $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.totalIncompleteCountLastSeven, $scope.totalCompleteCountLastSeven];
+    $scope.hourLabels = ["hours worked", "hours left", "hours overdue", "hours after deadline"];
 
-    $scope.itemLabelsCompleteIncompleteTotalLastSeven = ["w", "x", "y", "z", "items yet to complete", "items completed"];
-
-    // items overdue
-    $scope.itemDataOverdueCompleteDueTotalLastSeven = [$scope.totalOverdueCountLastSeven, $scope.totalOverdueCountLastSeven];
-    $scope.itemLabelsOverdueCompleteDueTotalLastSeven = ["items overdue", "items not yet due"];
-
+    $scope.itemTotalLabels = ["w", "x", "y", "z", "items yet to complete", "items completed"];
 
     // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
     // $scope.series = ['Series A', 'Series B'];
