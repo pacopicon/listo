@@ -100,7 +100,7 @@
     <!-- <div class="priorityCheckboxImportanceName"> -->
 <!--CHECKBOX-->
         <div class="completedBox">
-          <input type="checkbox" id="cb" ng-model="item.isSafeToComplete" ng-change="toggleInvertAndSave(item)"/>
+          <input type="checkbox" id="cb" ng-model="item.isSafeToComplete" ng-change="saveAndToggleInvert(item)"/>
         </div>
         <!-- ng-change="items.$save(item)" -->
 <!--PRIORITY-->
@@ -134,7 +134,7 @@
       <div ng-mouseover="hover = true" class="info"><i class="fa fa-info-circle" ng-class="{'redText': (item.isPastDue && !item.isSafeToComplete), yellowText: item.isSafeToComplete}"></i></div>
       <!-- ng-mouseleave="hover = false" -->
       <a href class="editBtn" ng-model="item" ng-hide="item.isSafeToComplete" ng-class="{'redCell': (item.isPastDue && !item.isSafeToComplete), yellowCell: item.isSafeToComplete}" ng-click="showComplex(item)"><p><i class="fa fa-pencil"></i></p></a>
-      <button class="deleteBtn" ng-model="item" ng-click="updateCompletion('deleteBtn', item, 0, 0, 0)" ng-show="item.isSafeToComplete" ><p><i class="fa fa-times"></i></p></button>
+      <button class="deleteBtn" ng-model="item" ng-click="updateCompletion(item, 0, 0, 0)" ng-show="item.isSafeToComplete" ><p><i class="fa fa-times"></i></p></button>
       <!-- <div class="deleteCheckbox">
         <input type="checkbox" id="cb" ng-change="updateCompletion(item, 0)"/>
       </div> -->

@@ -153,26 +153,42 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "dateCruncher", 
       ItemCrud.processOldCompleteItems();
     };
 
-    $scope.toggleInvertAndSave = function(item) {
-      var itemCount = 0;
+    $scope.saveAndToggleInvert = function(item) {
+      items.$save(item);
+      toggleInvert();
+    };
+
+    var toggleInvert = function() {
+      console.log("called");
+      var incompCount = 0;
+      var safeCount = 0;
 
       for (i = 0; i < items.length; i++) {
-        if (items[i]) {
-          itemCount++;
+        if (items[i] && !items[i].isComplete) {
+          incompCount++;
         }
       }
 
-      if (!item.isSafeToComplete && itemCount < 2) {
-        $scope.allSelected = false;
-      } else if (!item.isSafeToComplete && itemCount > 1) {
-        $scope.selectionInversion = true;
-      } else if (item.isSafeToComplete && itemCount < 2 ) {
-        $scope.allSelected = true;
-      } else if (item.isSafeToComplete && itemCount > 1 ) {
-        $scope.selectionInversion = false;
+      for (i = 0; i < items.length; i++) {
+        if (items[i] && items[i].isSafeToComplete) {
+          safeCount++;
+        }
       }
-      items.$save(item);
-    };
+
+      $scope.selectionInversion = false;
+      $scope.allSelected = false;
+
+      if (safeCount < 1 && incompCount < 1) {
+        $scope.allSelected = false;
+      } else if (safeCount > 0 && incompCount > 1 && safeCount < incompCount) {
+        $scope.selectionInversion = true;
+      } else if (safeCount == incompCount) {
+        $scope.allSelected = true;
+      }
+
+      console.log("allSelected: " + $scope.allSelected);
+      console.log("selectionInversion: " + $scope.selectionInversion);
+    }
 
     $scope.selectAllForDelete = function(items) {
       ItemCrud.toggleSelectForDelete(items);
