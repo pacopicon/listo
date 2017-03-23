@@ -88,6 +88,27 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
       };
     };
 
+    // The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
+    var updateCompletion = function(item, newDueDate, newhours, newMinutes) {
+      // Remember: Both IF conditions below can only be executed by the deleteBtn in userincompleteItems.html, which effectively delets the item from to do and relegates it to the archive.
+      // Both The ELSE (below) and the ELSE IF condition (further below) can be executed by BOTH the un-delete button in archive and the Modal when this latter is executed from archive.
+
+      console.log("item: " + item);
+
+      var item = items.$getRecord(item.$id);
+
+      if (!item.isComplete) {
+        item.isComplete = true;
+        item.completed_at = firebase.database.ServerValue.TIMESTAMP;
+
+      } else if (item.isComplete) {
+        item.isComplete = false;
+        item.completed_at = 0;
+        item.isSafeToComplete = false;
+      }
+      items.$save(item);
+    };
+
 // -- FUNCTIONS CALLED BY CONTROLLER --
     return {
       // handing ref over to AuthCtrl.js for User creation and authentication.
@@ -198,7 +219,7 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         }
 
         if (oldItem.isComplete) {
-          updateCompletion(owner, oldItem, newDueDate, newhours, newMinutes);
+          updateCompletion(oldItem, newDueDate, newHours, newMinutes);
         }
 
 
@@ -284,25 +305,8 @@ listo.factory("ItemCrud", ["$firebaseArray", "FirebaseRef", "UserCrud",
         }
       },
 
-// The function below marks item as complete or incomplete depending on its original state.  It is called by 'userincompleteItems.html' by the delete button and by 'userCompleteItems.html' by the modal.
-      updateCompletion: function(owner, item, newDueDate, newhours, newMinutes) {
-        // Remember: Both IF conditions below can only be executed by the deleteBtn in userincompleteItems.html, which effectively delets the item from to do and relegates it to the archive.
-        // Both The ELSE (below) and the ELSE IF condition (further below) can be executed by BOTH the un-delete button in archive and the Modal when this latter is executed from archive.
-
-        console.log("item: " + item);
-
-        var item = items.$getRecord(item.$id);
-
-        if (!item.isComplete) {
-          item.isComplete = true;
-          item.completed_at = firebase.database.ServerValue.TIMESTAMP;
-
-        } else if (item.isComplete) {
-          item.isComplete = false;
-          item.completed_at = 0;
-          item.isSafeToComplete = false;
-        }
-        items.$save(item);
+      updateCompletion: function(item, newDueDate, newHours, newMinutes) {
+        updateCompletion(item, newDueDate, newHours, newMinutes);
       }
 
     }; // end of Return

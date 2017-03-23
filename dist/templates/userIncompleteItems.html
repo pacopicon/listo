@@ -47,16 +47,16 @@
 <!--est. time-->
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 hour-and-minute">
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 hour">
-            <a href class="tip" data-animation="am-flip-x" bs-tooltip="dateTip"><button type="button" class="btn-hour btn btn-default" ng-model="hourwrap.selectedHour" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" bs-options="hour as hour for hour in hours" placeholder="estimate <i class='fa fa-clock-o'></i>" bs-select><span class="caret"></span></button></a>
+            <a href class="tip" data-animation="am-flip-x" bs-tooltip="dateTip"><button type="button" class="btn-hour btn btn-default" ng-model="hourwrap.selectedHour" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" bs-options="hour as hour for hour in hours" placeholder="estimate hours <i class='fa fa-clock-o'></i>" bs-select><span class="caret"></span></button></a>
           </div>
           <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12 minute">
-            <a href class="tip" data-animation="am-flip-x" bs-tooltip="timeTip"><button type="button" class="btn-minute btn btn-default" ng-model="minutewrap.selectedMinute" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" bs-options="minute as minute for minute in minutes" placeholder="estimate <i class='fa fa-hourglass-half'></i>" bs-select>Action<span class="caret"></span></button></a>
+            <a href class="tip" data-animation="am-flip-x" bs-tooltip="timeTip"><button type="button" class="btn-minute btn btn-default" ng-model="minutewrap.selectedMinute" data-html="1" data-animation="am-fade-and-scale" data-toggle="true" bs-options="minute as minute for minute in minutes" placeholder="estimate minutes <i class='fa fa-clock-o'></i>" bs-select>Action<span class="caret"></span></button></a>
           </div>
         </div>
 <!--Add Button--->
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 btn-div">
           <button type="submit" type="button" class="btn-add">Add to-do item</button>
-          <button ng-click="addTestItem()" class="btn-add btn-test">T E S T: add test item</button>
+          <!-- <button ng-click="addTestItem()" class="btn-add btn-test">T E S T: add test item</button> -->
           <!-- <button ng-click="initiateDataItemsWorkAround()" class="btn-add btn-test">T E S T: add dataItem</button> -->
           <!-- <button ng-click="addOrUpdateDataItems('itemLeftCount', 'hoursLeft', 'minutesLeft', 200, 200, 200)" class="btn-add btn-test">T E S T: update existing dataItem</button> -->
         </div>

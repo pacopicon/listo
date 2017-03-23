@@ -114,12 +114,12 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
     $scope.percentage = function(timeFrame) {
       total = $scope.count(timeFrame).total / 100;
       return {
-        worked: $scope.count(timeFrame).completeNotDue / total,
-        left: $scope.count(timeFrame).incompleteNotDue / total,
-        due: $scope.count(timeFrame).incompleteDue / total,
-        dueComp: $scope.count(timeFrame).completeDue / total,
-        totalComp: $scope.count(timeFrame).simplyComplete / total,
-        totalIncomp: $scope.count(timeFrame).simplyIncomplete / total
+        worked: Math.round($scope.count(timeFrame).completeNotDue / total),
+        left: Math.round($scope.count(timeFrame).incompleteNotDue / total),
+        due: Math.round($scope.count(timeFrame).incompleteDue / total),
+        dueComp: Math.round($scope.count(timeFrame).completeDue / total),
+        totalComp: Math.round($scope.count(timeFrame).simplyComplete / total),
+        totalIncomp: Math.round($scope.count(timeFrame).simplyIncomplete / total)
       };
     };
 

@@ -127,10 +127,9 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "dateCruncher", 
 
           // var t = new Date();
           // console.log("step 4 - UserCtrl close: old name: " + $scope.oldItemName + ", new name: " + newItemProps.name + ", date: " + newItemProps.dueDate + ", Time: " + t.getMinutes() + ":" + t.getSeconds() + ":" + t.getMilliseconds());
-
           ItemCrud.updateItem($scope.oldItem, newName, newDueDate, newImportance, newUrgent, newHours, newMinutes);
 
-          $scope.UserCtrlRefreshTalliesAndData();
+          ItemCrud.processOldCompleteItems();
         });
       });
     };
@@ -140,23 +139,18 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "dateCruncher", 
 
 // Brought this over from GraphCtrl, since DOM makes many $scope calls to it and cannot simplify GraphCtrl into a service incjectable into the present controller.
 
-
-    $scope.UserCtrlRefreshTalliesAndData = function() {
-      ItemCrud.processOldCompleteItems();
-    };
-
     // $scope.addTestItem = function() {
     //   var day = new Date();
     //   var dueDate = day.setDate(17);
     //   var dueDateObj = new Date(dueDate);
     //   var name = "test"
     //   ItemCrud.addItem(name, dueDateObj, "<i class='fa fa-star'></i>", 10, 10);
-    //   // $scope.UserCtrlRefreshTalliesAndData();
+    //   // ItemCrud.processOldCompleteItems();
     // };
 
     $scope.addItem = function() {
       ItemCrud.addItem($scope.newItemName, $scope.newDueDate, $scope.iconwrap.selectedIcon, $scope.hourwrap.selectedHour, $scope.minutewrap.selectedMinute);
-      $scope.UserCtrlRefreshTalliesAndData();
+      ItemCrud.processOldCompleteItems();
     };
 
     $scope.toggleInvertAndSave = function(item) {
@@ -194,27 +188,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "dateCruncher", 
       ItemCrud.toggleSelectForDelete(items);
     }
 
-
-
     $scope.deleteSelected = function() {
       for (var i = 0; i < items.length; i++)
         if (items[i].isComplete === false && items[i].isSafeToComplete === true) {
-          var owner = "deleteSelected"
           var newDueDate = 0;
           var newhours = 0;
           var newMinutes = 0;
-          $scope.updateCompletion(owner, items[i], newDueDate, newhours, newMinutes);
+          $scope.updateCompletion(items[i], newDueDate, newhours, newMinutes);
         }
     };
 
-    $scope.updateCompletion = function(owner, item, newDueDate, newhours, newMinutes) {
-      ItemCrud.updateCompletion(owner, item, newDueDate, newhours, newMinutes);
-
-      $scope.UserCtrlRefreshTalliesAndData();
-    };
-
-    $scope.itemTally = function(items) {
-      ItemCrud.checkItemArrayForCompletionStatus(items);
+    $scope.updateCompletion = function(item, newDueDate, newhours, newMinutes) {
+      ItemCrud.updateCompletion(item, newDueDate, newhours, newMinutes);
+      ItemCrud.processOldCompleteItems();
     };
 
 // End CRUD Functions
