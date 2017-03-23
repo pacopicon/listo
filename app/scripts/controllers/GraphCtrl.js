@@ -2,8 +2,6 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
   function($scope, ItemCrud, dateCruncher, $rootScope, $interval, $locale, $timeout, $q, $sce, $tooltip, $state) {
 
   // PUBLIC VARIABLES
-    $scope.dataItems = ItemCrud.getDataItems();
-
     $scope.chartTip = {
       "title": "click on me to refresh the charts",
       "checked": false

@@ -5,16 +5,11 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "dateCruncher", 
 
     $scope.items = ItemCrud.getAllItems();
 
-    $scope.dataItems = ItemCrud.getDataItems();
-    var dataItems = ItemCrud.getDataItems();
-
     var refreshTime = function() {
       time = Date.now();
       $scope.time = time;
 
       ItemCrud.updateAllItemsPastDue();
-      ItemCrud.discardEmptyDataItems();
-
       return time;
     };
 
