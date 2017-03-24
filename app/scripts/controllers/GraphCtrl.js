@@ -179,6 +179,14 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
       // chart 3: summary pie chart
       $scope.itemDataCompleteIncompleteTotalOverall = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("overall").simplyComplete, $scope.count("overall").simplyIncomplete];
+
+      // chart 4: weekly comparison line chart
+      $scope.itemsPer = [
+        [$scope.count("lastSeven").completeNotDue, $scope.count("nextSeven").completeNotDue],
+        [0, $scope.count("nextSeven").incompleteNotDue],
+        [$scope.count("lastSeven").incompleteDue, $scope.count("nextSeven").incompleteDue],
+        [$scope.count("lastSeven").completeDue, $scope.count("nextSeven").completeDue]
+      ];
     };
 
     // Chart Label ONLY for LAST-SEVEN
@@ -196,36 +204,30 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
     $scope.itemTotalLabels = ["w", "x", "y", "z", "items completed", "items yet to complete"];
 
-    // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
-    // $scope.series = ['Series A', 'Series B'];
-    // $scope.data = [
-    //   [65, 59, 80, 81, 56, 55, 40],
-    //   [28, 48, 40, 19, 86, 27, 90]
-    // ];
-    // $scope.onClick = function (points, evt) {
-    //   console.log(points, evt);
-    // };
-    // $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
-    // $scope.options = {
-    //   scales: {
-    //     yAxes: [
-    //       {
-    //         id: 'y-axis-1',
-    //         type: 'linear',
-    //         display: true,
-    //         position: 'left'
-    //       },
-    //       {
-    //         id: 'y-axis-2',
-    //         type: 'linear',
-    //         display: true,
-    //         position: 'right'
-    //       }
-    //     ]
-    //   }
-    // };
+    $scope.weekLabels = ["last week", "next week"];
+    $scope.series = ['complete not due', 'incomplete not due', 'incomplete due', 'complete due'];
 
-    // };// end of completionData()
-
+    $scope.onClick = function (points, evt) {
+      console.log(points, evt);
+    };
+    $scope.datasetOverride = [{ yAxisID: 'y-axis-1' }, { yAxisID: 'y-axis-2' }];
+    $scope.options = {
+      scales: {
+        yAxes: [
+          {
+            id: 'y-axis-1',
+            type: 'linear',
+            display: true,
+            position: 'left'
+          },
+          {
+            id: 'y-axis-2',
+            type: 'linear',
+            display: true,
+            position: 'right'
+          }
+        ]
+      }
+    };
   } // end of controller (don't erase)
 ]); // end of controller (don't erase)
