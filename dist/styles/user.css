@@ -247,7 +247,8 @@ section {
 }
 
 .btn-add:hover {
-  border: 3.5px solid #4c91cd;
+  background-color: #4c91cd;
+  color: white;
 }
 
 .btn-test:hover {
@@ -255,7 +256,7 @@ section {
 }
 
 .btn-add:active {
-  background-color: #4c91cd;
+  background-color: #0B5FAA;
   color: white;
 }
 
@@ -284,9 +285,22 @@ section {
   margin-right: 0;
 }
 
-.btn-wrap {
-
+.mainBtn {
+  transition: all 1s ease-in-out;
 }
+
+.IIndaryBtnYes {
+  transition: all 1s ease-in-out;
+}
+
+.IIndaryBtnNo {
+  transition: all 1s ease-in-out;
+  /*position: absolute;
+  top: -9999px;
+  left: -9999px;*/
+  display: none;
+}
+
 
 .controlBtn {
   border: 2.5px solid #3f4e62;
@@ -529,7 +543,7 @@ input[type="checkbox"]:checked + label:before {
   padding-left: 0;
 }
 
-.editBtn .fa-pencil:hover, .deleteBtn .fa-times:hover, .btn-add:hover {
+.editBtn .fa-pencil:hover, .deleteBtn .fa-times:hover {
   border: 3.5px solid
   color: #d6f3ff;
   text-decoration: none;

@@ -175,6 +175,19 @@ listo.controller('UserCtrl', ["$scope", "ItemCrud", "UserCrud", "dateCruncher", 
         }
       }
 
+      $scope.clickedToDelete = false;
+      // $scope.appear = false;
+
+      if (safeCount > 0) {
+        $scope.clickedToDelete = true;
+        $timeout(function appear() {$scope.appear = true}, 1000)
+      } else {
+        $scope.clickedToDelete = false;
+        $scope.appear = false;
+      }
+
+      console.log("clickedToDelete: " + $scope.clickedToDelete)
+
       $scope.selectionInversion = false;
       $scope.allSelected = false;
 

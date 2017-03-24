@@ -70,7 +70,8 @@
 <div class="container-fluid main-body">
 <!--begin select all / clear selected / delete selected-->
   <div class="row formControls">
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap">
+
+    <div class="col-md-12 col-sm-12 col-xs-12 left-wrap right-wrap btn-wrap mainBtn" ng-class="{'col-lg-6 col-md-6 col-sm-6 col-xs-12 left-wrap btn-wrap mainBtn': clickedToDelete, 'col-lg-12 col-md-12 col-sm-12 col-xs-12 left-wrap right-wrap btn-wrap mainBtn': !clickedToDelete}">
       <button class="controlBtn selectAll" ng-click="selectAllForDelete(items)" ng-show="!allSelected && !selectionInversion" ng-init="allSelected">
         <p>select all</p>
       </button>
@@ -78,10 +79,11 @@
         <p>clear selected</p>
       </button>
       <button class="controlBtn invertSelection" ng-click="invertSelectForDelete(items)" ng-show="selectionInversion">
-        <p>invert selected</p>
+        <p>invert selection</p>
       </button>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-wrap btn-wrap">
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-wrap btn-wrap IIndaryBtn" ng-show="appear">
+    <!-- <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 right-wrap btn-wrap IIndaryBtn" ng-class="{'IIndaryBtnYes': clickedToDelete, 'IIndaryBtnNo': !clickedToDelete}"> -->
       <button class="controlBtn deleteSelected" ng-click="deleteSelected()">
         <p>archive selected</p>
       </button>
