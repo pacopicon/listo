@@ -95,6 +95,9 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
           hoursCompleteDue = hoursCompleteDue + items[i].eHour;
         }
       }
+      // console.log("incompleteNotDue " + incompleteNotDue);
+      // console.log("nextWeek: " + lastMomentNextWeekObj.toString());
+
       return {
         completeNotDue: completeNotDue,
         incompleteNotDue: incompleteNotDue,
@@ -122,8 +125,6 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
         totalIncomp: Math.round($scope.count(timeFrame).simplyIncomplete / total)
       };
     };
-
-    $scope.itemDataCompleteIncompleteTotalLastSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("lastSeven").simplyComplete, $scope.count("lastSeven").simplyIncomplete];
 
     // Dummy $scope values to hack the color scheme:
 
@@ -156,16 +157,16 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
       // NEXT-SEVEN
       // for seeding percentage data in data-display:
-      $scope.percentage("NextSeven");
+      $scope.percentage("nextSeven");
 
       // chart 1: pie chart
-      $scope.itemDataNextSeven = [$scope.count("NextSeven").completeNotDue, $scope.count("NextSeven").incompleteNotDue, $scope.count("NextSeven").incompleteDue, $scope.count("NextSeven").completeDue];
+      $scope.itemDataNextSeven = [$scope.count("nextSeven").completeNotDue, $scope.count("nextSeven").incompleteNotDue, $scope.count("nextSeven").incompleteDue, $scope.count("nextSeven").completeDue];
 
       // chart 2: hour bar chart
-      $scope.hourDataNextSeven = [$scope.count("NextSeven").hoursCompleteNotDue, $scope.count("NextSeven").hoursIncompleteNotDue, $scope.count("NextSeven").hoursIncompleteDue, $scope.count("NextSeven").hoursCompleteDue]
+      $scope.hourDataNextSeven = [$scope.count("nextSeven").hoursCompleteNotDue, $scope.count("nextSeven").hoursIncompleteNotDue, $scope.count("nextSeven").hoursIncompleteDue, $scope.count("nextSeven").hoursCompleteDue]
 
       // chart 3: summary pie chart
-      $scope.itemDataCompleteIncompleteTotalNextSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("NextSeven").simplyComplete, $scope.count("NextSeven").simplyIncomplete];
+      $scope.itemDataCompleteIncompleteTotalNextSeven = [$scope.w, $scope.x, $scope.y, $scope.z, $scope.count("nextSeven").simplyComplete, $scope.count("nextSeven").simplyIncomplete];
 
       // OVERALL
       // for seeding percentage data in data-display:
@@ -194,7 +195,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
     $scope.hourLabels = ["hours worked", "hours left", "hours overdue", "hours after deadline"];
 
-    $scope.itemTotalLabels = ["w", "x", "y", "z", "items yet to complete", "items completed"];
+    $scope.itemTotalLabels = ["w", "x", "y", "z", "items completed", "items yet to complete"];
 
     // $scope.labels = ["January", "February", "March", "April", "May", "June", "July"];
     // $scope.series = ['Series A', 'Series B'];
