@@ -44,7 +44,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
     // "any" = both due and not due
 
     $scope.count = function(timeFrame) {
-      var completeNotDue = 0;
+      var completeNotDue = 0,
           incompleteNotDue = 0,
           incompleteDue = 0,
           completeDue = 0,
@@ -62,34 +62,31 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
       for (var i = 0; i < items.length; i++) {
 
-        if (timeFrame = "lastSeven") {
+        if (timeFrame == "lastSeven") {
           weekBool = items[i].dueDate >= firstMomentPastWeekNum && items[i].dueDate < lastMomentPastWeekNum;
-        } else if (timeFrame = "nextSeven") {
+        } else if (timeFrame == "nextSeven") {
           weekBool = items[i].dueDate >= nowNum && items[i].dueDate < lastMomentNextWeekNum;
-        } else if (timeFrame = "overall") {
+        } else if (timeFrame == "overall") {
           weekBool = true;
         }
 
-        var complete = items[i].isComplete;
-        var incomplete = !items[i].isComplete;
+        var isComplete = items[i].isComplete;
+        var isDue = items[i].isPastDue;
 
-        var notDue = !items[i].isPastDue;
-        var due = items[i].isPastDue;
-
-        // console.log("COUNT --> " + timeFrame + ": " + weekBool + ", " + completeBool + " (" + items[i].isComplete + "), " + dueBool + " (" + items[i].isPastDue + ") ");
-        if (weekBool && complete && notDue) {
+        // console.log("timeFrame: " + timeFrame + ", weekBool: " + weekBool + ", isComplete: " + isComplete + ", isDue: " + isDue);
+        if (weekBool && isComplete && !isDue) {
           completeNotDue++;
           minCompleteNotDue = minCompleteNotDue + items[i].eMinute;
           hoursCompleteNotDue = hoursCompleteNotDue + items[i].eHour;
-        } else if (weekBool && incomplete && notDue) {
+        } else if (weekBool && !isComplete && !isDue) {
           incompleteNotDue++;
           minIncompleteNotDue = minIncompleteNotDue + items[i].eMinute;
           hoursIncompleteNotDue = hoursIncompleteNotDue + items[i].eHour;
-        } else if (weekBool && incomplete && due) {
+        } else if (weekBool && !isComplete && isDue) {
           incompleteDue++;
           minIncompleteDue = minIncompleteDue + items[i].eMinute;
           hoursIncompleteDue = hoursIncompleteDue + items[i].eHour;
-        } else if (weekBool && complete && due) {
+        } else if (weekBool && isComplete && isDue) {
           completeDue++;
           minCompleteDue = minCompleteDue + items[i].eMinute;
           hoursCompleteDue = hoursCompleteDue + items[i].eHour;
@@ -126,7 +123,7 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
       };
     };
 
-    // Dummy $scope values to hack the color scheme:
+    // Dummy $scope values to hack chart.js color scheme:
 
     $scope.w = 0;
     $scope.x = 0;
@@ -140,6 +137,8 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
     function watcherFunction(newData) {
       console.log(newData);
+      console.log("nextSeven completeNotDue: " + $scope.count("nextSeven").completeNotDue);
+      console.log("nextSeven incompleteNotDue: " + $scope.count("nextSeven").incompleteNotDue);
       // data-seeding functions called here
 
       // LAST-SEVEN
