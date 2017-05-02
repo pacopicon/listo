@@ -191,21 +191,20 @@ listo.controller('GraphCtrl', ["$scope", "ItemCrud", "dateCruncher", "$rootScope
 
     // Chart Label ONLY for LAST-SEVEN
 
-    $scope.itemLastSevenLabels = ["items completed", "items overdue", "items completed after deadline"];
+    $scope.itemLastSevenLabels = ["completed", "overdue", "completed after deadline"];
 
     $scope.seriesLastSeven = ['last week'];
 
 
     // Chart Labels for LAST-SEVEN & NEXT-SEVEN & OVERALL
 
-    $scope.itemLabels = ["items completed", "items not due & incomplete", "items overdue", "items completed after deadline"];
+    $scope.itemLabels = ["completed", "incomplete", "overdue", "completed after deadline"];
 
     $scope.hourLabels = ["hours worked", "hours left", "hours overdue", "hours after deadline"];
 
-    $scope.itemTotalLabels = ["w", "x", "y", "z", "items completed", "items yet to complete"];
+    $scope.itemTotalLabels = ["w", "x", "y", "z", "all completed", "all incomplete"];
 
-    $scope.weekLabels = ["last week", "next week"];
-    $scope.series = ['complete not due', 'incomplete not due', 'incomplete due', 'complete due'];
+    $scope.weekLabels = ["last 7 days", "next 7 days"];
 
     $scope.onClick = function (points, evt) {
       console.log(points, evt);
