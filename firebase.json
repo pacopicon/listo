@@ -1,12 +1,6 @@
 {
   "hosting": {
-    "public": "app/pages",
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
-    ]
+    "public": "app/pages"
   },
   "database": {
     "rules": "database.rules.json"
